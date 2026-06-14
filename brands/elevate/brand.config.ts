@@ -12,8 +12,11 @@ export const elevateConfig: BrandConfig = {
   nav: [
     { label: "Services", href: "/services" },
     { label: "Pricing", href: "/pricing" },
+    { label: "How It Works", href: "/#how-it-works" },
+    { label: "About", href: "/#about" },
+    { label: "Corporate", href: "/#corporate" },
+    { label: "Become a Pro", href: "/pros/apply" },
     { label: "FAQ", href: "/faq" },
-    { label: "Become a pro", href: "/pros/apply" },
   ],
   footerColumns: [
     {

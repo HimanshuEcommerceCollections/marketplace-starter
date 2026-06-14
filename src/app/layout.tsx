@@ -3,11 +3,9 @@ import "@/styles/globals.css";
 
 import { getActiveBrandId } from "@/lib/brand/registry";
 import { getBrandConfig, getBrandContent } from "@/lib/brand/load";
-import { isEnabled } from "@/lib/flags/resolve";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { DemoBanner } from "@/components/layout/demo-banner";
 import { PageViewTracker } from "@/components/shared/page-view-tracker";
 import { JsonLd } from "@/lib/seo/json-ld";
 import { organization } from "@/lib/seo/jsonld";
@@ -46,12 +44,10 @@ export default function RootLayout({
     <html lang={config.locale} data-brand={brandId} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
         <Providers config={config} content={content}>
-          {isEnabled("demoBanner") ? <DemoBanner /> : null}
           <PageViewTracker />
           <Navbar
             brandName={config.shortName}
-            links={config.nav}
-            cta={content.hero.primaryCta}
+            cta={{ label: "Book Now", href: "/book" }}
           />
           <main className="flex-1">{children}</main>
           <Footer
