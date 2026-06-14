@@ -21,7 +21,7 @@ export function TestimonialsSection({
   return (
     <section
       aria-labelledby="testimonials-heading"
-      className="py-16 md:py-20 lg:py-28"
+      className="bg-muted py-16 md:py-20 lg:py-28"
     >
       <Container>
         <div className="mx-auto mb-12 max-w-2xl text-center md:mb-16">
@@ -46,7 +46,7 @@ export function TestimonialsSection({
         >
           {items.map((item) => (
             <li key={item.id}>
-              <Card className="h-full rounded-xl bg-muted p-6">
+              <Card className="h-full rounded-xl bg-card p-6">
                 <figure className="flex h-full flex-col gap-4">
                   <SampleBadge className="self-start border-transparent bg-accent text-accent-foreground" />
                   <blockquote className="font-heading text-lg leading-relaxed text-foreground">

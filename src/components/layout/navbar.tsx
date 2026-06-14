@@ -14,6 +14,7 @@ const DRAFT_NOTICE =
 
 export interface NavbarProps {
   brandName: string;
+  logoSublabel?: string;
   cta?: NavItem;
 }
 
@@ -26,6 +27,7 @@ export interface NavbarProps {
  */
 export function Navbar({
   brandName,
+  logoSublabel,
   cta = { label: "Book Now", href: "/book" },
 }: NavbarProps) {
   const [open, setOpen] = React.useState(false);
@@ -33,14 +35,22 @@ export function Navbar({
 
   const closeMenu = React.useCallback(() => setOpen(false), []);
 
-  // Close the slide-down menu on Escape for keyboard users.
+  // While the menu is open: close on Escape, and close if the viewport grows to
+  // the lg breakpoint (where the inline nav takes over).
   React.useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
     };
+    const onResize = () => {
+      if (window.innerWidth >= 1024) setOpen(false);
+    };
     document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
+    };
   }, [open]);
 
   return (
@@ -61,17 +71,32 @@ export function Navbar({
           aria-label="Primary"
           className="grid h-16 grid-cols-[1fr_auto_1fr] items-center gap-4"
         >
-          <div className="flex items-center justify-self-start">
+          <div className="col-start-1 flex min-w-0 items-center justify-self-start">
             <Link
               href="/"
               onClick={closeMenu}
-              className="rounded-md text-base font-semibold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex min-w-0 items-center gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              {brandName}
+              <span
+                aria-hidden
+                className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground"
+              >
+                {brandName.charAt(0)}
+              </span>
+              <span className="flex min-w-0 flex-col leading-tight">
+                <span className="truncate font-heading text-base font-semibold uppercase tracking-wide text-foreground">
+                  {brandName}
+                </span>
+                {logoSublabel ? (
+                  <span className="truncate text-xs font-medium text-muted-foreground">
+                    {logoSublabel}
+                  </span>
+                ) : null}
+              </span>
             </Link>
           </div>
 
-          <ul className="hidden items-center justify-center gap-1 lg:flex">
+          <ul className="col-start-2 hidden items-center justify-center gap-1 lg:flex">
             {NAV_ITEMS.map((link) => (
               <li key={link.href}>
                 <Link
@@ -84,8 +109,8 @@ export function Navbar({
             ))}
           </ul>
 
-          <div className="flex items-center justify-end gap-2 justify-self-end">
-            <Button asChild size="sm">
+          <div className="col-start-3 flex items-center justify-end gap-2 justify-self-end">
+            <Button asChild size="sm" className="hidden md:inline-flex">
               <Link href={cta.href} onClick={closeMenu}>
                 {cta.label}
               </Link>
