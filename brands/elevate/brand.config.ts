@@ -20,23 +20,43 @@ export const elevateConfig: BrandConfig = {
   ],
   footerColumns: [
     {
-      heading: "Explore",
+      heading: "Services",
       links: [
-        { label: "Services", href: "/services" },
-        { label: "Pricing", href: "/pricing" },
-        { label: "FAQ", href: "/faq" },
+        { label: "Massage", href: "/services/massage" },
+        { label: "Personal Training", href: "/services/personal-training" },
+        { label: "Yoga", href: "/services/yoga" },
+        { label: "Beauty", href: "/services/beauty" },
+        { label: "Nutrition Coaching", href: "/services/nutrition-coaching" },
+        { label: "Life Coaching", href: "/services/life-coaching" },
       ],
     },
     {
       heading: "Company",
       links: [
-        { label: "Become a pro", href: "/pros/apply" },
-        { label: "Waitlist", href: "/waitlist" },
+        { label: "About Us", href: "/#about" },
+        { label: "How It Works", href: "/#how-it-works" },
+        { label: "Corporate Wellness", href: "/#corporate" },
+        { label: "FAQ", href: "/faq" },
+        { label: "Contact", href: "#" },
       ],
     },
     {
-      heading: "Get started",
-      links: [{ label: "Book now", href: "/book" }],
+      heading: "Professionals",
+      links: [
+        { label: "Become a Pro", href: "/pros/apply" },
+        { label: "Partner with Elevate", href: "/pros/apply" },
+        { label: "Pro Resources", href: "#" },
+        { label: "Pro Login", href: "#" },
+      ],
+    },
+    {
+      heading: "Legal",
+      links: [
+        { label: "Privacy Policy", href: "#" },
+        { label: "Terms of Service", href: "#" },
+        { label: "Cookie Policy", href: "#" },
+        { label: "Accessibility", href: "#" },
+      ],
     },
   ],
   legalLinks: [

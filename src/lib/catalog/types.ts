@@ -29,6 +29,8 @@ export const ServiceSchema = z.object({
   pricing_ref: z.string(), // -> pricing.v1.json services key
   currency: z.string().length(3),
   from_price: z.number().optional(), // minor units, display only
+  icon: z.string().optional(), // lucide icon name for cards
+  coming_soon: z.boolean().default(false),
   image: z.string().optional(),
   config_options: z.array(ConfigOptionSchema).default([]),
   location_modes: z

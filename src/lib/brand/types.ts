@@ -55,6 +55,22 @@ export interface TestimonialItem {
   isSample: true;
 }
 
+export interface ProcessCard {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface HowItWorksStep {
+  title: string;
+  description: string;
+}
+
+export interface ComparisonRow {
+  traditional: string;
+  elevate: string;
+}
+
 /** Brand-variable marketing copy. */
 export interface BrandContent {
   hero: {
@@ -63,9 +79,55 @@ export interface BrandContent {
     subtitle?: string;
     primaryCta: NavItem;
     secondaryCta?: NavItem;
+    trustIndicators?: string[];
+    imageSrc?: string;
+    imageAlt?: string;
+    imageCaption?: { title: string; lines: string[] };
   };
   features: { heading?: string; subheading?: string; items: FeatureItem[] };
   faq: { heading?: string; items: FaqItem[] };
   cta: { title: string; body?: string; cta: NavItem };
-  testimonials: { heading?: string; items: TestimonialItem[] };
+  testimonials: {
+    heading?: string;
+    subheading?: string;
+    items: TestimonialItem[];
+  };
+
+  /* Optional home-page sections (present for brands that use them). */
+  trustProcess?: {
+    heading: string;
+    subheading?: string;
+    items: ProcessCard[];
+  };
+  servicesSection?: {
+    heading: string;
+    subheading?: string;
+    draftNote?: string;
+  };
+  howItWorks?: {
+    heading: string;
+    subheading?: string;
+    steps: HowItWorksStep[];
+  };
+  comparison?: {
+    heading: string;
+    subheading?: string;
+    traditionalLabel: string;
+    elevateLabel: string;
+    rows: ComparisonRow[];
+  };
+  corporate?: {
+    eyebrow?: string;
+    title: string;
+    body?: string;
+    tags: string[];
+    cta: NavItem;
+  };
+  finalCta?: {
+    eyebrow?: string;
+    title: string;
+    body?: string;
+    primaryCta: NavItem;
+    secondaryCta?: NavItem;
+  };
 }

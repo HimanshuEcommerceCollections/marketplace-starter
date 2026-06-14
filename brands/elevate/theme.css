@@ -1,15 +1,38 @@
-/* Elevate Health & Wellness — calm green/teal, soft radius.
-   Token VALUES only; no component code. Illustrative placeholder palette. */
+/* Elevate Health & Wellness — warm premium-wellness palette.
+   Token VALUES only; no component code. Colors are APPROXIMATE (derived from the
+   design reference) and centralized here so exact brand values can be swapped in
+   later without touching components. */
 [data-brand="elevate"] {
   --brand-font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --brand-font-heading: "Fraunces", Georgia, serif;
   --radius: 0.875rem;
 
-  --primary: oklch(0.62 0.13 165);
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.95 0.03 165);
-  --secondary-foreground: oklch(0.3 0.06 165);
-  --accent: oklch(0.9 0.06 200);
-  --accent-foreground: oklch(0.25 0.05 200);
-  --ring: oklch(0.62 0.13 165);
+  /* surfaces — warm cream / warm white */
+  --background: oklch(0.965 0.013 84);
+  --foreground: oklch(0.255 0.012 65);
+  --card: oklch(0.99 0.006 84);
+  --card-foreground: oklch(0.255 0.012 65);
+  --popover: oklch(0.99 0.006 84);
+  --popover-foreground: oklch(0.255 0.012 65);
+  --muted: oklch(0.93 0.02 83);
+  --muted-foreground: oklch(0.48 0.018 70);
+  --secondary: oklch(0.9 0.022 82);
+  --secondary-foreground: oklch(0.3 0.018 70);
+  --accent: oklch(0.92 0.03 130);
+  --accent-foreground: oklch(0.33 0.045 130);
+  --border: oklch(0.88 0.016 82);
+  --input: oklch(0.86 0.016 82);
+  --ring: oklch(0.45 0.055 128);
+
+  /* brand — deep olive / sage */
+  --primary: oklch(0.44 0.055 128);
+  --primary-foreground: oklch(0.98 0.008 84);
+
+  /* extended semantic surfaces */
+  --highlight: oklch(0.63 0.135 47); /* terracotta */
+  --highlight-foreground: oklch(0.99 0.006 84);
+  --surface-inverse: oklch(0.25 0.014 62); /* espresso */
+  --surface-inverse-foreground: oklch(0.93 0.012 84);
+  --surface-brand: oklch(0.51 0.045 132); /* mid sage */
+  --surface-brand-foreground: oklch(0.98 0.008 84);
 }
