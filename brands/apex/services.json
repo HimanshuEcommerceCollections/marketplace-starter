@@ -1,0 +1,95 @@
+{
+  "brand": "apex",
+  "note": "SAMPLE catalog — INTERNAL DRAFT. Placeholder copy and prices only.",
+  "categories": [
+    { "id": "cleaning", "title": "Cleaning", "description": "Home cleaning services (Sample)." },
+    { "id": "plumbing", "title": "Plumbing", "description": "Repairs and installs (Sample)." },
+    { "id": "handyman", "title": "Handyman", "description": "Odd jobs and fixes (Sample)." }
+  ],
+  "services": [
+    {
+      "id": "standard-clean",
+      "title": "Standard Home Clean (Sample)",
+      "summary": "A thorough clean for your whole home.",
+      "description": "A [Sample] standard cleaning visit. Placeholder description for the INTERNAL DRAFT starter.",
+      "category": "cleaning",
+      "service_type": "cleaning",
+      "pricing_ref": "standard-clean",
+      "currency": "USD",
+      "from_price": 9000,
+      "config_options": [
+        {
+          "id": "tier",
+          "label": "Clean type (Sample)",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "standard", "label": "Standard" },
+            { "id": "premium", "label": "Deep clean" }
+          ]
+        },
+        { "id": "rooms", "label": "Number of rooms", "input": "quantity", "min": 1, "max": 12 },
+        { "id": "supplies", "label": "Bring supplies (Sample)", "input": "toggle" }
+      ],
+      "location_modes": ["onsite"],
+      "badges": ["[Sample]"],
+      "faq": [
+        { "q": "Do I need to be home? (Sample)", "a": "Placeholder FAQ answer." }
+      ]
+    },
+    {
+      "id": "drain-service",
+      "title": "Drain & Plumbing Visit (Sample)",
+      "summary": "Diagnose and fix common plumbing issues.",
+      "description": "A [Sample] plumbing call-out. Placeholder description.",
+      "category": "plumbing",
+      "service_type": "plumbing",
+      "pricing_ref": "drain-service",
+      "currency": "USD",
+      "from_price": 12000,
+      "config_options": [
+        {
+          "id": "tier",
+          "label": "Visit type (Sample)",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "standard", "label": "Diagnostic" },
+            { "id": "premium", "label": "Diagnostic + repair" }
+          ]
+        },
+        { "id": "emergency", "label": "Emergency call-out (Sample)", "input": "toggle" }
+      ],
+      "location_modes": ["onsite"],
+      "badges": ["[Sample]"],
+      "faq": []
+    },
+    {
+      "id": "handyman-visit",
+      "title": "Handyman Visit (Sample)",
+      "summary": "Hourly help for odd jobs and small repairs.",
+      "description": "A [Sample] handyman visit billed hourly. Placeholder description.",
+      "category": "handyman",
+      "service_type": "handyman",
+      "pricing_ref": "handyman-visit",
+      "currency": "USD",
+      "from_price": 7000,
+      "config_options": [
+        {
+          "id": "tier",
+          "label": "Skill level (Sample)",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "standard", "label": "General" },
+            { "id": "premium", "label": "Specialist" }
+          ]
+        },
+        { "id": "hours", "label": "Hours", "input": "quantity", "min": 1, "max": 8 }
+      ],
+      "location_modes": ["onsite"],
+      "badges": ["[Sample]"],
+      "faq": []
+    }
+  ]
+}

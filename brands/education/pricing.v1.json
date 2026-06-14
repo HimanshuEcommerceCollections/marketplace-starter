@@ -1,0 +1,69 @@
+{
+  "version": "pricing.v1",
+  "currency": "USD",
+  "note": "SAMPLE PLACEHOLDER PRICES — not real quotes. INTERNAL DRAFT.",
+  "services": {
+    "tutoring-session": {
+      "base_price": { "amount": 5000, "currency": "USD" },
+      "modifiers": [
+        {
+          "id": "tier",
+          "label": "Level (Sample)",
+          "type": "select",
+          "applies": "per_unit",
+          "options": [
+            { "id": "standard", "label": "Standard", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "premium", "label": "Advanced", "delta": { "amount": 2000, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "materials",
+          "label": "Materials (Sample)",
+          "type": "toggle",
+          "applies": "flat",
+          "delta": { "amount": 1000, "currency": "USD" }
+        }
+      ],
+      "fees": []
+    },
+    "course-enrollment": {
+      "base_price": { "amount": 20000, "currency": "USD" },
+      "modifiers": [
+        {
+          "id": "tier",
+          "label": "Track (Sample)",
+          "type": "select",
+          "applies": "per_unit",
+          "options": [
+            { "id": "standard", "label": "Self-paced", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "premium", "label": "Cohort + mentor", "delta": { "amount": 15000, "currency": "USD" } }
+          ]
+        }
+      ],
+      "fees": []
+    },
+    "design-gig": {
+      "base_price": { "amount": 30000, "currency": "USD" },
+      "modifiers": [
+        {
+          "id": "tier",
+          "label": "Scope (Sample)",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "standard", "label": "Basic", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "premium", "label": "Comprehensive", "delta": { "amount": 35000, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "rush",
+          "label": "Rush delivery (Sample)",
+          "type": "toggle",
+          "applies": "flat",
+          "delta": { "amount": 10000, "currency": "USD" }
+        }
+      ],
+      "fees": []
+    }
+  }
+}

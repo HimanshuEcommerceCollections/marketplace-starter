@@ -1,0 +1,95 @@
+{
+  "brand": "education",
+  "note": "SAMPLE catalog — INTERNAL DRAFT. Placeholder copy and prices only.",
+  "categories": [
+    { "id": "tutoring", "title": "Tutoring", "description": "1:1 and group tutoring (Sample)." },
+    { "id": "courses", "title": "Courses", "description": "Structured courses (Sample)." },
+    { "id": "design", "title": "Design & Creative", "description": "Creative services (Sample)." }
+  ],
+  "services": [
+    {
+      "id": "tutoring-session",
+      "title": "Tutoring Session (Sample)",
+      "summary": "1:1 tutoring tailored to your goals.",
+      "description": "A [Sample] tutoring session with a vetted mentor. Placeholder description for the INTERNAL DRAFT starter.",
+      "category": "tutoring",
+      "service_type": "tutoring",
+      "pricing_ref": "tutoring-session",
+      "currency": "USD",
+      "from_price": 5000,
+      "config_options": [
+        {
+          "id": "tier",
+          "label": "Level (Sample)",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "standard", "label": "Standard" },
+            { "id": "premium", "label": "Advanced" }
+          ]
+        },
+        { "id": "sessions", "label": "Number of sessions", "input": "quantity", "min": 1, "max": 20 },
+        { "id": "materials", "label": "Include materials (Sample)", "input": "toggle" }
+      ],
+      "location_modes": ["remote", "onsite"],
+      "badges": ["[Sample]"],
+      "faq": [
+        { "q": "What subjects are covered? (Sample)", "a": "Placeholder FAQ answer." }
+      ]
+    },
+    {
+      "id": "course-enrollment",
+      "title": "Course Enrollment (Sample)",
+      "summary": "Enroll in a structured multi-week course.",
+      "description": "A [Sample] course enrollment. Placeholder description.",
+      "category": "courses",
+      "service_type": "courses",
+      "pricing_ref": "course-enrollment",
+      "currency": "USD",
+      "from_price": 20000,
+      "config_options": [
+        {
+          "id": "tier",
+          "label": "Track (Sample)",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "standard", "label": "Self-paced" },
+            { "id": "premium", "label": "Cohort + mentor" }
+          ]
+        },
+        { "id": "seats", "label": "Seats", "input": "quantity", "min": 1, "max": 10 }
+      ],
+      "location_modes": ["remote"],
+      "badges": ["[Sample]"],
+      "faq": []
+    },
+    {
+      "id": "design-gig",
+      "title": "Design & Creative Gig (Sample)",
+      "summary": "Project-based design and creative work.",
+      "description": "A [Sample] creative gig. Placeholder description.",
+      "category": "design",
+      "service_type": "design",
+      "pricing_ref": "design-gig",
+      "currency": "USD",
+      "from_price": 30000,
+      "config_options": [
+        {
+          "id": "tier",
+          "label": "Scope (Sample)",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "standard", "label": "Basic" },
+            { "id": "premium", "label": "Comprehensive" }
+          ]
+        },
+        { "id": "rush", "label": "Rush delivery (Sample)", "input": "toggle" }
+      ],
+      "location_modes": ["remote"],
+      "badges": ["[Sample]"],
+      "faq": []
+    }
+  ]
+}

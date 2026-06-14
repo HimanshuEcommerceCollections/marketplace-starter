@@ -1,0 +1,75 @@
+{
+  "version": "pricing.v1",
+  "currency": "USD",
+  "note": "SAMPLE PLACEHOLDER PRICES — not real quotes. INTERNAL DRAFT.",
+  "services": {
+    "standard-clean": {
+      "base_price": { "amount": 9000, "currency": "USD" },
+      "modifiers": [
+        {
+          "id": "tier",
+          "label": "Clean type (Sample)",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "standard", "label": "Standard", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "premium", "label": "Deep clean", "delta": { "amount": 5000, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "supplies",
+          "label": "Bring supplies (Sample)",
+          "type": "toggle",
+          "applies": "flat",
+          "delta": { "amount": 1500, "currency": "USD" }
+        }
+      ],
+      "fees": [
+        { "id": "callout", "label": "Call-out fee (Sample)", "kind": "fee", "calc": "flat", "value": 1000 }
+      ]
+    },
+    "drain-service": {
+      "base_price": { "amount": 12000, "currency": "USD" },
+      "modifiers": [
+        {
+          "id": "tier",
+          "label": "Visit type (Sample)",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "standard", "label": "Diagnostic", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "premium", "label": "Diagnostic + repair", "delta": { "amount": 8000, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "emergency",
+          "label": "Emergency call-out (Sample)",
+          "type": "toggle",
+          "applies": "flat",
+          "delta": { "amount": 6000, "currency": "USD" }
+        }
+      ],
+      "fees": [
+        { "id": "callout", "label": "Call-out fee (Sample)", "kind": "fee", "calc": "flat", "value": 1000 }
+      ]
+    },
+    "handyman-visit": {
+      "base_price": { "amount": 7000, "currency": "USD" },
+      "modifiers": [
+        {
+          "id": "tier",
+          "label": "Skill level (Sample)",
+          "type": "select",
+          "applies": "per_unit",
+          "options": [
+            { "id": "standard", "label": "General", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "premium", "label": "Specialist", "delta": { "amount": 2500, "currency": "USD" } }
+          ]
+        }
+      ],
+      "fees": [
+        { "id": "callout", "label": "Call-out fee (Sample)", "kind": "fee", "calc": "flat", "value": 1000 }
+      ]
+    }
+  }
+}

@@ -1,0 +1,14 @@
+/* Apex Total Home Services — bold blue/orange, sharp radius. Token VALUES only. */
+[data-brand="apex"] {
+  --brand-font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --brand-font-heading: "Sora", "Inter", sans-serif;
+  --radius: 0.375rem;
+
+  --primary: oklch(0.52 0.18 255);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.02 255);
+  --secondary-foreground: oklch(0.3 0.08 255);
+  --accent: oklch(0.72 0.18 55);
+  --accent-foreground: oklch(0.2 0.04 55);
+  --ring: oklch(0.52 0.18 255);
+}

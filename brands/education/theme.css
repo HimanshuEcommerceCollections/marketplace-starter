@@ -1,0 +1,14 @@
+/* Education & Creative — warm amber/indigo, friendly radius. Token VALUES only. */
+[data-brand="education"] {
+  --brand-font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --brand-font-heading: "Lora", Georgia, serif;
+  --radius: 0.625rem;
+
+  --primary: oklch(0.55 0.16 275);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.03 80);
+  --secondary-foreground: oklch(0.32 0.07 80);
+  --accent: oklch(0.78 0.15 75);
+  --accent-foreground: oklch(0.25 0.05 75);
+  --ring: oklch(0.55 0.16 275);
+}

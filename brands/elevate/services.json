@@ -1,0 +1,94 @@
+{
+  "brand": "elevate",
+  "note": "SAMPLE catalog — INTERNAL DRAFT. Placeholder copy and prices only.",
+  "categories": [
+    { "id": "training", "title": "Training", "description": "Personal and group training (Sample)." },
+    { "id": "nutrition", "title": "Nutrition", "description": "Coaching and meal planning (Sample)." },
+    { "id": "recovery", "title": "Recovery", "description": "Massage and mobility (Sample)." }
+  ],
+  "services": [
+    {
+      "id": "personal-training",
+      "title": "Personal Training Session (Sample)",
+      "summary": "One-on-one coaching tailored to your goals.",
+      "description": "A [Sample] personal training session with a vetted coach. Placeholder description for the INTERNAL DRAFT starter.",
+      "category": "training",
+      "service_type": "training",
+      "pricing_ref": "personal-training",
+      "currency": "USD",
+      "from_price": 6000,
+      "config_options": [
+        {
+          "id": "tier",
+          "label": "Tier (Sample)",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "standard", "label": "Standard" },
+            { "id": "premium", "label": "Premium" }
+          ]
+        },
+        { "id": "sessions", "label": "Number of sessions", "input": "quantity", "min": 1, "max": 20 },
+        { "id": "nutrition_addon", "label": "Add nutrition guidance (Sample)", "input": "toggle" }
+      ],
+      "location_modes": ["onsite", "remote"],
+      "badges": ["[Sample]"],
+      "faq": [
+        { "q": "What should I bring? (Sample)", "a": "This is placeholder FAQ copy." }
+      ]
+    },
+    {
+      "id": "nutrition-coaching",
+      "title": "Nutrition Coaching (Sample)",
+      "summary": "Personalized nutrition guidance and check-ins.",
+      "description": "A [Sample] nutrition coaching package. Placeholder description.",
+      "category": "nutrition",
+      "service_type": "nutrition",
+      "pricing_ref": "nutrition-coaching",
+      "currency": "USD",
+      "from_price": 4500,
+      "config_options": [
+        {
+          "id": "tier",
+          "label": "Plan (Sample)",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "standard", "label": "Monthly" },
+            { "id": "premium", "label": "Monthly + weekly calls" }
+          ]
+        }
+      ],
+      "location_modes": ["remote"],
+      "badges": ["[Sample]"],
+      "faq": []
+    },
+    {
+      "id": "recovery-massage",
+      "title": "Recovery Massage (Sample)",
+      "summary": "Targeted recovery and mobility work.",
+      "description": "A [Sample] recovery massage session. Placeholder description.",
+      "category": "recovery",
+      "service_type": "recovery",
+      "pricing_ref": "recovery-massage",
+      "currency": "USD",
+      "from_price": 8000,
+      "config_options": [
+        {
+          "id": "tier",
+          "label": "Length (Sample)",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "standard", "label": "60 minutes" },
+            { "id": "premium", "label": "90 minutes" }
+          ]
+        },
+        { "id": "hot_stones", "label": "Add hot stones (Sample)", "input": "toggle" }
+      ],
+      "location_modes": ["onsite"],
+      "badges": ["[Sample]"],
+      "faq": []
+    }
+  ]
+}

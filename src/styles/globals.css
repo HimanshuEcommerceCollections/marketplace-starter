@@ -1,0 +1,48 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./tokens.css";
+
+/* Brand override layers — all four ship in every build (~tiny); only the
+   matching [data-brand] scope applies at runtime, selected by NEXT_PUBLIC_BRAND. */
+@import "../../brands/elevate/theme.css";
+@import "../../brands/apex/theme.css";
+@import "../../brands/events/theme.css";
+@import "../../brands/education/theme.css";
+
+/* Named z-index utilities so components stay class-based (no magic numbers). */
+@utility z-sticky {
+  z-index: var(--z-sticky);
+}
+@utility z-banner {
+  z-index: var(--z-banner);
+}
+@utility z-modal {
+  z-index: var(--z-modal);
+}
+@utility z-toast {
+  z-index: var(--z-toast);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading;
+  }
+  /* Respect reduced motion globally (a11y). */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

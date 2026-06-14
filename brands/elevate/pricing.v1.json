@@ -1,0 +1,71 @@
+{
+  "version": "pricing.v1",
+  "currency": "USD",
+  "note": "SAMPLE PLACEHOLDER PRICES — not real quotes. INTERNAL DRAFT.",
+  "services": {
+    "personal-training": {
+      "base_price": { "amount": 6000, "currency": "USD" },
+      "modifiers": [
+        {
+          "id": "tier",
+          "label": "Tier (Sample)",
+          "type": "select",
+          "applies": "per_unit",
+          "options": [
+            { "id": "standard", "label": "Standard", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "premium", "label": "Premium", "delta": { "amount": 3000, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "nutrition_addon",
+          "label": "Nutrition guidance (Sample)",
+          "type": "toggle",
+          "applies": "flat",
+          "delta": { "amount": 1500, "currency": "USD" }
+        }
+      ],
+      "fees": [
+        { "id": "service_fee", "label": "Service fee (Sample)", "kind": "fee", "calc": "flat", "value": 500 }
+      ]
+    },
+    "nutrition-coaching": {
+      "base_price": { "amount": 4500, "currency": "USD" },
+      "modifiers": [
+        {
+          "id": "tier",
+          "label": "Plan (Sample)",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "standard", "label": "Monthly", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "premium", "label": "Monthly + weekly calls", "delta": { "amount": 4000, "currency": "USD" } }
+          ]
+        }
+      ],
+      "fees": []
+    },
+    "recovery-massage": {
+      "base_price": { "amount": 8000, "currency": "USD" },
+      "modifiers": [
+        {
+          "id": "tier",
+          "label": "Length (Sample)",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "standard", "label": "60 minutes", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "premium", "label": "90 minutes", "delta": { "amount": 3500, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "hot_stones",
+          "label": "Hot stones (Sample)",
+          "type": "toggle",
+          "applies": "flat",
+          "delta": { "amount": 1200, "currency": "USD" }
+        }
+      ],
+      "fees": []
+    }
+  }
+}
