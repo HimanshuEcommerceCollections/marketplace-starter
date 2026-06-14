@@ -1,44 +1,42 @@
-import { Container } from "@/components/layout/container";
-import { Hero } from "@/components/marketing/hero";
-import { FeatureGrid } from "@/components/marketing/feature-grid";
-import { CtaSection } from "@/components/marketing/cta-section";
-import { Testimonials } from "@/components/marketing/testimonials";
-import { ServiceGrid } from "@/components/marketplace/service-grid";
+import { HeroSection } from "@/components/sections/hero-section";
+import { TrustSafetySection } from "@/components/sections/trust-safety-section";
+import { ServicesGridSection } from "@/components/sections/services-grid-section";
+import { HowItWorksSection } from "@/components/sections/how-it-works-section";
+import { TestimonialsSection } from "@/components/sections/testimonials-section";
+import { ComparisonSection } from "@/components/sections/comparison-section";
+import { CorporateSection } from "@/components/sections/corporate-section";
+import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { getBrandContent } from "@/lib/brand/load";
 import { getServices } from "@/lib/catalog/load";
 import { isEnabled } from "@/lib/flags/resolve";
 
 export default function HomePage() {
   const content = getBrandContent();
-  const featured = getServices().slice(0, 3);
+  const services = getServices();
 
   return (
     <>
-      <Hero {...content.hero} />
+      <HeroSection {...content.hero} />
 
-      <FeatureGrid
-        heading={content.features.heading}
-        subheading={content.features.subheading}
-        items={content.features.items}
-      />
-
-      <section className="py-12 md:py-16">
-        <Container>
-          <div className="mb-8 flex items-end justify-between gap-4">
-            <h2 className="text-2xl font-bold md:text-3xl">Popular services</h2>
-          </div>
-          <ServiceGrid services={featured} />
-        </Container>
-      </section>
-
-      {isEnabled("testimonials") ? (
-        <Testimonials
-          heading={content.testimonials.heading}
-          items={content.testimonials.items}
-        />
+      {content.trustProcess ? (
+        <TrustSafetySection {...content.trustProcess} />
       ) : null}
 
-      <CtaSection {...content.cta} />
+      {content.servicesSection ? (
+        <ServicesGridSection {...content.servicesSection} services={services} />
+      ) : null}
+
+      {content.howItWorks ? <HowItWorksSection {...content.howItWorks} /> : null}
+
+      {isEnabled("testimonials") ? (
+        <TestimonialsSection {...content.testimonials} />
+      ) : null}
+
+      {content.comparison ? <ComparisonSection {...content.comparison} /> : null}
+
+      {content.corporate ? <CorporateSection {...content.corporate} /> : null}
+
+      {content.finalCta ? <FinalCtaSection {...content.finalCta} /> : null}
     </>
   );
 }

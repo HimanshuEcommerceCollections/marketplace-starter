@@ -16,7 +16,8 @@ Education & Creative). It is **INTERNAL DRAFT / demo-grade** — not production.
    the literal. The `showSampleLabels` flag is forced on and not overridable.
 3. **Footer carries `INTERNAL DRAFT`.** Do not remove the marker in
    `src/components/layout/footer.tsx`.
-4. **Global demo banner.** `DemoBanner` is mounted in the root layout on every page.
+4. **Global draft banner.** The "DRAFT EXPERIENCE" banner is rendered by the
+   Navbar (`src/components/layout/navbar.tsx`), so it appears on every page.
 5. **Forms are stub-only.** Validate → emit analytics → return a fake `request_id`.
    No `fetch`/backend calls. The real backend would plug in at
    `src/lib/forms/stub-submit.ts`.

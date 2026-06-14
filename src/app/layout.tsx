@@ -52,6 +52,7 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
           <Footer
             brandName={config.shortName}
+            tagline={content.hero.title}
             columns={config.footerColumns}
             legalLinks={config.legalLinks}
           />

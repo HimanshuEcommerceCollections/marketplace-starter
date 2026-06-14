@@ -38,6 +38,15 @@
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0); /* OVERRIDDEN PER BRAND (focus) */
 
+  /* ---- EXTENDED SEMANTIC SURFACES ---- (brand-overridable; sensible defaults
+     derived from existing tokens so brands that don't set them still work) */
+  --highlight: var(--primary); /* vivid CTA accent (e.g. terracotta) */
+  --highlight-foreground: var(--primary-foreground);
+  --surface-inverse: var(--foreground); /* dark sections (corporate, footer) */
+  --surface-inverse-foreground: var(--background);
+  --surface-brand: var(--primary); /* brand-tinted band (final CTA) */
+  --surface-brand-foreground: var(--primary-foreground);
+
   /* ---- RADIUS ---- (brands override --radius base) */
   --radius: 0.625rem; /* OVERRIDDEN PER BRAND */
   --radius-sm: calc(var(--radius) - 4px);
@@ -106,6 +115,12 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
+  --color-surface-inverse: var(--surface-inverse);
+  --color-surface-inverse-foreground: var(--surface-inverse-foreground);
+  --color-surface-brand: var(--surface-brand);
+  --color-surface-brand-foreground: var(--surface-brand-foreground);
 
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);

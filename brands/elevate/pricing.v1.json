@@ -3,49 +3,8 @@
   "currency": "USD",
   "note": "SAMPLE PLACEHOLDER PRICES — not real quotes. INTERNAL DRAFT.",
   "services": {
-    "personal-training": {
-      "base_price": { "amount": 6000, "currency": "USD" },
-      "modifiers": [
-        {
-          "id": "tier",
-          "label": "Tier (Sample)",
-          "type": "select",
-          "applies": "per_unit",
-          "options": [
-            { "id": "standard", "label": "Standard", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "premium", "label": "Premium", "delta": { "amount": 3000, "currency": "USD" } }
-          ]
-        },
-        {
-          "id": "nutrition_addon",
-          "label": "Nutrition guidance (Sample)",
-          "type": "toggle",
-          "applies": "flat",
-          "delta": { "amount": 1500, "currency": "USD" }
-        }
-      ],
-      "fees": [
-        { "id": "service_fee", "label": "Service fee (Sample)", "kind": "fee", "calc": "flat", "value": 500 }
-      ]
-    },
-    "nutrition-coaching": {
-      "base_price": { "amount": 4500, "currency": "USD" },
-      "modifiers": [
-        {
-          "id": "tier",
-          "label": "Plan (Sample)",
-          "type": "select",
-          "applies": "flat",
-          "options": [
-            { "id": "standard", "label": "Monthly", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "premium", "label": "Monthly + weekly calls", "delta": { "amount": 4000, "currency": "USD" } }
-          ]
-        }
-      ],
-      "fees": []
-    },
-    "recovery-massage": {
-      "base_price": { "amount": 8000, "currency": "USD" },
+    "massage": {
+      "base_price": { "amount": 10900, "currency": "USD" },
       "modifiers": [
         {
           "id": "tier",
@@ -54,17 +13,100 @@
           "applies": "flat",
           "options": [
             { "id": "standard", "label": "60 minutes", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "premium", "label": "90 minutes", "delta": { "amount": 3500, "currency": "USD" } }
+            { "id": "premium", "label": "90 minutes", "delta": { "amount": 4000, "currency": "USD" } }
           ]
-        },
-        {
-          "id": "hot_stones",
-          "label": "Hot stones (Sample)",
-          "type": "toggle",
-          "applies": "flat",
-          "delta": { "amount": 1200, "currency": "USD" }
         }
       ],
+      "fees": []
+    },
+    "personal-training": {
+      "base_price": { "amount": 7900, "currency": "USD" },
+      "modifiers": [
+        {
+          "id": "tier",
+          "label": "Tier (Sample)",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "standard", "label": "Standard", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "premium", "label": "Premium", "delta": { "amount": 3000, "currency": "USD" } }
+          ]
+        }
+      ],
+      "fees": []
+    },
+    "yoga": {
+      "base_price": { "amount": 8900, "currency": "USD" },
+      "modifiers": [
+        {
+          "id": "tier",
+          "label": "Style (Sample)",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "standard", "label": "Vinyasa", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "premium", "label": "Restorative", "delta": { "amount": 2000, "currency": "USD" } }
+          ]
+        }
+      ],
+      "fees": []
+    },
+    "beauty": {
+      "base_price": { "amount": 7500, "currency": "USD" },
+      "modifiers": [
+        {
+          "id": "tier",
+          "label": "Service (Sample)",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "standard", "label": "Express", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "premium", "label": "Signature", "delta": { "amount": 5000, "currency": "USD" } }
+          ]
+        }
+      ],
+      "fees": []
+    },
+    "nutrition-coaching": {
+      "base_price": { "amount": 12900, "currency": "USD" },
+      "modifiers": [
+        {
+          "id": "tier",
+          "label": "Plan (Sample)",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "standard", "label": "Monthly", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "premium", "label": "Monthly + weekly calls", "delta": { "amount": 6000, "currency": "USD" } }
+          ]
+        }
+      ],
+      "fees": []
+    },
+    "life-coaching": {
+      "base_price": { "amount": 11900, "currency": "USD" },
+      "modifiers": [
+        {
+          "id": "tier",
+          "label": "Format (Sample)",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "standard", "label": "Single session", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "premium", "label": "Package of 4", "delta": { "amount": 30000, "currency": "USD" } }
+          ]
+        }
+      ],
+      "fees": []
+    },
+    "physical-therapy": {
+      "base_price": { "amount": 0, "currency": "USD" },
+      "modifiers": [],
+      "fees": []
+    },
+    "speech-therapy": {
+      "base_price": { "amount": 0, "currency": "USD" },
+      "modifiers": [],
       "fees": []
     }
   }

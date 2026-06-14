@@ -2,21 +2,50 @@
   "brand": "elevate",
   "note": "SAMPLE catalog — INTERNAL DRAFT. Placeholder copy and prices only.",
   "categories": [
-    { "id": "training", "title": "Training", "description": "Personal and group training (Sample)." },
-    { "id": "nutrition", "title": "Nutrition", "description": "Coaching and meal planning (Sample)." },
-    { "id": "recovery", "title": "Recovery", "description": "Massage and mobility (Sample)." }
+    { "id": "bodywork", "title": "Bodywork", "description": "Massage and recovery (Sample)." },
+    { "id": "fitness", "title": "Fitness", "description": "Training and movement (Sample)." },
+    { "id": "wellness", "title": "Wellness", "description": "Nutrition, beauty, and coaching (Sample)." },
+    { "id": "therapy", "title": "Therapy", "description": "Clinical services (Sample)." }
   ],
   "services": [
     {
+      "id": "massage",
+      "title": "Massage",
+      "summary": "Swedish, deep tissue, and sports massage in the comfort of your home.",
+      "description": "A [Sample] in-home massage session with a vetted independent professional. Placeholder description for the INTERNAL DRAFT starter.",
+      "category": "bodywork",
+      "service_type": "bodywork",
+      "pricing_ref": "massage",
+      "currency": "USD",
+      "from_price": 10900,
+      "icon": "HandHelping",
+      "config_options": [
+        {
+          "id": "tier",
+          "label": "Length (Sample)",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "standard", "label": "60 minutes" },
+            { "id": "premium", "label": "90 minutes" }
+          ]
+        }
+      ],
+      "location_modes": ["onsite"],
+      "badges": ["[Sample]"],
+      "faq": []
+    },
+    {
       "id": "personal-training",
-      "title": "Personal Training Session (Sample)",
-      "summary": "One-on-one coaching tailored to your goals.",
-      "description": "A [Sample] personal training session with a vetted coach. Placeholder description for the INTERNAL DRAFT starter.",
-      "category": "training",
-      "service_type": "training",
+      "title": "Personal Training",
+      "summary": "Custom workouts with certified trainers who come to you.",
+      "description": "A [Sample] in-home personal training session. Placeholder description.",
+      "category": "fitness",
+      "service_type": "fitness",
       "pricing_ref": "personal-training",
       "currency": "USD",
-      "from_price": 6000,
+      "from_price": 7900,
+      "icon": "Dumbbell",
       "config_options": [
         {
           "id": "tier",
@@ -27,26 +56,77 @@
             { "id": "standard", "label": "Standard" },
             { "id": "premium", "label": "Premium" }
           ]
-        },
-        { "id": "sessions", "label": "Number of sessions", "input": "quantity", "min": 1, "max": 20 },
-        { "id": "nutrition_addon", "label": "Add nutrition guidance (Sample)", "input": "toggle" }
+        }
       ],
       "location_modes": ["onsite", "remote"],
       "badges": ["[Sample]"],
-      "faq": [
-        { "q": "What should I bring? (Sample)", "a": "This is placeholder FAQ copy." }
-      ]
+      "faq": []
+    },
+    {
+      "id": "yoga",
+      "title": "Yoga",
+      "summary": "Private yoga sessions tailored to your level and goals.",
+      "description": "A [Sample] private yoga session. Placeholder description.",
+      "category": "fitness",
+      "service_type": "fitness",
+      "pricing_ref": "yoga",
+      "currency": "USD",
+      "from_price": 8900,
+      "icon": "Flower2",
+      "config_options": [
+        {
+          "id": "tier",
+          "label": "Style (Sample)",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "standard", "label": "Vinyasa" },
+            { "id": "premium", "label": "Restorative" }
+          ]
+        }
+      ],
+      "location_modes": ["onsite", "remote"],
+      "badges": ["[Sample]"],
+      "faq": []
+    },
+    {
+      "id": "beauty",
+      "title": "Beauty",
+      "summary": "Facials, blowouts, and beauty services at your convenience.",
+      "description": "A [Sample] in-home beauty service. Placeholder description.",
+      "category": "wellness",
+      "service_type": "wellness",
+      "pricing_ref": "beauty",
+      "currency": "USD",
+      "from_price": 7500,
+      "icon": "Sparkles",
+      "config_options": [
+        {
+          "id": "tier",
+          "label": "Service (Sample)",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "standard", "label": "Express" },
+            { "id": "premium", "label": "Signature" }
+          ]
+        }
+      ],
+      "location_modes": ["onsite"],
+      "badges": ["[Sample]"],
+      "faq": []
     },
     {
       "id": "nutrition-coaching",
-      "title": "Nutrition Coaching (Sample)",
-      "summary": "Personalized nutrition guidance and check-ins.",
+      "title": "Nutrition Coaching",
+      "summary": "Evidence-based nutrition guidance from registered practitioners.",
       "description": "A [Sample] nutrition coaching package. Placeholder description.",
-      "category": "nutrition",
-      "service_type": "nutrition",
+      "category": "wellness",
+      "service_type": "wellness",
       "pricing_ref": "nutrition-coaching",
       "currency": "USD",
-      "from_price": 4500,
+      "from_price": 12900,
+      "icon": "Salad",
       "config_options": [
         {
           "id": "tier",
@@ -64,29 +144,61 @@
       "faq": []
     },
     {
-      "id": "recovery-massage",
-      "title": "Recovery Massage (Sample)",
-      "summary": "Targeted recovery and mobility work.",
-      "description": "A [Sample] recovery massage session. Placeholder description.",
-      "category": "recovery",
-      "service_type": "recovery",
-      "pricing_ref": "recovery-massage",
+      "id": "life-coaching",
+      "title": "Life Coaching",
+      "summary": "Goal-focused coaching sessions in your own environment.",
+      "description": "A [Sample] life coaching session. Placeholder description.",
+      "category": "wellness",
+      "service_type": "wellness",
+      "pricing_ref": "life-coaching",
       "currency": "USD",
-      "from_price": 8000,
+      "from_price": 11900,
+      "icon": "Compass",
       "config_options": [
         {
           "id": "tier",
-          "label": "Length (Sample)",
+          "label": "Format (Sample)",
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "standard", "label": "60 minutes" },
-            { "id": "premium", "label": "90 minutes" }
+            { "id": "standard", "label": "Single session" },
+            { "id": "premium", "label": "Package of 4" }
           ]
-        },
-        { "id": "hot_stones", "label": "Add hot stones (Sample)", "input": "toggle" }
+        }
       ],
+      "location_modes": ["onsite", "remote"],
+      "badges": ["[Sample]"],
+      "faq": []
+    },
+    {
+      "id": "physical-therapy",
+      "title": "Physical Therapy",
+      "summary": "PT and rehabilitation with licensed independent therapists.",
+      "description": "A [Sample] physical therapy service. Coming soon — placeholder description.",
+      "category": "therapy",
+      "service_type": "therapy",
+      "pricing_ref": "physical-therapy",
+      "currency": "USD",
+      "icon": "Activity",
+      "coming_soon": true,
+      "config_options": [],
       "location_modes": ["onsite"],
+      "badges": ["[Sample]"],
+      "faq": []
+    },
+    {
+      "id": "speech-therapy",
+      "title": "Speech Therapy",
+      "summary": "Speech and language therapy from licensed independent providers.",
+      "description": "A [Sample] speech therapy service. Coming soon — placeholder description.",
+      "category": "therapy",
+      "service_type": "therapy",
+      "pricing_ref": "speech-therapy",
+      "currency": "USD",
+      "icon": "MessageCircle",
+      "coming_soon": true,
+      "config_options": [],
+      "location_modes": ["onsite", "remote"],
       "badges": ["[Sample]"],
       "faq": []
     }

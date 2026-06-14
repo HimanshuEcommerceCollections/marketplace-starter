@@ -61,7 +61,6 @@ export function Navbar({
           aria-label="Primary"
           className="grid h-16 grid-cols-[1fr_auto_1fr] items-center gap-4"
         >
-          {/* Left: logo */}
           <div className="flex items-center justify-self-start">
             <Link
               href="/"
@@ -72,7 +71,6 @@ export function Navbar({
             </Link>
           </div>
 
-          {/* Center: desktop navigation (lg and above) */}
           <ul className="hidden items-center justify-center gap-1 lg:flex">
             {NAV_ITEMS.map((link) => (
               <li key={link.href}>
@@ -86,7 +84,6 @@ export function Navbar({
             ))}
           </ul>
 
-          {/* Right: Book Now (all sizes) + hamburger (below lg) */}
           <div className="flex items-center justify-end gap-2 justify-self-end">
             <Button asChild size="sm">
               <Link href={cta.href} onClick={closeMenu}>
@@ -112,7 +109,6 @@ export function Navbar({
           </div>
         </Container>
 
-        {/* Slide-down mobile menu (below lg) */}
         {open ? (
           <div
             id="mobile-menu"
