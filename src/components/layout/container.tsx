@@ -2,10 +2,10 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const sizeMap = {
-  sm: "max-w-container-sm",
-  md: "max-w-container-md",
-  lg: "max-w-container-lg",
-  xl: "max-w-container-xl",
+  sm: "max-w-3xl",
+  md: "max-w-5xl",
+  lg: "max-w-6xl",
+  xl: "max-w-7xl", // shared homepage content rail (80rem)
   full: "max-w-none",
 } as const;
 

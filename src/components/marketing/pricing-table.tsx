@@ -15,7 +15,7 @@ export function PricingTable({ heading, subheading, tiers }: PricingTableProps) 
   return (
     <section className="py-12 md:py-16" aria-labelledby="pricing-heading">
       <Container>
-        <div className="mx-auto mb-10 max-w-container-sm text-center">
+        <div className="mx-auto mb-10 max-w-2xl text-center">
           <h2 id="pricing-heading" className="text-2xl font-bold md:text-3xl">
             {heading ?? "Pricing"}
           </h2>

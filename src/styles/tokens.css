@@ -70,12 +70,9 @@
   --shadow-xl: 0 20px 25px -5px oklch(0 0 0 / 0.1),
     0 8px 10px -6px oklch(0 0 0 / 0.1);
 
-  /* ---- CONTAINER WIDTHS ---- (used by Container wrapper) */
-  --container-sm: 40rem;
-  --container-md: 48rem;
-  --container-lg: 64rem;
-  --container-xl: 80rem;
-  --container-2xl: 90rem;
+  /* NOTE: container widths intentionally NOT defined here — Tailwind v4's built-in
+     --container-* scale powers max-w-* utilities; overriding it collides with
+     max-w-sm/md/lg/xl/2xl. The shared page container uses max-w-7xl (1280px). */
 
   /* ---- Z-INDEX SCALE ---- (named layers; no magic numbers in components) */
   --z-docked: 10;
@@ -137,10 +134,4 @@
   --shadow-md: var(--shadow-md);
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
-
-  --container-sm: var(--container-sm);
-  --container-md: var(--container-md);
-  --container-lg: var(--container-lg);
-  --container-xl: var(--container-xl);
-  --container-2xl: var(--container-2xl);
 }

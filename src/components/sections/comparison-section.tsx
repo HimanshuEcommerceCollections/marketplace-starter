@@ -38,7 +38,7 @@ export function ComparisonSection({
           ) : null}
         </div>
 
-        <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-border bg-card">
+        <div className="overflow-hidden rounded-2xl border border-border bg-card">
           <div className="grid grid-cols-1 bg-muted sm:grid-cols-2">
             <p className="px-5 py-3 text-sm font-semibold text-muted-foreground">
               {traditionalLabel}
