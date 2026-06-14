@@ -24,7 +24,15 @@ export function Footer({ brandName, tagline, columns, legalLinks }: FooterProps)
       <Container className="py-12">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5">
           <div className="sm:col-span-2 lg:col-span-1">
-            <p className="font-heading text-lg font-semibold">{brandName}</p>
+            <div className="flex items-center gap-2">
+              <span
+                aria-hidden
+                className="inline-flex size-7 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground"
+              >
+                {brandName.charAt(0)}
+              </span>
+              <p className="font-heading text-lg font-semibold">{brandName}</p>
+            </div>
             {tagline ? (
               <p className="mt-2 text-sm text-surface-inverse-foreground/70">
                 {tagline}

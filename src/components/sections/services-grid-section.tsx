@@ -24,7 +24,7 @@ export function ServicesGridSection({
     <section
       id="services"
       aria-labelledby="services-heading"
-      className="py-16 md:py-20 lg:py-28"
+      className="bg-muted py-16 md:py-20 lg:py-28"
     >
       <Container>
         <div className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
@@ -40,7 +40,7 @@ export function ServicesGridSection({
             </p>
           ) : null}
           {draftNote ? (
-            <p className="mx-auto mt-6 inline-flex rounded-full bg-highlight/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-highlight">
+            <p className="mx-auto mt-6 w-fit max-w-full rounded-full bg-highlight/10 px-4 py-1.5 text-center text-xs font-semibold uppercase tracking-wide text-highlight">
               {draftNote}
             </p>
           ) : null}

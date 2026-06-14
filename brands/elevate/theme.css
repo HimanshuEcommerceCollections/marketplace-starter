@@ -3,8 +3,8 @@
    design reference) and centralized here so exact brand values can be swapped in
    later without touching components. */
 [data-brand="elevate"] {
-  --brand-font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --brand-font-heading: "Fraunces", Georgia, serif;
+  --brand-font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --brand-font-heading: var(--font-fraunces), Georgia, serif;
   --radius: 0.875rem;
 
   /* surfaces — warm cream / warm white */

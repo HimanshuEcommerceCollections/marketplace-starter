@@ -16,6 +16,8 @@ export interface BrandConfig {
   id: BrandId;
   name: string;
   shortName: string;
+  /** Small lockup sublabel under the wordmark (e.g. "Health & Wellness"). */
+  logoSublabel?: string;
   tagline: string;
   contactEmail: string;
   contactPhone?: string;

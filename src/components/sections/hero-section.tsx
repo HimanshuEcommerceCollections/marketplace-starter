@@ -29,12 +29,12 @@ export function HeroSection({
   imageAlt = "",
   imageCaption,
 }: HeroSectionProps) {
-  const isSvg = imageSrc?.toLowerCase().endsWith(".svg") ?? false;
+  const showImage = !!imageSrc && !imageSrc.toLowerCase().endsWith(".svg");
 
   return (
     <section aria-labelledby="hero-heading" className="py-16 md:py-20 lg:py-28">
-      <Container className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-10 lg:gap-16">
-        <div className="flex flex-col gap-6">
+      <Container className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="order-2 flex flex-col gap-6 lg:order-1">
           <div className="flex flex-col gap-4">
             {eyebrow ? (
               <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
@@ -77,7 +77,12 @@ export function HeroSection({
                   key={item}
                   className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground"
                 >
-                  <Check aria-hidden className="size-3.5 shrink-0 text-primary" />
+                  <span
+                    aria-hidden
+                    className="inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"
+                  >
+                    <Check className="size-2.5" strokeWidth={3} />
+                  </span>
                   {item}
                 </li>
               ))}
@@ -85,32 +90,27 @@ export function HeroSection({
           ) : null}
         </div>
 
-        <div className="relative overflow-hidden rounded-2xl border border-border bg-muted shadow-sm">
-          <AspectRatio ratio={4 / 5}>
-            {imageSrc ? (
+        <div className="relative order-1 overflow-hidden rounded-2xl border border-border bg-muted shadow-sm lg:order-2">
+          <AspectRatio ratio={4 / 3}>
+            {showImage ? (
               <Image
-                src={imageSrc}
+                src={imageSrc!}
                 alt={imageAlt}
                 fill
                 priority
                 sizes="(min-width: 48rem) 50vw, 100vw"
                 className="object-cover"
-                unoptimized={isSvg}
               />
-            ) : null}
-
-            {imageCaption ? (
-              <div className="absolute inset-x-0 bottom-0 m-3 rounded-xl border border-border bg-background/80 p-3 backdrop-blur">
+            ) : imageCaption ? (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 p-6 text-center">
                 <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                   {imageCaption.title}
                 </p>
-                <div className="mt-1 flex flex-col gap-0.5">
-                  {imageCaption.lines.map((line) => (
-                    <p key={line} className="text-sm text-foreground">
-                      {line}
-                    </p>
-                  ))}
-                </div>
+                {imageCaption.lines.map((line) => (
+                  <p key={line} className="text-sm text-muted-foreground">
+                    {line}
+                  </p>
+                ))}
               </div>
             ) : null}
           </AspectRatio>

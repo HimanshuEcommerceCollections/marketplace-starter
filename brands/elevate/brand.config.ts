@@ -4,6 +4,7 @@ export const elevateConfig: BrandConfig = {
   id: "elevate",
   name: "Elevate Health & Wellness",
   shortName: "Elevate",
+  logoSublabel: "Health & Wellness",
   tagline: "Personalized wellness, training, and recovery.",
   contactEmail: "hello@example.com",
   contactPhone: "+1 (555) 010-0100",

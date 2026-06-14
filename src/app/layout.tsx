@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fraunces, Inter } from "next/font/google";
 import "@/styles/globals.css";
 
 import { getActiveBrandId } from "@/lib/brand/registry";
@@ -11,6 +12,17 @@ import { JsonLd } from "@/lib/seo/json-ld";
 import { organization } from "@/lib/seo/jsonld";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  display: "swap",
+});
 
 export function generateMetadata(): Metadata {
   const brand = getBrandConfig();
@@ -41,12 +53,18 @@ export default function RootLayout({
   });
 
   return (
-    <html lang={config.locale} data-brand={brandId} suppressHydrationWarning>
+    <html
+      lang={config.locale}
+      data-brand={brandId}
+      className={`${inter.variable} ${fraunces.variable}`}
+      suppressHydrationWarning
+    >
       <body className="flex min-h-screen flex-col">
         <Providers config={config} content={content}>
           <PageViewTracker />
           <Navbar
             brandName={config.shortName}
+            logoSublabel={config.logoSublabel}
             cta={{ label: "Book Now", href: "/book" }}
           />
           <main className="flex-1">{children}</main>

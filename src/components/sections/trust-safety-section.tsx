@@ -35,16 +35,13 @@ export function TrustSafetySection({
           ) : null}
         </div>
 
-        <ul
-          role="list"
-          className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8"
-        >
+        <ul role="list" className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
           {items.map((item) => {
             const Icon = getIcon(item.icon);
             return (
               <li key={item.title}>
-                <Card className="flex h-full flex-col items-start gap-4 rounded-xl p-6">
-                  <span className="inline-flex items-center justify-center rounded-lg bg-primary/10 p-2.5 text-primary">
+                <Card className="flex h-full flex-col items-center gap-4 rounded-xl p-8 text-center">
+                  <span className="inline-flex size-14 items-center justify-center rounded-full border border-border bg-background text-primary">
                     <Icon className="size-6" strokeWidth={1.75} aria-hidden />
                   </span>
                   <h3 className="font-heading text-lg font-semibold text-foreground">
