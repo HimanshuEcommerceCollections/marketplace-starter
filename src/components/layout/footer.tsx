@@ -20,10 +20,10 @@ const SOCIALS = [
 export function Footer({ brandName, tagline, columns, legalLinks }: FooterProps) {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-surface-inverse text-surface-inverse-foreground">
+    <footer className="footer bg-surface-inverse text-surface-inverse-foreground">
       <Container className="py-12">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5">
-          <div className="sm:col-span-2 lg:col-span-1">
+        <div className="footer-inner grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="footer-logo-row sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2">
               <span
                 aria-hidden
@@ -40,7 +40,7 @@ export function Footer({ brandName, tagline, columns, legalLinks }: FooterProps)
             ) : null}
           </div>
           {columns.map((col) => (
-            <div key={col.heading}>
+            <div key={col.heading} className="footer-link-group">
               <h2 className="text-sm font-semibold">{col.heading}</h2>
               <ul className="mt-3 space-y-2">
                 {col.links.map((link) => (
@@ -58,11 +58,11 @@ export function Footer({ brandName, tagline, columns, legalLinks }: FooterProps)
           ))}
         </div>
 
-        <div className="my-8 border-t border-surface-inverse-foreground/15" />
+        <div className="footer-divider my-8 border-t border-surface-inverse-foreground/15" />
 
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="footer-bottom-bar flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-4">
-            <p className="text-xs text-surface-inverse-foreground/70">
+            <p className="footer-copyright text-xs text-surface-inverse-foreground/70">
               © {year} {brandName}
             </p>
             <ul className="flex flex-wrap gap-3">
