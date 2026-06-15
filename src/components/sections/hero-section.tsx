@@ -32,30 +32,30 @@ export function HeroSection({
   const showImage = !!imageSrc && !imageSrc.toLowerCase().endsWith(".svg");
 
   return (
-    <section aria-labelledby="hero-heading" className="py-16 md:py-20 lg:py-28">
+    <section aria-labelledby="hero-heading" className="hero-section py-16 md:py-20 lg:py-28">
       <Container className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
-        <div className="order-2 flex flex-col gap-6 lg:order-1">
+        <div className="hero-content order-2 flex flex-col gap-6 lg:order-1">
           <div className="flex flex-col gap-4">
             {eyebrow ? (
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              <p className="hero-eyebrow text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 {eyebrow}
               </p>
             ) : null}
             <h1
               id="hero-heading"
-              className="font-heading text-4xl font-semibold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl"
+              className="hero-headline font-heading text-4xl font-semibold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl"
             >
               {title}
             </h1>
             {subtitle ? (
-              <p className="max-w-prose text-lg leading-relaxed text-muted-foreground">
+              <p className="hero-body max-w-prose text-lg leading-relaxed text-muted-foreground">
                 {subtitle}
               </p>
             ) : null}
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button asChild size="lg" className="w-full sm:w-auto">
+          <div className="hero-cta-group flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg" className="btn-primary w-full sm:w-auto">
               <Link href={primaryCta.href}>{primaryCta.label}</Link>
             </Button>
             {secondaryCta ? (
@@ -63,7 +63,7 @@ export function HeroSection({
                 asChild
                 size="lg"
                 variant="outline"
-                className="w-full sm:w-auto"
+                className="btn-secondary w-full sm:w-auto"
               >
                 <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
               </Button>
@@ -71,7 +71,7 @@ export function HeroSection({
           </div>
 
           {trustIndicators.length > 0 ? (
-            <ul className="flex flex-wrap gap-2">
+            <ul className="hero-trust-badges flex flex-wrap gap-2">
               {trustIndicators.map((item) => (
                 <li
                   key={item}
@@ -90,7 +90,7 @@ export function HeroSection({
           ) : null}
         </div>
 
-        <div className="relative order-1 overflow-hidden rounded-2xl border border-border bg-muted shadow-sm lg:order-2">
+        <div className="hero-image-container relative order-1 overflow-hidden rounded-2xl border border-border bg-muted shadow-sm lg:order-2">
           <AspectRatio ratio={4 / 3}>
             {showImage ? (
               <Image
