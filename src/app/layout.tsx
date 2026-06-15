@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Lora, Inter } from "next/font/google";
 import "@/styles/globals.css";
 
 import { getActiveBrandId } from "@/lib/brand/registry";
@@ -18,9 +18,9 @@ const inter = Inter({
   variable: "--font-inter",
   display: "swap",
 });
-const fraunces = Fraunces({
+const lora = Lora({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  variable: "--font-lora",
   display: "swap",
 });
 
@@ -56,7 +56,7 @@ export default function RootLayout({
     <html
       lang={config.locale}
       data-brand={brandId}
-      className={`${inter.variable} ${fraunces.variable}`}
+      className={`${inter.variable} ${lora.variable}`}
       suppressHydrationWarning
     >
       <body className="flex min-h-screen flex-col">
