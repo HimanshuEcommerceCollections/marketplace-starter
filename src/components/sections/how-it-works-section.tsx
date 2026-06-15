@@ -20,7 +20,7 @@ export function HowItWorksSection({
     <section
       id="how-it-works"
       aria-labelledby="how-it-works-heading"
-      className="how-it-works-section py-16 md:py-20 lg:py-28"
+      className="py-16 md:py-20 lg:py-28"
     >
       <Container>
         <div className="mx-auto mb-12 max-w-2xl text-center md:mb-16">
@@ -37,7 +37,7 @@ export function HowItWorksSection({
           ) : null}
         </div>
 
-        <ol className="steps-row flex flex-col md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-12 lg:grid-cols-6 lg:gap-x-0">
+        <ol className="flex flex-col md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-12 lg:grid-cols-6 lg:gap-x-0">
           {steps.map((step, index) => {
             const isLast = index === steps.length - 1;
             const number = String(index + 1).padStart(2, "0");
@@ -45,7 +45,7 @@ export function HowItWorksSection({
             return (
               <li
                 key={step.title}
-                className="timeline-step relative flex gap-4 pb-10 last:pb-0 md:flex-col md:items-center md:gap-4 md:pb-0 md:text-center lg:px-4"
+                className="relative flex gap-4 pb-10 last:pb-0 md:flex-col md:items-center md:gap-4 md:pb-0 md:text-center lg:px-4"
               >
                 {!isLast ? (
                   <>
@@ -55,7 +55,7 @@ export function HowItWorksSection({
                     />
                     <span
                       aria-hidden
-                      className="step-connector absolute left-1/2 top-7 hidden h-px w-full -translate-y-1/2 bg-border lg:block"
+                      className="absolute left-1/2 top-7 hidden h-px w-full -translate-y-1/2 bg-border lg:block"
                     />
                   </>
                 ) : null}

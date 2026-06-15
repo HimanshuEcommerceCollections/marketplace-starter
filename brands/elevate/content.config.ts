@@ -95,15 +95,15 @@ export const elevateContent: BrandContent = {
         id: "t1",
         quote:
           "I was nervous about having someone come to my home, but the vetting process gave me real confidence. The session was seamless.",
-        author: "Wake Forest, NC",
-        role: "Massage",
+        author: "A.M.",
+        role: "Massage — 90 min",
         isSample: true,
       },
       {
         id: "t2",
         quote:
           "My trainer adapts every session to what I actually need that day. It has completely changed how I think about fitness.",
-        author: "Raleigh, NC",
+        author: "D.K.",
         role: "Personal Training",
         isSample: true,
       },
@@ -111,8 +111,8 @@ export const elevateContent: BrandContent = {
         id: "t3",
         quote:
           "I have tried other in-home services before. Elevate is different — it feels curated, not just convenient.",
-        author: "Cary, NC",
-        role: "Yoga",
+        author: "R.T.",
+        role: "Massage — Swedish",
         isSample: true,
       },
     ],

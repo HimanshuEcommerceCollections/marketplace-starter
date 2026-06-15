@@ -23,7 +23,7 @@ export function CorporateSection({
     <section
       id="corporate"
       aria-labelledby="corporate-heading"
-      className="corporate-section bg-surface-inverse text-surface-inverse-foreground"
+      className="bg-surface-inverse text-surface-inverse-foreground"
     >
       <Container className="py-16 text-center md:py-20 lg:py-28">
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-6">
@@ -34,18 +34,18 @@ export function CorporateSection({
           ) : null}
           <h2
             id="corporate-heading"
-            className="corporate-title font-heading text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl"
+            className="font-heading text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl"
           >
             {title}
           </h2>
           {body ? (
-            <p className="corporate-body text-lg leading-relaxed text-surface-inverse-foreground/80">
+            <p className="text-lg leading-relaxed text-surface-inverse-foreground/80">
               {body}
             </p>
           ) : null}
 
           {tags.length > 0 ? (
-            <ul className="corporate-benefits-row flex flex-wrap justify-center gap-2">
+            <ul className="flex flex-wrap justify-center gap-2">
               {tags.map((tag) => (
                 <li
                   key={tag}

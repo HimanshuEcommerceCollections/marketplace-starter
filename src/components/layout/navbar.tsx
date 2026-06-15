@@ -59,9 +59,9 @@ export function Navbar({
         <div
           role="region"
           aria-label="Draft experience notice"
-          className="demo-banner bg-secondary px-4 py-1.5 text-center text-xs font-medium text-secondary-foreground"
+          className="bg-secondary px-4 py-1.5 text-center text-xs font-medium text-secondary-foreground"
         >
-          <span className="demo-banner-text">{DRAFT_NOTICE}</span>
+          {DRAFT_NOTICE}
         </div>
       ) : null}
 
@@ -69,7 +69,7 @@ export function Navbar({
         <Container
           as="nav"
           aria-label="Primary"
-          className="nav-bar grid h-16 grid-cols-[1fr_auto_1fr] items-center gap-4"
+          className="grid h-16 grid-cols-[1fr_auto_1fr] items-center gap-4"
         >
           <div className="col-start-1 flex min-w-0 items-center justify-self-start">
             <Link
@@ -79,16 +79,16 @@ export function Navbar({
             >
               <span
                 aria-hidden
-                className="nav-logo-mark inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground"
+                className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground"
               >
                 {brandName.charAt(0)}
               </span>
               <span className="flex min-w-0 flex-col leading-tight">
-                <span className="nav-logo-name truncate font-heading text-base font-semibold uppercase tracking-wide text-foreground">
+                <span className="truncate font-heading text-base font-semibold uppercase tracking-wide text-foreground">
                   {brandName}
                 </span>
                 {logoSublabel ? (
-                  <span className="nav-logo-sub truncate text-xs font-medium text-muted-foreground">
+                  <span className="truncate text-xs font-medium text-muted-foreground">
                     {logoSublabel}
                   </span>
                 ) : null}
@@ -96,7 +96,7 @@ export function Navbar({
             </Link>
           </div>
 
-          <ul className="nav-links col-start-2 hidden items-center justify-center gap-1 lg:flex">
+          <ul className="col-start-2 hidden items-center justify-center gap-1 lg:flex">
             {NAV_ITEMS.map((link) => (
               <li key={link.href}>
                 <Link
@@ -109,8 +109,8 @@ export function Navbar({
             ))}
           </ul>
 
-          <div className="nav-right-group col-start-3 flex items-center justify-end gap-2 justify-self-end">
-            <Button asChild size="sm" className="nav-book-btn hidden md:inline-flex">
+          <div className="col-start-3 flex items-center justify-end gap-2 justify-self-end">
+            <Button asChild size="sm" className="hidden md:inline-flex">
               <Link href={cta.href} onClick={closeMenu}>
                 {cta.label}
               </Link>
@@ -119,7 +119,7 @@ export function Navbar({
               type="button"
               variant="ghost"
               size="icon"
-              className="nav-hamburger lg:hidden"
+              className="lg:hidden"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
               aria-controls="mobile-menu"

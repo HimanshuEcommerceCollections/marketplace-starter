@@ -24,7 +24,7 @@ export function ServicesGridSection({
     <section
       id="services"
       aria-labelledby="services-heading"
-      className="services-section bg-muted py-16 md:py-20 lg:py-28"
+      className="bg-muted py-16 md:py-20 lg:py-28"
     >
       <Container>
         <div className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
@@ -48,12 +48,12 @@ export function ServicesGridSection({
 
         <ul
           role="list"
-          className="services-grid grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
         >
           {services.map((service) => {
             const Icon = getIcon(service.icon);
             return (
-              <li key={service.id} className={service.coming_soon ? "service-card-coming-soon" : "service-card"}>
+              <li key={service.id}>
                 <Card className="flex h-full flex-col gap-3 rounded-xl p-6">
                   <div className="flex items-center justify-between gap-2">
                     <span className="inline-flex items-center justify-center rounded-lg bg-primary/10 p-2.5 text-primary">

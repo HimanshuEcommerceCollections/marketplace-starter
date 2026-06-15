@@ -4,7 +4,7 @@
    later without touching components. */
 [data-brand="elevate"] {
   --brand-font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --brand-font-heading: var(--font-lora), Georgia, serif;
+  --brand-font-heading: var(--font-fraunces), Georgia, serif;
   --radius: 0.875rem;
 
   /* surfaces — warm cream / warm white */

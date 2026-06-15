@@ -22,7 +22,7 @@ export function FinalCtaSection({
   return (
     <section
       aria-labelledby="final-cta-heading"
-      className="final-cta-section bg-surface-brand text-surface-brand-foreground"
+      className="bg-surface-brand text-surface-brand-foreground"
     >
       <Container className="py-16 text-center md:py-20 lg:py-28">
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-6">
@@ -33,17 +33,17 @@ export function FinalCtaSection({
           ) : null}
           <h2
             id="final-cta-heading"
-            className="final-cta-title font-heading text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl"
+            className="font-heading text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl"
           >
             {title}
           </h2>
           {body ? (
-            <p className="final-cta-body text-lg leading-relaxed text-surface-brand-foreground/85">
+            <p className="text-lg leading-relaxed text-surface-brand-foreground/85">
               {body}
             </p>
           ) : null}
 
-          <div className="final-cta-buttons mt-2 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+          <div className="mt-2 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
             <Button
               asChild
               size="lg"
