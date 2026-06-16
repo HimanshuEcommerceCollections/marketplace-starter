@@ -7,18 +7,25 @@ import {
   useBookingDraft,
   buildBookingRequest,
   toConfiguration,
+  selectionSummary,
+  addOnsSummary,
+  formatWindowLabel,
   WIZARD_STEPS,
 } from "./booking-provider";
-import { WizardStepper } from "./wizard-stepper";
+import { BookingStepLayout } from "./booking-step-layout";
+import { BookingSummaryCard } from "./booking-summary-card";
+import { RequestSummaryCard } from "./request-summary-card";
 import { WizardStepConfig } from "./wizard-step-config";
-import { WizardStepSchedule } from "./wizard-step-schedule";
-import { WizardStepContact } from "./wizard-step-contact";
+import { WizardStepPricing } from "./wizard-step-pricing";
+import { WizardStepDetails } from "./wizard-step-details";
 import { WizardStepReview } from "./wizard-step-review";
 import { BookingSuccessScreen } from "./booking-success-screen";
+import { formatMoney } from "@/lib/money";
+import type { WizardStep } from "./booking-provider";
+import { ArrowRight } from "lucide-react";
 import { analytics } from "@/lib/analytics/analytics";
 import { computePrice } from "@/lib/pricing/engine";
-import { validateForm, type FieldErrors } from "@/lib/forms/validate";
-import { ContactSchema } from "@/lib/booking/contract.schema";
+import type { FieldErrors } from "@/lib/forms/validate";
 import type { Service } from "@/lib/catalog/types";
 import type { PricingTable } from "@/lib/pricing/types";
 import type { BrandId } from "@/lib/brand/registry";
@@ -41,10 +48,30 @@ export function BookingWizard(props: BookingWizardProps) {
   );
 }
 
+/** Map the wizard's internal steps onto the 6-step booking flow indicator. */
+const FLOW_INDEX: Record<WizardStep, number> = {
+  config: 1, // Configure
+  pricing: 2, // Pricing
+  details: 3, // Details
+  review: 4, // Confirm
+  success: 5, // Done
+};
+
+const STEP_HEADING: Record<WizardStep, string> = {
+  config: "Configure Your Session",
+  pricing: "Review Your Pricing",
+  details: "Your Details",
+  review: "Review & Confirm",
+  success: "Done",
+};
+
+const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
 function WizardInner() {
   const ctx = useBookingDraft();
   const { state, dispatch, service, pricing } = ctx;
-  const [contactErrors, setContactErrors] = React.useState<FieldErrors>();
+  const [fieldErrors, setFieldErrors] = React.useState<FieldErrors>();
+  const [consent, setConsent] = React.useState(false);
   const stepRef = React.useRef<HTMLDivElement>(null);
   const index = WIZARD_STEPS.indexOf(state.step);
 
@@ -73,26 +100,31 @@ function WizardInner() {
           displayed_price: breakdown.total.amount,
           currency: breakdown.total.currency,
         });
-        dispatch({ type: "SET_STEP", step: "schedule" });
+        dispatch({ type: "SET_STEP", step: "pricing" });
         return;
       }
-      case "schedule": {
+      case "pricing": {
         analytics.bookStart({
           service_id: service.id,
           service_type: service.service_type,
           step: index,
         });
-        dispatch({ type: "SET_STEP", step: "contact" });
+        dispatch({ type: "SET_STEP", step: "details" });
         return;
       }
-      case "contact": {
-        const result = validateForm(ContactSchema, state.contact);
-        if (!result.success) {
-          setContactErrors(result.errors);
+      case "details": {
+        const errs: FieldErrors = {};
+        if (!state.firstName.trim()) errs.firstName = ["First name is required"];
+        if (!state.lastName.trim()) errs.lastName = ["Last name is required"];
+        if (!EMAIL_RE.test(state.email)) errs.email = ["Enter a valid email"];
+        if (!state.windows[0]?.date)
+          errs.window1 = ["Select a date for your first window"];
+        if (Object.keys(errs).length > 0) {
+          setFieldErrors(errs);
           stepRef.current?.focus();
           return;
         }
-        setContactErrors(undefined);
+        setFieldErrors(undefined);
         dispatch({ type: "SET_STEP", step: "review" });
         return;
       }
@@ -119,19 +151,72 @@ function WizardInner() {
     dispatch({ type: "SUBMIT_OK", request });
   }
 
-  if (state.step === "success") {
-    return <BookingSuccessScreen request={state.request} />;
-  }
+  const isConfig = state.step === "config";
+  const isPricing = state.step === "pricing";
+  const isDetails = state.step === "details";
+  const isReview = state.step === "review";
+  const isSuccess = state.step === "success";
+  const primaryStep = isConfig || isPricing || isDetails;
+  const showSummary = primaryStep || isReview;
+  const breakdown = computePrice(pricing, toConfiguration(state, service));
+  const baseLabel = selectionSummary(service, state.selections);
+
+  const PRIMARY_CTA: Partial<Record<WizardStep, string>> = {
+    config: "See Pricing",
+    pricing: "Continue to Details",
+    details: "Review & Confirm",
+  };
+
+  const DESCRIPTION: Partial<Record<WizardStep, string>> = {
+    details: "Enter your contact information and preferred scheduling windows.",
+    review:
+      "Please review your booking request before submitting. A coordinator will confirm all details.",
+  };
+
+  const summaryNode = isReview ? (
+    <RequestSummaryCard
+      serviceTitle={service.title}
+      session={baseLabel}
+      addOns={addOnsSummary(service, state.selections)}
+      schedule={formatWindowLabel(state.windows[0])}
+      total={`From ${formatMoney(breakdown.total).replace(/\.00$/, "")}`}
+    />
+  ) : (
+    <BookingSummaryCard
+      serviceTitle={service.title}
+      baseLabel={baseLabel || undefined}
+      breakdown={breakdown}
+      onSeePricing={goNext}
+      condensed={isDetails}
+    />
+  );
 
   return (
-    <div className="space-y-8">
-      <WizardStepper step={state.step} />
-
-      {contactErrors && Object.keys(contactErrors).length > 0 ? (
+    <BookingStepLayout
+      currentStepIndex={FLOW_INDEX[state.step]}
+      complete={isSuccess}
+      centered={isSuccess}
+      service={{ title: service.title, icon: service.icon }}
+      heading={isSuccess ? undefined : STEP_HEADING[state.step]}
+      description={DESCRIPTION[state.step]}
+      showServiceIdentity={isConfig}
+      back={
+        isConfig
+          ? { label: "Back to Services", href: "/book" }
+          : isPricing
+            ? { label: "Edit Configuration", onBack: goBack }
+            : isReview
+              ? { label: "Back to Details", onBack: goBack }
+              : undefined
+      }
+      summaryMobile={isConfig}
+      summary={showSummary ? summaryNode : undefined}
+    >
+      {fieldErrors && Object.keys(fieldErrors).length > 0 ? (
         <div
           role="alert"
           aria-live="assertive"
-          className="rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive"
+          className="mb-6 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive"
         >
           Please fix the highlighted fields before continuing.
         </div>
@@ -139,36 +224,57 @@ function WizardInner() {
 
       <div ref={stepRef} tabIndex={-1} className="outline-none">
         {state.step === "config" ? <WizardStepConfig /> : null}
-        {state.step === "schedule" ? <WizardStepSchedule /> : null}
-        {state.step === "contact" ? (
-          <WizardStepContact errors={contactErrors} />
+        {state.step === "pricing" ? <WizardStepPricing /> : null}
+        {state.step === "details" ? (
+          <WizardStepDetails errors={fieldErrors} />
         ) : null}
         {state.step === "review" ? <WizardStepReview /> : null}
+        {state.step === "success" ? (
+          <BookingSuccessScreen request={state.request} />
+        ) : null}
       </div>
 
-      <div className="flex items-center justify-between gap-3 border-t border-border pt-6">
+      {primaryStep ? (
         <Button
           type="button"
-          variant="ghost"
-          onClick={goBack}
-          disabled={index === 0}
+          size="lg"
+          onClick={goNext}
+          className="mt-8 w-full bg-highlight text-highlight-foreground hover:bg-highlight/90"
         >
-          Back
+          {PRIMARY_CTA[state.step]}
+          <ArrowRight aria-hidden />
         </Button>
-        {state.step === "review" ? (
+      ) : isReview ? (
+        <div className="mt-8 space-y-4">
+          <label className="flex items-start gap-3 rounded-xl bg-muted p-4 text-sm text-foreground">
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              className="mt-0.5 size-4 shrink-0 accent-primary"
+            />
+            <span>
+              I understand that a coordinator will confirm this booking request
+              before it is finalized. This is a request, not a confirmed booking.
+            </span>
+          </label>
           <Button
             type="button"
+            size="lg"
             onClick={submit}
-            disabled={state.status === "submitting"}
+            disabled={!consent || state.status === "submitting"}
+            className="w-full bg-highlight text-highlight-foreground hover:bg-highlight/90"
           >
-            Submit booking
+            {consent
+              ? "Submit Booking Request"
+              : "Submit Booking Request (Check box above to enable)"}
           </Button>
-        ) : (
-          <Button type="button" onClick={goNext}>
-            Continue
-          </Button>
-        )}
-      </div>
-    </div>
+          <p className="text-xs text-muted-foreground">
+            DRAFT EXPERIENCE — This request will be reviewed by a coordinator.
+            Pricing and availability subject to confirmation.
+          </p>
+        </div>
+      ) : null}
+    </BookingStepLayout>
   );
 }

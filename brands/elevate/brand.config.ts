@@ -8,6 +8,8 @@ export const elevateConfig: BrandConfig = {
   tagline: "Personalized wellness, training, and recovery.",
   contactEmail: "hello@example.com",
   contactPhone: "+1 (555) 010-0100",
+  serviceArea: "Raleigh, NC",
+  bookingPrefix: "ELV",
   locale: "en-US",
   currency: "USD",
   nav: [

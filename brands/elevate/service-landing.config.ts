@@ -310,4 +310,112 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
       },
     ],
   },
+
+  /* ───────────────────────────────── Yoga ──────────────────────────── */
+  yoga: {
+    slug: "yoga",
+    hero: {
+      variant: "light",
+      eyebrow: "Yoga",
+      title: "In-Home Yoga",
+      subtitle:
+        "Personalized yoga sessions delivered to your home by vetted independent professionals.",
+      primaryCta: { label: "Book Yoga", href: "/book?service=yoga" },
+      secondaryCta: { label: "How It Works", href: "#how-it-works" },
+      image: {
+        gradient: true,
+        caption: {
+          title: "Instructor guiding a session inside a real residential home",
+          lines: ["Calm · Natural light · One-on-one"],
+        },
+      },
+    },
+    sections: [
+      {
+        type: "cards",
+        variant: "stacked",
+        columns: 4,
+        items: [
+          { icon: "Sparkles", title: "Beginners", description: "No prior experience required. Your instructor guides every movement and builds from the ground up." },
+          { icon: "PersonStanding", title: "Flexibility & Mobility", description: "Targeted practices to open up tight areas, improve range of motion, and support your daily movement." },
+          { icon: "HeartPulse", title: "Stress Management", description: "Structured breathing and mindful movement to help you decompress and reset after a long day." },
+          { icon: "TrendingUp", title: "Ongoing Practice", description: "Regular sessions with the same professional to deepen your practice and track real progress over time." },
+        ],
+      },
+      {
+        type: "cards",
+        variant: "stacked",
+        surface: "muted",
+        heading: "Find the practice that fits you",
+        subheading: "Your sessions adapt to your goals — the exact focus is configured during booking.",
+        columns: 4,
+        items: [
+          { icon: "Flower2", title: "Gentle Flow", description: "Slow, connected movement sequences designed to build warmth and ease in the body." },
+          { icon: "Activity", title: "Mobility Focus", description: "Targeted work on specific areas — hips, shoulders, spine — to restore function and freedom of movement." },
+          { icon: "Star", title: "Beginner Sessions", description: "A welcoming introduction to yoga fundamentals, terminology, and foundational postures." },
+          { icon: "Compass", title: "General Wellness", description: "A balanced mix of movement, breath, and rest tailored to how you feel on a given day." },
+        ],
+      },
+      {
+        type: "cards",
+        variant: "stacked",
+        heading: "Why practice at home?",
+        subheading: "Your home is the calmest studio you'll ever roll out a mat in.",
+        columns: 4,
+        items: [
+          { icon: "Car", title: "No Travel Required", description: "Your session starts the moment your instructor arrives. No commute, no parking, no rushing." },
+          { icon: "Home", title: "Comfortable Environment", description: "Practice in your own space where you feel most at ease — floor, mat, or however you prefer." },
+          { icon: "CalendarDays", title: "Flexible Scheduling", description: "Early morning, midday, or evening — sessions adapt to your calendar, not the other way around." },
+          { icon: "Target", title: "Personalized Attention", description: "Every session is entirely yours. Your instructor watches only you and adjusts in real time." },
+        ],
+      },
+      {
+        type: "processCards",
+        surface: "muted",
+        columns: 4,
+        steps: [
+          { title: "Submit Request", description: "Tell us about your experience level, goals, and when you'd like to practice through our quick intake form." },
+          { title: "Coordinator Review", description: "Our team reviews your request to understand what kind of instructor will serve you best." },
+          { title: "Professional Match", description: "We identify an independent instructor whose background and style aligns with your specific needs." },
+          { title: "Schedule Confirmation", description: "You confirm availability and your first session is scheduled at your home, on your terms." },
+        ],
+      },
+      {
+        type: "stepper",
+        heading: "Six steps from intent to first session.",
+        subheading: "Transparent and designed to respect your time.",
+        activeIndex: 2,
+        steps: [
+          "Pick Service",
+          "Configure",
+          "See the Price",
+          "Details + Schedule",
+          "Confirm + Submit",
+          "Success",
+        ],
+      },
+      {
+        type: "testimonials",
+        surface: "muted",
+        heading: "What clients are saying.",
+        subheading: "[Sample] testimonials — for demonstration purposes",
+        items: [
+          { id: "yoga-1", quote: "Having an instructor come to my apartment completely changed how I approach mornings. It's the one habit that's actually stuck.", author: "A.R.", role: "In-Home Yoga · Raleigh, NC", isSample: true },
+          { id: "yoga-2", quote: "I'd been intimidated by yoga for years. Working with someone in my own living room made it feel approachable from day one.", author: "M.C.", role: "In-Home Yoga · Cary, NC", isSample: true },
+          { id: "yoga-3", quote: "The matching process was easy and the instructor clearly understood what I was looking for — gentle but real.", author: "K.W.", role: "In-Home Yoga · Wake County, NC", isSample: true },
+        ],
+      },
+      {
+        type: "faq",
+        viewAll: { label: "View Full FAQ", href: "/faq" },
+      },
+      {
+        type: "cta",
+        title: "Wellness shouldn't require a commute.",
+        body: "Book your first in-home yoga session with a vetted independent professional.",
+        primaryCta: { label: "Book Yoga", href: "/book?service=yoga" },
+        secondaryCta: { label: "View Pricing", href: "/pricing" },
+      },
+    ],
+  },
 };

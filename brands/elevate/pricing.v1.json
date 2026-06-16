@@ -7,13 +7,37 @@
       "base_price": { "amount": 10900, "currency": "USD" },
       "modifiers": [
         {
-          "id": "tier",
-          "label": "Length (Sample)",
+          "id": "duration",
+          "label": "Session Duration",
           "type": "select",
           "applies": "flat",
           "options": [
-            { "id": "standard", "label": "60 minutes", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "premium", "label": "90 minutes", "delta": { "amount": 4000, "currency": "USD" } }
+            { "id": "60", "label": "60 minutes", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "90", "label": "90 minutes", "delta": { "amount": 3000, "currency": "USD" } },
+            { "id": "120", "label": "120 minutes", "delta": { "amount": 6000, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "session-type",
+          "label": "Session Type",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "swedish", "label": "Swedish (Relaxation)", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "deep-tissue", "label": "Deep Tissue", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "sports", "label": "Sports Massage", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "aromatherapy", "label": "Aromatherapy", "delta": { "amount": 0, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "add-ons",
+          "label": "Add-Ons",
+          "type": "multiselect",
+          "applies": "flat",
+          "options": [
+            { "id": "hot-stones", "label": "Hot Stones", "delta": { "amount": 2000, "currency": "USD" } },
+            { "id": "aromatherapy-oil", "label": "Aromatherapy Oil", "delta": { "amount": 1500, "currency": "USD" } },
+            { "id": "extended-focus", "label": "Extended Focus Area", "delta": { "amount": 1000, "currency": "USD" } }
           ]
         }
       ],

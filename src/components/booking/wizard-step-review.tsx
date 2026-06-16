@@ -1,61 +1,108 @@
 "use client";
 
-import { useBookingDraft, toConfiguration } from "./booking-provider";
-import { PriceSummaryCard } from "./price-summary-card";
+import {
+  useBookingDraft,
+  toConfiguration,
+  addOnsSummary,
+  formatWindowLabel,
+} from "./booking-provider";
+import { ReviewCard, ReviewRow } from "./review-card";
 import { computePrice } from "@/lib/pricing/engine";
+import { formatMoney } from "@/lib/money";
+import type { Money } from "@/lib/booking/contract";
+
+/** Whole-dollar money (e.g. "$109"); optional leading "+" for positive deltas. */
+function money(m: Money, sign = false): string {
+  const s = formatMoney(m).replace(/\.00$/, "");
+  return sign && m.amount > 0 ? `+${s}` : s;
+}
 
 export function WizardStepReview() {
-  const ctx = useBookingDraft();
-  const { state, service } = ctx;
-  const config = toConfiguration(state, service);
-  const breakdown = computePrice(ctx.pricing, config);
-
-  const selectionRows = Object.entries(state.selections).filter(
-    ([, v]) => v !== false && v !== "" && v != null,
+  const { state, dispatch, service, pricing } = useBookingDraft();
+  const breakdown = computePrice(pricing, toConfiguration(state, service));
+  const priceLines = breakdown.line_items.filter(
+    (li) => li.kind === "base" || li.amount.amount !== 0,
   );
+  const filledWindows = state.windows.filter((w) => w.date);
+  const addOns = addOnsSummary(service, state.selections);
+
+  const goTo = (step: "config" | "details") =>
+    dispatch({ type: "SET_STEP", step });
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold">Review &amp; submit</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Confirm your details. Submitting is a stub — no booking is sent.
-        </p>
-      </div>
+    <div className="space-y-5">
+      {/* Service */}
+      <ReviewCard title="Service" onEdit={() => goTo("config")}>
+        <ReviewRow label="Service" value={service.title} />
+        {service.config_options
+          .filter((o) => o.input === "select")
+          .map((o) => (
+            <ReviewRow
+              key={o.id}
+              label={o.label}
+              value={
+                o.choices?.find((c) => c.id === state.selections[o.id])?.label ??
+                "—"
+              }
+            />
+          ))}
+        {service.config_options.some((o) => o.input === "multiselect") ? (
+          <ReviewRow label="Add-ons" value={addOns || "None"} />
+        ) : null}
+      </ReviewCard>
 
-      <dl className="grid gap-2 text-sm">
-        <div className="flex justify-between gap-4">
-          <dt className="text-muted-foreground">Service</dt>
-          <dd className="font-medium">{service.title}</dd>
-        </div>
-        <div className="flex justify-between gap-4">
-          <dt className="text-muted-foreground">Quantity</dt>
-          <dd>{state.quantity}</dd>
-        </div>
-        {selectionRows.map(([k, v]) => (
-          <div key={k} className="flex justify-between gap-4">
-            <dt className="text-muted-foreground">{k}</dt>
-            <dd>{String(v)}</dd>
-          </div>
+      {/* Pricing */}
+      <ReviewCard
+        title="Pricing (DRAFT)"
+        badge={
+          <span className="inline-flex items-center rounded-md bg-muted-foreground/15 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            Draft
+          </span>
+        }
+      >
+        {priceLines.map((li, i) => (
+          <ReviewRow
+            key={`${li.label}-${i}`}
+            label={li.kind === "base" ? "Base Session" : li.label}
+            value={
+              li.kind === "base"
+                ? `${breakdown.is_estimate ? "From " : ""}${money(li.amount)}`
+                : money(li.amount, true)
+            }
+          />
         ))}
-        <div className="flex justify-between gap-4">
-          <dt className="text-muted-foreground">Preferred date</dt>
-          <dd>{state.scheduleDates[0] ?? "Flexible"}</dd>
-        </div>
-        <div className="flex justify-between gap-4">
-          <dt className="text-muted-foreground">Time window</dt>
-          <dd>{state.timeWindows[0] ?? "anytime"}</dd>
-        </div>
-        <div className="flex justify-between gap-4">
-          <dt className="text-muted-foreground">Contact</dt>
-          <dd>
-            {state.contact.name || "—"}
-            {state.contact.email ? ` · ${state.contact.email}` : ""}
-          </dd>
-        </div>
-      </dl>
+        <ReviewRow
+          label="Estimated Total"
+          emphasis
+          value={`${breakdown.is_estimate ? "From " : ""}${money(breakdown.total)}`}
+        />
+      </ReviewCard>
 
-      <PriceSummaryCard breakdown={breakdown} sample />
+      {/* Schedule */}
+      <ReviewCard title="Schedule" onEdit={() => goTo("details")}>
+        {filledWindows.length > 0 ? (
+          filledWindows.map((w, i) => (
+            <ReviewRow
+              key={i}
+              label={`Window ${i + 1}`}
+              value={formatWindowLabel(w)}
+            />
+          ))
+        ) : (
+          <ReviewRow label="Windows" value="Flexible" />
+        )}
+      </ReviewCard>
+
+      {/* Your Details */}
+      <ReviewCard title="Your Details" onEdit={() => goTo("details")}>
+        <ReviewRow
+          label="Name"
+          value={`${state.firstName} ${state.lastName}`.trim() || "—"}
+        />
+        <ReviewRow label="Email" value={state.email || "—"} />
+        <ReviewRow label="Phone" value={state.phone || "—"} />
+        <ReviewRow label="Location" value={state.address || "—"} />
+      </ReviewCard>
     </div>
   );
 }
