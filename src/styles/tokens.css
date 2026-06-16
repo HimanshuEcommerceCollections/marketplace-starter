@@ -46,6 +46,7 @@
   --surface-inverse-foreground: var(--background);
   --surface-brand: var(--primary); /* brand-tinted band (final CTA) */
   --surface-brand-foreground: var(--primary-foreground);
+  --notice: var(--highlight); /* draft / demo notice text (brand-overridable) */
 
   /* ---- RADIUS ---- (brands override --radius base) */
   --radius: 0.625rem; /* OVERRIDDEN PER BRAND */
@@ -58,6 +59,8 @@
   /* ---- TYPOGRAPHY · families ---- (OVERRIDDEN PER BRAND via --brand-font-*) */
   --font-sans: var(--brand-font-sans, ui-sans-serif, system-ui, sans-serif);
   --font-heading: var(--brand-font-heading, var(--font-sans));
+  /* Editorial display serif (loaded via next/font as --font-lora). */
+  --font-display: var(--font-lora), Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* ---- SHADOWS / ELEVATION ---- */
@@ -118,6 +121,7 @@
   --color-surface-inverse-foreground: var(--surface-inverse-foreground);
   --color-surface-brand: var(--surface-brand);
   --color-surface-brand-foreground: var(--surface-brand-foreground);
+  --color-notice: var(--notice);
 
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
@@ -127,7 +131,15 @@
 
   --font-sans: var(--font-sans);
   --font-heading: var(--font-heading);
+  --font-display: var(--font-display);
   --font-mono: var(--font-mono);
+
+  /* Display heading size — 32px / 120% line-height (text-display utility). */
+  --text-display: 2rem;
+  --text-display--line-height: 1.2;
+
+  /* Wide letter-spacing for small uppercase labels (tracking-label utility). */
+  --tracking-label: 0.8px;
 
   --shadow-xs: var(--shadow-xs);
   --shadow-sm: var(--shadow-sm);

@@ -19,6 +19,12 @@ import {
   Car,
   Home,
   CalendarDays,
+  Clock,
+  Target,
+  MapPin,
+  Gauge,
+  PersonStanding,
+  TrendingUp,
 } from "lucide-react";
 
 /** Maps content/services icon name strings to Lucide components (data-driven). */
@@ -42,6 +48,12 @@ const ICONS: Record<string, LucideIcon> = {
   Car,
   Home,
   CalendarDays,
+  Clock,
+  Target,
+  MapPin,
+  Gauge,
+  PersonStanding,
+  TrendingUp,
 };
 
 export function getIcon(name?: string): LucideIcon {

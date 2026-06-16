@@ -1,12 +1,16 @@
 import { Container } from "@/components/layout/container";
 import { Card } from "@/components/ui/card";
 import { SampleBadge } from "@/components/shared/sample-badge";
+import { cn } from "@/lib/utils";
 import type { TestimonialItem } from "@/lib/brand/types";
+import type { Surface } from "@/lib/services/landing";
 
 export interface TestimonialsSectionProps {
   heading?: string;
   subheading?: string;
   items: TestimonialItem[];
+  /** Background. Defaults to "muted" (homepage look). */
+  surface?: Surface;
 }
 
 /**
@@ -17,11 +21,15 @@ export function TestimonialsSection({
   heading,
   subheading,
   items,
+  surface = "muted",
 }: TestimonialsSectionProps) {
   return (
     <section
       aria-labelledby="testimonials-heading"
-      className="bg-muted py-16 md:py-20 lg:py-28"
+      className={cn(
+        "py-16 md:py-20 lg:py-28",
+        surface === "muted" && "bg-muted",
+      )}
     >
       <Container>
         <div className="mx-auto mb-12 max-w-2xl text-center md:mb-16">

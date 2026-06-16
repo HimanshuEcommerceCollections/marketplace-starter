@@ -19,7 +19,10 @@ export default function HomePage() {
       <HeroSection {...content.hero} />
 
       {content.trustProcess ? (
-        <TrustSafetySection {...content.trustProcess} />
+        <TrustSafetySection
+          {...content.trustProcess}
+          headingClassName="font-display text-display font-bold text-foreground"
+        />
       ) : null}
 
       {content.servicesSection ? (

@@ -3,16 +3,20 @@
 import * as React from "react";
 import Link from "next/link";
 import { Container } from "@/components/layout/container";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { getIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
-import type { ConfiguratorGroup } from "@/lib/services/landing";
+import type { ConfiguratorGroup, Surface } from "@/lib/services/landing";
 import type { NavItem } from "@/lib/brand/types";
 
 export interface SessionConfiguratorSectionProps {
+  variant?: "interactive" | "preview";
   heading?: string;
   subheading?: string;
   groups: ConfiguratorGroup[];
   cta?: NavItem;
+  surface?: Surface;
 }
 
 const GRID_COLS: Record<number, string> = {
@@ -21,6 +25,10 @@ const GRID_COLS: Record<number, string> = {
   3: "sm:grid-cols-2 lg:grid-cols-3",
   4: "sm:grid-cols-2 lg:grid-cols-4",
 };
+
+function optionText(label: string, note?: string) {
+  return note ? `${label} (${note})` : label;
+}
 
 function Pill({
   label,
@@ -48,23 +56,54 @@ function Pill({
   );
 }
 
-function optionText(label: string, note?: string) {
-  return note ? `${label} (${note})` : label;
+/** Static preview — one card per group, options as a bulleted list. */
+function PreviewGroups({ groups }: { groups: ConfiguratorGroup[] }) {
+  return (
+    <div
+      className={cn(
+        "grid grid-cols-1 gap-6 lg:gap-8",
+        GRID_COLS[Math.min(groups.length, 4)],
+      )}
+    >
+      {groups.map((group) => {
+        const Icon = getIcon(group.icon);
+        return (
+          <Card
+            key={group.id}
+            className="flex h-full flex-col gap-4 rounded-xl bg-card p-6"
+          >
+            <p className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <span className="text-primary">
+                <Icon className="size-4" strokeWidth={1.75} aria-hidden />
+              </span>
+              {group.label}
+            </p>
+            <ul className="flex flex-col gap-2.5">
+              {group.options.map((option) => (
+                <li
+                  key={option.id}
+                  className="flex items-center gap-2 text-sm text-muted-foreground"
+                >
+                  <span
+                    aria-hidden
+                    className="size-1.5 shrink-0 rounded-full bg-primary/50"
+                  />
+                  {optionText(option.label, option.note)}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-auto border-t border-border pt-3 text-xs text-muted-foreground/80">
+              Configured during booking
+            </p>
+          </Card>
+        );
+      })}
+    </div>
+  );
 }
 
-/**
- * Session Configurator Preview — interactive option preview before booking.
- * Client component, token-only, fully data-driven via `groups`. No API calls;
- * selections are local state only.
- * Desktop: up to 4 columns · Tablet: 2 columns · Mobile: single-column.
- */
-export function SessionConfiguratorSection({
-  heading = "Configure your session",
-  subheading = "Exact pricing updates live in the booking flow. This is a preview of available options.",
-  groups,
-  cta,
-}: SessionConfiguratorSectionProps) {
-  // Initialise selections: single -> default/first option id; multi -> [].
+/** Interactive preview — one big card containing togglable option pills. */
+function InteractiveGroups({ groups }: { groups: ConfiguratorGroup[] }) {
   const [selections, setSelections] = React.useState<
     Record<string, string | string[]>
   >(() =>
@@ -102,9 +141,63 @@ export function SessionConfiguratorSection({
   };
 
   return (
+    <div className="mx-auto max-w-4xl rounded-2xl border border-border bg-muted p-8 shadow-sm md:p-10">
+      <div
+        className={cn(
+          "grid grid-cols-1 gap-8 lg:gap-10",
+          GRID_COLS[Math.min(groups.length, 4)],
+        )}
+      >
+        {groups.map((group) => (
+          <div key={group.id} role="group" aria-labelledby={`config-${group.id}`}>
+            <p
+              id={`config-${group.id}`}
+              className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground"
+            >
+              {group.label}
+            </p>
+            <div className="flex flex-col gap-2">
+              {group.options.map((option) => (
+                <Pill
+                  key={option.id}
+                  label={optionText(option.label, option.note)}
+                  selected={isSelected(group, option.id)}
+                  onToggle={() =>
+                    group.type === "single"
+                      ? setSingle(group.id, option.id)
+                      : toggleMulti(group.id, option.id)
+                  }
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Session Configurator. Data-driven via `groups`. No API calls.
+ * - "interactive": togglable pills in one card (+ optional CTA).
+ * - "preview": static per-group cards listing options.
+ * Desktop: up to 4 columns · Tablet: 2 columns · Mobile: single-column.
+ */
+export function SessionConfiguratorSection({
+  variant = "interactive",
+  heading = "Configure your session",
+  subheading = "Exact pricing updates live in the booking flow. This is a preview of available options.",
+  groups,
+  cta,
+  surface = "default",
+}: SessionConfiguratorSectionProps) {
+  return (
     <section
       aria-labelledby="configurator-heading"
-      className="py-16 md:py-20 lg:py-28"
+      className={cn(
+        "py-16 md:py-20 lg:py-28",
+        surface === "muted" && "bg-muted",
+      )}
     >
       <Container>
         <div className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
@@ -121,43 +214,11 @@ export function SessionConfiguratorSection({
           ) : null}
         </div>
 
-        <div className="mx-auto max-w-4xl rounded-2xl border border-border bg-muted p-8 shadow-sm md:p-10">
-          <div
-            className={cn(
-              "grid grid-cols-1 gap-8 lg:gap-10",
-              GRID_COLS[Math.min(groups.length, 4)],
-            )}
-          >
-            {groups.map((group) => (
-              <div
-                key={group.id}
-                role="group"
-                aria-labelledby={`config-${group.id}`}
-              >
-                <p
-                  id={`config-${group.id}`}
-                  className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground"
-                >
-                  {group.label}
-                </p>
-                <div className="flex flex-col gap-2">
-                  {group.options.map((option) => (
-                    <Pill
-                      key={option.id}
-                      label={optionText(option.label, option.note)}
-                      selected={isSelected(group, option.id)}
-                      onToggle={() =>
-                        group.type === "single"
-                          ? setSingle(group.id, option.id)
-                          : toggleMulti(group.id, option.id)
-                      }
-                    />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        {variant === "preview" ? (
+          <PreviewGroups groups={groups} />
+        ) : (
+          <InteractiveGroups groups={groups} />
+        )}
 
         {cta ? (
           <div className="mt-8 flex justify-center">

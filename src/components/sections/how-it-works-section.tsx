@@ -1,10 +1,13 @@
 import { Container } from "@/components/layout/container";
+import { cn } from "@/lib/utils";
 import type { HowItWorksStep } from "@/lib/brand/types";
+import type { Surface } from "@/lib/services/landing";
 
 export interface HowItWorksSectionProps {
   heading: string;
   subheading?: string;
   steps: HowItWorksStep[];
+  surface?: Surface;
 }
 
 /**
@@ -15,12 +18,16 @@ export function HowItWorksSection({
   heading,
   subheading,
   steps,
+  surface = "default",
 }: HowItWorksSectionProps) {
   return (
     <section
       id="how-it-works"
       aria-labelledby="how-it-works-heading"
-      className="py-16 md:py-20 lg:py-28"
+      className={cn(
+        "py-16 md:py-20 lg:py-28",
+        surface === "muted" && "bg-muted",
+      )}
     >
       <Container>
         <div className="mx-auto mb-12 max-w-2xl text-center md:mb-16">
