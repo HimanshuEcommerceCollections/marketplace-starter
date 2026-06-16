@@ -82,9 +82,15 @@ export default async function ServiceDetailPage({
         { name: landing.hero.title, url: `${SITE_URL}/services/${svc.id}` },
       ]),
     ];
-    if (isEnabled("faqJsonLd") && landing.faq && landing.faq.items.length > 0) {
+    const faqSection = landing.sections.find((s) => s.type === "faq");
+    if (
+      isEnabled("faqJsonLd") &&
+      faqSection?.type === "faq" &&
+      faqSection.items &&
+      faqSection.items.length > 0
+    ) {
       jsonLd.push(
-        faqPage(landing.faq.items.map((f) => ({ q: f.question, a: f.answer }))),
+        faqPage(faqSection.items.map((f) => ({ q: f.question, a: f.answer }))),
       );
     }
 

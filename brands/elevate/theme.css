@@ -31,6 +31,7 @@
   /* extended semantic surfaces */
   --highlight: oklch(0.63 0.135 47); /* terracotta */
   --highlight-foreground: oklch(0.99 0.006 84);
+  --notice: #a06a45; /* exact draft-notice terracotta (design reference) */
   --surface-inverse: oklch(0.25 0.014 62); /* espresso */
   --surface-inverse-foreground: oklch(0.93 0.012 84);
   --surface-brand: oklch(0.51 0.045 132); /* mid sage */
