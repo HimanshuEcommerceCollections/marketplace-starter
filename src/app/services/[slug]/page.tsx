@@ -4,10 +4,16 @@ import type { Metadata } from "next";
 import { getService, getServices } from "@/lib/catalog/load";
 import { getPricingTable } from "@/lib/pricing/load";
 import { computePrice } from "@/lib/pricing/engine";
-import { getBrandConfig } from "@/lib/brand/load";
+import {
+  getBrandConfig,
+  getBrandContent,
+  getServiceLanding,
+} from "@/lib/brand/load";
+import { formatMoney } from "@/lib/money";
 import { ServiceHero } from "@/components/marketplace/service-hero";
 import { ServiceDetailLayout } from "@/components/marketplace/service-detail-layout";
 import { ServiceViewTracker } from "@/components/marketplace/service-view-tracker";
+import { ServiceLandingPage } from "@/components/marketplace/service-landing-page";
 import { PriceSummaryCard } from "@/components/booking/price-summary-card";
 import { FaqAccordion } from "@/components/marketing/faq-accordion";
 import { Button } from "@/components/ui/button";
@@ -32,6 +38,10 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  const landing = getServiceLanding(slug);
+  if (landing) {
+    return { title: landing.hero.title, description: landing.hero.subtitle };
+  }
   const svc = getService(slug);
   if (!svc) return {};
   return { title: svc.title, description: svc.summary };
@@ -52,6 +62,46 @@ export default async function ServiceDetailPage({
     selections: {},
     quantity: 1,
   });
+
+  const landing = getServiceLanding(svc.id);
+
+  // Config-driven landing page (preferred). Falls back to the detail layout
+  // below for services that don't yet have a landing config.
+  if (landing) {
+    const jsonLd: JsonLdThing[] = [
+      serviceLd({
+        name: landing.hero.title,
+        description: svc.summary,
+        provider: config.name,
+        url: `${SITE_URL}/services/${svc.id}`,
+        serviceType: svc.service_type,
+      }),
+      breadcrumbList([
+        { name: "Home", url: SITE_URL },
+        { name: "Services", url: `${SITE_URL}/services` },
+        { name: landing.hero.title, url: `${SITE_URL}/services/${svc.id}` },
+      ]),
+    ];
+    if (isEnabled("faqJsonLd") && landing.faq && landing.faq.items.length > 0) {
+      jsonLd.push(
+        faqPage(landing.faq.items.map((f) => ({ q: f.question, a: f.answer }))),
+      );
+    }
+
+    return (
+      <>
+        <ServiceLandingPage
+          config={landing}
+          priceLabel={`From ${formatMoney(breakdown.total)}`}
+          category={svc.category}
+          price={breakdown.total.amount}
+          currency={breakdown.total.currency}
+          fallbackTestimonials={getBrandContent().testimonials}
+        />
+        <JsonLd data={jsonLd} />
+      </>
+    );
+  }
 
   const jsonLd: JsonLdThing[] = [
     serviceLd({

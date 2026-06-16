@@ -16,6 +16,9 @@ import {
   Headphones,
   Star,
   BadgeCheck,
+  Car,
+  Home,
+  CalendarDays,
 } from "lucide-react";
 
 /** Maps content/services icon name strings to Lucide components (data-driven). */
@@ -36,6 +39,9 @@ const ICONS: Record<string, LucideIcon> = {
   Headphones,
   Star,
   BadgeCheck,
+  Car,
+  Home,
+  CalendarDays,
 };
 
 export function getIcon(name?: string): LucideIcon {

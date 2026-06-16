@@ -10,7 +10,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const ROOT = process.cwd();
-const BRANDS = ["elevate", "apex", "events", "education"];
+const BRANDS = ["elevate"];
 const REQUIRED_FILES = [
   "brand.config.ts",
   "content.config.ts",

@@ -3,7 +3,7 @@
  * brands/<slug>/ folder, the [data-brand="<slug>"] CSS scope, the registry key,
  * and the booking_request.brand enum.
  */
-export const BRAND_IDS = ["elevate", "apex", "events", "education"] as const;
+export const BRAND_IDS = ["elevate"] as const;
 export type BrandId = (typeof BRAND_IDS)[number];
 
 export const DEFAULT_BRAND: BrandId = "elevate";

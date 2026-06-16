@@ -7,13 +7,21 @@ export interface TrustSafetySectionProps {
   heading: string;
   subheading?: string;
   items: ProcessCard[];
+  /** Desktop column count. Default 3 (homepage); use 4 for service landing. */
+  columns?: 3 | 4;
 }
+
+const COLUMN_CLASS: Record<3 | 4, string> = {
+  3: "lg:grid-cols-3",
+  4: "sm:grid-cols-2 lg:grid-cols-4",
+};
 
 /** Trust / process cards. Server component, token-only, data-driven. */
 export function TrustSafetySection({
   heading,
   subheading,
   items,
+  columns = 3,
 }: TrustSafetySectionProps) {
   return (
     <section
@@ -35,7 +43,10 @@ export function TrustSafetySection({
           ) : null}
         </div>
 
-        <ul role="list" className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
+        <ul
+          role="list"
+          className={`grid grid-cols-1 gap-6 lg:gap-8 ${COLUMN_CLASS[columns]}`}
+        >
           {items.map((item) => {
             const Icon = getIcon(item.icon);
             return (

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Container } from "@/components/layout/container";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -52,9 +53,8 @@ export function ServicesGridSection({
         >
           {services.map((service) => {
             const Icon = getIcon(service.icon);
-            return (
-              <li key={service.id}>
-                <Card className="flex h-full flex-col gap-3 rounded-xl p-6">
+            const card = (
+              <Card className="flex h-full flex-col gap-3 rounded-xl p-6 transition group-hover:-translate-y-0.5 group-hover:border-primary/40 group-hover:shadow-md">
                   <div className="flex items-center justify-between gap-2">
                     <span className="inline-flex items-center justify-center rounded-lg bg-primary/10 p-2.5 text-primary">
                       <Icon className="size-6" strokeWidth={1.75} aria-hidden />
@@ -92,6 +92,21 @@ export function ServicesGridSection({
                     )}
                   </div>
                 </Card>
+            );
+
+            return (
+              <li key={service.id}>
+                {service.coming_soon ? (
+                  card
+                ) : (
+                  <Link
+                    href={`/services/${service.id}`}
+                    aria-label={`View ${service.title}`}
+                    className="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  >
+                    {card}
+                  </Link>
+                )}
               </li>
             );
           })}

@@ -2,12 +2,9 @@
 @import "tw-animate-css";
 @import "./tokens.css";
 
-/* Brand override layers — all four ship in every build (~tiny); only the
-   matching [data-brand] scope applies at runtime, selected by NEXT_PUBLIC_BRAND. */
+/* Brand override layer — the matching [data-brand] scope applies at runtime,
+   selected by NEXT_PUBLIC_BRAND. */
 @import "../../brands/elevate/theme.css";
-@import "../../brands/apex/theme.css";
-@import "../../brands/events/theme.css";
-@import "../../brands/education/theme.css";
 
 /* Named z-index utilities so components stay class-based (no magic numbers). */
 @utility z-sticky {
