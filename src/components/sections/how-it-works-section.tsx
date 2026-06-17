@@ -1,3 +1,4 @@
+import { Info } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { cn } from "@/lib/utils";
 import type { HowItWorksStep } from "@/lib/brand/types";
@@ -8,6 +9,8 @@ export interface HowItWorksSectionProps {
   subheading?: string;
   steps: HowItWorksStep[];
   surface?: Surface;
+  /** Optional callout below the timeline. */
+  note?: string;
 }
 
 /**
@@ -19,6 +22,7 @@ export function HowItWorksSection({
   subheading,
   steps,
   surface = "default",
+  note,
 }: HowItWorksSectionProps) {
   return (
     <section
@@ -87,6 +91,13 @@ export function HowItWorksSection({
             );
           })}
         </ol>
+
+        {note ? (
+          <p className="mx-auto mt-12 flex max-w-3xl items-start gap-2 rounded-xl border border-border bg-background/60 p-4 text-sm text-muted-foreground">
+            <Info className="mt-0.5 size-4 shrink-0 text-highlight" aria-hidden />
+            {note}
+          </p>
+        ) : null}
       </Container>
     </section>
   );

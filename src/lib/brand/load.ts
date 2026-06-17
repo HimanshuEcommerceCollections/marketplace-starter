@@ -4,10 +4,27 @@ import type {
   ServiceLandingConfig,
   ServiceLandingRegistry,
 } from "@/lib/services/landing";
+import type { PartnerLandingConfig } from "@/lib/partner/landing";
+import type { PricingPageConfig } from "@/lib/pricing/page";
+import type { HowItWorksPageConfig } from "@/lib/how-it-works/page";
+import type { AboutPageConfig } from "@/lib/about/page";
+import type { CorporatePageConfig } from "@/lib/corporate/page";
+import type { FaqPageConfig } from "@/lib/faq/page";
+import type { LegalPageConfig } from "@/lib/legal/page";
+import type { ServicesPageConfig } from "@/lib/services/page";
 
 import { elevateConfig } from "@brands/elevate/brand.config";
 import { elevateContent } from "@brands/elevate/content.config";
 import { elevateServiceLanding } from "@brands/elevate/service-landing.config";
+import { elevatePartner } from "@brands/elevate/partner.config";
+import { elevatePricingPage } from "@brands/elevate/pricing-page.config";
+import { elevateHowItWorks } from "@brands/elevate/how-it-works.config";
+import { elevateAbout } from "@brands/elevate/about-page.config";
+import { elevateCorporate } from "@brands/elevate/corporate.config";
+import { elevateFaqPage } from "@brands/elevate/faq-page.config";
+import { elevatePrivacyPage } from "@brands/elevate/privacy-page.config";
+import { elevateTermsPage } from "@brands/elevate/terms-page.config";
+import { elevateServicesPage } from "@brands/elevate/services-page.config";
 import elevateServices from "@brands/elevate/services.json";
 import elevatePricing from "@brands/elevate/pricing.v1.json";
 
@@ -17,6 +34,24 @@ export interface LoadedBrand {
   content: BrandContent;
   /** Per-service landing page configs, keyed by service slug. */
   serviceLanding: ServiceLandingRegistry;
+  /** "Partner with Elevate" (Become a Pro) page content. */
+  partner: PartnerLandingConfig;
+  /** "Simple, Transparent Pricing" page content. */
+  pricingPage: PricingPageConfig;
+  /** "How Elevate Works" page content. */
+  howItWorks: HowItWorksPageConfig;
+  /** "About" page content. */
+  about: AboutPageConfig;
+  /** "Corporate Wellness" page content. */
+  corporate: CorporatePageConfig;
+  /** "Frequently Asked Questions" page content. */
+  faqPage: FaqPageConfig;
+  /** "Privacy Policy" page content. */
+  privacyPage: LegalPageConfig;
+  /** "Terms & Conditions" page content (reuses the legal-page system). */
+  termsPage: LegalPageConfig;
+  /** Standalone "Services" page content (same card grid as the home page). */
+  servicesPage: ServicesPageConfig;
   /** Raw JSON — validated lazily by catalog/pricing loaders via zod. */
   services: unknown;
   pricing: unknown;
@@ -28,6 +63,15 @@ const REGISTRY: Record<BrandId, LoadedBrand> = {
     config: elevateConfig,
     content: elevateContent,
     serviceLanding: elevateServiceLanding,
+    partner: elevatePartner,
+    pricingPage: elevatePricingPage,
+    howItWorks: elevateHowItWorks,
+    about: elevateAbout,
+    corporate: elevateCorporate,
+    faqPage: elevateFaqPage,
+    privacyPage: elevatePrivacyPage,
+    termsPage: elevateTermsPage,
+    servicesPage: elevateServicesPage,
     services: elevateServices,
     pricing: elevatePricing,
   },
@@ -55,6 +99,51 @@ export function getServiceLanding(
 /** All service slugs that have a dedicated landing page in the active brand. */
 export function getServiceLandingSlugs(): string[] {
   return Object.keys(loadBrand().serviceLanding);
+}
+
+/** The active brand's "Partner with Elevate" (Become a Pro) page content. */
+export function getPartnerLanding(): PartnerLandingConfig {
+  return loadBrand().partner;
+}
+
+/** The active brand's "Simple, Transparent Pricing" page content. */
+export function getPricingPage(): PricingPageConfig {
+  return loadBrand().pricingPage;
+}
+
+/** The active brand's "How Elevate Works" page content. */
+export function getHowItWorksPage(): HowItWorksPageConfig {
+  return loadBrand().howItWorks;
+}
+
+/** The active brand's "About" page content. */
+export function getAboutPage(): AboutPageConfig {
+  return loadBrand().about;
+}
+
+/** The active brand's "Corporate Wellness" page content. */
+export function getCorporateLanding(): CorporatePageConfig {
+  return loadBrand().corporate;
+}
+
+/** The active brand's "Frequently Asked Questions" page content. */
+export function getFaqPage(): FaqPageConfig {
+  return loadBrand().faqPage;
+}
+
+/** The active brand's "Privacy Policy" page content. */
+export function getPrivacyPage(): LegalPageConfig {
+  return loadBrand().privacyPage;
+}
+
+/** The active brand's "Terms & Conditions" page content. */
+export function getTermsPage(): LegalPageConfig {
+  return loadBrand().termsPage;
+}
+
+/** The active brand's standalone "Services" page content. */
+export function getServicesPage(): ServicesPageConfig {
+  return loadBrand().servicesPage;
 }
 
 export function allBrands(): LoadedBrand[] {

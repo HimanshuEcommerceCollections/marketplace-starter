@@ -55,16 +55,16 @@ export const elevateConfig: BrandConfig = {
     {
       heading: "Legal",
       links: [
-        { label: "Privacy Policy", href: "#" },
-        { label: "Terms of Service", href: "#" },
+        { label: "Privacy Policy", href: "/privacy" },
+        { label: "Terms of Service", href: "/terms" },
         { label: "Cookie Policy", href: "#" },
         { label: "Accessibility", href: "#" },
       ],
     },
   ],
   legalLinks: [
-    { label: "Privacy", href: "#" },
-    { label: "Terms", href: "#" },
+    { label: "Privacy", href: "/privacy" },
+    { label: "Terms", href: "/terms" },
   ],
   serviceCategories: ["training", "nutrition", "recovery"],
   organization: {
