@@ -214,4 +214,27 @@ export const elevateContent: BrandContent = {
     body: "Build your [Sample] wellness plan in minutes.",
     cta: { label: "Book a session", href: "/book" },
   },
+
+  auth: {
+    categories: ["Yoga", "Beauty", "Massage", "Personal Training", "Nutrition"],
+    login: {
+      panelTitle: "Wellness, delivered to your door.",
+      testimonial: {
+        id: "auth-login",
+        quote:
+          "Exactly what I needed — professional, convenient, and always on time.",
+        author: "Elevate client",
+        isSample: true,
+      },
+    },
+    signup: {
+      panelTitle: "Your personal wellness concierge awaits.",
+      testimonial: {
+        id: "auth-signup",
+        quote: "From yoga to beauty — all my wellness needs, handled at home.",
+        author: "Elevate client",
+        isSample: true,
+      },
+    },
+  },
 };

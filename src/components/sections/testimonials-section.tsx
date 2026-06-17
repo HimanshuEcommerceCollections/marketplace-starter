@@ -13,9 +13,55 @@ export interface TestimonialsSectionProps {
   surface?: Surface;
 }
 
+/** Per-surface token classes — enables a light, muted, or dark (inverse) band. */
+const SURFACE: Record<
+  Surface,
+  {
+    section: string;
+    heading: string;
+    subheading: string;
+    card: string;
+    quote: string;
+    author: string;
+    role: string;
+    /** Override for the author-line [Sample] badge on dark surfaces. */
+    badge?: string;
+  }
+> = {
+  default: {
+    section: "",
+    heading: "text-foreground",
+    subheading: "text-muted-foreground",
+    card: "bg-card",
+    quote: "text-foreground",
+    author: "text-foreground",
+    role: "text-muted-foreground",
+  },
+  muted: {
+    section: "bg-muted",
+    heading: "text-foreground",
+    subheading: "text-muted-foreground",
+    card: "bg-card",
+    quote: "text-foreground",
+    author: "text-foreground",
+    role: "text-muted-foreground",
+  },
+  inverse: {
+    section: "bg-surface-inverse text-surface-inverse-foreground",
+    heading: "text-surface-inverse-foreground",
+    subheading: "text-surface-inverse-foreground/80",
+    card: "border-surface-inverse-foreground/15 bg-surface-inverse-foreground/5",
+    quote: "text-surface-inverse-foreground",
+    author: "text-surface-inverse-foreground",
+    role: "text-surface-inverse-foreground/70",
+    badge: "border-surface-inverse-foreground/30 text-surface-inverse-foreground/80",
+  },
+};
+
 /**
  * Testimonials — social proof, always visibly [Sample]-labeled (rule).
- * Server component, token-only, data-driven.
+ * Server component, token-only, data-driven. Supports light, muted, and dark
+ * (inverse) bands.
  */
 export function TestimonialsSection({
   heading,
@@ -23,26 +69,28 @@ export function TestimonialsSection({
   items,
   surface = "muted",
 }: TestimonialsSectionProps) {
+  const s = SURFACE[surface];
+
   return (
     <section
       aria-labelledby="testimonials-heading"
-      className={cn(
-        "py-16 md:py-20 lg:py-28",
-        surface === "muted" && "bg-muted",
-      )}
+      className={cn("py-16 md:py-20 lg:py-28", s.section)}
     >
       <Container>
         <div className="mx-auto mb-12 max-w-2xl text-center md:mb-16">
           {heading ? (
             <h2
               id="testimonials-heading"
-              className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl lg:text-5xl"
+              className={cn(
+                "font-heading text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl",
+                s.heading,
+              )}
             >
               {heading}
             </h2>
           ) : null}
           {subheading ? (
-            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+            <p className={cn("mt-4 text-lg leading-relaxed", s.subheading)}>
               {subheading}
             </p>
           ) : null}
@@ -54,21 +102,29 @@ export function TestimonialsSection({
         >
           {items.map((item) => (
             <li key={item.id}>
-              <Card className="h-full rounded-xl bg-card p-6">
+              <Card className={cn("h-full rounded-xl p-6", s.card)}>
                 <figure className="flex h-full flex-col gap-4">
                   <SampleBadge className="self-start border-transparent bg-accent text-accent-foreground" />
-                  <blockquote className="font-heading text-lg leading-relaxed text-foreground">
+                  <blockquote
+                    className={cn(
+                      "font-heading text-lg leading-relaxed",
+                      s.quote,
+                    )}
+                  >
                     &ldquo;{item.quote}&rdquo;
                   </blockquote>
                   <figcaption className="mt-auto">
-                    <p className="flex flex-wrap items-center gap-2 font-semibold text-foreground">
+                    <p
+                      className={cn(
+                        "flex flex-wrap items-center gap-2 font-semibold",
+                        s.author,
+                      )}
+                    >
                       {item.author}
-                      <SampleBadge />
+                      <SampleBadge className={s.badge} />
                     </p>
                     {item.role ? (
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {item.role}
-                      </p>
+                      <p className={cn("mt-1 text-sm", s.role)}>{item.role}</p>
                     ) : null}
                   </figcaption>
                 </figure>

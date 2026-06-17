@@ -10,18 +10,23 @@ export interface SiteChromeProps {
 }
 
 /**
- * Wraps the page in the site navbar + footer, EXCEPT on the booking flow
- * (/book*), which renders its own dedicated header (and no footer).
+ * Wraps the page in the site navbar + footer, EXCEPT on flows that render their
+ * own full-screen chrome: the booking flow (/book*), the auth screens
+ * (/login, /signup), and the admin console (/admin*), which all provide their
+ * own header and no public footer.
  */
 export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   const pathname = usePathname();
   const bookingFlow = pathname?.startsWith("/book") ?? false;
+  const authFlow = pathname === "/login" || pathname === "/signup";
+  const adminFlow = pathname?.startsWith("/admin") ?? false;
+  const bareLayout = bookingFlow || authFlow || adminFlow;
 
   return (
     <>
-      {!bookingFlow ? navbar : null}
+      {!bareLayout ? navbar : null}
       <main className="flex-1">{children}</main>
-      {!bookingFlow ? footer : null}
+      {!bareLayout ? footer : null}
     </>
   );
 }

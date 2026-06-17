@@ -150,6 +150,7 @@
       "currency": "USD",
       "from_price": 12900,
       "icon": "Salad",
+      "landing_slug": "life-coaching",
       "config_options": [
         {
           "id": "tier",
@@ -202,7 +203,7 @@
       "service_type": "therapy",
       "pricing_ref": "physical-therapy",
       "currency": "USD",
-      "from_price": 13500,
+      "from_price": 16500,
       "icon": "Activity",
       "coming_soon": true,
       "config_options": [],

@@ -46,6 +46,13 @@ export interface FeatureItem {
   description: string;
   /** Optional small badge, e.g. "Coming Soon". */
   badge?: string;
+  /** Optional fine-print line under the description (stacked cards), e.g. a
+   *  disclaimer like "Educational overview only. Not a clinical promise." */
+  footnote?: string;
+  /** Optional "Learn more" link target (rendered by stacked card sections). */
+  href?: string;
+  /** Override the link label (defaults to "Learn More"). */
+  hrefLabel?: string;
 }
 
 /** A featured offering — like {@link FeatureItem} but with an inquiry link. */
@@ -83,6 +90,8 @@ export interface ProcessCard {
 export interface HowItWorksStep {
   title: string;
   description: string;
+  /** Optional lucide icon name. Rendered beside the step number in process cards. */
+  icon?: string;
 }
 
 export interface ComparisonRow {
@@ -148,5 +157,14 @@ export interface BrandContent {
     body?: string;
     primaryCta: NavItem;
     secondaryCta?: NavItem;
+  };
+
+  /* Auth screens (login / signup). The brand panel copy + sample quote shown on
+     the customer-facing split-screen; structural form labels live in code. */
+  auth?: {
+    /** Service category chips shown on the brand panel. */
+    categories: string[];
+    login: { panelTitle: string; testimonial: TestimonialItem };
+    signup: { panelTitle: string; testimonial: TestimonialItem };
   };
 }

@@ -38,6 +38,11 @@ import {
   Phone,
   HelpCircle,
   MessageSquare,
+  Scissors,
+  Brush,
+  Palette,
+  Gift,
+  Crown,
 } from "lucide-react";
 
 /** Maps content/services icon name strings to Lucide components (data-driven). */
@@ -80,6 +85,11 @@ const ICONS: Record<string, LucideIcon> = {
   Phone,
   HelpCircle,
   MessageSquare,
+  Scissors,
+  Brush,
+  Palette,
+  Gift,
+  Crown,
 };
 
 export function getIcon(name?: string): LucideIcon {

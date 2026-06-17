@@ -8,6 +8,8 @@ import {
   WaitlistFormSchema,
   BookingContactFormSchema,
   CorporateQuoteFormSchema,
+  LoginFormSchema,
+  SignupFormSchema,
 } from "./schemas";
 
 export interface StubResult {
@@ -73,6 +75,28 @@ export async function submitCorporateQuoteStub(
   const blocked = maintenanceBlocked();
   if (blocked) return blocked;
   const v = validateForm(CorporateQuoteFormSchema, input);
+  if (!v.success) return fail(v);
+  return { success: true, request_id: crypto.randomUUID() };
+}
+
+/**
+ * Account sign-in / sign-up. Validate → return a fake request_id. NEVER sends
+ * or stores credentials, and emits NO analytics — the analytics contract is
+ * locked to exactly 8 events and auth is not one of them (mirrors the booking
+ * contact / corporate quote stubs).
+ */
+export async function submitLoginStub(input: unknown): Promise<StubResult> {
+  const blocked = maintenanceBlocked();
+  if (blocked) return blocked;
+  const v = validateForm(LoginFormSchema, input);
+  if (!v.success) return fail(v);
+  return { success: true, request_id: crypto.randomUUID() };
+}
+
+export async function submitSignupStub(input: unknown): Promise<StubResult> {
+  const blocked = maintenanceBlocked();
+  if (blocked) return blocked;
+  const v = validateForm(SignupFormSchema, input);
   if (!v.success) return fail(v);
   return { success: true, request_id: crypto.randomUUID() };
 }

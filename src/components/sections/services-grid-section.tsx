@@ -123,7 +123,7 @@ export function ServicesGridSection({
                   card
                 ) : (
                   <Link
-                    href={`/services/${service.id}`}
+                    href={`/services/${service.landing_slug ?? service.id}`}
                     aria-label={`View ${service.title}`}
                     className="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   >

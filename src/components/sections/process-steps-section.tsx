@@ -1,5 +1,6 @@
 import { Container } from "@/components/layout/container";
 import { Card } from "@/components/ui/card";
+import { getIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 import type { HowItWorksStep } from "@/lib/brand/types";
 import type { Surface } from "@/lib/services/landing";
@@ -58,30 +59,47 @@ export function ProcessStepsSection({
         <ol
           className={cn("grid grid-cols-1 gap-6 lg:gap-8", COLUMN_CLASS[columns])}
         >
-          {steps.map((step, index) => (
-            <li key={step.title}>
-              <Card
-                className={cn(
-                  "flex h-full flex-col items-start gap-4 rounded-xl p-6",
-                  surface === "muted" ? "bg-background" : "bg-muted",
-                )}
-              >
-                <span
-                  aria-hidden
-                  className="inline-flex size-11 items-center justify-center rounded-full bg-primary text-base font-semibold text-primary-foreground shadow-sm"
+          {steps.map((step, index) => {
+            const Icon = step.icon ? getIcon(step.icon) : null;
+            return (
+              <li key={step.title}>
+                <Card
+                  className={cn(
+                    "flex h-full flex-col items-start gap-4 rounded-xl p-6",
+                    surface === "muted" ? "bg-background" : "bg-muted",
+                  )}
                 >
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3 className="font-heading text-lg font-semibold text-foreground">
-                  <span className="sr-only">{`Step ${index + 1}: `}</span>
-                  {step.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {step.description}
-                </p>
-              </Card>
-            </li>
-          ))}
+                  {Icon ? (
+                    <div className="flex w-full items-center gap-3">
+                      <span
+                        aria-hidden
+                        className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
+                      >
+                        <Icon className="size-5" strokeWidth={1.75} />
+                      </span>
+                      <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                        {`Step ${index + 1}`}
+                      </span>
+                    </div>
+                  ) : (
+                    <span
+                      aria-hidden
+                      className="inline-flex size-11 items-center justify-center rounded-full bg-primary text-base font-semibold text-primary-foreground shadow-sm"
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  )}
+                  <h3 className="font-heading text-lg font-semibold text-foreground">
+                    <span className="sr-only">{`Step ${index + 1}: `}</span>
+                    {step.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {step.description}
+                  </p>
+                </Card>
+              </li>
+            );
+          })}
         </ol>
       </Container>
     </section>

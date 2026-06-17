@@ -26,6 +26,13 @@ export const ProApplyFormSchema = z.object({
 export const WaitlistFormSchema = z.object({
   email: z.string().email("Enter a valid email"),
   service_id: z.string().optional(),
+  // Optional interest-list fields (richer "join the interest list" form). The
+  // analytics contract stays locked to waitlist_submit; these are not tracked.
+  first_name: z.string().max(80).optional(),
+  last_name: z.string().max(80).optional(),
+  phone: z.string().max(40).optional(),
+  zip: z.string().max(12).optional(),
+  notes: z.string().max(2000).optional(),
   schedule_preferences: SchedulePreferencesSchema.partial().optional(),
 });
 
@@ -39,7 +46,33 @@ export const CorporateQuoteFormSchema = z.object({
   notes: z.string().max(2000).optional(),
 });
 
+/** Account sign-in. Stub-only — no credentials are ever sent or stored. */
+export const LoginFormSchema = z.object({
+  email: z.string().email("Enter a valid email"),
+  password: z.string().min(8, "Minimum 8 characters"),
+  remember: z.boolean().optional(),
+});
+
+/** Account creation. Stub-only — no credentials are ever sent or stored. */
+export const SignupFormSchema = z
+  .object({
+    name: z.string().min(1, "Name is required").max(120),
+    email: z.string().email("Enter a valid email"),
+    phone: z.string().max(40).optional(),
+    password: z.string().min(8, "Minimum 8 characters"),
+    confirm_password: z.string().min(1, "Re-enter your password"),
+    consent: z.literal(true, {
+      errorMap: () => ({ message: "Please accept the terms to continue" }),
+    }),
+  })
+  .refine((data) => data.password === data.confirm_password, {
+    message: "Passwords do not match",
+    path: ["confirm_password"],
+  });
+
 export type BookingContactForm = z.infer<typeof BookingContactFormSchema>;
 export type ProApplyForm = z.infer<typeof ProApplyFormSchema>;
 export type WaitlistForm = z.infer<typeof WaitlistFormSchema>;
 export type CorporateQuoteForm = z.infer<typeof CorporateQuoteFormSchema>;
+export type LoginForm = z.infer<typeof LoginFormSchema>;
+export type SignupForm = z.infer<typeof SignupFormSchema>;

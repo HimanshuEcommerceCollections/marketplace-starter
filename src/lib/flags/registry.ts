@@ -6,6 +6,7 @@ export const FLAG_KEYS = [
   "pricingEngine", // show computed prices vs "Contact us"
   "proApplyForm", // "become a pro" application form
   "waitlistForm", // waitlist capture form
+  "authEnabled", // account login / signup pages + nav entry points
   "testimonials", // sample testimonials section
   "faqJsonLd", // emit FAQPage JSON-LD
   "analyticsDebug", // verbose analytics logging
@@ -49,6 +50,11 @@ export const FLAG_REGISTRY: Record<FlagKey, FlagDefinition> = {
   waitlistForm: {
     key: "waitlistForm",
     description: "Waitlist capture form",
+    default: true,
+  },
+  authEnabled: {
+    key: "authEnabled",
+    description: "Account login / signup pages and nav entry points",
     default: true,
   },
   testimonials: {

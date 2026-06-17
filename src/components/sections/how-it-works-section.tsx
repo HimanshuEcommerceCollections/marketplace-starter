@@ -9,6 +9,8 @@ export interface HowItWorksSectionProps {
   subheading?: string;
   steps: HowItWorksStep[];
   surface?: Surface;
+  /** Zero-based index of the step to emphasize (optional). */
+  activeIndex?: number;
   /** Optional callout below the timeline. */
   note?: string;
 }
@@ -22,6 +24,7 @@ export function HowItWorksSection({
   subheading,
   steps,
   surface = "default",
+  activeIndex,
   note,
 }: HowItWorksSectionProps) {
   return (
@@ -51,6 +54,7 @@ export function HowItWorksSection({
         <ol className="flex flex-col md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-12 lg:grid-cols-6 lg:gap-x-0">
           {steps.map((step, index) => {
             const isLast = index === steps.length - 1;
+            const isActive = index === activeIndex;
             const number = String(index + 1).padStart(2, "0");
 
             return (
@@ -73,7 +77,12 @@ export function HowItWorksSection({
 
                 <span
                   aria-hidden
-                  className="relative z-10 inline-flex size-14 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-semibold text-primary-foreground shadow-sm ring-4 ring-primary/10"
+                  className={cn(
+                    "relative z-10 inline-flex size-14 shrink-0 items-center justify-center rounded-full text-lg font-semibold shadow-sm ring-4",
+                    isActive
+                      ? "bg-highlight text-highlight-foreground ring-highlight/25"
+                      : "bg-primary text-primary-foreground ring-primary/10",
+                  )}
                 >
                   {number}
                 </span>

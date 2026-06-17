@@ -98,7 +98,9 @@ export default async function ServiceDetailPage({
       <>
         <ServiceLandingPage
           config={landing}
-          priceLabel={`From ${formatMoney(breakdown.total)}`}
+          priceLabel={
+            svc.coming_soon ? undefined : `From ${formatMoney(breakdown.total)}`
+          }
           category={svc.category}
           price={breakdown.total.amount}
           currency={breakdown.total.currency}

@@ -16,6 +16,8 @@ export interface NavbarProps {
   brandName: string;
   logoSublabel?: string;
   cta?: NavItem;
+  /** Account entry point (Sign In). Shown only when the authEnabled flag is on. */
+  account?: NavItem;
 }
 
 /**
@@ -29,9 +31,11 @@ export function Navbar({
   brandName,
   logoSublabel,
   cta = { label: "Book Now", href: "/book" },
+  account = { label: "Sign In", href: "/login" },
 }: NavbarProps) {
   const [open, setOpen] = React.useState(false);
   const showBanner = useFlag("demoBanner");
+  const showAuth = useFlag("authEnabled");
 
   const closeMenu = React.useCallback(() => setOpen(false), []);
 
@@ -110,6 +114,14 @@ export function Navbar({
           </ul>
 
           <div className="col-start-3 flex items-center justify-end gap-2 justify-self-end">
+            {showAuth ? (
+              <Link
+                href={account.href}
+                className="hidden rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:inline-flex"
+              >
+                {account.label}
+              </Link>
+            ) : null}
             <Button asChild size="sm" className="hidden md:inline-flex">
               <Link href={cta.href} onClick={closeMenu}>
                 {cta.label}
@@ -151,6 +163,15 @@ export function Navbar({
                     {link.label}
                   </Link>
                 ))}
+                {showAuth ? (
+                  <Link
+                    href={account.href}
+                    onClick={closeMenu}
+                    className="rounded-md px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    {account.label}
+                  </Link>
+                ) : null}
                 <Button asChild className="mt-3 w-full">
                   <Link href={cta.href} onClick={closeMenu}>
                     {cta.label}

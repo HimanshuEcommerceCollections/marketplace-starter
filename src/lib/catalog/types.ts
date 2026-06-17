@@ -30,6 +30,9 @@ export const ServiceSchema = z.object({
   currency: z.string().length(3),
   from_price: z.number().optional(), // minor units, display only
   icon: z.string().optional(), // lucide icon name for cards
+  // Optional: card links to /services/<landing_slug> instead of /services/<id>.
+  // Lets one service's card open another service's landing page (data-driven).
+  landing_slug: z.string().optional(),
   coming_soon: z.boolean().default(false),
   image: z.string().optional(),
   config_options: z.array(ConfigOptionSchema).default([]),

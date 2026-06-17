@@ -6,8 +6,9 @@ import type {
   TestimonialItem,
 } from "@/lib/brand/types";
 
-/** Background treatment for a section, enabling alternating bands. */
-export type Surface = "default" | "muted";
+/** Background treatment for a section, enabling alternating bands.
+ *  "inverse" = dark/espresso band (e.g. a trust section). */
+export type Surface = "default" | "muted" | "inverse";
 
 /**
  * A single group of options in the "Configure your session" preview
@@ -65,6 +66,28 @@ export interface TimelineSection extends BaseSection {
   heading?: string;
   subheading?: string;
   steps: HowItWorksStep[];
+  /** Zero-based index of the step to emphasize (optional). */
+  activeIndex?: number;
+}
+
+/**
+ * Two-column "what happens" detail — an image beside an icon list of phases
+ * (e.g. "What Happens During a Session?"). Reusable across services.
+ */
+export interface SessionStepsSection extends BaseSection {
+  type: "sessionSteps";
+  heading?: string;
+  subheading?: string;
+  /** Image/photo placeholder shown beside the list. */
+  image?: {
+    src?: string;
+    alt?: string;
+    caption?: { title: string; lines: string[] };
+  };
+  /** Image side on desktop (default "left"; mobile always stacks image first). */
+  imagePosition?: "left" | "right";
+  /** The labeled phases — icon + title + description. */
+  items: FeatureItem[];
 }
 
 /** Compact inline stepper — small numbered chips with labels only. */
@@ -104,6 +127,81 @@ export interface FaqSectionConfig extends BaseSection {
   viewAll?: NavItem;
 }
 
+/**
+ * Highlighted callout band — leading icon/badge, heading, and body, with an
+ * optional tag pill (e.g. a minimum-booking notice). Reusable across services.
+ */
+export interface NoticeSection extends BaseSection {
+  type: "notice";
+  /** Lucide icon name shown in the leading badge (default "DollarSign"). */
+  icon?: string;
+  heading: string;
+  body: string;
+  /** Optional tag pill on the trailing edge, e.g. "Helpful Info". */
+  tag?: string;
+}
+
+/**
+ * A single pricing tier (e.g. "Evaluation Visit"). Prices are draft/illustrative
+ * and always rendered with a "Draft" pill and a [Sample] badge.
+ */
+export interface PricingTier {
+  /** Small badge above the name, e.g. "Initial Visit" / "Ongoing Care". */
+  badge?: string;
+  name: string;
+  /** Display price in minor units (e.g. 16500 = $165). Shown as "From $165". */
+  price: { amount: number; currency: string };
+  /** e.g. "60–90 minutes". */
+  duration?: string;
+  /** "What's included" checklist. */
+  included: string[];
+  /** Muted footnote under the checklist, e.g. "Evaluation required first." */
+  footnote?: string;
+  /** Per-card CTA — for coming-soon services this points at the interest list. */
+  cta?: NavItem;
+  /** Emphasize this tier with the dark (inverse) treatment. */
+  featured?: boolean;
+}
+
+/**
+ * "Session Pricing" — two or more side-by-side tier cards. Built for coming-soon
+ * services: prices are draft, each card CTA joins the interest list. Reusable.
+ */
+export interface PricingTiersSection extends BaseSection {
+  type: "pricingTiers";
+  eyebrow?: string;
+  heading?: string;
+  subheading?: string;
+  /** Caution band above the cards, e.g. "DRAFT PRICING — Do not use…". */
+  draftNote?: string;
+  tiers: PricingTier[];
+}
+
+/** A short value-prop line (icon + text) shown beside the interest-list form. */
+export interface InterestListBullet {
+  icon?: string;
+  text: string;
+}
+
+/**
+ * Interest-list capture — two-column band (copy + bullets beside a stub form).
+ * For coming-soon services in place of a booking flow. The form is stub-only and
+ * emits the `waitlist_submit` analytics event.
+ */
+export interface InterestListSection extends BaseSection {
+  type: "interestList";
+  eyebrow?: string;
+  heading: string;
+  subheading?: string;
+  /** Service slug recorded with the waitlist submission. */
+  serviceId?: string;
+  bullets?: InterestListBullet[];
+  /** Footnote under the form, e.g. a consent line. */
+  footnote?: string;
+  /** Submit button label (default "Join the Interest List"). */
+  submitLabel?: string;
+}
+
 /** Final CTA banner (brand surface). */
 export interface CtaSection extends BaseSection {
   type: "cta";
@@ -118,9 +216,13 @@ export type ServiceSection =
   | CardsSection
   | ProcessCardsSection
   | TimelineSection
+  | SessionStepsSection
   | StepperSection
   | ConfiguratorSection
   | TestimonialsSection
+  | NoticeSection
+  | PricingTiersSection
+  | InterestListSection
   | FaqSectionConfig
   | CtaSection;
 

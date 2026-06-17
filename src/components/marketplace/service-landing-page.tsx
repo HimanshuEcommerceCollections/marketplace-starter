@@ -5,8 +5,12 @@ import { BenefitsSection } from "@/components/sections/benefits-section";
 import { ProcessStepsSection } from "@/components/sections/process-steps-section";
 import { HowItWorksSection } from "@/components/sections/how-it-works-section";
 import { JourneyStepperSection } from "@/components/sections/journey-stepper-section";
+import { SessionStepsSection } from "@/components/sections/session-steps-section";
 import { SessionConfiguratorSection } from "@/components/sections/session-configurator-section";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
+import { NoticeSection } from "@/components/sections/notice-section";
+import { PricingTiersSection } from "@/components/sections/pricing-tiers-section";
+import { InterestListSection } from "@/components/sections/interest-list-section";
 import { FaqSection } from "@/components/sections/faq-section";
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { isEnabled } from "@/lib/flags/resolve";
@@ -85,6 +89,20 @@ export function ServiceLandingPage({
             heading={section.heading ?? ""}
             subheading={section.subheading}
             steps={section.steps}
+            activeIndex={section.activeIndex}
+            surface={section.surface}
+          />
+        );
+
+      case "sessionSteps":
+        return (
+          <SessionStepsSection
+            key={key}
+            heading={section.heading}
+            subheading={section.subheading}
+            image={section.image}
+            imagePosition={section.imagePosition}
+            items={section.items}
             surface={section.surface}
           />
         );
@@ -129,6 +147,46 @@ export function ServiceLandingPage({
           />
         );
       }
+
+      case "notice":
+        return (
+          <NoticeSection
+            key={key}
+            icon={section.icon}
+            heading={section.heading}
+            body={section.body}
+            tag={section.tag}
+            surface={section.surface}
+          />
+        );
+
+      case "pricingTiers":
+        return (
+          <PricingTiersSection
+            key={key}
+            eyebrow={section.eyebrow}
+            heading={section.heading}
+            subheading={section.subheading}
+            draftNote={section.draftNote}
+            tiers={section.tiers}
+            surface={section.surface}
+          />
+        );
+
+      case "interestList":
+        return (
+          <InterestListSection
+            key={key}
+            eyebrow={section.eyebrow}
+            heading={section.heading}
+            subheading={section.subheading}
+            serviceId={section.serviceId}
+            bullets={section.bullets}
+            footnote={section.footnote}
+            submitLabel={section.submitLabel}
+            surface={section.surface}
+          />
+        );
 
       case "faq":
         return (

@@ -40,7 +40,8 @@ export const elevateConfig: BrandConfig = {
         { label: "How It Works", href: "/#how-it-works" },
         { label: "Corporate Wellness", href: "/#corporate" },
         { label: "FAQ", href: "/faq" },
-        { label: "Contact", href: "#" },
+        { label: "Log In", href: "/login" },
+        { label: "Create Account", href: "/signup" },
       ],
     },
     {
@@ -49,7 +50,7 @@ export const elevateConfig: BrandConfig = {
         { label: "Become a Pro", href: "/pros/apply" },
         { label: "Partner with Elevate", href: "/pros/apply" },
         { label: "Pro Resources", href: "#" },
-        { label: "Pro Login", href: "#" },
+        { label: "Pro Login", href: "/login" },
       ],
     },
     {
