@@ -44,6 +44,19 @@ export interface FeatureItem {
   icon?: string;
   title: string;
   description: string;
+  /** Optional small badge, e.g. "Coming Soon". */
+  badge?: string;
+}
+
+/** A featured offering — like {@link FeatureItem} but with an inquiry link. */
+export interface OfferingItem {
+  icon?: string;
+  title: string;
+  description: string;
+  /** Optional small badge, e.g. "Most Requested" / "Custom Quote". */
+  badge?: string;
+  /** Optional inquiry link, e.g. { label: "Inquire about this", href: "#quote" }. */
+  cta?: NavItem;
 }
 
 export interface FaqItem {

@@ -7,6 +7,7 @@ import {
   ProApplyFormSchema,
   WaitlistFormSchema,
   BookingContactFormSchema,
+  CorporateQuoteFormSchema,
 } from "./schemas";
 
 export interface StubResult {
@@ -57,6 +58,21 @@ export async function submitBookingContactStub(
   const blocked = maintenanceBlocked();
   if (blocked) return blocked;
   const v = validateForm(BookingContactFormSchema, input);
+  if (!v.success) return fail(v);
+  return { success: true, request_id: crypto.randomUUID() };
+}
+
+/**
+ * Corporate "Request a Quote" inquiry. No analytics event is emitted — the
+ * analytics contract is locked to exactly 8 events and a corporate quote is not
+ * one of them (mirrors submitBookingContactStub).
+ */
+export async function submitCorporateQuoteStub(
+  input: unknown,
+): Promise<StubResult> {
+  const blocked = maintenanceBlocked();
+  if (blocked) return blocked;
+  const v = validateForm(CorporateQuoteFormSchema, input);
   if (!v.success) return fail(v);
   return { success: true, request_id: crypto.randomUUID() };
 }

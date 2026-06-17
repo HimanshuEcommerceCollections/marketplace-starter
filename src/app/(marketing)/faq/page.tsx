@@ -1,18 +1,14 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/layout/container";
-import { FaqAccordion } from "@/components/marketing/faq-accordion";
-import { getBrandContent } from "@/lib/brand/load";
+import { FaqLandingPage } from "@/components/marketing/faq-landing-page";
+import { getFaqPage } from "@/lib/brand/load";
 
-export const metadata: Metadata = { title: "FAQ" };
+export const metadata: Metadata = {
+  title: "FAQ",
+  description:
+    "Answers about booking, scheduling, pricing, safety, and working with independent Elevate professionals.",
+};
 
 export default function FaqPage() {
-  const { faq } = getBrandContent();
-  return (
-    <Container size="md" className="py-12">
-      <h1 className="mb-8 text-3xl font-bold tracking-tight">
-        {faq.heading ?? "Frequently asked questions"}
-      </h1>
-      <FaqAccordion items={faq.items} />
-    </Container>
-  );
+  const config = getFaqPage();
+  return <FaqLandingPage config={config} />;
 }

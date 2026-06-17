@@ -25,6 +25,19 @@ import {
   Gauge,
   PersonStanding,
   TrendingUp,
+  Globe,
+  Search,
+  Shield,
+  Users,
+  Package,
+  RefreshCw,
+  DollarSign,
+  CalendarClock,
+  Building2,
+  Mail,
+  Phone,
+  HelpCircle,
+  MessageSquare,
 } from "lucide-react";
 
 /** Maps content/services icon name strings to Lucide components (data-driven). */
@@ -54,6 +67,19 @@ const ICONS: Record<string, LucideIcon> = {
   Gauge,
   PersonStanding,
   TrendingUp,
+  Globe,
+  Search,
+  Shield,
+  Users,
+  Package,
+  RefreshCw,
+  DollarSign,
+  CalendarClock,
+  Building2,
+  Mail,
+  Phone,
+  HelpCircle,
+  MessageSquare,
 };
 
 export function getIcon(name?: string): LucideIcon {

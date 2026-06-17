@@ -1,16 +1,17 @@
-import { Info } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Info } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Card } from "@/components/ui/card";
 import { getIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
-import type { FeatureItem } from "@/lib/brand/types";
+import type { OfferingItem } from "@/lib/brand/types";
 import type { Surface } from "@/lib/services/landing";
 
-export interface BenefitsSectionProps {
+export interface OfferingsSectionProps {
   heading?: string;
   subheading?: string;
-  items: FeatureItem[];
-  /** Desktop column count. Default 3. */
+  items: OfferingItem[];
+  /** Desktop column count. Default 4. */
   columns?: 2 | 3 | 4;
   surface?: Surface;
   /** Optional callout below the grid. */
@@ -24,20 +25,22 @@ const COLUMN_CLASS: Record<2 | 3 | 4, string> = {
 };
 
 /**
- * Stacked benefit cards (square icon top-left, left-aligned). Server component,
- * token-only, data-driven. Equal-height cards.
+ * Featured-offering cards: top accent bar, icon, optional badge, and an
+ * optional "Inquire about this →" link. A sibling of {@link BenefitsSection}
+ * for offers that need a per-card call to action. Server component, token-only,
+ * data-driven, equal-height cards.
  */
-export function BenefitsSection({
+export function OfferingsSection({
   heading,
   subheading,
   items,
-  columns = 3,
+  columns = 4,
   surface = "default",
   note,
-}: BenefitsSectionProps) {
+}: OfferingsSectionProps) {
   return (
     <section
-      aria-labelledby={heading ? "benefits-heading" : undefined}
+      aria-labelledby={heading ? "offerings-heading" : undefined}
       className={cn(
         "py-16 md:py-20 lg:py-28",
         surface === "muted" && "bg-muted",
@@ -47,7 +50,7 @@ export function BenefitsSection({
         {heading ? (
           <div className="mx-auto mb-12 max-w-2xl text-center md:mb-16">
             <h2
-              id="benefits-heading"
+              id="offerings-heading"
               className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl lg:text-5xl"
             >
               {heading}
@@ -70,7 +73,7 @@ export function BenefitsSection({
               <li key={item.title}>
                 <Card
                   className={cn(
-                    "flex h-full flex-col items-start gap-4 rounded-xl p-6 transition hover:-translate-y-0.5 hover:shadow-md focus-within:shadow-md",
+                    "flex h-full flex-col items-start gap-4 rounded-xl border-t-2 border-t-highlight p-6 transition hover:-translate-y-0.5 hover:shadow-md focus-within:shadow-md",
                     surface === "muted" ? "bg-background" : "bg-muted",
                   )}
                 >
@@ -79,7 +82,7 @@ export function BenefitsSection({
                       <Icon className="size-6" strokeWidth={1.75} aria-hidden />
                     </span>
                     {item.badge ? (
-                      <span className="inline-flex items-center rounded-md bg-muted-foreground/15 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      <span className="inline-flex items-center rounded-md bg-highlight/10 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-highlight">
                         {item.badge}
                       </span>
                     ) : null}
@@ -90,6 +93,15 @@ export function BenefitsSection({
                   <p className="text-sm leading-relaxed text-muted-foreground">
                     {item.description}
                   </p>
+                  {item.cta ? (
+                    <Link
+                      href={item.cta.href}
+                      className="mt-auto inline-flex items-center gap-1 rounded-md text-sm font-semibold text-highlight transition-colors hover:text-highlight/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      {item.cta.label}
+                      <ArrowRight className="size-4" aria-hidden />
+                    </Link>
+                  ) : null}
                 </Card>
               </li>
             );
