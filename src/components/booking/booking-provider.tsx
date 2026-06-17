@@ -4,45 +4,46 @@ import * as React from "react";
 import type { Service } from "@/lib/catalog/types";
 import type { PricingTable } from "@/lib/pricing/types";
 import type { BrandId } from "@/lib/brand/registry";
-import type {
-  BookingRequest,
-  Configuration,
-  Contact,
-} from "@/lib/booking/contract";
-import type {
-  LocationMode,
-  TimeWindowKind,
-  Flexibility,
-} from "@/lib/booking/enums";
+import type { BookingRequest, Configuration } from "@/lib/booking/contract";
 import { createDraftBooking } from "@/lib/booking/contract";
 import { computePrice } from "@/lib/pricing/engine";
 
 export type WizardStep =
   | "config"
-  | "schedule"
-  | "contact"
+  | "pricing"
+  | "details"
   | "review"
   | "success";
 
 export const WIZARD_STEPS: WizardStep[] = [
   "config",
-  "schedule",
-  "contact",
+  "pricing",
+  "details",
   "review",
   "success",
 ];
 
 type SelectionValue = string | number | boolean | string[];
 
+/** A single preferred scheduling window (date + time, both optional). */
+export interface SchedWindow {
+  date: string;
+  time: string;
+}
+
+type DetailField = "firstName" | "lastName" | "email" | "phone" | "address";
+
 export interface WizardState {
   step: WizardStep;
   selections: Record<string, SelectionValue>;
   quantity: number;
-  scheduleDates: string[];
-  timeWindows: TimeWindowKind[];
-  flexibility: Flexibility;
-  contact: Partial<Contact>;
-  locationMode: LocationMode;
+  /* Details form */
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  windows: SchedWindow[];
   notes: string;
   status: "draft" | "submitting" | "submitted" | "error";
   request?: BookingRequest;
@@ -52,14 +53,8 @@ type Action =
   | { type: "SET_STEP"; step: WizardStep }
   | { type: "SET_SELECTION"; key: string; value: SelectionValue }
   | { type: "SET_QUANTITY"; quantity: number }
-  | {
-      type: "SET_SCHEDULE";
-      dates: string[];
-      windows: TimeWindowKind[];
-      flexibility: Flexibility;
-    }
-  | { type: "SET_CONTACT"; patch: Partial<Contact> }
-  | { type: "SET_LOCATION_MODE"; mode: LocationMode }
+  | { type: "SET_FIELD"; field: DetailField; value: string }
+  | { type: "SET_WINDOW"; index: number; patch: Partial<SchedWindow> }
   | { type: "SET_NOTES"; notes: string }
   | { type: "SUBMIT_START" }
   | { type: "SUBMIT_OK"; request: BookingRequest };
@@ -75,17 +70,15 @@ function reducer(state: WizardState, action: Action): WizardState {
       };
     case "SET_QUANTITY":
       return { ...state, quantity: Math.max(1, action.quantity) };
-    case "SET_SCHEDULE":
+    case "SET_FIELD":
+      return { ...state, [action.field]: action.value };
+    case "SET_WINDOW":
       return {
         ...state,
-        scheduleDates: action.dates,
-        timeWindows: action.windows,
-        flexibility: action.flexibility,
+        windows: state.windows.map((w, i) =>
+          i === action.index ? { ...w, ...action.patch } : w,
+        ),
       };
-    case "SET_CONTACT":
-      return { ...state, contact: { ...state.contact, ...action.patch } };
-    case "SET_LOCATION_MODE":
-      return { ...state, locationMode: action.mode };
     case "SET_NOTES":
       return { ...state, notes: action.notes };
     case "SUBMIT_START":
@@ -142,11 +135,16 @@ export function BookingProvider({
     step: "config",
     selections: defaultSelections(service),
     quantity: 1,
-    scheduleDates: [],
-    timeWindows: ["anytime"],
-    flexibility: "flexible",
-    contact: { preferred_method: "email", consent_marketing: false },
-    locationMode: service.location_modes[0] ?? "onsite",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    address: "",
+    windows: [
+      { date: "", time: "" },
+      { date: "", time: "" },
+      { date: "", time: "" },
+    ],
     notes: "",
     status: "draft",
   };
@@ -166,6 +164,53 @@ export function useBookingDraft(): BookingContextValue {
   return ctx;
 }
 
+/**
+ * Human-readable summary of the chosen single-select options, e.g.
+ * "60 minutes · Swedish (Relaxation)". Used for summary/pricing line labels.
+ */
+export function selectionSummary(
+  service: Service,
+  selections: Record<string, SelectionValue>,
+): string {
+  return service.config_options
+    .filter((o) => o.input === "select")
+    .map((o) => o.choices?.find((c) => c.id === selections[o.id])?.label)
+    .filter(Boolean)
+    .join(" · ");
+}
+
+/** Joined labels of the chosen multi-select options (e.g. "Hot Stones, Aromatherapy Oil"). */
+export function addOnsSummary(
+  service: Service,
+  selections: Record<string, SelectionValue>,
+): string {
+  return service.config_options
+    .filter((o) => o.input === "multiselect")
+    .flatMap((o) => {
+      const sel = selections[o.id];
+      const ids = Array.isArray(sel) ? sel : [];
+      return (o.choices ?? [])
+        .filter((c) => ids.includes(c.id))
+        .map((c) => c.label);
+    })
+    .join(", ");
+}
+
+/** Human-readable scheduling window, e.g. "Thu, Jun 19 · 10:00 AM" ("" if no date). */
+export function formatWindowLabel(w: SchedWindow): string {
+  if (!w.date) return "";
+  const datePart = new Date(`${w.date}T00:00:00`).toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
+  if (!w.time) return datePart;
+  const [h, m] = w.time.split(":").map(Number);
+  const period = h < 12 ? "AM" : "PM";
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  return `${datePart} · ${h12}:${String(m).padStart(2, "0")} ${period}`;
+}
+
 /** Build the Configuration from wizard state. service.id MUST key pricing.services. */
 export function toConfiguration(
   state: WizardState,
@@ -180,32 +225,42 @@ export function toConfiguration(
 
 /** Assemble a submitted booking_request from wizard state (stub — no backend). */
 export function buildBookingRequest(ctx: BookingContextValue): BookingRequest {
-  const configuration = toConfiguration(ctx.state, ctx.service);
+  const { state, service } = ctx;
+  const configuration = toConfiguration(state, service);
   const displayed_price = computePrice(ctx.pricing, configuration);
   const draft = createDraftBooking({
     brand: ctx.brandId,
-    service_type: ctx.service.service_type,
+    service_type: service.service_type,
     source: "web_wizard",
     configuration,
     displayed_price,
   });
+
+  // Each filled window becomes an ISO date(+time) string in preferred_dates.
+  const preferred_dates = state.windows
+    .filter((w) => w.date)
+    .map((w) => (w.time ? `${w.date}T${w.time}` : w.date));
+
   return {
     ...draft,
     contact: {
-      name: ctx.state.contact.name ?? "",
-      email: ctx.state.contact.email ?? "",
-      phone: ctx.state.contact.phone,
-      preferred_method: ctx.state.contact.preferred_method ?? "email",
-      consent_marketing: ctx.state.contact.consent_marketing ?? false,
+      name: `${state.firstName} ${state.lastName}`.trim(),
+      email: state.email,
+      phone: state.phone || undefined,
+      preferred_method: "email",
+      consent_marketing: false,
     },
-    location_pref: { mode: ctx.state.locationMode },
+    location_pref: {
+      mode: service.location_modes[0] ?? "onsite",
+      address_line1: state.address || undefined,
+    },
     schedule_preferences: {
-      preferred_dates: ctx.state.scheduleDates,
-      time_windows: ctx.state.timeWindows,
+      preferred_dates,
+      time_windows: ["anytime"],
       timezone: "UTC",
-      flexibility: ctx.state.flexibility,
+      flexibility: "flexible",
     },
-    notes: ctx.state.notes,
+    notes: state.notes,
     status: "submitted",
   };
 }

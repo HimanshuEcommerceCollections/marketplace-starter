@@ -1,11 +1,22 @@
 import type { Metadata } from "next";
+import { Container } from "@/components/layout/container";
 import { BookingWizard } from "@/components/booking/booking-wizard";
+import { BookingFlowStepper } from "@/components/booking/booking-flow-stepper";
+import { ServiceSelection } from "@/components/booking/service-selection";
+import type { ServiceSelectItem } from "@/components/booking/service-select-card";
 import { getService, getServices } from "@/lib/catalog/load";
 import { getPricingTable } from "@/lib/pricing/load";
 import { getActiveBrandId } from "@/lib/brand/registry";
+import { formatMoney } from "@/lib/money";
 import { isEnabled } from "@/lib/flags/resolve";
 
 export const metadata: Metadata = { title: "Book" };
+
+/** Whole-dollar "From $X" label (e.g. 10900 -> "From $109"). */
+function priceLabel(amount: number | undefined, currency: string): string | null {
+  if (amount == null) return null;
+  return `From ${formatMoney({ amount, currency }).replace(/\.00$/, "")}`;
+}
 
 export default async function BookPage({
   searchParams,
@@ -14,32 +25,44 @@ export default async function BookPage({
 }) {
   if (!isEnabled("bookingWizard")) {
     return (
-      <p className="text-sm text-muted-foreground">
-        Booking is currently unavailable.
-      </p>
+      <Container size="md" className="py-12">
+        <p className="text-sm text-muted-foreground">
+          Booking is currently unavailable.
+        </p>
+      </Container>
     );
   }
 
   const { service: serviceParam } = await searchParams;
-  const service =
-    (serviceParam ? getService(serviceParam) : undefined) ?? getServices()[0];
+  const service = serviceParam ? getService(serviceParam) : undefined;
 
+  // Step 1 — no valid service in the URL: show the service picker.
   if (!service) {
+    const items: ServiceSelectItem[] = getServices().map((s) => ({
+      slug: s.id,
+      title: s.title,
+      icon: s.icon,
+      priceLabel: priceLabel(s.from_price, s.currency),
+      status: s.coming_soon ? "coming-soon" : "active",
+    }));
+
     return (
-      <p className="text-sm text-muted-foreground">
-        No services available to book.
-      </p>
+      <Container size="xl" className="py-8 md:py-10">
+        <BookingFlowStepper currentIndex={0} />
+        <div className="mt-10 md:mt-12">
+          <ServiceSelection items={items} />
+        </div>
+      </Container>
     );
   }
 
+  // Service chosen — continue into the configurator wizard (it renders its own
+  // booking chrome via BookingStepLayout).
   return (
-    <div>
-      <h1 className="mb-6 text-2xl font-bold">Book {service.title}</h1>
-      <BookingWizard
-        service={service}
-        pricing={getPricingTable()}
-        brandId={getActiveBrandId()}
-      />
-    </div>
+    <BookingWizard
+      service={service}
+      pricing={getPricingTable()}
+      brandId={getActiveBrandId()}
+    />
   );
 }

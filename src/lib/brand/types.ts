@@ -21,6 +21,10 @@ export interface BrandConfig {
   tagline: string;
   contactEmail: string;
   contactPhone?: string;
+  /** Short service-area label for booking UI, e.g. "Raleigh, NC". */
+  serviceArea?: string;
+  /** Prefix for booking reference numbers, e.g. "ELV" -> "ELV-2026-4821". */
+  bookingPrefix?: string;
   locale: string;
   currency: string;
   nav: NavItem[];

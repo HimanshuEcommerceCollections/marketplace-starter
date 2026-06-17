@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getIcon } from "@/lib/icons";
 import { formatMoney } from "@/lib/money";
+import { cn } from "@/lib/utils";
 import type { Service } from "@/lib/catalog/types";
 
 export interface ServicesGridSectionProps {
@@ -27,7 +28,7 @@ export function ServicesGridSection({
       className="bg-muted py-16 md:py-20 lg:py-28"
     >
       <Container>
-        <div className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
+        <div className="mx-auto mb-8 max-w-2xl text-center">
           <h2
             id="services-heading"
             className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl lg:text-5xl"
@@ -39,12 +40,13 @@ export function ServicesGridSection({
               {subheading}
             </p>
           ) : null}
-          {draftNote ? (
-            <p className="mx-auto mt-6 w-fit max-w-full rounded-full bg-notice/10 px-4 py-1.5 text-center font-sans text-xs font-semibold uppercase leading-none tracking-label text-notice">
-              {draftNote}
-            </p>
-          ) : null}
         </div>
+
+        {draftNote ? (
+          <p className="mb-10 w-full rounded-lg bg-notice/10 px-4 py-2.5 text-center font-sans text-xs font-semibold uppercase leading-none tracking-label text-notice md:mb-12">
+            {draftNote}
+          </p>
+        ) : null}
 
         <ul
           role="list"
@@ -52,6 +54,7 @@ export function ServicesGridSection({
         >
           {services.map((service) => {
             const Icon = getIcon(service.icon);
+            const comingSoon = service.coming_soon;
             // Whole-dollar display for card prices (e.g. "$109" not "$109.00").
             const priceLabel =
               service.from_price != null
@@ -61,42 +64,62 @@ export function ServicesGridSection({
                   }).replace(/\.00$/, "")
                 : null;
             const card = (
-              <Card className="flex h-full flex-col gap-2 rounded-md px-6 py-7 transition group-hover:-translate-y-0.5 group-hover:border-primary/40 group-hover:shadow-md">
-                  <div className="mb-1 flex items-center justify-between gap-2">
-                    <span className="inline-flex items-center justify-center rounded-lg bg-primary/10 p-2 text-primary">
-                      <Icon className="size-6" strokeWidth={1.75} aria-hidden />
-                    </span>
-                    {service.coming_soon ? (
-                      <Badge variant="secondary">Coming Soon</Badge>
-                    ) : null}
-                  </div>
+              <Card
+                className={cn(
+                  "flex h-full flex-col gap-2 rounded-md px-6 py-7 transition",
+                  comingSoon
+                    ? "bg-transparent shadow-none"
+                    : "group-hover:-translate-y-0.5 group-hover:border-primary/40 group-hover:shadow-md",
+                )}
+              >
+                {comingSoon ? (
+                  <Badge variant="secondary" className="mb-1 w-fit">
+                    Coming Soon
+                  </Badge>
+                ) : null}
 
-                  <h3 className="font-heading text-lg font-semibold leading-tight text-foreground">
-                    {service.title}
-                  </h3>
-
-                  {!service.coming_soon && priceLabel ? (
-                    <p className="text-sm">
-                      <span className="text-muted-foreground">From </span>
-                      <span className="font-semibold text-highlight">
-                        {priceLabel}
-                      </span>
-                    </p>
-                  ) : (
-                    <p className="text-sm font-medium text-muted-foreground">
-                      Availability coming soon
-                    </p>
+                <span
+                  className={cn(
+                    "mb-1 inline-flex w-fit items-center justify-center rounded-lg p-2",
+                    comingSoon
+                      ? "bg-muted-foreground/10 text-muted-foreground"
+                      : "bg-primary/10 text-primary",
                   )}
+                >
+                  <Icon className="size-6" strokeWidth={1.75} aria-hidden />
+                </span>
 
-                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                    {service.summary}
+                <h3
+                  className={cn(
+                    "font-heading text-lg font-semibold leading-tight",
+                    comingSoon ? "text-muted-foreground" : "text-foreground",
+                  )}
+                >
+                  {service.title}
+                </h3>
+
+                {!comingSoon && priceLabel ? (
+                  <p className="text-sm">
+                    <span className="text-muted-foreground">From </span>
+                    <span className="font-semibold text-highlight">
+                      {priceLabel}
+                    </span>
                   </p>
-                </Card>
+                ) : (
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Coming Soon
+                  </p>
+                )}
+
+                <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                  {service.summary}
+                </p>
+              </Card>
             );
 
             return (
               <li key={service.id}>
-                {service.coming_soon ? (
+                {comingSoon ? (
                   card
                 ) : (
                   <Link

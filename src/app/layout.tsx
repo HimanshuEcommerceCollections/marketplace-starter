@@ -7,6 +7,7 @@ import { getBrandConfig, getBrandContent } from "@/lib/brand/load";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { SiteChrome } from "@/components/layout/site-chrome";
 import { PageViewTracker } from "@/components/shared/page-view-tracker";
 import { JsonLd } from "@/lib/seo/json-ld";
 import { organization } from "@/lib/seo/jsonld";
@@ -67,18 +68,25 @@ export default function RootLayout({
       <body className="flex min-h-screen flex-col">
         <Providers config={config} content={content}>
           <PageViewTracker />
-          <Navbar
-            brandName={config.shortName}
-            logoSublabel={config.logoSublabel}
-            cta={{ label: "Book Now", href: "/book" }}
-          />
-          <main className="flex-1">{children}</main>
-          <Footer
-            brandName={config.shortName}
-            tagline={content.hero.title}
-            columns={config.footerColumns}
-            legalLinks={config.legalLinks}
-          />
+          <SiteChrome
+            navbar={
+              <Navbar
+                brandName={config.shortName}
+                logoSublabel={config.logoSublabel}
+                cta={{ label: "Book Now", href: "/book" }}
+              />
+            }
+            footer={
+              <Footer
+                brandName={config.shortName}
+                tagline={content.hero.title}
+                columns={config.footerColumns}
+                legalLinks={config.legalLinks}
+              />
+            }
+          >
+            {children}
+          </SiteChrome>
         </Providers>
         <JsonLd data={orgJsonLd} />
       </body>

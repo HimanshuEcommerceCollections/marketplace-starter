@@ -1,4 +1,4 @@
-import { Container } from "@/components/layout/container";
+import { BookingHeader } from "@/components/booking/booking-header";
 
 export default function BookLayout({
   children,
@@ -6,8 +6,9 @@ export default function BookLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Container size="md" className="py-12">
+    <>
+      <BookingHeader />
       {children}
-    </Container>
+    </>
   );
 }
