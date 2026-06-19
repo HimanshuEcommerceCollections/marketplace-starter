@@ -1,9 +1,10 @@
 "use client";
 
-import { useBookingDraft } from "./booking-provider";
+import { useBookingDraft, toConfiguration } from "./booking-provider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { computePrice } from "@/lib/pricing/engine";
 import { formatMoney, addMoney } from "@/lib/money";
 import { cn } from "@/lib/utils";
 import type { ConfigOption } from "@/lib/catalog/types";
@@ -30,8 +31,33 @@ export function WizardStepConfig() {
       (o) => o.delta && o.delta.amount !== 0,
     );
 
+  const minBooking = service.min_booking ?? 0;
+  const currentTotal = computePrice(pricing, toConfiguration(state, service)).total;
+  const metMin = currentTotal.amount >= minBooking;
+
   return (
     <div className="space-y-8">
+      {minBooking > 0 ? (
+        <div
+          className={cn(
+            "flex flex-wrap items-center justify-between gap-2 rounded-lg border p-4 text-sm",
+            metMin
+              ? "border-highlight/40 bg-highlight/5 text-foreground"
+              : "border-notice/30 bg-notice/10 text-notice",
+          )}
+        >
+          <span className="font-semibold">
+            Minimum booking value{" "}
+            {money({ amount: minBooking, currency: currentTotal.currency })}
+          </span>
+          <span className={metMin ? "text-highlight" : undefined}>
+            {metMin
+              ? `Minimum met — current ${money(currentTotal)} (DRAFT)`
+              : `Add services to continue — current ${money(currentTotal)} (DRAFT)`}
+          </span>
+        </div>
+      ) : null}
+
       {service.config_options.length === 0 ? (
         <p className="text-sm text-muted-foreground">
           No options for this service — continue to the next step.

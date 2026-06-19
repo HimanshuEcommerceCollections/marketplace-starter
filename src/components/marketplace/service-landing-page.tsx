@@ -11,6 +11,7 @@ import { TestimonialsSection } from "@/components/sections/testimonials-section"
 import { NoticeSection } from "@/components/sections/notice-section";
 import { PricingTiersSection } from "@/components/sections/pricing-tiers-section";
 import { InterestListSection } from "@/components/sections/interest-list-section";
+import { ComingSoonConfiguratorSection } from "@/components/sections/coming-soon-configurator-section";
 import { FaqSection } from "@/components/sections/faq-section";
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { isEnabled } from "@/lib/flags/resolve";
@@ -184,6 +185,21 @@ export function ServiceLandingPage({
             bullets={section.bullets}
             footnote={section.footnote}
             submitLabel={section.submitLabel}
+            surface={section.surface}
+          />
+        );
+
+      case "comingSoonConfigurator":
+        return (
+          <ComingSoonConfiguratorSection
+            key={key}
+            eyebrow={section.eyebrow}
+            heading={section.heading}
+            subheading={section.subheading}
+            groups={section.groups}
+            notes={section.notes}
+            tiers={section.tiers}
+            footnote={section.footnote}
             surface={section.surface}
           />
         );

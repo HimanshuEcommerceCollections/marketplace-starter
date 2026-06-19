@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { BookingWizard } from "@/components/booking/booking-wizard";
 import { BookingFlowStepper } from "@/components/booking/booking-flow-stepper";
@@ -35,6 +36,12 @@ export default async function BookPage({
 
   const { service: serviceParam } = await searchParams;
   const service = serviceParam ? getService(serviceParam) : undefined;
+
+  // Coming-soon services are not bookable — a crafted /book?service=<id> deep
+  // link sends the visitor to the interest list, matching the picker + landing.
+  if (service?.coming_soon) {
+    redirect(`/waitlist?service=${service.id}`);
+  }
 
   // Step 1 — no valid service in the URL: show the service picker.
   if (!service) {

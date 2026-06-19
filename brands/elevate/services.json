@@ -71,13 +71,48 @@
       "icon": "Dumbbell",
       "config_options": [
         {
-          "id": "tier",
-          "label": "Tier (Sample)",
+          "id": "session-format",
+          "label": "Session Format",
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "standard", "label": "Standard" },
-            { "id": "premium", "label": "Premium" }
+            { "id": "individual", "label": "Individual" },
+            { "id": "partner-training", "label": "Partner Training" },
+            { "id": "small-group", "label": "Small Group (3–5)" }
+          ]
+        },
+        {
+          "id": "duration",
+          "label": "Duration",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "45", "label": "45 Minutes" },
+            { "id": "60", "label": "60 Minutes" },
+            { "id": "90", "label": "90 Minutes" }
+          ]
+        },
+        {
+          "id": "goal-focus",
+          "label": "Goal Focus",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "weight-loss", "label": "Weight Loss" },
+            { "id": "strength-training", "label": "Strength Training" },
+            { "id": "mobility-flexibility", "label": "Mobility & Flexibility" },
+            { "id": "general-fitness", "label": "General Fitness" }
+          ]
+        },
+        {
+          "id": "package",
+          "label": "Package",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "single", "label": "Single Session" },
+            { "id": "pack-4", "label": "4 Session Pack" },
+            { "id": "pack-8", "label": "8 Session Pack" }
           ]
         }
       ],
@@ -98,13 +133,47 @@
       "icon": "Flower2",
       "config_options": [
         {
-          "id": "tier",
-          "label": "Style (Sample)",
+          "id": "session-format",
+          "label": "Session Format",
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "standard", "label": "Vinyasa" },
-            { "id": "premium", "label": "Restorative" }
+            { "id": "individual", "label": "Individual" },
+            { "id": "couple", "label": "Couple" },
+            { "id": "small-group", "label": "Small Group" }
+          ]
+        },
+        {
+          "id": "duration",
+          "label": "Duration",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "60", "label": "60 Minutes" },
+            { "id": "90", "label": "90 Minutes" }
+          ]
+        },
+        {
+          "id": "yoga-style",
+          "label": "Yoga Style",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "gentle-flow", "label": "Gentle Flow" },
+            { "id": "hatha", "label": "Hatha" },
+            { "id": "vinyasa", "label": "Vinyasa" },
+            { "id": "restorative", "label": "Restorative" }
+          ]
+        },
+        {
+          "id": "package",
+          "label": "Package",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "single", "label": "Single Session" },
+            { "id": "pack-4", "label": "4 Session Pack" },
+            { "id": "pack-8", "label": "8 Session Pack" }
           ]
         }
       ],
@@ -122,16 +191,41 @@
       "pricing_ref": "beauty",
       "currency": "USD",
       "from_price": 7500,
+      "min_booking": 7500,
       "icon": "Sparkles",
       "config_options": [
         {
-          "id": "tier",
-          "label": "Service (Sample)",
+          "id": "services",
+          "label": "Select Services",
+          "input": "multiselect",
+          "choices": [
+            { "id": "hair-styling", "label": "Hair Styling" },
+            { "id": "makeup-application", "label": "Makeup Application" },
+            { "id": "blowout", "label": "Blowout" },
+            { "id": "event-styling", "label": "Event Styling" }
+          ]
+        },
+        {
+          "id": "people",
+          "label": "Number of People",
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "standard", "label": "Express" },
-            { "id": "premium", "label": "Signature" }
+            { "id": "1", "label": "1" },
+            { "id": "2", "label": "2" },
+            { "id": "3-plus", "label": "3+" }
+          ]
+        },
+        {
+          "id": "occasion",
+          "label": "Occasion",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "everyday", "label": "Everyday" },
+            { "id": "photoshoot", "label": "Photoshoot" },
+            { "id": "wedding-event", "label": "Wedding/Event" },
+            { "id": "other", "label": "Other" }
           ]
         }
       ],
@@ -153,17 +247,49 @@
       "landing_slug": "life-coaching",
       "config_options": [
         {
-          "id": "tier",
-          "label": "Plan (Sample)",
+          "id": "consultation-type",
+          "label": "Consultation Type",
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "standard", "label": "Monthly" },
-            { "id": "premium", "label": "Monthly + weekly calls" }
+            { "id": "initial", "label": "Initial Consultation" },
+            { "id": "follow-up", "label": "Follow-Up Session" }
+          ]
+        },
+        {
+          "id": "format",
+          "label": "Format",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "in-home", "label": "In Home" },
+            { "id": "virtual", "label": "Virtual" }
+          ]
+        },
+        {
+          "id": "goal",
+          "label": "Goal",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "weight-management", "label": "Weight Management" },
+            { "id": "sports-nutrition", "label": "Sports Nutrition" },
+            { "id": "healthy-lifestyle", "label": "Healthy Lifestyle" },
+            { "id": "medical-support", "label": "Medical Nutrition Support" }
+          ]
+        },
+        {
+          "id": "package",
+          "label": "Package",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "single", "label": "Single Session" },
+            { "id": "monthly", "label": "Monthly Coaching" }
           ]
         }
       ],
-      "location_modes": ["remote"],
+      "location_modes": ["onsite", "remote"],
       "badges": ["[Sample]"],
       "faq": []
     },
@@ -180,13 +306,46 @@
       "icon": "Compass",
       "config_options": [
         {
-          "id": "tier",
-          "label": "Format (Sample)",
+          "id": "session-format",
+          "label": "Session Format",
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "standard", "label": "Single session" },
-            { "id": "premium", "label": "Package of 4" }
+            { "id": "in-home", "label": "In Home" },
+            { "id": "virtual", "label": "Virtual" }
+          ]
+        },
+        {
+          "id": "focus-area",
+          "label": "Focus Area",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "career-growth", "label": "Career Growth" },
+            { "id": "work-life-balance", "label": "Work-Life Balance" },
+            { "id": "personal-development", "label": "Personal Development" },
+            { "id": "goal-setting", "label": "Goal Setting" }
+          ]
+        },
+        {
+          "id": "duration",
+          "label": "Duration",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "60", "label": "60 Minutes" },
+            { "id": "90", "label": "90 Minutes" }
+          ]
+        },
+        {
+          "id": "package",
+          "label": "Package",
+          "input": "select",
+          "required": true,
+          "choices": [
+            { "id": "single", "label": "Single Session" },
+            { "id": "pack-4", "label": "4 Session Pack" },
+            { "id": "pack-8", "label": "8 Session Pack" }
           ]
         }
       ],

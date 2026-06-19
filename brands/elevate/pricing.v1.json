@@ -47,13 +47,48 @@
       "base_price": { "amount": 7900, "currency": "USD" },
       "modifiers": [
         {
-          "id": "tier",
-          "label": "Tier (Sample)",
+          "id": "session-format",
+          "label": "Session Format",
           "type": "select",
           "applies": "flat",
           "options": [
-            { "id": "standard", "label": "Standard", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "premium", "label": "Premium", "delta": { "amount": 3000, "currency": "USD" } }
+            { "id": "individual", "label": "Individual", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "partner-training", "label": "Partner Training", "delta": { "amount": 3000, "currency": "USD" } },
+            { "id": "small-group", "label": "Small Group (3–5)", "delta": { "amount": 5000, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "duration",
+          "label": "Duration",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "45", "label": "45 Minutes", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "60", "label": "60 Minutes", "delta": { "amount": 2000, "currency": "USD" } },
+            { "id": "90", "label": "90 Minutes", "delta": { "amount": 5000, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "goal-focus",
+          "label": "Goal Focus",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "weight-loss", "label": "Weight Loss", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "strength-training", "label": "Strength Training", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "mobility-flexibility", "label": "Mobility & Flexibility", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "general-fitness", "label": "General Fitness", "delta": { "amount": 0, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "package",
+          "label": "Package",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "single", "label": "Single Session", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "pack-4", "label": "4 Session Pack", "delta": { "amount": 25300, "currency": "USD" } },
+            { "id": "pack-8", "label": "8 Session Pack", "delta": { "amount": 48000, "currency": "USD" } }
           ]
         }
       ],
@@ -63,29 +98,88 @@
       "base_price": { "amount": 8900, "currency": "USD" },
       "modifiers": [
         {
-          "id": "tier",
-          "label": "Style (Sample)",
+          "id": "session-format",
+          "label": "Session Format",
           "type": "select",
           "applies": "flat",
           "options": [
-            { "id": "standard", "label": "Vinyasa", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "premium", "label": "Restorative", "delta": { "amount": 2000, "currency": "USD" } }
+            { "id": "individual", "label": "Individual", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "couple", "label": "Couple", "delta": { "amount": 3000, "currency": "USD" } },
+            { "id": "small-group", "label": "Small Group", "delta": { "amount": 5000, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "duration",
+          "label": "Duration",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "60", "label": "60 Minutes", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "90", "label": "90 Minutes", "delta": { "amount": 3000, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "yoga-style",
+          "label": "Yoga Style",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "gentle-flow", "label": "Gentle Flow", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "hatha", "label": "Hatha", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "vinyasa", "label": "Vinyasa", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "restorative", "label": "Restorative", "delta": { "amount": 0, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "package",
+          "label": "Package",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "single", "label": "Single Session", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "pack-4", "label": "4 Session Pack", "delta": { "amount": 28500, "currency": "USD" } },
+            { "id": "pack-8", "label": "8 Session Pack", "delta": { "amount": 54000, "currency": "USD" } }
           ]
         }
       ],
       "fees": []
     },
     "beauty": {
-      "base_price": { "amount": 7500, "currency": "USD" },
+      "base_price": { "amount": 0, "currency": "USD" },
       "modifiers": [
         {
-          "id": "tier",
-          "label": "Service (Sample)",
+          "id": "services",
+          "label": "Select Services",
+          "type": "multiselect",
+          "applies": "flat",
+          "options": [
+            { "id": "hair-styling", "label": "Hair Styling", "delta": { "amount": 5500, "currency": "USD" } },
+            { "id": "makeup-application", "label": "Makeup Application", "delta": { "amount": 6500, "currency": "USD" } },
+            { "id": "blowout", "label": "Blowout", "delta": { "amount": 4500, "currency": "USD" } },
+            { "id": "event-styling", "label": "Event Styling", "delta": { "amount": 9500, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "people",
+          "label": "Number of People",
           "type": "select",
           "applies": "flat",
           "options": [
-            { "id": "standard", "label": "Express", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "premium", "label": "Signature", "delta": { "amount": 5000, "currency": "USD" } }
+            { "id": "1", "label": "1", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "2", "label": "2", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "3-plus", "label": "3+", "delta": { "amount": 0, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "occasion",
+          "label": "Occasion",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "everyday", "label": "Everyday", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "photoshoot", "label": "Photoshoot", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "wedding-event", "label": "Wedding/Event", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "other", "label": "Other", "delta": { "amount": 0, "currency": "USD" } }
           ]
         }
       ],
@@ -95,13 +189,45 @@
       "base_price": { "amount": 12900, "currency": "USD" },
       "modifiers": [
         {
-          "id": "tier",
-          "label": "Plan (Sample)",
+          "id": "consultation-type",
+          "label": "Consultation Type",
           "type": "select",
           "applies": "flat",
           "options": [
-            { "id": "standard", "label": "Monthly", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "premium", "label": "Monthly + weekly calls", "delta": { "amount": 6000, "currency": "USD" } }
+            { "id": "initial", "label": "Initial Consultation", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "follow-up", "label": "Follow-Up Session", "delta": { "amount": 0, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "format",
+          "label": "Format",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "in-home", "label": "In Home", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "virtual", "label": "Virtual", "delta": { "amount": 0, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "goal",
+          "label": "Goal",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "weight-management", "label": "Weight Management", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "sports-nutrition", "label": "Sports Nutrition", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "healthy-lifestyle", "label": "Healthy Lifestyle", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "medical-support", "label": "Medical Nutrition Support", "delta": { "amount": 0, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "package",
+          "label": "Package",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "single", "label": "Single Session", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "monthly", "label": "Monthly Coaching", "delta": { "amount": 30000, "currency": "USD" } }
           ]
         }
       ],
@@ -111,13 +237,46 @@
       "base_price": { "amount": 11900, "currency": "USD" },
       "modifiers": [
         {
-          "id": "tier",
-          "label": "Format (Sample)",
+          "id": "session-format",
+          "label": "Session Format",
           "type": "select",
           "applies": "flat",
           "options": [
-            { "id": "standard", "label": "Single session", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "premium", "label": "Package of 4", "delta": { "amount": 30000, "currency": "USD" } }
+            { "id": "in-home", "label": "In Home", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "virtual", "label": "Virtual", "delta": { "amount": 0, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "focus-area",
+          "label": "Focus Area",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "career-growth", "label": "Career Growth", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "work-life-balance", "label": "Work-Life Balance", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "personal-development", "label": "Personal Development", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "goal-setting", "label": "Goal Setting", "delta": { "amount": 0, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "duration",
+          "label": "Duration",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "60", "label": "60 Minutes", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "90", "label": "90 Minutes", "delta": { "amount": 3000, "currency": "USD" } }
+          ]
+        },
+        {
+          "id": "package",
+          "label": "Package",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "single", "label": "Single Session", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "pack-4", "label": "4 Session Pack", "delta": { "amount": 35700, "currency": "USD" } },
+            { "id": "pack-8", "label": "8 Session Pack", "delta": { "amount": 66600, "currency": "USD" } }
           ]
         }
       ],

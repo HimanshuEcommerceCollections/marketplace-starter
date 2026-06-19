@@ -92,6 +92,7 @@ function WizardInner() {
   function goNext() {
     switch (state.step) {
       case "config": {
+        if (belowMin) return; // minimum-booking gate not yet met
         const breakdown = computePrice(pricing, toConfiguration(state, service));
         analytics.configComplete({
           service_id: service.id,
@@ -160,6 +161,10 @@ function WizardInner() {
   const showSummary = primaryStep || isReview;
   const breakdown = computePrice(pricing, toConfiguration(state, service));
   const baseLabel = selectionSummary(service, state.selections);
+  // Minimum-booking gate (e.g. Beauty's $75): block leaving Configure until the
+  // DRAFT total reaches the floor.
+  const minBooking = service.min_booking ?? 0;
+  const belowMin = breakdown.total.amount < minBooking;
 
   const PRIMARY_CTA: Partial<Record<WizardStep, string>> = {
     config: "See Pricing",
@@ -187,6 +192,7 @@ function WizardInner() {
       baseLabel={baseLabel || undefined}
       breakdown={breakdown}
       onSeePricing={goNext}
+      seePricingDisabled={isConfig && belowMin}
       condensed={isDetails}
     />
   );
@@ -239,9 +245,12 @@ function WizardInner() {
           type="button"
           size="lg"
           onClick={goNext}
+          disabled={isConfig && belowMin}
           className="mt-8 w-full bg-highlight text-highlight-foreground hover:bg-highlight/90"
         >
-          {PRIMARY_CTA[state.step]}
+          {isConfig && belowMin
+            ? `Add services to reach the ${formatMoney({ amount: minBooking, currency: breakdown.total.currency }).replace(/\.00$/, "")} minimum`
+            : PRIMARY_CTA[state.step]}
           <ArrowRight aria-hidden />
         </Button>
       ) : isReview ? (

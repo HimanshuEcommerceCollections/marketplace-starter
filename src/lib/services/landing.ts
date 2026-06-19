@@ -212,6 +212,41 @@ export interface CtaSection extends BaseSection {
   secondaryCta?: NavItem;
 }
 
+/**
+ * A single selector group in a coming-soon configurator preview.
+ * "radio" renders togglable pills; "dropdown" renders a native select.
+ */
+export interface ComingSoonConfigGroup {
+  id: string;
+  label: string;
+  /** Optional lucide icon name shown beside the group label. */
+  icon?: string;
+  /** Presentation: "radio" (default) = pills; "dropdown" = native select. */
+  control?: "radio" | "dropdown";
+  options: { id: string; label: string }[];
+}
+
+/**
+ * Coming-soon configurator — an illustrative, NON-submitting "plan your visit"
+ * preview for services without a live booking flow (e.g. Physical/Speech
+ * Therapy). Renders selector groups + an optional notes field, and an "OR"
+ * summary of draft visit-type tiers. No price is computed live; a coordinator
+ * confirms final pricing. Reusable across coming-soon services.
+ */
+export interface ComingSoonConfiguratorSection extends BaseSection {
+  type: "comingSoonConfigurator";
+  eyebrow?: string;
+  heading?: string;
+  subheading?: string;
+  groups: ComingSoonConfigGroup[];
+  /** Optional free-text notes field (illustrative — never submitted). */
+  notes?: { label: string; placeholder?: string };
+  /** Draft visit-type tiers shown side-by-side with "OR" in the summary. */
+  tiers: { id: string; name: string; price: { amount: number; currency: string } }[];
+  /** Footnote under the summary, e.g. "Coordinator will confirm final pricing." */
+  footnote?: string;
+}
+
 export type ServiceSection =
   | CardsSection
   | ProcessCardsSection
@@ -223,6 +258,7 @@ export type ServiceSection =
   | NoticeSection
   | PricingTiersSection
   | InterestListSection
+  | ComingSoonConfiguratorSection
   | FaqSectionConfig
   | CtaSection;
 

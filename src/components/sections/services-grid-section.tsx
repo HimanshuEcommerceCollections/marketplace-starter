@@ -119,17 +119,13 @@ export function ServicesGridSection({
 
             return (
               <li key={service.id}>
-                {comingSoon ? (
-                  card
-                ) : (
-                  <Link
-                    href={`/services/${service.landing_slug ?? service.id}`}
-                    aria-label={`View ${service.title}`}
-                    className="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                  >
-                    {card}
-                  </Link>
-                )}
+                <Link
+                  href={`/services/${service.landing_slug ?? service.id}`}
+                  aria-label={`View ${service.title}`}
+                  className="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                >
+                  {card}
+                </Link>
               </li>
             );
           })}

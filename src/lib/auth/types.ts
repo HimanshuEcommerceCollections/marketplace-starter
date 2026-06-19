@@ -2,7 +2,11 @@
  * The authenticated user shape returned by the Elevate server (`PublicUser` —
  * the User row without `passwordHash`). Client-safe; no server imports.
  */
-export type SessionRole = "CUSTOMER" | "PROVIDER" | "COORDINATOR" | "ADMIN";
+export type SessionRole =
+  | "USER_CUSTOMER"
+  | "SYSTEM_PROVIDER"
+  | "SYSTEM_COORDINATOR"
+  | "SYSTEM_ADMIN";
 
 export interface SessionUser {
   id: string;

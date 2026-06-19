@@ -3,7 +3,15 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { LogOut } from "lucide-react";
 import { useAuth } from "@/components/auth/auth-provider";
+import { Avatar } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import type { NavItem } from "@/lib/brand/types";
 
 export interface AuthStatusProps {
@@ -17,7 +25,10 @@ const itemClass =
 
 /**
  * Navbar account control. Shows the Sign In link when signed out (preserving
- * the prior behavior), or the user's name + Sign out when authenticated.
+ * the prior behavior). When authenticated, the top-bar instance ("desktop")
+ * renders an initials avatar that opens a small menu with Log out; the in-menu
+ * instance ("mobile") renders nothing, since the avatar already lives in the
+ * bar at all breakpoints.
  */
 export function AuthStatus({ account, variant, onNavigate }: AuthStatusProps) {
   const { status, user, logout } = useAuth();
@@ -31,24 +42,27 @@ export function AuthStatus({ account, variant, onNavigate }: AuthStatusProps) {
   };
 
   if (status === "authenticated" && user) {
-    if (variant === "desktop") {
-      return (
-        <div className="hidden items-center gap-2 md:flex">
-          <span className="text-sm font-medium text-foreground">{user.name}</span>
-          <button type="button" onClick={onSignOut} className={itemClass}>
-            Sign out
-          </button>
-        </div>
-      );
-    }
+    // The avatar lives in the top bar (desktop instance) on every breakpoint,
+    // so the hamburger-menu instance renders nothing to avoid duplication.
+    if (variant === "mobile") return null;
     return (
-      <button
-        type="button"
-        onClick={onSignOut}
-        className="rounded-md px-3 py-2 text-left text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-      >
-        Sign out ({user.name})
-      </button>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button
+            type="button"
+            aria-label="Account menu"
+            className="flex items-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            <Avatar name={user.name} />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem onSelect={onSignOut}>
+            <LogOut className="size-4" aria-hidden />
+            Log out
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     );
   }
 

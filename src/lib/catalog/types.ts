@@ -29,6 +29,10 @@ export const ServiceSchema = z.object({
   pricing_ref: z.string(), // -> pricing.v1.json services key
   currency: z.string().length(3),
   from_price: z.number().optional(), // minor units, display only
+  // Minimum booking value in minor units. When set, the booking wizard blocks
+  // advancing past Configure until the DRAFT total reaches this floor, and the
+  // displayed "From" price never reads below it (e.g. Beauty's $75 minimum).
+  min_booking: z.number().optional(),
   icon: z.string().optional(), // lucide icon name for cards
   // Optional: card links to /services/<landing_slug> instead of /services/<id>.
   // Lets one service's card open another service's landing page (data-driven).

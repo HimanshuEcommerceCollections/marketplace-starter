@@ -62,6 +62,10 @@ export default async function ServiceDetailPage({
     selections: {},
     quantity: 1,
   });
+  // Displayed "From" price never reads below the service's booking minimum
+  // (e.g. Beauty's $75 floor, where the base price is $0).
+  const fromAmount = Math.max(breakdown.total.amount, svc.min_booking ?? 0);
+  const fromMoney = { amount: fromAmount, currency: breakdown.total.currency };
 
   const landing = getServiceLanding(svc.id);
 
@@ -99,10 +103,10 @@ export default async function ServiceDetailPage({
         <ServiceLandingPage
           config={landing}
           priceLabel={
-            svc.coming_soon ? undefined : `From ${formatMoney(breakdown.total)}`
+            svc.coming_soon ? undefined : `From ${formatMoney(fromMoney)}`
           }
           category={svc.category}
-          price={breakdown.total.amount}
+          price={fromAmount}
           currency={breakdown.total.currency}
           fallbackTestimonials={getBrandContent().testimonials}
         />

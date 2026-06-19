@@ -24,9 +24,9 @@ export function WizardStepPricing() {
 
   const breakdown = computePrice(pricing, toConfiguration(state, service));
   const summary = selectionSummary(service, state.selections);
-  const lines = breakdown.line_items.filter(
-    (li) => li.kind === "base" || li.amount.amount !== 0,
-  );
+  // Only non-zero lines (a $0 base — e.g. Beauty — is omitted; its total comes
+  // entirely from the selected services).
+  const lines = breakdown.line_items.filter((li) => li.amount.amount !== 0);
 
   return (
     <div className="space-y-6">

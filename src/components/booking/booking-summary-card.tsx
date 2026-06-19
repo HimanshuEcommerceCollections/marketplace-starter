@@ -11,6 +11,8 @@ export interface BookingSummaryCardProps {
   /** "See Full Pricing" action (advances the flow). */
   onSeePricing?: () => void;
   ctaLabel?: string;
+  /** Disable the "See Full Pricing" action (e.g. minimum-booking not yet met). */
+  seePricingDisabled?: boolean;
   /** Condensed variant: no CTA / coordinator note, "Total" label, badge at bottom. */
   condensed?: boolean;
 }
@@ -31,6 +33,7 @@ export function BookingSummaryCard({
   baseLabel,
   onSeePricing,
   ctaLabel = "See Full Pricing",
+  seePricingDisabled = false,
   condensed = false,
 }: BookingSummaryCardProps) {
   const base = baseLabel || serviceTitle;
@@ -39,10 +42,9 @@ export function BookingSummaryCard({
       Draft Pricing
     </span>
   );
-  // Base line + only the selections that change the price.
-  const lines = breakdown.line_items.filter(
-    (li) => li.kind === "base" || li.amount.amount !== 0,
-  );
+  // Only lines that carry a non-zero amount (a $0 base — e.g. Beauty, whose
+  // total is driven entirely by selected services — is omitted).
+  const lines = breakdown.line_items.filter((li) => li.amount.amount !== 0);
 
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-muted text-foreground lg:border-transparent lg:bg-surface-inverse lg:text-surface-inverse-foreground">
@@ -102,6 +104,7 @@ export function BookingSummaryCard({
           <Button
             type="button"
             onClick={onSeePricing}
+            disabled={seePricingDisabled}
             className="w-full bg-highlight text-highlight-foreground hover:bg-highlight/90 focus-visible:ring-offset-surface-inverse"
           >
             {ctaLabel}
