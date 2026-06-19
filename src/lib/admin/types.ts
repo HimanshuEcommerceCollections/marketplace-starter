@@ -1,6 +1,41 @@
 export type BookingStatus = "pending" | "active" | "completed" | "cancelled";
 export type ServiceStatus = "active" | "inactive";
 
+/** Category lifecycle (mirrors the server `CategoryStatus` enum). */
+export type CategoryStatus = "DRAFT" | "ACTIVE" | "INACTIVE";
+
+/** A category as returned by the server API (camelCase; basePrice in cents). */
+export interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  basePrice: number;
+  status: CategoryStatus;
+  coverImagePath: string;
+  iconPath: string;
+  servicesCount?: number; // present on list + details
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** Details response — `servicesCount` is always present. */
+export interface CategoryDetails extends Category {
+  servicesCount: number;
+}
+
+export interface PaginationMeta {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
+export interface CategoryListResult {
+  items: Category[];
+  meta: PaginationMeta;
+}
+
 export interface AdminBooking {
   id: string;
   client: string;

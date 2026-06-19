@@ -2,6 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import {
   LayoutDashboard,
   CalendarDays,
+  Shapes,
   Sparkles,
   Users,
   DollarSign,
@@ -17,6 +18,7 @@ export interface AdminNavItem {
 export const ADMIN_NAV: AdminNavItem[] = [
   { label: "Overview", href: "/admin", icon: LayoutDashboard },
   { label: "Bookings", href: "/admin/bookings", icon: CalendarDays },
+  { label: "Categories", href: "/admin/categories", icon: Shapes },
   { label: "Services", href: "/admin/services", icon: Sparkles },
   { label: "Professionals", href: "/admin/professionals", icon: Users },
   { label: "Pricing", href: "/admin/pricing", icon: DollarSign },

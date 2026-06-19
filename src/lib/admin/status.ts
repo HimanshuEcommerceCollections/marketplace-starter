@@ -1,5 +1,5 @@
 import type { BadgeProps } from "@/components/ui/badge";
-import type { BookingStatus, ServiceStatus } from "./types";
+import type { BookingStatus, CategoryStatus, ServiceStatus } from "./types";
 
 type Variant = NonNullable<BadgeProps["variant"]>;
 
@@ -45,4 +45,23 @@ export function serviceStatusBadge(s: ServiceStatus): {
   return s === "active"
     ? { variant: "success", label: "Active" }
     : { variant: "destructive", label: "Inactive" };
+}
+
+/**
+ * Category-status → Badge variant + label.
+ * Draft = neutral (secondary), Active = success (olive/green), Inactive = destructive
+ * (mirrors `serviceStatusBadge`'s inactive treatment for consistency).
+ */
+export function categoryStatusBadge(s: CategoryStatus): {
+  variant: Variant;
+  label: string;
+} {
+  switch (s) {
+    case "DRAFT":
+      return { variant: "secondary", label: "Draft" };
+    case "ACTIVE":
+      return { variant: "success", label: "Active" };
+    case "INACTIVE":
+      return { variant: "destructive", label: "Inactive" };
+  }
 }

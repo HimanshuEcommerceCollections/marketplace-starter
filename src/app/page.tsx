@@ -8,11 +8,24 @@ import { CorporateSection } from "@/components/sections/corporate-section";
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { getBrandContent } from "@/lib/brand/load";
 import { getServices } from "@/lib/catalog/load";
+import { serviceToGridCard } from "@/lib/catalog/cards";
+import {
+  fetchPublicCategories,
+  categoryToGridCard,
+} from "@/lib/catalog/categories-api";
 import { isEnabled } from "@/lib/flags/resolve";
 
-export default function HomePage() {
+// ISR: re-fetch the live categories periodically. The component still renders
+// (via the static fallback) if the API is unreachable at build/request time.
+export const revalidate = 60;
+
+export default async function HomePage() {
   const content = getBrandContent();
-  const services = getServices();
+  // Live categories from the API; fall back to the static catalog if it's down.
+  const apiCategories = await fetchPublicCategories();
+  const serviceCards = apiCategories
+    ? apiCategories.map(categoryToGridCard)
+    : getServices().map(serviceToGridCard);
 
   return (
     <>
@@ -26,7 +39,7 @@ export default function HomePage() {
       ) : null}
 
       {content.servicesSection ? (
-        <ServicesGridSection {...content.servicesSection} services={services} />
+        <ServicesGridSection {...content.servicesSection} cards={serviceCards} />
       ) : null}
 
       {content.howItWorks ? <HowItWorksSection {...content.howItWorks} /> : null}

@@ -3,15 +3,18 @@ import { Container } from "@/components/layout/container";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getIcon } from "@/lib/icons";
-import { formatMoney } from "@/lib/money";
 import { cn } from "@/lib/utils";
 import type { Service } from "@/lib/catalog/types";
+import { serviceToGridCard, type GridCard } from "@/lib/catalog/cards";
 
 export interface ServicesGridSectionProps {
   heading: string;
   subheading?: string;
   draftNote?: string;
-  services: Service[];
+  /** Pre-adapted cards (e.g. fetched from the API). Takes precedence. */
+  cards?: GridCard[];
+  /** Raw catalog services, adapted to cards internally (static callers). */
+  services?: Service[];
 }
 
 /** Services marketplace grid. Server component, token-only, data-driven. */
@@ -19,8 +22,10 @@ export function ServicesGridSection({
   heading,
   subheading,
   draftNote,
+  cards,
   services,
 }: ServicesGridSectionProps) {
+  const items: GridCard[] = cards ?? (services ?? []).map(serviceToGridCard);
   return (
     <section
       id="services"
@@ -52,17 +57,10 @@ export function ServicesGridSection({
           role="list"
           className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
         >
-          {services.map((service) => {
+          {items.map((service) => {
             const Icon = getIcon(service.icon);
-            const comingSoon = service.coming_soon;
-            // Whole-dollar display for card prices (e.g. "$109" not "$109.00").
-            const priceLabel =
-              service.from_price != null
-                ? formatMoney({
-                    amount: service.from_price,
-                    currency: service.currency,
-                  }).replace(/\.00$/, "")
-                : null;
+            const comingSoon = service.comingSoon;
+            const priceLabel = service.priceLabel;
             const card = (
               <Card
                 className={cn(
@@ -120,7 +118,7 @@ export function ServicesGridSection({
             return (
               <li key={service.id}>
                 <Link
-                  href={`/services/${service.landing_slug ?? service.id}`}
+                  href={service.href}
                   aria-label={`View ${service.title}`}
                   className="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >

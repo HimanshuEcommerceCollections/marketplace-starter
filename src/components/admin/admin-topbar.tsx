@@ -9,17 +9,23 @@ export interface AdminTopbarProps {
   searchPlaceholder: string;
   action?: React.ReactNode;
   date?: string;
+  /** When provided, the search field is controlled (functional). Omit for the
+   *  default decorative stub used by other admin screens. */
+  searchValue?: string;
+  onSearchChange?: (value: string) => void;
 }
 
 /**
  * Sticky utility bar above each admin screen: a search field, optional date,
  * a notifications bell, and an optional primary action (passed by the page).
- * Search is a stub-only control — no backend wiring.
+ * Search is a stub unless `onSearchChange` is supplied (then it's controlled).
  */
 export function AdminTopbar({
   searchPlaceholder,
   action,
   date,
+  searchValue,
+  onSearchChange,
 }: AdminTopbarProps) {
   return (
     <div className="lg:sticky lg:top-0 z-sticky flex h-16 items-center gap-3 border-b border-border bg-muted/80 px-4 backdrop-blur sm:px-6 lg:px-8">
@@ -33,6 +39,9 @@ export function AdminTopbar({
           aria-label="Search"
           placeholder={searchPlaceholder}
           className="bg-card pl-9"
+          {...(onSearchChange
+            ? { value: searchValue ?? "", onChange: (e) => onSearchChange(e.target.value) }
+            : {})}
         />
       </div>
 
