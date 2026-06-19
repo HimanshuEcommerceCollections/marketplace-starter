@@ -2,48 +2,50 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { submitLoginStub } from "@/lib/forms/stub-submit";
-import type { FieldErrors } from "@/lib/forms/validate";
+import { useAuth } from "@/components/auth/auth-provider";
+import { landingPathForRole } from "@/lib/auth/roles";
+import { validateForm, type FieldErrors } from "@/lib/forms/validate";
+import { LoginFormSchema } from "@/lib/forms/schemas";
 
 export interface LoginFormProps {
   brandName: string;
 }
 
 export function LoginForm({ brandName }: LoginFormProps) {
+  const router = useRouter();
+  const { login } = useAuth();
   const [errors, setErrors] = React.useState<FieldErrors>();
-  const [done, setDone] = React.useState(false);
   const [pending, setPending] = React.useState(false);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setPending(true);
     const form = new FormData(e.currentTarget);
-    const result = await submitLoginStub({
+    const parsed = validateForm(LoginFormSchema, {
       email: form.get("email"),
       password: form.get("password"),
       remember: form.get("remember") === "on",
     });
+    if (!parsed.success || !parsed.data) {
+      setErrors(parsed.errors);
+      return;
+    }
+    setPending(true);
+    const result = await login({
+      email: parsed.data.email,
+      password: parsed.data.password,
+    });
     setPending(false);
     if (result.success) {
       setErrors(undefined);
-      setDone(true);
+      router.push(result.user ? landingPathForRole(result.user.role) : "/");
+      router.refresh();
     } else {
       setErrors(result.errors);
     }
-  }
-
-  if (done) {
-    return (
-      <p
-        role="status"
-        className="rounded-lg border border-success/40 bg-success/10 p-4 text-sm"
-      >
-        Signed in (stub — no session created, nothing sent).
-      </p>
-    );
   }
 
   return (

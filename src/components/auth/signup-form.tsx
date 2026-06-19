@@ -2,22 +2,27 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { submitSignupStub } from "@/lib/forms/stub-submit";
-import type { FieldErrors } from "@/lib/forms/validate";
+import { useAuth } from "@/components/auth/auth-provider";
+import { landingPathForRole } from "@/lib/auth/roles";
+import { validateForm, type FieldErrors } from "@/lib/forms/validate";
+import { SignupFormSchema } from "@/lib/forms/schemas";
 
 export function SignupForm() {
+  const router = useRouter();
+  const { signup } = useAuth();
   const [errors, setErrors] = React.useState<FieldErrors>();
-  const [done, setDone] = React.useState(false);
   const [pending, setPending] = React.useState(false);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setPending(true);
     const form = new FormData(e.currentTarget);
-    const result = await submitSignupStub({
+    // Client-only rules (password confirmation + consent) are enforced here;
+    // the server validates name/email/password/brand.
+    const parsed = validateForm(SignupFormSchema, {
       name: form.get("name"),
       email: form.get("email"),
       phone: form.get("phone") || undefined,
@@ -25,24 +30,25 @@ export function SignupForm() {
       confirm_password: form.get("confirm_password"),
       consent: form.get("consent") === "on",
     });
+    if (!parsed.success || !parsed.data) {
+      setErrors(parsed.errors);
+      return;
+    }
+    setPending(true);
+    const result = await signup({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      phone: parsed.data.phone,
+      password: parsed.data.password,
+    });
     setPending(false);
     if (result.success) {
       setErrors(undefined);
-      setDone(true);
+      router.push(result.user ? landingPathForRole(result.user.role) : "/");
+      router.refresh();
     } else {
       setErrors(result.errors);
     }
-  }
-
-  if (done) {
-    return (
-      <p
-        role="status"
-        className="rounded-lg border border-success/40 bg-success/10 p-4 text-sm"
-      >
-        Account created (stub — nothing sent, no account stored).
-      </p>
-    );
   }
 
   return (

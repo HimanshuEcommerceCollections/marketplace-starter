@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { Container } from "./container";
 import { Button } from "@/components/ui/button";
+import { AuthStatus } from "@/components/auth/auth-status";
 import { useFlag } from "@/lib/flags/useFlag";
 import { NAV_ITEMS } from "@/config/navigation";
 import type { NavItem } from "@/lib/brand/types";
@@ -115,12 +116,7 @@ export function Navbar({
 
           <div className="col-start-3 flex items-center justify-end gap-2 justify-self-end">
             {showAuth ? (
-              <Link
-                href={account.href}
-                className="hidden rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:inline-flex"
-              >
-                {account.label}
-              </Link>
+              <AuthStatus account={account} variant="desktop" />
             ) : null}
             <Button asChild size="sm" className="hidden md:inline-flex">
               <Link href={cta.href} onClick={closeMenu}>
@@ -164,13 +160,11 @@ export function Navbar({
                   </Link>
                 ))}
                 {showAuth ? (
-                  <Link
-                    href={account.href}
-                    onClick={closeMenu}
-                    className="rounded-md px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    {account.label}
-                  </Link>
+                  <AuthStatus
+                    account={account}
+                    variant="mobile"
+                    onNavigate={closeMenu}
+                  />
                 ) : null}
                 <Button asChild className="mt-3 w-full">
                   <Link href={cta.href} onClick={closeMenu}>
