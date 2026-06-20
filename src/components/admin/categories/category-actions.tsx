@@ -2,7 +2,15 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { MoreHorizontal, Eye, Pencil, CheckCircle2, Ban } from "lucide-react";
+import {
+  MoreHorizontal,
+  Eye,
+  Pencil,
+  CheckCircle2,
+  Ban,
+  Clock,
+  FileEdit,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,12 +18,12 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import type { Category } from "@/lib/admin/types";
+import type { Category, CategoryStatus } from "@/lib/admin/types";
 import {
-  publishCategory,
-  deactivateCategory,
-  CategoryApiError,
-} from "@/lib/admin/categories";
+  CATEGORY_TRANSITIONS,
+  categoryTransitionLabel,
+} from "@/lib/admin/status";
+import { setCategoryStatus, CategoryApiError } from "@/lib/admin/categories";
 
 export interface CategoryActionsProps {
   category: Category;
@@ -24,15 +32,25 @@ export interface CategoryActionsProps {
   onError?: (message: string) => void;
 }
 
-/** Row actions menu: View · Edit · Publish (DRAFT/INACTIVE) · Deactivate (ACTIVE). */
+const TRANSITION_ICON: Record<
+  CategoryStatus,
+  React.ComponentType<{ className?: string }>
+> = {
+  ACTIVE: CheckCircle2,
+  COMING_SOON: Clock,
+  DRAFT: FileEdit,
+  INACTIVE: Ban,
+};
+
+/** Row actions menu: View · Edit · one item per valid status transition. */
 export function CategoryActions({ category, onChanged, onError }: CategoryActionsProps) {
   const router = useRouter();
   const [busy, setBusy] = React.useState(false);
 
-  const run = async (fn: () => Promise<unknown>) => {
+  const run = async (to: CategoryStatus) => {
     setBusy(true);
     try {
-      await fn();
+      await setCategoryStatus(category.id, to);
       onChanged();
     } catch (err) {
       onError?.(
@@ -43,8 +61,7 @@ export function CategoryActions({ category, onChanged, onError }: CategoryAction
     }
   };
 
-  const canPublish = category.status === "DRAFT" || category.status === "INACTIVE";
-  const canDeactivate = category.status === "ACTIVE";
+  const targets = CATEGORY_TRANSITIONS[category.status];
 
   return (
     <DropdownMenu>
@@ -70,20 +87,15 @@ export function CategoryActions({ category, onChanged, onError }: CategoryAction
           <Pencil className="size-4" aria-hidden />
           Edit
         </DropdownMenuItem>
-        {canPublish ? (
-          <DropdownMenuItem onSelect={() => void run(() => publishCategory(category.id))}>
-            <CheckCircle2 className="size-4" aria-hidden />
-            {category.status === "INACTIVE" ? "Reactivate" : "Publish"}
-          </DropdownMenuItem>
-        ) : null}
-        {canDeactivate ? (
-          <DropdownMenuItem
-            onSelect={() => void run(() => deactivateCategory(category.id))}
-          >
-            <Ban className="size-4" aria-hidden />
-            Deactivate
-          </DropdownMenuItem>
-        ) : null}
+        {targets.map((to) => {
+          const Icon = TRANSITION_ICON[to];
+          return (
+            <DropdownMenuItem key={to} onSelect={() => void run(to)}>
+              <Icon className="size-4" aria-hidden />
+              {categoryTransitionLabel(to)}
+            </DropdownMenuItem>
+          );
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   );

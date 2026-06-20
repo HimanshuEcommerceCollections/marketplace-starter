@@ -8,7 +8,6 @@ import { Providers } from "./providers";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SiteChrome } from "@/components/layout/site-chrome";
-import { DevDesignToggle } from "@/components/auth/dev-design-toggle";
 import { PageViewTracker } from "@/components/shared/page-view-tracker";
 import { JsonLd } from "@/lib/seo/json-ld";
 import { organization } from "@/lib/seo/jsonld";
@@ -89,8 +88,6 @@ export default function RootLayout({
             {children}
           </SiteChrome>
         </Providers>
-        {/* TEMP: global design preview toggle (user ↔ system) — remove before production. */}
-        <DevDesignToggle />
         <JsonLd data={orgJsonLd} />
       </body>
     </html>

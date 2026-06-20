@@ -2,7 +2,7 @@ export type BookingStatus = "pending" | "active" | "completed" | "cancelled";
 export type ServiceStatus = "active" | "inactive";
 
 /** Category lifecycle (mirrors the server `CategoryStatus` enum). */
-export type CategoryStatus = "DRAFT" | "ACTIVE" | "INACTIVE";
+export type CategoryStatus = "DRAFT" | "ACTIVE" | "COMING_SOON" | "INACTIVE";
 
 /** A category as returned by the server API (camelCase; basePrice in cents). */
 export interface Category {

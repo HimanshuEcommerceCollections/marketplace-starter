@@ -49,8 +49,9 @@ export function serviceStatusBadge(s: ServiceStatus): {
 
 /**
  * Category-status → Badge variant + label.
- * Draft = neutral (secondary), Active = success (olive/green), Inactive = destructive
- * (mirrors `serviceStatusBadge`'s inactive treatment for consistency).
+ * Draft = neutral (secondary), Active = success (olive/green), Coming Soon =
+ * warning (informational, awaiting launch), Inactive = destructive (mirrors
+ * `serviceStatusBadge`'s inactive treatment for consistency).
  */
 export function categoryStatusBadge(s: CategoryStatus): {
   variant: Variant;
@@ -61,7 +62,35 @@ export function categoryStatusBadge(s: CategoryStatus): {
       return { variant: "secondary", label: "Draft" };
     case "ACTIVE":
       return { variant: "success", label: "Active" };
+    case "COMING_SOON":
+      return { variant: "warning", label: "Coming Soon" };
     case "INACTIVE":
       return { variant: "destructive", label: "Inactive" };
+  }
+}
+
+/**
+ * Allowed lifecycle transitions — mirrors the server `ALLOWED_TRANSITIONS` map
+ * so the admin UI only offers actions the API will accept. Source of truth is
+ * the server; this drives which buttons/menu items render.
+ */
+export const CATEGORY_TRANSITIONS: Record<CategoryStatus, CategoryStatus[]> = {
+  DRAFT: ["ACTIVE", "COMING_SOON"],
+  ACTIVE: ["DRAFT", "COMING_SOON", "INACTIVE"],
+  COMING_SOON: ["DRAFT", "ACTIVE", "INACTIVE"],
+  INACTIVE: ["ACTIVE", "COMING_SOON"],
+};
+
+/** Action label for transitioning a category to the given target status. */
+export function categoryTransitionLabel(to: CategoryStatus): string {
+  switch (to) {
+    case "ACTIVE":
+      return "Publish";
+    case "COMING_SOON":
+      return "Mark Coming Soon";
+    case "DRAFT":
+      return "Move to Draft";
+    case "INACTIVE":
+      return "Deactivate";
   }
 }

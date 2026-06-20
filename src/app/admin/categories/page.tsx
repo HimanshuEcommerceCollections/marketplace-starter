@@ -23,6 +23,7 @@ const STATUS_FILTERS: { label: string; value: CategoryStatus | "ALL" }[] = [
   { label: "All", value: "ALL" },
   { label: "Draft", value: "DRAFT" },
   { label: "Active", value: "ACTIVE" },
+  { label: "Coming Soon", value: "COMING_SOON" },
   { label: "Inactive", value: "INACTIVE" },
 ];
 const PAGE_SIZE = 10;

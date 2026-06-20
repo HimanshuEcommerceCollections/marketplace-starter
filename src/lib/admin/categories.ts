@@ -103,3 +103,13 @@ export async function publishCategory(id: string): Promise<Category> {
 export async function deactivateCategory(id: string): Promise<Category> {
   return unwrap<Category>(await apiClient.post(`/categories/${id}/deactivate`)).data;
 }
+
+/** Generic lifecycle change to any valid target status (server enforces the map). */
+export async function setCategoryStatus(
+  id: string,
+  status: CategoryStatus,
+): Promise<Category> {
+  return unwrap<Category>(
+    await apiClient.post(`/categories/${id}/status`, { status }),
+  ).data;
+}

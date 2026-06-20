@@ -8,7 +8,7 @@ export interface ApiCategory {
   slug: string;
   description: string | null;
   basePrice: number;
-  status: "DRAFT" | "ACTIVE" | "INACTIVE";
+  status: "DRAFT" | "ACTIVE" | "COMING_SOON" | "INACTIVE";
   coverImagePath: string;
   iconPath: string;
   servicesCount?: number;
@@ -40,6 +40,9 @@ export function categoryToGridCard(c: ApiCategory): GridCard {
     icon: c.iconPath,
     priceLabel:
       c.status === "ACTIVE" ? wholeDollarLabel(c.basePrice, "USD") : null,
-    comingSoon: c.status !== "ACTIVE",
+    // Only COMING_SOON renders the coming-soon treatment (muted, no price,
+    // booking disabled). DRAFT/INACTIVE are never sent to users, so they are
+    // not — and must not be — treated as coming-soon.
+    comingSoon: c.status === "COMING_SOON",
   };
 }
