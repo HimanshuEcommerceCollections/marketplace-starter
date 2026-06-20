@@ -6,6 +6,21 @@ const nextConfig: NextConfig = {
     // Add brand asset CDNs here per deploy. Placeholder local assets need no remotePatterns.
     remotePatterns: [],
   },
+  async redirects() {
+    // The admin "category" pages were merged into flat "service" pages.
+    return [
+      {
+        source: "/admin/categories/:path*",
+        destination: "/admin/services/:path*",
+        permanent: true,
+      },
+      {
+        source: "/admin/categories",
+        destination: "/admin/services",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

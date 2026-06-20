@@ -1,40 +1,100 @@
 "use client";
 
 import * as React from "react";
-import { Plus } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Plus, TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { SampleBadge } from "@/components/shared/sample-badge";
 import { AdminTopbar } from "@/components/admin/admin-topbar";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
 import { SampleNotice } from "@/components/admin/sample-notice";
 import { ServiceStatusPill } from "@/components/admin/status-pill";
-import {
-  AdminTable,
-  type AdminColumn,
-} from "@/components/admin/admin-table";
-import { MasterDetail } from "@/components/admin/master-detail";
-import { ADMIN_SERVICES } from "@/lib/admin/sample-data";
-import type { AdminService } from "@/lib/admin/types";
-import { ServiceEditPanel } from "@/components/admin/services/service-edit-panel";
+import { AdminTable, type AdminColumn } from "@/components/admin/admin-table";
+import { ServiceActions } from "@/components/admin/services/service-actions";
+import { ServiceEmptyState } from "@/components/admin/services/service-empty-state";
+import { ServiceTableSkeleton } from "@/components/admin/services/service-table-skeleton";
+import { listServices, ServiceApiError } from "@/lib/admin/services";
+import type { AdminService, AdminServiceListResult, ServiceStatus } from "@/lib/admin/types";
+import { formatDate, formatCents } from "@/lib/admin/format";
+
+const STATUS_FILTERS: { label: string; value: ServiceStatus | "ALL" }[] = [
+  { label: "All", value: "ALL" },
+  { label: "Draft", value: "DRAFT" },
+  { label: "Active", value: "ACTIVE" },
+  { label: "Coming Soon", value: "COMING_SOON" },
+  { label: "Inactive", value: "INACTIVE" },
+];
+const PAGE_SIZE = 10;
 
 export default function AdminServicesPage() {
-  const [selectedId, setSelectedId] = React.useState<string | undefined>(
-    undefined,
-  );
-  const selected = ADMIN_SERVICES.find((s) => s.id === selectedId);
+  const router = useRouter();
+  const [search, setSearch] = React.useState("");
+  const [debounced, setDebounced] = React.useState("");
+  const [status, setStatus] = React.useState<ServiceStatus | "ALL">("ALL");
+  const [page, setPage] = React.useState(1);
+  const [result, setResult] = React.useState<AdminServiceListResult | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  // Debounce the search box; reset to page 1 on a new query.
+  React.useEffect(() => {
+    const t = setTimeout(() => {
+      setDebounced(search);
+      setPage(1);
+    }, 300);
+    return () => clearTimeout(t);
+  }, [search]);
+
+  const load = React.useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await listServices({
+        page,
+        limit: PAGE_SIZE,
+        search: debounced || undefined,
+        status: status === "ALL" ? undefined : status,
+        sort: "desc",
+      });
+      setResult(res);
+    } catch (err) {
+      setError(
+        err instanceof ServiceApiError ? err.message : "Failed to load services.",
+      );
+      setResult(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, debounced, status]);
+
+  React.useEffect(() => {
+    void load();
+  }, [load]);
 
   const columns: AdminColumn<AdminService>[] = [
     {
-      key: "name",
-      header: "Service",
-      primary: true,
-      cell: (row) => row.name,
+      key: "icon",
+      header: "Icon",
+      mobileHidden: true,
+      headerClassName: "w-12",
+      cell: (r) => (
+        <span className="inline-flex size-8 items-center justify-center overflow-hidden rounded border border-border bg-muted">
+          {/* eslint-disable-next-line @next/next/no-img-element -- small service icon thumbnail */}
+          <img src={r.iconPath} alt="" aria-hidden className="size-5" />
+        </span>
+      ),
     },
+    { key: "name", header: "Service", primary: true, cell: (r) => r.name },
     {
-      key: "category",
-      header: "Category",
-      cell: (row) => row.category,
+      key: "slug",
+      header: "Slug",
+      cell: (r) => (
+        <code className="rounded bg-muted px-1.5 py-0.5 text-xs text-muted-foreground">
+          {r.slug}
+        </code>
+      ),
     },
     {
       key: "basePrice",
@@ -44,76 +104,129 @@ export default function AdminServicesPage() {
           <SampleBadge />
         </span>
       ),
-      cell: (row) => (
-        <span className="font-medium text-foreground">{row.basePrice}</span>
+      align: "right",
+      cell: (r) => (
+        <span className="font-medium text-foreground">{formatCents(r.basePrice)}</span>
       ),
     },
+    { key: "status", header: "Status", cell: (r) => <ServiceStatusPill status={r.status} /> },
     {
-      key: "duration",
-      header: "Duration",
-      cell: (row) => row.duration,
-    },
-    {
-      key: "status",
-      header: "Status",
-      cell: (row) => <ServiceStatusPill status={row.status} />,
+      key: "createdAt",
+      header: "Created",
+      mobileHidden: true,
+      cell: (r) => formatDate(r.createdAt),
     },
   ];
+
+  const items = result?.items ?? [];
+  const meta = result?.meta;
+  const isFiltered = debounced !== "" || status !== "ALL";
 
   return (
     <>
       <AdminTopbar
         searchPlaceholder="Search services..."
+        searchValue={search}
+        onSearchChange={setSearch}
         action={
-          <Button type="button" size="sm">
-            <Plus aria-hidden />
-            Add Service
+          <Button asChild size="sm">
+            <Link href="/admin/services/new">
+              <Plus aria-hidden />
+              Create Service
+            </Link>
           </Button>
         }
       />
       <div className="px-4 py-6 sm:px-6 lg:px-8">
         <AdminPageHeader
-          title="Services & Pricing"
-          subtitle="Manage service offerings, base pricing, duration, and availability"
+          title="Services"
+          subtitle="Manage the bookable services in the customer marketplace and control what's published."
         />
         <SampleNotice className="mb-6" />
 
-        <MasterDetail
-          detailOpen={Boolean(selected)}
-          onClose={() => setSelectedId(undefined)}
-          detailLabel="Edit service"
-          emptyState={
-            <Card className="flex items-center justify-center p-8 text-center text-sm text-muted-foreground">
-              Select a service to edit.
+        {/* Toolbar: status filter + count */}
+        <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div role="group" aria-label="Filter by status" className="flex flex-wrap gap-1.5">
+            {STATUS_FILTERS.map((f) => (
+              <Button
+                key={f.value}
+                type="button"
+                size="sm"
+                variant={status === f.value ? "default" : "outline"}
+                aria-pressed={status === f.value}
+                onClick={() => {
+                  setStatus(f.value);
+                  setPage(1);
+                }}
+              >
+                {f.label}
+              </Button>
+            ))}
+          </div>
+          {meta ? (
+            <span className="text-sm text-muted-foreground">
+              {meta.total} {meta.total === 1 ? "service" : "services"}
+            </span>
+          ) : null}
+        </div>
+
+        {/* Content states */}
+        {loading ? (
+          <ServiceTableSkeleton />
+        ) : error ? (
+          <Card className="flex items-center gap-2 px-4 py-8 text-sm text-destructive">
+            <TriangleAlert className="size-4 shrink-0" aria-hidden />
+            {error}
+          </Card>
+        ) : items.length === 0 ? (
+          isFiltered ? (
+            <Card className="px-4 py-12 text-center text-sm text-muted-foreground">
+              No services match your filters.
             </Card>
-          }
-          list={
+          ) : (
+            <ServiceEmptyState />
+          )
+        ) : (
+          <>
             <AdminTable
               columns={columns}
-              rows={ADMIN_SERVICES}
-              getRowId={(row) => row.id}
-              selectedId={selectedId}
-              onRowSelect={(row) => setSelectedId(row.id)}
-              caption="Services and pricing"
-              emptyMessage="No services to show."
-              rowActions={(row) => (
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setSelectedId(row.id)}
-                >
-                  Edit
-                </Button>
+              rows={items}
+              getRowId={(r) => r.id}
+              onRowSelect={(r) => router.push(`/admin/services/${r.id}`)}
+              caption="Services"
+              rowActions={(r) => (
+                <ServiceActions service={r} onChanged={load} onError={setError} />
               )}
             />
-          }
-          detail={
-            selected ? (
-              <ServiceEditPanel key={selected.id} service={selected} />
-            ) : null
-          }
-        />
+            {meta && meta.totalPages > 1 ? (
+              <div className="mt-4 flex items-center justify-between gap-3">
+                <span className="text-sm text-muted-foreground">
+                  Page {meta.page} of {meta.totalPages}
+                </span>
+                <div className="flex gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    disabled={meta.page <= 1}
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    disabled={meta.page >= meta.totalPages}
+                    onClick={() => setPage((p) => p + 1)}
+                  >
+                    Next
+                  </Button>
+                </div>
+              </div>
+            ) : null}
+          </>
+        )}
       </div>
     </>
   );

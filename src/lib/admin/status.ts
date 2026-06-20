@@ -1,5 +1,5 @@
 import type { BadgeProps } from "@/components/ui/badge";
-import type { BookingStatus, CategoryStatus, ServiceStatus } from "./types";
+import type { BookingStatus, ServiceStatus } from "./types";
 
 type Variant = NonNullable<BadgeProps["variant"]>;
 
@@ -38,22 +38,12 @@ export function bookingStatusDot(s: BookingStatus): string {
   }
 }
 
-export function serviceStatusBadge(s: ServiceStatus): {
-  variant: Variant;
-  label: string;
-} {
-  return s === "active"
-    ? { variant: "success", label: "Active" }
-    : { variant: "destructive", label: "Inactive" };
-}
-
 /**
- * Category-status → Badge variant + label.
+ * Service-status → Badge variant + label.
  * Draft = neutral (secondary), Active = success (olive/green), Coming Soon =
- * warning (informational, awaiting launch), Inactive = destructive (mirrors
- * `serviceStatusBadge`'s inactive treatment for consistency).
+ * warning (informational, awaiting launch), Inactive = destructive.
  */
-export function categoryStatusBadge(s: CategoryStatus): {
+export function serviceStatusBadge(s: ServiceStatus): {
   variant: Variant;
   label: string;
 } {
@@ -74,15 +64,15 @@ export function categoryStatusBadge(s: CategoryStatus): {
  * so the admin UI only offers actions the API will accept. Source of truth is
  * the server; this drives which buttons/menu items render.
  */
-export const CATEGORY_TRANSITIONS: Record<CategoryStatus, CategoryStatus[]> = {
+export const SERVICE_TRANSITIONS: Record<ServiceStatus, ServiceStatus[]> = {
   DRAFT: ["ACTIVE", "COMING_SOON"],
   ACTIVE: ["DRAFT", "COMING_SOON", "INACTIVE"],
   COMING_SOON: ["DRAFT", "ACTIVE", "INACTIVE"],
   INACTIVE: ["ACTIVE", "COMING_SOON"],
 };
 
-/** Action label for transitioning a category to the given target status. */
-export function categoryTransitionLabel(to: CategoryStatus): string {
+/** Action label for transitioning a service to the given target status. */
+export function serviceTransitionLabel(to: ServiceStatus): string {
   switch (to) {
     case "ACTIVE":
       return "Publish";

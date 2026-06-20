@@ -1,6 +1,5 @@
 import type {
   AdminBooking,
-  AdminService,
   AdminUser,
   Kpi,
   ServicesOverviewItem,
@@ -300,90 +299,3 @@ export const PENDING_BOOKINGS: AdminBooking[] = ALL_BOOKINGS.filter(
 export const ACTIVE_BOOKINGS: AdminBooking[] = ALL_BOOKINGS.filter(
   (b) => b.status === "active",
 );
-
-export const ADMIN_SERVICES: AdminService[] = [
-  {
-    id: "yoga-private-session",
-    name: "Yoga — Private Session",
-    category: "Wellness",
-    basePrice: "$80",
-    duration: "60 min",
-    status: "active",
-  },
-  {
-    id: "yoga-group-up-to-4",
-    name: "Yoga — Group (up to 4)",
-    category: "Wellness",
-    basePrice: "$65/person",
-    duration: "60 min",
-    status: "active",
-  },
-  {
-    id: "beauty-hair-styling",
-    name: "Beauty — Hair Styling",
-    category: "Beauty",
-    basePrice: "From $75",
-    maxPrice: "$180",
-    duration: "60–120 min",
-    status: "active",
-    description:
-      "Professional hair styling services performed in your home. Includes blowout, styling, and finishing.",
-    availability: { weekdays: true, weekends: true, sameDay: false },
-  },
-  {
-    id: "beauty-makeup-application",
-    name: "Beauty — Makeup Application",
-    category: "Beauty",
-    basePrice: "From $75",
-    duration: "45–90 min",
-    status: "active",
-  },
-  {
-    id: "massage-swedish",
-    name: "Massage — Swedish",
-    category: "Massage",
-    basePrice: "$95",
-    duration: "60 min",
-    status: "active",
-  },
-  {
-    id: "massage-deep-tissue",
-    name: "Massage — Deep Tissue",
-    category: "Massage",
-    basePrice: "$115",
-    duration: "90 min",
-    status: "active",
-  },
-  {
-    id: "personal-training",
-    name: "Personal Training",
-    category: "Fitness",
-    basePrice: "$90",
-    duration: "60 min",
-    status: "active",
-  },
-  {
-    id: "nutrition-coaching",
-    name: "Nutrition Coaching",
-    category: "Wellness",
-    basePrice: "$85",
-    duration: "50 min",
-    status: "inactive",
-  },
-  {
-    id: "life-coaching",
-    name: "Life Coaching",
-    category: "Wellness",
-    basePrice: "$100",
-    duration: "60 min",
-    status: "active",
-  },
-  {
-    id: "physical-therapy",
-    name: "Physical Therapy",
-    category: "Medical",
-    basePrice: "$110",
-    duration: "60 min",
-    status: "inactive",
-  },
-];
