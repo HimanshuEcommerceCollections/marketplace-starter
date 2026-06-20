@@ -10,21 +10,21 @@ import { getBrandContent } from "@/lib/brand/load";
 import { getServices } from "@/lib/catalog/load";
 import { serviceToGridCard } from "@/lib/catalog/cards";
 import {
-  fetchPublicCategories,
-  categoryToGridCard,
-} from "@/lib/catalog/categories-api";
+  fetchPublicServices,
+  apiServiceToGridCard,
+} from "@/lib/catalog/services-api";
 import { isEnabled } from "@/lib/flags/resolve";
 
-// ISR: re-fetch the live categories periodically. The component still renders
+// ISR: re-fetch the live services periodically. The component still renders
 // (via the static fallback) if the API is unreachable at build/request time.
 export const revalidate = 60;
 
 export default async function HomePage() {
   const content = getBrandContent();
-  // Live categories from the API; fall back to the static catalog if it's down.
-  const apiCategories = await fetchPublicCategories();
-  const serviceCards = apiCategories
-    ? apiCategories.map(categoryToGridCard)
+  // Live services from the API; fall back to the static catalog if it's down.
+  const apiServices = await fetchPublicServices();
+  const serviceCards = apiServices
+    ? apiServices.map(apiServiceToGridCard)
     : getServices().map(serviceToGridCard);
 
   return (

@@ -3,14 +3,9 @@ import { Badge } from "@/components/ui/badge";
 import {
   bookingStatusBadge,
   bookingStatusDot,
-  categoryStatusBadge,
   serviceStatusBadge,
 } from "@/lib/admin/status";
-import type {
-  BookingStatus,
-  CategoryStatus,
-  ServiceStatus,
-} from "@/lib/admin/types";
+import type { BookingStatus, ServiceStatus } from "@/lib/admin/types";
 import { cn } from "@/lib/utils";
 
 export function StatusPill({ status }: { status: BookingStatus }) {
@@ -32,10 +27,5 @@ export function StatusDot({ status }: { status: BookingStatus }) {
 
 export function ServiceStatusPill({ status }: { status: ServiceStatus }) {
   const { variant, label } = serviceStatusBadge(status);
-  return <Badge variant={variant}>{label}</Badge>;
-}
-
-export function CategoryStatusPill({ status }: { status: CategoryStatus }) {
-  const { variant, label } = categoryStatusBadge(status);
   return <Badge variant={variant}>{label}</Badge>;
 }

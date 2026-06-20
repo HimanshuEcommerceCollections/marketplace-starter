@@ -1,27 +1,21 @@
 export type BookingStatus = "pending" | "active" | "completed" | "cancelled";
-export type ServiceStatus = "active" | "inactive";
 
-/** Category lifecycle (mirrors the server `CategoryStatus` enum). */
-export type CategoryStatus = "DRAFT" | "ACTIVE" | "COMING_SOON" | "INACTIVE";
+/** Service lifecycle (mirrors the server `ServiceStatus` enum). */
+export type ServiceStatus = "DRAFT" | "ACTIVE" | "COMING_SOON" | "INACTIVE";
 
-/** A category as returned by the server API (camelCase; basePrice in cents). */
-export interface Category {
+/** A bookable service as returned by the server API (camelCase; basePrice in cents). */
+export interface AdminService {
   id: string;
   name: string;
   slug: string;
   description: string | null;
   basePrice: number;
-  status: CategoryStatus;
+  durationMinutes: number;
+  status: ServiceStatus;
   iconPath: string; // resolved SVG icon URL (config-managed, with fallback)
   coverImages: string[]; // ordered cover image URLs; first is the default
-  servicesCount?: number; // present on list + details
   createdAt: string;
   updatedAt: string;
-}
-
-/** Details response — `servicesCount` is always present. */
-export interface CategoryDetails extends Category {
-  servicesCount: number;
 }
 
 export interface PaginationMeta {
@@ -31,8 +25,8 @@ export interface PaginationMeta {
   totalPages: number;
 }
 
-export interface CategoryListResult {
-  items: Category[];
+export interface AdminServiceListResult {
+  items: AdminService[];
   meta: PaginationMeta;
 }
 
@@ -52,18 +46,6 @@ export interface AdminBooking {
   stage?: string;
   priceOverride?: string;
   location?: string;
-}
-
-export interface AdminService {
-  id: string;
-  name: string;
-  category: string;
-  basePrice: string;
-  maxPrice?: string;
-  duration: string;
-  status: ServiceStatus;
-  description?: string;
-  availability?: { weekdays: boolean; weekends: boolean; sameDay: boolean };
 }
 
 export interface Kpi {
