@@ -11,3 +11,15 @@ export function isStaffRole(role: SessionRole): boolean {
 export function landingPathForRole(role: SessionRole): string {
   return isStaffRole(role) ? "/admin" : "/";
 }
+
+/** Human-readable labels for session roles, shown in the admin UI. */
+const ROLE_LABELS: Record<SessionRole, string> = {
+  USER_CUSTOMER: "Customer",
+  SYSTEM_PROVIDER: "Provider",
+  SYSTEM_COORDINATOR: "Coordinator",
+  SYSTEM_ADMIN: "Admin",
+};
+
+export function roleLabel(role: SessionRole): string {
+  return ROLE_LABELS[role] ?? role;
+}

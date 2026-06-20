@@ -5,7 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Diamond } from "lucide-react";
 import { ADMIN_NAV } from "@/lib/admin/nav";
-import { ADMIN_USER } from "@/lib/admin/sample-data";
+import { useAuth } from "@/components/auth/auth-provider";
+import { initialsFromName } from "@/components/ui/avatar";
+import { roleLabel } from "@/lib/auth/roles";
 import { cn } from "@/lib/utils";
 
 export interface AdminSidebarProps {
@@ -25,6 +27,7 @@ export function AdminSidebar({
   onNavigate,
 }: AdminSidebarProps) {
   const pathname = usePathname();
+  const { user } = useAuth();
 
   const isActive = (href: string) =>
     href === "/admin" ? pathname === "/admin" : (pathname?.startsWith(href) ?? false);
@@ -85,23 +88,25 @@ export function AdminSidebar({
         </ul>
       </nav>
 
-      {/* Profile */}
-      <div className="flex items-center gap-3 border-t border-surface-inverse-foreground/15 px-5 py-4">
-        <span
-          aria-hidden
-          className="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-surface-inverse-foreground/15 text-sm font-semibold text-surface-inverse-foreground"
-        >
-          {ADMIN_USER.initials}
-        </span>
-        <span className="flex min-w-0 flex-col leading-tight">
-          <span className="truncate text-sm font-medium text-surface-inverse-foreground">
-            {ADMIN_USER.name}
+      {/* Profile — reflects the signed-in staff user (/admin is role-gated). */}
+      {user ? (
+        <div className="flex items-center gap-3 border-t border-surface-inverse-foreground/15 px-5 py-4">
+          <span
+            aria-hidden
+            className="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-surface-inverse-foreground/15 text-sm font-semibold text-surface-inverse-foreground"
+          >
+            {initialsFromName(user.name)}
           </span>
-          <span className="truncate text-xs text-surface-inverse-foreground/60">
-            {ADMIN_USER.role}
+          <span className="flex min-w-0 flex-col leading-tight">
+            <span className="truncate text-sm font-medium text-surface-inverse-foreground">
+              {user.name}
+            </span>
+            <span className="truncate text-xs text-surface-inverse-foreground/60">
+              {roleLabel(user.role)}
+            </span>
           </span>
-        </span>
-      </div>
+        </div>
+      ) : null}
     </div>
   );
 }
