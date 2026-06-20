@@ -15,6 +15,8 @@ import {
   updateCategory,
   CategoryApiError,
 } from "@/lib/admin/categories";
+import { createCategoryAssets } from "@/lib/admin/category-assets";
+import { CategoryAssetStager } from "./category-asset-stager";
 
 /** Browser-side slug preview; the server is the source of truth on save. */
 function slugify(input: string): string {
@@ -42,6 +44,13 @@ export function CategoryForm({ mode, initial }: CategoryFormProps) {
   const [errors, setErrors] = React.useState<FieldErrors>({});
   const [formError, setFormError] = React.useState<string | null>(null);
   const [submitting, setSubmitting] = React.useState(false);
+  // Staged assets (create flow only): selected now, uploaded after the category
+  // is created since the asset API is keyed by slug.
+  const [pendingIcon, setPendingIcon] = React.useState<File | null>(null);
+  const [pendingCovers, setPendingCovers] = React.useState<File[]>([]);
+  // Set if the category was created but its images failed to upload — the
+  // category exists, so we offer a link to its page instead of re-creating.
+  const [createdId, setCreatedId] = React.useState<string | null>(null);
 
   // Auto-derive the slug from the name until the user edits it directly.
   React.useEffect(() => {
@@ -74,28 +83,55 @@ export function CategoryForm({ mode, initial }: CategoryFormProps) {
   }
 
   async function submit(publish: boolean) {
+    if (submitting || createdId) return; // category already created; don't duplicate
     setFormError(null);
     const valid = validate();
     if (!valid) return;
     setSubmitting(true);
     try {
       const trimmedDescription = description.trim();
-      const result =
-        mode === "create"
-          ? await createCategory({
-              name: name.trim(),
-              slug: slug || undefined,
-              description: trimmedDescription || undefined,
-              basePrice: valid.basePrice,
-              publish,
-            })
-          : await updateCategory(initial!.id, {
-              name: name.trim(),
-              slug: slug || undefined,
-              description: trimmedDescription ? trimmedDescription : null,
-              basePrice: valid.basePrice,
-            });
-      router.push(`/admin/categories/${result.id}`);
+      if (mode === "edit") {
+        const result = await updateCategory(initial!.id, {
+          name: name.trim(),
+          slug: slug || undefined,
+          description: trimmedDescription ? trimmedDescription : null,
+          basePrice: valid.basePrice,
+        });
+        router.push(`/admin/categories/${result.id}`);
+        router.refresh();
+        return;
+      }
+
+      const created = await createCategory({
+        name: name.trim(),
+        slug: slug || undefined,
+        description: trimmedDescription || undefined,
+        basePrice: valid.basePrice,
+        publish,
+      });
+
+      // Upload any staged icon/covers now that the category (and its slug) exist.
+      if (pendingIcon || pendingCovers.length > 0) {
+        const assetForm = new FormData();
+        if (pendingIcon) assetForm.append("icon", pendingIcon);
+        for (const cover of pendingCovers) assetForm.append("covers", cover);
+        try {
+          await createCategoryAssets(created.slug, assetForm);
+        } catch (assetErr) {
+          // The category was created; only the images failed. Don't lose it —
+          // surface the error and offer a link to its page to retry there.
+          setCreatedId(created.id);
+          setFormError(
+            assetErr instanceof CategoryApiError
+              ? `Category created, but the images failed to upload: ${assetErr.message}. Open the category to add them.`
+              : "Category created, but the images failed to upload. Open the category to add them.",
+          );
+          setSubmitting(false);
+          return;
+        }
+      }
+
+      router.push(`/admin/categories/${created.id}`);
       router.refresh();
     } catch (err) {
       if (err instanceof CategoryApiError) applyApiError(err);
@@ -183,28 +219,48 @@ export function CategoryForm({ mode, initial }: CategoryFormProps) {
           />
         </Field>
 
+        {mode === "create" ? (
+          <CategoryAssetStager
+            icon={pendingIcon}
+            onIconChange={setPendingIcon}
+            covers={pendingCovers}
+            onCoversChange={setPendingCovers}
+            onNotice={setFormError}
+            disabled={submitting || createdId !== null}
+          />
+        ) : null}
+
         <div className="flex flex-wrap items-center justify-end gap-3 pt-2">
-          <Button asChild type="button" variant="ghost">
-            <Link href="/admin/categories">Cancel</Link>
-          </Button>
-          {mode === "create" ? (
-            <>
-              <Button
-                type="button"
-                variant="outline"
-                disabled={submitting}
-                onClick={() => void submit(false)}
-              >
-                Save as Draft
-              </Button>
-              <Button type="button" disabled={submitting} onClick={() => void submit(true)}>
-                Publish
-              </Button>
-            </>
-          ) : (
-            <Button type="submit" disabled={submitting}>
-              Save Changes
+          {createdId ? (
+            // Category was created but image upload failed — let the user open it.
+            <Button asChild type="button">
+              <Link href={`/admin/categories/${createdId}`}>Go to category</Link>
             </Button>
+          ) : (
+            <>
+              <Button asChild type="button" variant="ghost">
+                <Link href="/admin/categories">Cancel</Link>
+              </Button>
+              {mode === "create" ? (
+                <>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={submitting}
+                    onClick={() => void submit(false)}
+                  >
+                    Save as Draft
+                  </Button>
+                  <Button type="button" disabled={submitting} onClick={() => void submit(true)}>
+                    Publish
+                  </Button>
+                </>
+              ) : (
+                <Button type="submit" disabled={submitting}>
+                  Save Changes
+                </Button>
+              )}
+            </>
           )}
         </div>
       </form>

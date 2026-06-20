@@ -74,6 +74,18 @@ export default function AdminCategoriesPage() {
   }, [load]);
 
   const columns: AdminColumn<Category>[] = [
+    {
+      key: "icon",
+      header: "Icon",
+      mobileHidden: true,
+      headerClassName: "w-12",
+      cell: (r) => (
+        <span className="inline-flex size-8 items-center justify-center overflow-hidden rounded border border-border bg-muted">
+          {/* eslint-disable-next-line @next/next/no-img-element -- small category icon thumbnail */}
+          <img src={r.iconPath} alt="" aria-hidden className="size-5" />
+        </span>
+      ),
+    },
     { key: "name", header: "Category", primary: true, cell: (r) => r.name },
     {
       key: "slug",

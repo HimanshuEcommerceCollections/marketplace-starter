@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { SampleBadge } from "@/components/shared/sample-badge";
 import { CategoryStatusPill } from "@/components/admin/status-pill";
 import { CategoryStatusControl } from "@/components/admin/categories/category-status-control";
+import { CategoryAssetsPanel } from "@/components/admin/categories/category-assets-panel";
 import { getCategory, CategoryApiError } from "@/lib/admin/categories";
 import type { Category, CategoryDetails } from "@/lib/admin/types";
 import { formatDate, formatCents } from "@/lib/admin/format";
@@ -108,6 +109,8 @@ export default function CategoryDetailsPage() {
           </Card>
 
           <CategoryStatusControl category={category} onChanged={onStatusChanged} />
+
+          <CategoryAssetsPanel slug={category.slug} />
         </div>
       )}
     </div>
