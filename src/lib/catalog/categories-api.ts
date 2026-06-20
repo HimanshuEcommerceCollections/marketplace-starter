@@ -9,8 +9,10 @@ export interface ApiCategory {
   description: string | null;
   basePrice: number;
   status: "DRAFT" | "ACTIVE" | "COMING_SOON" | "INACTIVE";
-  coverImagePath: string;
+  /** Resolved SVG icon URL (config-managed, with fallback). */
   iconPath: string;
+  /** Ordered cover image URLs; first is the default. */
+  coverImages: string[];
   servicesCount?: number;
   createdAt: string;
   updatedAt: string;
@@ -37,7 +39,9 @@ export function categoryToGridCard(c: ApiCategory): GridCard {
     href: `/services/${c.slug}`,
     title: c.name,
     summary: c.description ?? undefined,
-    icon: c.iconPath,
+    // iconPath is now an uploaded SVG URL (not a lucide name) — render as <img>.
+    iconUrl: c.iconPath,
+    coverImages: c.coverImages,
     priceLabel:
       c.status === "ACTIVE" ? wholeDollarLabel(c.basePrice, "USD") : null,
     // Only COMING_SOON renders the coming-soon treatment (muted, no price,

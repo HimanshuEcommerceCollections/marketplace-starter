@@ -27,6 +27,10 @@ next-env.d.ts
 # testing / coverage
 /coverage
 
+# runtime category-asset uploads (keep the committed default placeholders)
+/public/categories/*
+!/public/categories/default/
+
 # claude code local settings (machine-specific)
 .claude/settings.local.json
 

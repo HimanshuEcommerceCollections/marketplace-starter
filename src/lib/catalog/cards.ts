@@ -11,7 +11,9 @@ export interface GridCard {
   href: string;
   title: string;
   summary?: string;
-  icon?: string; // lucide icon name
+  icon?: string; // lucide icon name (static catalog services)
+  iconUrl?: string; // uploaded SVG icon URL (API categories); takes precedence
+  coverImages?: string[]; // ordered cover image URLs (API categories)
   priceLabel?: string | null; // whole-dollar label e.g. "$109"; null = no price
   comingSoon?: boolean;
 }

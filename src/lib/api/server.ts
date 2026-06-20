@@ -5,7 +5,8 @@ import axios from "axios";
  * BFF route handlers (src/app/api/**), never by client components — the browser
  * talks to those same-origin route handlers, not to this base URL directly.
  */
-const API_BASE_URL = process.env.API_BASE_URL ?? "http://localhost:4000/api/v1";
+export const API_BASE_URL =
+  process.env.API_BASE_URL ?? "http://localhost:4000/api/v1";
 
 export interface ApiResult<T = unknown> {
   ok: boolean;

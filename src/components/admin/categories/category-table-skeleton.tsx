@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 
-const COLS = 6;
+const COLS = 7;
 const ROWS = 6;
 
 /** Loading placeholder matching the categories table (desktop) / cards (mobile). */

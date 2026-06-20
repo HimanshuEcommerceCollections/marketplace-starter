@@ -61,6 +61,18 @@ export function ServicesGridSection({
             const Icon = getIcon(service.icon);
             const comingSoon = service.comingSoon;
             const priceLabel = service.priceLabel;
+            const iconBox = service.iconUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element -- token-sized inline SVG icon, not a content image
+              <img
+                src={service.iconUrl}
+                alt=""
+                aria-hidden
+                className="size-6"
+                loading="lazy"
+              />
+            ) : (
+              <Icon className="size-6" strokeWidth={1.75} aria-hidden />
+            );
             const card = (
               <Card
                 className={cn(
@@ -84,7 +96,7 @@ export function ServicesGridSection({
                       : "bg-primary/10 text-primary",
                   )}
                 >
-                  <Icon className="size-6" strokeWidth={1.75} aria-hidden />
+                  {iconBox}
                 </span>
 
                 <h3
