@@ -55,7 +55,6 @@ function priceLabel(cents: number): string {
 
 export interface ServiceConfigPanelProps {
   serviceId: string;
-  serviceBasePrice: number;
 }
 
 /**
@@ -65,7 +64,7 @@ export interface ServiceConfigPanelProps {
  * always reflects persisted state (including server-enforced rules like
  * "a group needs ≥ 1 option before it can be activated").
  */
-export function ServiceConfigPanel({ serviceId, serviceBasePrice }: ServiceConfigPanelProps) {
+export function ServiceConfigPanel({ serviceId }: ServiceConfigPanelProps) {
   const [groups, setGroups] = React.useState<ConfigGroup[] | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
@@ -174,10 +173,6 @@ export function ServiceConfigPanel({ serviceId, serviceBasePrice }: ServiceConfi
           ))}
         </ul>
       )}
-
-      {groups && groups.length > 0 ? (
-        <PricingPreview basePrice={serviceBasePrice} groups={groups} />
-      ) : null}
     </Card>
   );
 }
@@ -651,56 +646,5 @@ function IconButton({
     >
       {children}
     </Button>
-  );
-}
-
-/**
- * Read-only "Option A" pricing preview: base price + the range each ACTIVE group
- * can add. The exact total is computed at booking time (Phase 3); this shows the
- * span so admins can sanity-check their modifiers.
- */
-function PricingPreview({ basePrice, groups }: { basePrice: number; groups: ConfigGroup[] }) {
-  const activeGroups = groups.filter(
-    (g) => g.status === "ACTIVE" && g.options.some((o) => o.status === "ACTIVE"),
-  );
-
-  // Lower bound: base + every required single-select's cheapest active option.
-  // Upper bound: base + the most expensive active option of every active group
-  // (multi-select can stack, but we keep the preview simple and per-group).
-  let min = basePrice;
-  let max = basePrice;
-  for (const g of activeGroups) {
-    const mods = g.options.filter((o) => o.status === "ACTIVE").map((o) => o.priceModifier);
-    if (mods.length === 0) continue;
-    const cheapest = Math.min(...mods);
-    const dearest = Math.max(...mods);
-    if (g.isRequired && g.selectionType === "SINGLE_SELECT") min += cheapest;
-    max += dearest;
-  }
-
-  return (
-    <div className="mt-6 rounded-lg border border-border bg-muted/20 p-4">
-      <div className="flex items-center gap-2">
-        <h3 className="font-heading text-sm font-semibold text-foreground">Pricing preview</h3>
-        <SampleBadge />
-      </div>
-      <dl className="mt-3 space-y-1.5 text-sm">
-        <div className="flex items-center justify-between">
-          <dt className="text-muted-foreground">Base price</dt>
-          <dd className="font-medium text-foreground">{formatCents(basePrice)}</dd>
-        </div>
-        <div className="flex items-center justify-between">
-          <dt className="text-muted-foreground">Typical range</dt>
-          <dd className="font-medium text-foreground">
-            {formatCents(min)}
-            {max !== min ? ` – ${formatCents(max)}` : ""}
-          </dd>
-        </div>
-      </dl>
-      <p className="mt-3 text-xs text-muted-foreground">
-        Final price = base price + the price modifiers of the options a customer selects. The
-        exact total is calculated during booking.
-      </p>
-    </div>
   );
 }

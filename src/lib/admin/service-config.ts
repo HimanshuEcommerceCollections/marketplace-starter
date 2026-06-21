@@ -31,6 +31,23 @@ export interface ConfigGroup {
   updatedAt: string;
 }
 
+export interface PriceLineItem {
+  groupId: string;
+  groupLabel: string;
+  optionId: string;
+  optionKey: string;
+  optionLabel: string;
+  priceModifier: number; // minor units (cents)
+}
+
+export interface PriceQuote {
+  serviceId: string;
+  currency: string;
+  basePrice: number; // minor units (cents)
+  lineItems: PriceLineItem[];
+  total: number;
+}
+
 export interface CreateConfigGroupInput {
   key: string;
   label: string;
@@ -173,5 +190,17 @@ export async function reorderConfigOptions(
       `/services/${serviceId}/config/groups/${groupId}/options/order`,
       { optionIds },
     ),
+  );
+}
+
+// ── Pricing ("Option A": base + selected option modifiers) ───────────────────────
+/** Quote the price for a set of selected option ids. Throws ServiceApiError on
+ *  invalid selections (e.g. a required group with no choice). */
+export async function quoteServicePrice(
+  serviceId: string,
+  optionIds: string[],
+): Promise<PriceQuote> {
+  return unwrap<PriceQuote>(
+    await apiClient.post(`/services/${serviceId}/config/price`, { optionIds }),
   );
 }
