@@ -8,9 +8,11 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SampleBadge } from "@/components/shared/sample-badge";
 import { ServiceStatusPill } from "@/components/admin/status-pill";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ServiceStatusControl } from "@/components/admin/services/service-status-control";
 import { ServiceAssetsPanel } from "@/components/admin/services/service-assets-panel";
 import { ServiceConfigPanel } from "@/components/admin/services/service-config-panel";
+import { ServicePricingPreview } from "@/components/admin/services/service-pricing-preview";
 import { getService, ServiceApiError } from "@/lib/admin/services";
 import type { AdminService } from "@/lib/admin/types";
 import { formatDate, formatCents } from "@/lib/admin/format";
@@ -60,7 +62,7 @@ export default function ServiceDetailsPage() {
           {error ?? "Service not found."}
         </Card>
       ) : (
-        <div className="mx-auto max-w-3xl space-y-6">
+        <div className="mx-auto max-w-4xl space-y-6">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
               <div className="flex flex-wrap items-center gap-3">
@@ -79,33 +81,57 @@ export default function ServiceDetailsPage() {
             </Button>
           </div>
 
-          <Card className="divide-y divide-border p-0">
-            <Row
-              label="Base price"
-              value={
-                <span className="inline-flex items-center gap-2">
-                  {formatCents(service.basePrice)}
-                  <SampleBadge />
-                </span>
-              }
-            />
-            <Row
-              label="Description"
-              value={
-                service.description || (
-                  <span className="text-muted-foreground">No description</span>
-                )
-              }
-            />
-            <Row label="Created" value={formatDate(service.createdAt)} />
-            <Row label="Updated" value={formatDate(service.updatedAt)} />
-          </Card>
+          <Tabs defaultValue="details">
+            <TabsList aria-label="Service editor">
+              <TabsTrigger value="details">Service Details</TabsTrigger>
+              <TabsTrigger value="assets">Assets</TabsTrigger>
+              <TabsTrigger value="configurations">Configurations</TabsTrigger>
+              <TabsTrigger value="pricing">Pricing Preview</TabsTrigger>
+              <TabsTrigger value="publish">Publish</TabsTrigger>
+            </TabsList>
 
-          <ServiceStatusControl service={service} onChanged={onStatusChanged} />
+            <div className="pt-5">
+              <TabsContent value="details">
+                <Card className="divide-y divide-border p-0">
+                  <Row
+                    label="Base price"
+                    value={
+                      <span className="inline-flex items-center gap-2">
+                        {formatCents(service.basePrice)}
+                        <SampleBadge />
+                      </span>
+                    }
+                  />
+                  <Row
+                    label="Description"
+                    value={
+                      service.description || (
+                        <span className="text-muted-foreground">No description</span>
+                      )
+                    }
+                  />
+                  <Row label="Created" value={formatDate(service.createdAt)} />
+                  <Row label="Updated" value={formatDate(service.updatedAt)} />
+                </Card>
+              </TabsContent>
 
-          <ServiceAssetsPanel slug={service.slug} />
+              <TabsContent value="assets">
+                <ServiceAssetsPanel slug={service.slug} />
+              </TabsContent>
 
-          <ServiceConfigPanel serviceId={service.id} serviceBasePrice={service.basePrice} />
+              <TabsContent value="configurations">
+                <ServiceConfigPanel serviceId={service.id} />
+              </TabsContent>
+
+              <TabsContent value="pricing">
+                <ServicePricingPreview serviceId={service.id} basePrice={service.basePrice} />
+              </TabsContent>
+
+              <TabsContent value="publish">
+                <ServiceStatusControl service={service} onChanged={onStatusChanged} />
+              </TabsContent>
+            </div>
+          </Tabs>
         </div>
       )}
     </div>
