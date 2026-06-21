@@ -202,15 +202,14 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
       },
       {
         type: "configurator",
-        variant: "preview",
-        heading: "Configure your session.",
-        subheading: "Preview options — exact configuration happens during booking.",
+        variant: "interactive",
+        cta: { label: "Book Personal Training", href: "/book?service=personal-training" },
         groups: [
           {
             id: "session-format",
             label: "Session Format",
-            icon: "Users",
             type: "single",
+            defaultOptionId: "individual",
             options: [
               { id: "individual", label: "Individual" },
               { id: "partner-training", label: "Partner Training" },
@@ -220,8 +219,8 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
           {
             id: "duration",
             label: "Duration",
-            icon: "Clock",
             type: "single",
+            defaultOptionId: "60",
             options: [
               { id: "45", label: "45 Minutes" },
               { id: "60", label: "60 Minutes" },
@@ -231,8 +230,8 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
           {
             id: "goal-focus",
             label: "Goal Focus",
-            icon: "Target",
             type: "single",
+            defaultOptionId: "general-fitness",
             options: [
               { id: "weight-loss", label: "Weight Loss" },
               { id: "strength-training", label: "Strength Training" },
@@ -243,8 +242,8 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
           {
             id: "package",
             label: "Package",
-            icon: "Package",
             type: "single",
+            defaultOptionId: "single",
             options: [
               { id: "single", label: "Single Session" },
               { id: "pack-4", label: "4 Session Pack" },
@@ -409,6 +408,57 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
         ],
       },
       {
+        type: "configurator",
+        variant: "interactive",
+        cta: { label: "Book Yoga", href: "/book?service=yoga" },
+        groups: [
+          {
+            id: "session-format",
+            label: "Session Format",
+            type: "single",
+            defaultOptionId: "individual",
+            options: [
+              { id: "individual", label: "Individual" },
+              { id: "couple", label: "Couple" },
+              { id: "small-group", label: "Small Group" },
+            ],
+          },
+          {
+            id: "duration",
+            label: "Duration",
+            type: "single",
+            defaultOptionId: "60",
+            options: [
+              { id: "60", label: "60 Minutes" },
+              { id: "90", label: "90 Minutes" },
+            ],
+          },
+          {
+            id: "yoga-style",
+            label: "Yoga Style",
+            type: "single",
+            defaultOptionId: "gentle-flow",
+            options: [
+              { id: "gentle-flow", label: "Gentle Flow" },
+              { id: "hatha", label: "Hatha" },
+              { id: "vinyasa", label: "Vinyasa" },
+              { id: "restorative", label: "Restorative" },
+            ],
+          },
+          {
+            id: "package",
+            label: "Package",
+            type: "single",
+            defaultOptionId: "single",
+            options: [
+              { id: "single", label: "Single Session" },
+              { id: "pack-4", label: "4 Session Pack" },
+              { id: "pack-8", label: "8 Session Pack" },
+            ],
+          },
+        ],
+      },
+      {
         type: "testimonials",
         surface: "muted",
         heading: "What clients are saying.",
@@ -533,6 +583,55 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
         ],
       },
       {
+        type: "configurator",
+        variant: "interactive",
+        cta: { label: "Book Nutrition Coaching", href: "/book?service=nutrition-coaching" },
+        groups: [
+          {
+            id: "consultation-type",
+            label: "Consultation Type",
+            type: "single",
+            defaultOptionId: "initial",
+            options: [
+              { id: "initial", label: "Initial Consultation" },
+              { id: "follow-up", label: "Follow-Up Session" },
+            ],
+          },
+          {
+            id: "format",
+            label: "Format",
+            type: "single",
+            defaultOptionId: "in-home",
+            options: [
+              { id: "in-home", label: "In Home" },
+              { id: "virtual", label: "Virtual" },
+            ],
+          },
+          {
+            id: "goal",
+            label: "Goal",
+            type: "single",
+            defaultOptionId: "weight-management",
+            options: [
+              { id: "weight-management", label: "Weight Management" },
+              { id: "sports-nutrition", label: "Sports Nutrition" },
+              { id: "healthy-lifestyle", label: "Healthy Lifestyle" },
+              { id: "medical-support", label: "Medical Nutrition Support" },
+            ],
+          },
+          {
+            id: "package",
+            label: "Package",
+            type: "single",
+            defaultOptionId: "single",
+            options: [
+              { id: "single", label: "Single Session" },
+              { id: "monthly", label: "Monthly Coaching" },
+            ],
+          },
+        ],
+      },
+      {
         type: "testimonials",
         surface: "muted",
         heading: "What clients are saying.",
@@ -651,6 +750,56 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
           "Details + Schedule",
           "Confirm + Submit",
           "Success",
+        ],
+      },
+      {
+        type: "configurator",
+        variant: "interactive",
+        cta: { label: "Book Life Coaching", href: "/book?service=life-coaching" },
+        groups: [
+          {
+            id: "session-format",
+            label: "Session Format",
+            type: "single",
+            defaultOptionId: "in-home",
+            options: [
+              { id: "in-home", label: "In Home" },
+              { id: "virtual", label: "Virtual" },
+            ],
+          },
+          {
+            id: "focus-area",
+            label: "Focus Area",
+            type: "single",
+            defaultOptionId: "career-growth",
+            options: [
+              { id: "career-growth", label: "Career Growth" },
+              { id: "work-life-balance", label: "Work-Life Balance" },
+              { id: "personal-development", label: "Personal Development" },
+              { id: "goal-setting", label: "Goal Setting" },
+            ],
+          },
+          {
+            id: "duration",
+            label: "Duration",
+            type: "single",
+            defaultOptionId: "60",
+            options: [
+              { id: "60", label: "60 Minutes" },
+              { id: "90", label: "90 Minutes" },
+            ],
+          },
+          {
+            id: "package",
+            label: "Package",
+            type: "single",
+            defaultOptionId: "single",
+            options: [
+              { id: "single", label: "Single Session" },
+              { id: "pack-4", label: "4 Session Pack" },
+              { id: "pack-8", label: "8 Session Pack" },
+            ],
+          },
         ],
       },
       {
@@ -826,6 +975,47 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
             title: "Service Delivered",
             description:
               "Your professional arrives ready for a premium session.",
+          },
+        ],
+      },
+      {
+        type: "configurator",
+        variant: "interactive",
+        cta: { label: "Book Beauty", href: "/book?service=beauty" },
+        groups: [
+          {
+            id: "services",
+            label: "Select Services",
+            type: "multi",
+            options: [
+              { id: "hair-styling", label: "Hair Styling" },
+              { id: "makeup-application", label: "Makeup Application" },
+              { id: "blowout", label: "Blowout" },
+              { id: "event-styling", label: "Event Styling" },
+            ],
+          },
+          {
+            id: "people",
+            label: "Number of People",
+            type: "single",
+            defaultOptionId: "1",
+            options: [
+              { id: "1", label: "1" },
+              { id: "2", label: "2" },
+              { id: "3-plus", label: "3+" },
+            ],
+          },
+          {
+            id: "occasion",
+            label: "Occasion",
+            type: "single",
+            defaultOptionId: "everyday",
+            options: [
+              { id: "everyday", label: "Everyday" },
+              { id: "photoshoot", label: "Photoshoot" },
+              { id: "wedding-event", label: "Wedding/Event" },
+              { id: "other", label: "Other" },
+            ],
           },
         ],
       },
