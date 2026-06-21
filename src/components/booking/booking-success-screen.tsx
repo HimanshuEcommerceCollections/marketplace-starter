@@ -30,15 +30,21 @@ function bookingReference(prefix: string, request?: BookingRequest): string {
  */
 export function BookingSuccessScreen({
   request,
+  reference: liveReference,
+  live = false,
 }: {
   request?: BookingRequest;
+  /** Real backend booking reference (live submit). */
+  reference?: string;
+  /** True when this was a real (API) booking, not the demo stub. */
+  live?: boolean;
 }) {
   const { config } = useBrand();
   const prefix =
     config.bookingPrefix ?? config.shortName.slice(0, 3).toUpperCase();
   const reference = React.useMemo(
-    () => bookingReference(prefix, request),
-    [prefix, request],
+    () => liveReference ?? bookingReference(prefix, request),
+    [liveReference, prefix, request],
   );
 
   const headingRef = React.useRef<HTMLHeadingElement>(null);
@@ -141,8 +147,9 @@ export function BookingSuccessScreen({
       </div>
 
       <p className="mx-auto mt-6 max-w-md text-xs text-muted-foreground">
-        DRAFT EXPERIENCE — This confirmation is a demonstration only. No actual
-        booking has been made.
+        {live
+          ? "DRAFT EXPERIENCE — Your booking request has been recorded. A coordinator will confirm availability and final pricing."
+          : "DRAFT EXPERIENCE — This confirmation is a demonstration only. No actual booking has been made."}
       </p>
     </div>
   );

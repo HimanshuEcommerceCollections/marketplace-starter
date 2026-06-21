@@ -1,11 +1,15 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/components/auth/auth-provider";
+import { submitBooking, BookingApiError } from "@/lib/booking/api";
 import {
   BookingProvider,
   useBookingDraft,
   buildBookingRequest,
+  toServerBooking,
   toConfiguration,
   selectionSummary,
   addOnsSummary,
@@ -34,6 +38,10 @@ export interface BookingWizardProps {
   service: Service;
   pricing: PricingTable;
   brandId: BrandId;
+  /** Present when wired to live data — enables real (API) booking submission. */
+  liveServiceId?: string;
+  optionIdByGroupKey?: Record<string, Record<string, string>>;
+  durationMinutes?: number;
 }
 
 export function BookingWizard(props: BookingWizardProps) {
@@ -42,6 +50,9 @@ export function BookingWizard(props: BookingWizardProps) {
       service={props.service}
       pricing={props.pricing}
       brandId={props.brandId}
+      liveServiceId={props.liveServiceId}
+      optionIdByGroupKey={props.optionIdByGroupKey}
+      durationMinutes={props.durationMinutes}
     >
       <WizardInner />
     </BookingProvider>
@@ -70,10 +81,15 @@ const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 function WizardInner() {
   const ctx = useBookingDraft();
   const { state, dispatch, service, pricing } = ctx;
+  const { status: authStatus } = useAuth();
+  const router = useRouter();
   const [fieldErrors, setFieldErrors] = React.useState<FieldErrors>();
   const [consent, setConsent] = React.useState(false);
   const stepRef = React.useRef<HTMLDivElement>(null);
   const index = WIZARD_STEPS.indexOf(state.step);
+
+  // Where to return after signing in to complete a live booking.
+  const loginRedirect = `/login?next=${encodeURIComponent(`/book?service=${service.id}`)}`;
 
   // config_start fires once when the wizard mounts.
   React.useEffect(() => {
@@ -139,17 +155,54 @@ function WizardInner() {
     dispatch({ type: "SET_STEP", step: WIZARD_STEPS[index - 1] });
   }
 
-  function submit() {
-    dispatch({ type: "SUBMIT_START" });
+  async function submit() {
+    if (state.status === "submitting") return;
     const request = buildBookingRequest(ctx);
-    analytics.bookSubmit({
-      request_id: request.request_id,
-      service_type: request.service_type,
-      displayed_price: request.displayed_price.total.amount,
-      currency: request.displayed_price.total.currency,
-      is_stub: true,
-    });
-    dispatch({ type: "SUBMIT_OK", request });
+
+    // No live service wired (static fallback / API down) → keep the stub behavior.
+    if (!ctx.liveServiceId) {
+      dispatch({ type: "SUBMIT_START" });
+      analytics.bookSubmit({
+        request_id: request.request_id,
+        service_type: request.service_type,
+        displayed_price: request.displayed_price.total.amount,
+        currency: request.displayed_price.total.currency,
+        is_stub: true,
+      });
+      dispatch({ type: "SUBMIT_OK", request });
+      return;
+    }
+
+    // Live submit requires an authenticated customer — gate at submit time.
+    if (authStatus !== "authenticated") {
+      router.push(loginRedirect);
+      return;
+    }
+
+    dispatch({ type: "SUBMIT_START" });
+    try {
+      const created = await submitBooking(toServerBooking(ctx));
+      analytics.bookSubmit({
+        request_id: created.reference,
+        service_type: request.service_type,
+        displayed_price: created.priceAmount,
+        currency: created.currency,
+        is_stub: false,
+      });
+      dispatch({ type: "SUBMIT_OK", request, reference: created.reference });
+    } catch (err) {
+      if (err instanceof BookingApiError && err.status === 401) {
+        router.push(loginRedirect);
+        return;
+      }
+      dispatch({
+        type: "SUBMIT_ERROR",
+        error:
+          err instanceof BookingApiError
+            ? err.message
+            : "Could not submit your booking. Please try again.",
+      });
+    }
   }
 
   const isConfig = state.step === "config";
@@ -236,7 +289,11 @@ function WizardInner() {
         ) : null}
         {state.step === "review" ? <WizardStepReview /> : null}
         {state.step === "success" ? (
-          <BookingSuccessScreen request={state.request} />
+          <BookingSuccessScreen
+            request={state.request}
+            reference={state.reference}
+            live={Boolean(ctx.liveServiceId)}
+          />
         ) : null}
       </div>
 
@@ -267,16 +324,26 @@ function WizardInner() {
               before it is finalized. This is a request, not a confirmed booking.
             </span>
           </label>
+          {state.status === "error" && state.error ? (
+            <p
+              role="alert"
+              className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive"
+            >
+              {state.error}
+            </p>
+          ) : null}
           <Button
             type="button"
             size="lg"
-            onClick={submit}
+            onClick={() => void submit()}
             disabled={!consent || state.status === "submitting"}
             className="w-full bg-highlight text-highlight-foreground hover:bg-highlight/90"
           >
-            {consent
-              ? "Submit Booking Request"
-              : "Submit Booking Request (Check box above to enable)"}
+            {state.status === "submitting"
+              ? "Submitting…"
+              : consent
+                ? "Submit Booking Request"
+                : "Submit Booking Request (Check box above to enable)"}
           </Button>
           <p className="text-xs text-muted-foreground">
             DRAFT EXPERIENCE — This request will be reviewed by a coordinator.

@@ -7,6 +7,7 @@ import type { BrandId } from "@/lib/brand/registry";
 import type { BookingRequest, Configuration } from "@/lib/booking/contract";
 import { createDraftBooking } from "@/lib/booking/contract";
 import { computePrice } from "@/lib/pricing/engine";
+import type { CreateBookingPayload } from "@/lib/booking/api";
 
 export type WizardStep =
   | "config"
@@ -47,6 +48,10 @@ export interface WizardState {
   notes: string;
   status: "draft" | "submitting" | "submitted" | "error";
   request?: BookingRequest;
+  /** Backend booking reference (live submit only). */
+  reference?: string;
+  /** Submission error message (status === "error"). */
+  error?: string;
 }
 
 type Action =
@@ -57,7 +62,8 @@ type Action =
   | { type: "SET_WINDOW"; index: number; patch: Partial<SchedWindow> }
   | { type: "SET_NOTES"; notes: string }
   | { type: "SUBMIT_START" }
-  | { type: "SUBMIT_OK"; request: BookingRequest };
+  | { type: "SUBMIT_OK"; request: BookingRequest; reference?: string }
+  | { type: "SUBMIT_ERROR"; error: string };
 
 function reducer(state: WizardState, action: Action): WizardState {
   switch (action.type) {
@@ -82,14 +88,17 @@ function reducer(state: WizardState, action: Action): WizardState {
     case "SET_NOTES":
       return { ...state, notes: action.notes };
     case "SUBMIT_START":
-      return { ...state, status: "submitting" };
+      return { ...state, status: "submitting", error: undefined };
     case "SUBMIT_OK":
       return {
         ...state,
         status: "submitted",
         request: action.request,
+        reference: action.reference,
         step: "success",
       };
+    case "SUBMIT_ERROR":
+      return { ...state, status: "error", error: action.error };
     default:
       return state;
   }
@@ -116,6 +125,12 @@ interface BookingContextValue {
   service: Service;
   pricing: PricingTable;
   brandId: BrandId;
+  /** Live backend service UUID — present only when wired to the live API. */
+  liveServiceId?: string;
+  /** groupKey -> (optionKey -> option UUID), to resolve selections for the API. */
+  optionIdByGroupKey?: Record<string, Record<string, string>>;
+  /** Live service duration (minutes) — derives scheduledEnd from the start. */
+  durationMinutes?: number;
 }
 
 const BookingContext = React.createContext<BookingContextValue | null>(null);
@@ -124,11 +139,17 @@ export function BookingProvider({
   service,
   pricing,
   brandId,
+  liveServiceId,
+  optionIdByGroupKey,
+  durationMinutes,
   children,
 }: {
   service: Service;
   pricing: PricingTable;
   brandId: BrandId;
+  liveServiceId?: string;
+  optionIdByGroupKey?: Record<string, Record<string, string>>;
+  durationMinutes?: number;
   children: React.ReactNode;
 }) {
   const initial: WizardState = {
@@ -150,7 +171,18 @@ export function BookingProvider({
   };
   const [state, dispatch] = React.useReducer(reducer, initial);
   return (
-    <BookingContext.Provider value={{ state, dispatch, service, pricing, brandId }}>
+    <BookingContext.Provider
+      value={{
+        state,
+        dispatch,
+        service,
+        pricing,
+        brandId,
+        liveServiceId,
+        optionIdByGroupKey,
+        durationMinutes,
+      }}
+    >
       {children}
     </BookingContext.Provider>
   );
@@ -262,5 +294,64 @@ export function buildBookingRequest(ctx: BookingContextValue): BookingRequest {
     },
     notes: state.notes,
     status: "submitted",
+  };
+}
+
+const MODE_TO_SERVER: Record<string, "ONSITE" | "REMOTE" | "HYBRID"> = {
+  onsite: "ONSITE",
+  remote: "REMOTE",
+  hybrid: "HYBRID",
+};
+
+/**
+ * Map wizard state to the backend booking DTO (live submit). Selections (keyed
+ * by groupKey -> optionKey) are resolved to backend option UUIDs; the first
+ * preferred window becomes the concrete slot (end = start + duration), and the
+ * remaining windows + the full schedule preferences + contact/address are
+ * persisted on the booking. Requires `liveServiceId`.
+ */
+export function toServerBooking(ctx: BookingContextValue): CreateBookingPayload {
+  const { state, service, liveServiceId, optionIdByGroupKey, durationMinutes } = ctx;
+  if (!liveServiceId) throw new Error("toServerBooking requires a live service");
+
+  const map = optionIdByGroupKey ?? {};
+  const optionIds: string[] = [];
+  for (const [groupKey, value] of Object.entries(state.selections)) {
+    const keys = Array.isArray(value) ? value : typeof value === "string" ? [value] : [];
+    for (const k of keys) {
+      const id = map[groupKey]?.[k];
+      if (id) optionIds.push(id);
+    }
+  }
+
+  const filled = state.windows.filter((w) => w.date);
+  const first = filled[0] ?? state.windows[0];
+  const startDate = new Date(`${first.date}T${first.time || "09:00"}:00`);
+  const dur = durationMinutes && durationMinutes > 0 ? durationMinutes : 60;
+  const endDate = new Date(startDate.getTime() + dur * 60_000);
+
+  const altWindows = filled.slice(1).map(formatWindowLabel).filter(Boolean);
+  const notesParts: string[] = [];
+  if (state.notes.trim()) notesParts.push(state.notes.trim());
+  if (altWindows.length) notesParts.push(`Alternate preferred windows: ${altWindows.join("; ")}`);
+
+  return {
+    serviceId: liveServiceId,
+    scheduledStart: startDate.toISOString(),
+    scheduledEnd: endDate.toISOString(),
+    locationMode: MODE_TO_SERVER[service.location_modes[0] ?? "onsite"] ?? "ONSITE",
+    notes: notesParts.join("\n") || undefined,
+    optionIds,
+    contact: {
+      name: `${state.firstName} ${state.lastName}`.trim() || undefined,
+      email: state.email || undefined,
+      phone: state.phone || undefined,
+    },
+    address: state.address || undefined,
+    schedulePreferences: {
+      windows: filled.map((w) => ({ date: w.date, time: w.time || undefined })),
+      flexibility: "flexible",
+      timezone: "UTC",
+    },
   };
 }
