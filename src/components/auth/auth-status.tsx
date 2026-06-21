@@ -3,13 +3,14 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { LogOut } from "lucide-react";
+import { LogOut, CalendarDays } from "lucide-react";
 import { useAuth } from "@/components/auth/auth-provider";
 import { Avatar } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { NavItem } from "@/lib/brand/types";
@@ -57,6 +58,16 @@ export function AuthStatus({ account, variant, onNavigate }: AuthStatusProps) {
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
+          <DropdownMenuItem
+            onSelect={() => {
+              onNavigate?.();
+              router.push("/bookings");
+            }}
+          >
+            <CalendarDays className="size-4" aria-hidden />
+            My Bookings
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem onSelect={onSignOut}>
             <LogOut className="size-4" aria-hidden />
             Log out

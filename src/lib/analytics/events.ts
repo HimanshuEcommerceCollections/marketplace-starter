@@ -40,7 +40,8 @@ export interface BookSubmitProps extends BaseProps {
   service_type: string;
   displayed_price: number;
   currency: string;
-  is_stub: true;
+  // false once a booking is submitted to the live backend; true for the demo stub.
+  is_stub: boolean;
 }
 export interface ProApplySubmitProps extends BaseProps {
   service_category?: string;

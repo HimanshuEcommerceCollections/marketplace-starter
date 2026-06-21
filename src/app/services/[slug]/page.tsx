@@ -2,8 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getService, getServices } from "@/lib/catalog/load";
+import { fetchServiceBySlug } from "@/lib/catalog/services-api";
 import { getPricingTable } from "@/lib/pricing/load";
 import { computePrice } from "@/lib/pricing/engine";
+import type { DisplayedPrice } from "@/lib/booking/contract";
 import {
   getBrandConfig,
   getBrandContent,
@@ -27,6 +29,10 @@ import {
 import { isEnabled } from "@/lib/flags/resolve";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
+
+// Re-fetch live service core (price/status/description) periodically; static
+// marketing content is unaffected, and the page falls back to static on failure.
+export const revalidate = 60;
 
 export function generateStaticParams() {
   return getServices().map((s) => ({ slug: s.id }));
@@ -57,15 +63,32 @@ export default async function ServiceDetailPage({
   if (!svc) notFound();
 
   const config = getBrandConfig();
-  const breakdown = computePrice(getPricingTable(), {
+  // Hybrid: prefer the live (admin-managed) base price + status; fall back to the
+  // static catalog when the API is unavailable. Marketing copy (hero/landing/FAQ)
+  // stays from the static catalog.
+  const live = await fetchServiceBySlug(slug);
+  const staticBreakdown = computePrice(getPricingTable(), {
     service_id: svc.id,
     selections: {},
     quantity: 1,
   });
+  const currency = staticBreakdown.total.currency;
   // Displayed "From" price never reads below the service's booking minimum
   // (e.g. Beauty's $75 floor, where the base price is $0).
-  const fromAmount = Math.max(breakdown.total.amount, svc.min_booking ?? 0);
-  const fromMoney = { amount: fromAmount, currency: breakdown.total.currency };
+  const baseAmount = live ? live.basePrice : staticBreakdown.total.amount;
+  const fromAmount = Math.max(baseAmount, svc.min_booking ?? 0);
+  const fromMoney = { amount: fromAmount, currency };
+  const breakdown: DisplayedPrice = live
+    ? {
+        total: fromMoney,
+        subtotal: fromMoney,
+        line_items: [{ label: "Base (Sample)", amount: fromMoney, kind: "base" }],
+        pricing_version: "live",
+        is_estimate: true,
+      }
+    : staticBreakdown;
+  const comingSoon = live ? live.status === "COMING_SOON" : svc.coming_soon;
+  const aboutDescription = live?.description ?? svc.description;
 
   const landing = getServiceLanding(svc.id);
 
@@ -102,9 +125,7 @@ export default async function ServiceDetailPage({
       <>
         <ServiceLandingPage
           config={landing}
-          priceLabel={
-            svc.coming_soon ? undefined : `From ${formatMoney(fromMoney)}`
-          }
+          priceLabel={comingSoon ? undefined : `From ${formatMoney(fromMoney)}`}
           category={svc.category}
           price={fromAmount}
           currency={breakdown.total.currency}
@@ -158,7 +179,7 @@ export default async function ServiceDetailPage({
       >
         <article className="prose-none space-y-4">
           <h2 className="text-2xl font-bold">About this service</h2>
-          <p className="text-muted-foreground">{svc.description}</p>
+          <p className="text-muted-foreground">{aboutDescription}</p>
         </article>
 
         {svc.faq.length > 0 ? (

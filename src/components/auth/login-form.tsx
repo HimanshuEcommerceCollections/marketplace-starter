@@ -41,7 +41,13 @@ export function LoginForm({ brandName }: LoginFormProps) {
     setPending(false);
     if (result.success) {
       setErrors(undefined);
-      router.push(result.user ? landingPathForRole(result.user.role) : "/");
+      // Honor a safe in-app ?next= (e.g. returning to the booking wizard);
+      // otherwise route by role. Reject protocol-relative ("//") targets.
+      const next = new URLSearchParams(window.location.search).get("next");
+      const safeNext = next && next.startsWith("/") && !next.startsWith("//") ? next : null;
+      router.push(
+        safeNext ?? (result.user ? landingPathForRole(result.user.role) : "/"),
+      );
       router.refresh();
     } else {
       setErrors(result.errors);
