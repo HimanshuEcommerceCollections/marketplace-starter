@@ -17,7 +17,7 @@ import {
   type MyBooking,
 } from "@/lib/booking/api";
 import { bookingStatusBadge, isCancellable } from "@/lib/booking/status";
-import { formatBookingWhen } from "@/lib/booking/format";
+import { formatBookingDate, formatBookingTime } from "@/lib/booking/format";
 import { formatMoney } from "@/lib/money";
 
 export default function BookingDetailPage() {
@@ -150,7 +150,8 @@ export default function BookingDetailPage() {
           <Card className="p-5">
             <h2 className="mb-3 font-heading text-sm font-semibold text-foreground">Schedule</h2>
             <dl className="space-y-1.5 text-sm">
-              <Row label="Preferred start" value={formatBookingWhen(booking.scheduledStart)} />
+              <Row label="Date" value={formatBookingDate(booking.scheduledDate)} />
+              <Row label="Time" value={formatBookingTime(booking.scheduledTime)} />
               {windows.length > 1 ? (
                 <Row
                   label="Alternate windows"

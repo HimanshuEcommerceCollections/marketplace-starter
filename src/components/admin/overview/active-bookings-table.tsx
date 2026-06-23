@@ -18,7 +18,7 @@ const columns: AdminColumn<AdminBooking>[] = [
       <span className="inline-flex items-center gap-2">
         <StatusDot status={row.status} />
         <span className="font-mono text-xs text-muted-foreground">
-          {row.id}
+          {row.reference ?? row.id}
         </span>
       </span>
     ),

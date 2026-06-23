@@ -32,6 +32,8 @@ export interface AdminServiceListResult {
 
 export interface AdminBooking {
   id: string;
+  /** Human-readable reference (e.g. BK-…) for display; falls back to `id`. */
+  reference?: string;
   client: string;
   clientFullName?: string;
   clientEmail?: string;

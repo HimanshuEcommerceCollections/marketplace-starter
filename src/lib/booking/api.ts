@@ -67,6 +67,8 @@ export interface MyBooking {
   serviceSlug: string;
   scheduledStart: string;
   scheduledEnd: string;
+  scheduledDate: string; // "YYYY-MM-DD"
+  scheduledTime: string; // "HH:mm"
   priceAmount: number;
   currency: string;
   locationMode: string;

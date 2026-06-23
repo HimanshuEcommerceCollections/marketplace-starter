@@ -9,6 +9,10 @@ import type { AdminBooking } from "@/lib/admin/types";
 
 export interface PendingReviewTableProps {
   bookings: AdminBooking[];
+  /** When provided, each row gets working Confirm/Reject actions (id = booking id). */
+  onConfirm?: (id: string) => void;
+  onReject?: (id: string) => void;
+  busyId?: string;
 }
 
 const columns: AdminColumn<AdminBooking>[] = [
@@ -20,7 +24,7 @@ const columns: AdminColumn<AdminBooking>[] = [
       <span className="inline-flex items-center gap-2">
         <StatusDot status={row.status} />
         <span className="font-mono text-xs text-muted-foreground">
-          {row.id}
+          {row.reference ?? row.id}
         </span>
       </span>
     ),
@@ -65,8 +69,14 @@ const columns: AdminColumn<AdminBooking>[] = [
   },
 ];
 
-/** Pending-review queue: each row offers stub Confirm / Reject actions. */
-export function PendingReviewTable({ bookings }: PendingReviewTableProps) {
+/** Pending-review queue. Confirm/Reject are wired only when handlers are passed. */
+export function PendingReviewTable({
+  bookings,
+  onConfirm,
+  onReject,
+  busyId,
+}: PendingReviewTableProps) {
+  const interactive = Boolean(onConfirm || onReject);
   return (
     <AdminTable
       caption="Bookings awaiting confirmation"
@@ -74,25 +84,33 @@ export function PendingReviewTable({ bookings }: PendingReviewTableProps) {
       rows={bookings}
       getRowId={(row) => row.id}
       emptyMessage="No bookings are awaiting review."
-      rowActions={() => (
-        <>
-          <Button
-            type="button"
-            size="sm"
-            className="bg-success text-success-foreground hover:bg-success/90"
-          >
-            Confirm
-          </Button>
-          <Button
-            type="button"
-            size="sm"
-            variant="outline"
-            className="border-destructive text-destructive hover:bg-destructive/10"
-          >
-            Reject
-          </Button>
-        </>
-      )}
+      rowActions={
+        interactive
+          ? (row) => (
+              <>
+                <Button
+                  type="button"
+                  size="sm"
+                  disabled={busyId === row.id}
+                  className="bg-success text-success-foreground hover:bg-success/90"
+                  onClick={() => onConfirm?.(row.id)}
+                >
+                  Confirm
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  disabled={busyId === row.id}
+                  className="border-destructive text-destructive hover:bg-destructive/10"
+                  onClick={() => onReject?.(row.id)}
+                >
+                  Reject
+                </Button>
+              </>
+            )
+          : undefined
+      }
     />
   );
 }
