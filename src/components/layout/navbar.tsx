@@ -3,15 +3,15 @@
 import * as React from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { Container } from "./container";
 import { Button } from "@/components/ui/button";
 import { AuthStatus } from "@/components/auth/auth-status";
 import { useFlag } from "@/lib/flags/useFlag";
 import { NAV_ITEMS } from "@/config/navigation";
+import { cn } from "@/lib/utils";
 import type { NavItem } from "@/lib/brand/types";
 
 const DRAFT_NOTICE =
-  "DRAFT EXPERIENCE — Pricing and service availability shown for demonstration purposes.";
+  "Demo site · Do not submit real information · INTERNAL DRAFT";
 
 export interface NavbarProps {
   brandName: string;
@@ -22,26 +22,31 @@ export interface NavbarProps {
 }
 
 /**
- * Responsive top navigation.
- * - lg and above: logo (left), navigation (centered), Book Now (right).
- * - below lg: logo (left), Book Now + hamburger (right); links collapse into a
- *   slide-down menu rendered beneath the bar.
- * Full-width draft banner sits above the bar on every breakpoint.
+ * Floating-pill primary navigation (redesigned). A full-width demo banner sits
+ * at the very top; below it a centered frosted pill holds the wordmark, links,
+ * and the Book Now CTA. The header is fixed, so SiteChrome offsets page content
+ * (the homepage hero deliberately sits behind it).
  */
 export function Navbar({
   brandName,
-  logoSublabel,
   cta = { label: "Book Now", href: "/book" },
   account = { label: "Sign In", href: "/login" },
 }: NavbarProps) {
   const [open, setOpen] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
   const showBanner = useFlag("demoBanner");
   const showAuth = useFlag("authEnabled");
 
   const closeMenu = React.useCallback(() => setOpen(false), []);
 
-  // While the menu is open: close on Escape, and close if the viewport grows to
-  // the lg breakpoint (where the inline nav takes over).
+  React.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // While the menu is open: close on Escape, and close at the lg breakpoint.
   React.useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
@@ -59,54 +64,41 @@ export function Navbar({
   }, [open]);
 
   return (
-    <>
+    <header className="z-sticky fixed inset-x-0 top-0">
       {showBanner ? (
         <div
           role="region"
           aria-label="Draft experience notice"
-          className="bg-secondary px-4 py-1.5 text-center text-xs font-medium text-secondary-foreground"
+          className="bg-foreground px-4 py-2 text-center text-xs font-medium uppercase tracking-widest text-background/45"
         >
           {DRAFT_NOTICE}
         </div>
       ) : null}
 
-      <header className="z-sticky sticky top-0 border-b border-border bg-background/80 backdrop-blur">
-        <Container
-          as="nav"
+      <div className="flex justify-center px-3 pt-3">
+        <nav
           aria-label="Primary"
-          className="grid h-16 grid-cols-[1fr_auto_1fr] items-center gap-4"
+          className={cn(
+            "flex max-w-full items-center gap-1 rounded-full border py-2 pl-5 pr-2 shadow-lg backdrop-blur-xl transition-colors",
+            scrolled
+              ? "border-border bg-background/90"
+              : "border-border/60 bg-background/65",
+          )}
         >
-          <div className="col-start-1 flex min-w-0 items-center justify-self-start">
-            <Link
-              href="/"
-              onClick={closeMenu}
-              className="flex min-w-0 items-center gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              <span
-                aria-hidden
-                className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground"
-              >
-                {brandName.charAt(0)}
-              </span>
-              <span className="flex min-w-0 flex-col leading-tight">
-                <span className="truncate font-heading text-base font-semibold uppercase tracking-wide text-foreground">
-                  {brandName}
-                </span>
-                {logoSublabel ? (
-                  <span className="truncate text-xs font-medium text-muted-foreground">
-                    {logoSublabel}
-                  </span>
-                ) : null}
-              </span>
-            </Link>
-          </div>
+          <Link
+            href="/"
+            onClick={closeMenu}
+            className="mr-4 rounded-md font-display text-lg leading-none tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {brandName}
+          </Link>
 
-          <ul className="col-start-2 hidden items-center justify-center gap-1 lg:flex">
+          <ul className="hidden items-center gap-0.5 lg:flex">
             {NAV_ITEMS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="rounded-full px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   {link.label}
                 </Link>
@@ -114,68 +106,66 @@ export function Navbar({
             ))}
           </ul>
 
-          <div className="col-start-3 flex items-center justify-end gap-2 justify-self-end">
-            {showAuth ? (
+          {showAuth ? (
+            <span className="ml-1 hidden lg:inline-flex">
               <AuthStatus account={account} variant="desktop" />
-            ) : null}
-            <Button asChild size="sm" className="hidden md:inline-flex">
-              <Link href={cta.href} onClick={closeMenu}>
-                {cta.label}
-              </Link>
-            </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              aria-label={open ? "Close menu" : "Open menu"}
-              aria-expanded={open}
-              aria-controls="mobile-menu"
-              onClick={() => setOpen((value) => !value)}
-            >
-              {open ? (
-                <X className="size-5" aria-hidden />
-              ) : (
-                <Menu className="size-5" aria-hidden />
-              )}
-            </Button>
-          </div>
-        </Container>
+            </span>
+          ) : null}
 
-        {open ? (
+          <Button
+            asChild
+            size="sm"
+            className="ml-1.5 hidden rounded-full md:inline-flex"
+          >
+            <Link href={cta.href} onClick={closeMenu}>
+              {cta.label} →
+            </Link>
+          </Button>
+
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="ml-1 rounded-full lg:hidden"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
+          </Button>
+        </nav>
+      </div>
+
+      {open ? (
+        <div className="flex justify-center px-3 pt-2 lg:hidden">
           <div
             id="mobile-menu"
-            className="animate-in fade-in slide-in-from-top-2 border-t border-border bg-background lg:hidden"
+            className="animate-in fade-in slide-in-from-top-2 w-full max-w-sm rounded-2xl border border-border bg-background p-3 shadow-xl"
           >
-            <Container className="py-4">
-              <nav aria-label="Mobile" className="flex flex-col gap-1">
-                {NAV_ITEMS.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={closeMenu}
-                    className="rounded-md px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-                {showAuth ? (
-                  <AuthStatus
-                    account={account}
-                    variant="mobile"
-                    onNavigate={closeMenu}
-                  />
-                ) : null}
-                <Button asChild className="mt-3 w-full">
-                  <Link href={cta.href} onClick={closeMenu}>
-                    {cta.label}
-                  </Link>
-                </Button>
-              </nav>
-            </Container>
+            <nav aria-label="Mobile" className="flex flex-col gap-1">
+              {NAV_ITEMS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={closeMenu}
+                  className="rounded-lg px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              {showAuth ? (
+                <AuthStatus account={account} variant="mobile" onNavigate={closeMenu} />
+              ) : null}
+              <Button asChild className="mt-2 w-full rounded-full">
+                <Link href={cta.href} onClick={closeMenu}>
+                  {cta.label} →
+                </Link>
+              </Button>
+            </nav>
           </div>
-        ) : null}
-      </header>
-    </>
+        </div>
+      ) : null}
+    </header>
   );
 }

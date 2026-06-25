@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Lora } from "next/font/google";
+import { DM_Serif_Display, Fraunces, Inter, Lora } from "next/font/google";
 import "@/styles/globals.css";
 
 import { getActiveBrandId } from "@/lib/brand/registry";
@@ -27,6 +27,14 @@ const fraunces = Fraunces({
 const lora = Lora({
   subsets: ["latin"],
   variable: "--font-lora",
+  display: "swap",
+});
+// Editorial display serif for the redesigned Elevate homepage headings.
+const dmSerifDisplay = DM_Serif_Display({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-dm-serif",
   display: "swap",
 });
 
@@ -62,7 +70,7 @@ export default function RootLayout({
     <html
       lang={config.locale}
       data-brand={brandId}
-      className={`${inter.variable} ${fraunces.variable} ${lora.variable}`}
+      className={`${inter.variable} ${fraunces.variable} ${lora.variable} ${dmSerifDisplay.variable}`}
       suppressHydrationWarning
     >
       <body className="flex min-h-screen flex-col">

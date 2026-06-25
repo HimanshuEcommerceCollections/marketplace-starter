@@ -111,6 +111,8 @@ export interface BrandContent {
     imageSrc?: string;
     imageAlt?: string;
     imageCaption?: { title: string; lines: string[] };
+    /** Lifestyle photo trio shown beneath the hero (redesigned homepage). */
+    photos?: { src: string; alt: string; label: string }[];
   };
   features: { heading?: string; subheading?: string; items: FeatureItem[] };
   faq: { heading?: string; items: FaqItem[] };
@@ -131,6 +133,14 @@ export interface BrandContent {
     heading: string;
     subheading?: string;
     draftNote?: string;
+  };
+  /** Editorial statement line with a word-by-word reveal (redesigned homepage). */
+  statement?: {
+    lead: string;
+    /** Emphasized (italic, accent) closing phrase of the lead sentence. */
+    emphasis: string;
+    /** Short follow-up line revealed after the lead. */
+    sub?: string;
   };
   howItWorks?: {
     heading: string;
