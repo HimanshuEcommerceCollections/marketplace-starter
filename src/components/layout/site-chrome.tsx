@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import * as React from "react";
+import { cn } from "@/lib/utils";
 
 export interface SiteChromeProps {
   navbar: React.ReactNode;
@@ -21,11 +22,16 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   const authFlow = pathname === "/login" || pathname === "/signup";
   const adminFlow = pathname?.startsWith("/admin") ?? false;
   const bareLayout = bookingFlow || authFlow || adminFlow;
+  const isHome = pathname === "/";
 
   return (
     <>
       {!bareLayout ? navbar : null}
-      <main className="flex-1">{children}</main>
+      {/* The fixed floating nav overlaps content; offset every page except the
+          homepage, whose full-bleed hero deliberately sits behind the nav. */}
+      <main className={cn("flex-1", !bareLayout && !isHome && "pt-28")}>
+        {children}
+      </main>
       {!bareLayout ? footer : null}
     </>
   );

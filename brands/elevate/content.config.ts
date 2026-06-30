@@ -2,25 +2,49 @@ import type { BrandContent } from "@/lib/brand/types";
 
 export const elevateContent: BrandContent = {
   hero: {
-    eyebrow: "Raleigh & Wake County, NC · Premium in-home wellness",
+    eyebrow: "Raleigh · Wake County · 8 Disciplines",
     title: "Your hour. Your home. Your pro.",
     subtitle:
-      "Elevate connects Raleigh and Wake County with fully vetted, independent wellness providers — massage therapists, personal trainers, yoga instructors, and more — who come directly to your home. Premium care, on your schedule, no commute required.",
-    primaryCta: { label: "Book Now", href: "/book" },
-    secondaryCta: { label: "How It Works", href: "/#how-it-works" },
+      "Vetted independent wellness professionals, delivered to your door across Wake County. One transparent price. A real coordinator confirms within one business hour.",
+    primaryCta: { label: "Book a session", href: "/book" },
+    secondaryCta: { label: "See all services", href: "/#services" },
     trustIndicators: [
       "Background Checked",
       "Identity Verified",
       "Independent Professionals",
       "Coordinator Confirmed",
     ],
-    imageSrc: "/images/placeholder.svg",
+    imageSrc:
+      "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1600&q=80",
     imageAlt:
-      "Sample lifestyle image — an independent professional with a client in a warm, naturally lit home.",
+      "Sample lifestyle image — a warm, naturally lit in-home wellness session.",
     imageCaption: {
       title: "Lifestyle photography",
       lines: ["Real home · Natural light", "Professional + client"],
     },
+    photos: [
+      {
+        src: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=80",
+        alt: "Sample image — a yoga session at home.",
+        label: "Yoga",
+      },
+      {
+        src: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=900&q=80",
+        alt: "Sample image — an in-home massage therapy session.",
+        label: "Massage",
+      },
+      {
+        src: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=80",
+        alt: "Sample image — a personal training session.",
+        label: "Training",
+      },
+    ],
+  },
+
+  statement: {
+    lead: "Raleigh's wellness has never had a",
+    emphasis: "single front door.",
+    sub: "Until now.",
   },
 
   trustProcess: {
@@ -56,33 +80,28 @@ export const elevateContent: BrandContent = {
   },
 
   howItWorks: {
-    heading: "How Elevate works",
+    heading: "Wellness in four steps.",
     subheading: "Book in minutes. Your pro arrives at your door.",
     steps: [
       {
-        title: "Pick a Service",
-        description: "Choose from eight wellness categories tailored to your goals.",
-      },
-      {
-        title: "Configure",
-        description: "Set your preferences, location, and any special requirements.",
-      },
-      {
-        title: "See the Price",
-        description: "Transparent pricing with no hidden fees. DRAFT prices shown.",
-      },
-      {
-        title: "Details + Schedule",
-        description: "Select your date, time, and session duration.",
-      },
-      {
-        title: "Confirm + Submit",
-        description: "Review your booking — a coordinator will follow up.",
-      },
-      {
-        title: "Your Pro Arrives",
+        title: "Pick a service",
         description:
-          "Your vetted independent professional arrives at your door on time.",
+          "Eight disciplines, transparent pricing. No quotes, no callbacks, no guessing.",
+      },
+      {
+        title: "Configure & price",
+        description:
+          "Duration, format, pack — price updates live. What you see is what you pay.",
+      },
+      {
+        title: "Submit your request",
+        description:
+          "Details, location, three time windows. Reference number issued instantly.",
+      },
+      {
+        title: "Coordinator confirms",
+        description:
+          "A real person confirms in under one business hour. Your pro arrives.",
       },
     ],
   },
