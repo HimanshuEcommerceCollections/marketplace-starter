@@ -137,7 +137,7 @@ export function HomeServices({
 
   return (
     <section ref={scope} id="services" aria-labelledby="services-heading" className="py-20 md:py-28">
-      <Container>
+      <Container size="full">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">
