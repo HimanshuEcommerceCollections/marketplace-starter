@@ -14,6 +14,7 @@ export type WizardStep =
   | "pricing"
   | "details"
   | "review"
+  | "payment"
   | "success";
 
 export const WIZARD_STEPS: WizardStep[] = [
@@ -21,6 +22,7 @@ export const WIZARD_STEPS: WizardStep[] = [
   "pricing",
   "details",
   "review",
+  "payment",
   "success",
 ];
 
@@ -46,10 +48,18 @@ export interface WizardState {
   address: string;
   windows: SchedWindow[];
   notes: string;
-  status: "draft" | "submitting" | "submitted" | "error";
+  status: "draft" | "submitting" | "paying" | "submitted" | "error";
   request?: BookingRequest;
   /** Backend booking reference (live submit only). */
   reference?: string;
+  /** Backend booking id (live submit only) — reused on payment retry. */
+  bookingId?: string;
+  /** Payment (live submit only): set once the PaymentIntent is created. */
+  paymentId?: string;
+  clientSecret?: string;
+  publishableKey?: string | null;
+  amount?: number;
+  currency?: string;
   /** Submission error message (status === "error"). */
   error?: string;
 }
@@ -63,6 +73,21 @@ type Action =
   | { type: "SET_NOTES"; notes: string }
   | { type: "SUBMIT_START" }
   | { type: "SUBMIT_OK"; request: BookingRequest; reference?: string }
+  | {
+      type: "BOOKING_CREATED";
+      request: BookingRequest;
+      reference: string;
+      bookingId: string;
+    }
+  | {
+      type: "PAYMENT_BEGIN";
+      paymentId: string;
+      clientSecret: string;
+      publishableKey: string | null;
+      amount: number;
+      currency: string;
+    }
+  | { type: "PAYMENT_OK" }
   | { type: "SUBMIT_ERROR"; error: string };
 
 function reducer(state: WizardState, action: Action): WizardState {
@@ -97,6 +122,28 @@ function reducer(state: WizardState, action: Action): WizardState {
         reference: action.reference,
         step: "success",
       };
+    case "BOOKING_CREATED":
+      // Booking persisted (status stays "submitting" while we set up payment).
+      // bookingId is retained so a payment retry never creates a duplicate.
+      return {
+        ...state,
+        request: action.request,
+        reference: action.reference,
+        bookingId: action.bookingId,
+      };
+    case "PAYMENT_BEGIN":
+      return {
+        ...state,
+        status: "paying",
+        step: "payment",
+        paymentId: action.paymentId,
+        clientSecret: action.clientSecret,
+        publishableKey: action.publishableKey,
+        amount: action.amount,
+        currency: action.currency,
+      };
+    case "PAYMENT_OK":
+      return { ...state, status: "submitted", step: "success" };
     case "SUBMIT_ERROR":
       return { ...state, status: "error", error: action.error };
     default:
@@ -228,19 +275,31 @@ export function addOnsSummary(
     .join(", ");
 }
 
-/** Human-readable scheduling window, e.g. "Thu, Jun 19 · 10:00 AM" ("" if no date). */
-export function formatWindowLabel(w: SchedWindow): string {
-  if (!w.date) return "";
-  const datePart = new Date(`${w.date}T00:00:00`).toLocaleDateString("en-US", {
+/** Long-form date label, e.g. "Thu, Jun 19" ("" when no date). */
+export function formatDateLabel(date: string): string {
+  if (!date) return "";
+  return new Date(`${date}T00:00:00`).toLocaleDateString("en-US", {
     weekday: "short",
     month: "short",
     day: "numeric",
   });
-  if (!w.time) return datePart;
-  const [h, m] = w.time.split(":").map(Number);
+}
+
+/** 12-hour time label, e.g. "10:00 AM" ("" when no time). */
+export function formatTimeLabel(time: string): string {
+  if (!time) return "";
+  const [h, m] = time.split(":").map(Number);
   const period = h < 12 ? "AM" : "PM";
   const h12 = h % 12 === 0 ? 12 : h % 12;
-  return `${datePart} · ${h12}:${String(m).padStart(2, "0")} ${period}`;
+  return `${h12}:${String(m).padStart(2, "0")} ${period}`;
+}
+
+/** Human-readable scheduling window, e.g. "Thu, Jun 19 · 10:00 AM" ("" if no date). */
+export function formatWindowLabel(w: SchedWindow): string {
+  const datePart = formatDateLabel(w.date);
+  if (!datePart) return "";
+  const timePart = formatTimeLabel(w.time);
+  return timePart ? `${datePart} · ${timePart}` : datePart;
 }
 
 /** Build the Configuration from wizard state. service.id MUST key pricing.services. */
