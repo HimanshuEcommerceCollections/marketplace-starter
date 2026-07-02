@@ -35,6 +35,8 @@ export function serviceToGridCard(service: Service): GridCard {
     title: service.title,
     summary: service.summary,
     icon: service.icon,
+    iconUrl: service.icon_path,
+    coverImages: service.cover_images.length ? service.cover_images : undefined,
     priceLabel: service.coming_soon
       ? null
       : wholeDollarLabel(service.from_price, service.currency),

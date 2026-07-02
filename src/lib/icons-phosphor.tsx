@@ -1,0 +1,46 @@
+import type { Icon } from "@phosphor-icons/react";
+import {
+  HandWaving,
+  Barbell,
+  PersonSimple,
+  Sparkle,
+  Leaf,
+  ChatCircle,
+  Heartbeat,
+  Microphone,
+  ShieldCheck,
+  Headset,
+  House,
+  MapPin,
+  ArrowUpRight,
+  ArrowRight,
+} from "@phosphor-icons/react";
+
+/**
+ * Phosphor icon resolver for the redesigned homepage. Keyed both by the Lucide
+ * names used in `services.json` (so service cards translate cleanly) and by the
+ * Phosphor names used directly in content (e.g. the "Why Elevate" cards). The
+ * rest of the app keeps using the Lucide resolver in `@/lib/icons`.
+ */
+const PHOSPHOR_ICONS: Record<string, Icon> = {
+  // Direct Phosphor names (content-authored).
+  ShieldCheck,
+  Headset,
+  House,
+  MapPin,
+  ArrowUpRight,
+  ArrowRight,
+  // Lucide service-icon names -> closest Phosphor glyph (matches the mockup).
+  HandHelping: HandWaving,
+  Dumbbell: Barbell,
+  Flower2: PersonSimple,
+  Sparkles: Sparkle,
+  Salad: Leaf,
+  Compass: ChatCircle,
+  Activity: Heartbeat,
+  MessageCircle: Microphone,
+};
+
+export function getPhosphorIcon(name?: string): Icon {
+  return (name && PHOSPHOR_ICONS[name]) || Sparkle;
+}

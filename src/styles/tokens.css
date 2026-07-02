@@ -61,6 +61,8 @@
   --font-heading: var(--brand-font-heading, var(--font-sans));
   /* Editorial display serif (loaded via next/font as --font-lora). */
   --font-display: var(--font-lora), Georgia, serif;
+  /* Heavy grotesque display for oversized hero wordmarks (OVERRIDDEN PER BRAND). */
+  --font-display-bold: var(--font-sans);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* ---- SHADOWS / ELEVATION ---- */
@@ -132,6 +134,7 @@
   --font-sans: var(--font-sans);
   --font-heading: var(--font-heading);
   --font-display: var(--font-display);
+  --font-display-bold: var(--font-display-bold);
   --font-mono: var(--font-mono);
 
   /* Display heading size — 32px / 120% line-height (text-display utility). */

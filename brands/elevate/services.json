@@ -2,10 +2,26 @@
   "brand": "elevate",
   "note": "SAMPLE catalog — INTERNAL DRAFT. Placeholder copy and prices only.",
   "categories": [
-    { "id": "bodywork", "title": "Bodywork", "description": "Massage and recovery (Sample)." },
-    { "id": "fitness", "title": "Fitness", "description": "Training and movement (Sample)." },
-    { "id": "wellness", "title": "Wellness", "description": "Nutrition, beauty, and coaching (Sample)." },
-    { "id": "therapy", "title": "Therapy", "description": "Clinical services (Sample)." }
+    {
+      "id": "bodywork",
+      "title": "Bodywork",
+      "description": "Massage and recovery (Sample)."
+    },
+    {
+      "id": "fitness",
+      "title": "Fitness",
+      "description": "Training and movement (Sample)."
+    },
+    {
+      "id": "wellness",
+      "title": "Wellness",
+      "description": "Nutrition, beauty, and coaching (Sample)."
+    },
+    {
+      "id": "therapy",
+      "title": "Therapy",
+      "description": "Clinical services (Sample)."
+    }
   ],
   "services": [
     {
@@ -26,9 +42,18 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "60", "label": "60 minutes" },
-            { "id": "90", "label": "90 minutes" },
-            { "id": "120", "label": "120 minutes" }
+            {
+              "id": "60",
+              "label": "60 minutes"
+            },
+            {
+              "id": "90",
+              "label": "90 minutes"
+            },
+            {
+              "id": "120",
+              "label": "120 minutes"
+            }
           ]
         },
         {
@@ -37,10 +62,22 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "swedish", "label": "Swedish (Relaxation)" },
-            { "id": "deep-tissue", "label": "Deep Tissue" },
-            { "id": "sports", "label": "Sports Massage" },
-            { "id": "aromatherapy", "label": "Aromatherapy" }
+            {
+              "id": "swedish",
+              "label": "Swedish (Relaxation)"
+            },
+            {
+              "id": "deep-tissue",
+              "label": "Deep Tissue"
+            },
+            {
+              "id": "sports",
+              "label": "Sports Massage"
+            },
+            {
+              "id": "aromatherapy",
+              "label": "Aromatherapy"
+            }
           ]
         },
         {
@@ -48,15 +85,32 @@
           "label": "Add-Ons",
           "input": "multiselect",
           "choices": [
-            { "id": "hot-stones", "label": "Hot Stones" },
-            { "id": "aromatherapy-oil", "label": "Aromatherapy Oil" },
-            { "id": "extended-focus", "label": "Extended Focus Area" }
+            {
+              "id": "hot-stones",
+              "label": "Hot Stones"
+            },
+            {
+              "id": "aromatherapy-oil",
+              "label": "Aromatherapy Oil"
+            },
+            {
+              "id": "extended-focus",
+              "label": "Extended Focus Area"
+            }
           ]
         }
       ],
-      "location_modes": ["onsite"],
-      "badges": ["[Sample]"],
-      "faq": []
+      "location_modes": [
+        "onsite"
+      ],
+      "badges": [
+        "[Sample]"
+      ],
+      "faq": [],
+      "cover_images": [
+        "/services/massage/cover-1.jpg"
+      ],
+      "icon_path": "/services/massage/icon.svg"
     },
     {
       "id": "personal-training",
@@ -76,9 +130,18 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "individual", "label": "Individual" },
-            { "id": "partner-training", "label": "Partner Training" },
-            { "id": "small-group", "label": "Small Group (3–5)" }
+            {
+              "id": "individual",
+              "label": "Individual"
+            },
+            {
+              "id": "partner-training",
+              "label": "Partner Training"
+            },
+            {
+              "id": "small-group",
+              "label": "Small Group (3–5)"
+            }
           ]
         },
         {
@@ -87,9 +150,18 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "45", "label": "45 Minutes" },
-            { "id": "60", "label": "60 Minutes" },
-            { "id": "90", "label": "90 Minutes" }
+            {
+              "id": "45",
+              "label": "45 Minutes"
+            },
+            {
+              "id": "60",
+              "label": "60 Minutes"
+            },
+            {
+              "id": "90",
+              "label": "90 Minutes"
+            }
           ]
         },
         {
@@ -98,10 +170,22 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "weight-loss", "label": "Weight Loss" },
-            { "id": "strength-training", "label": "Strength Training" },
-            { "id": "mobility-flexibility", "label": "Mobility & Flexibility" },
-            { "id": "general-fitness", "label": "General Fitness" }
+            {
+              "id": "weight-loss",
+              "label": "Weight Loss"
+            },
+            {
+              "id": "strength-training",
+              "label": "Strength Training"
+            },
+            {
+              "id": "mobility-flexibility",
+              "label": "Mobility & Flexibility"
+            },
+            {
+              "id": "general-fitness",
+              "label": "General Fitness"
+            }
           ]
         },
         {
@@ -110,15 +194,33 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "single", "label": "Single Session" },
-            { "id": "pack-4", "label": "4 Session Pack" },
-            { "id": "pack-8", "label": "8 Session Pack" }
+            {
+              "id": "single",
+              "label": "Single Session"
+            },
+            {
+              "id": "pack-4",
+              "label": "4 Session Pack"
+            },
+            {
+              "id": "pack-8",
+              "label": "8 Session Pack"
+            }
           ]
         }
       ],
-      "location_modes": ["onsite", "remote"],
-      "badges": ["[Sample]"],
-      "faq": []
+      "location_modes": [
+        "onsite",
+        "remote"
+      ],
+      "badges": [
+        "[Sample]"
+      ],
+      "faq": [],
+      "cover_images": [
+        "/services/personal-training/cover-1.jpg"
+      ],
+      "icon_path": "/services/personal-training/icon.svg"
     },
     {
       "id": "yoga",
@@ -138,9 +240,18 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "individual", "label": "Individual" },
-            { "id": "couple", "label": "Couple" },
-            { "id": "small-group", "label": "Small Group" }
+            {
+              "id": "individual",
+              "label": "Individual"
+            },
+            {
+              "id": "couple",
+              "label": "Couple"
+            },
+            {
+              "id": "small-group",
+              "label": "Small Group"
+            }
           ]
         },
         {
@@ -149,8 +260,14 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "60", "label": "60 Minutes" },
-            { "id": "90", "label": "90 Minutes" }
+            {
+              "id": "60",
+              "label": "60 Minutes"
+            },
+            {
+              "id": "90",
+              "label": "90 Minutes"
+            }
           ]
         },
         {
@@ -159,10 +276,22 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "gentle-flow", "label": "Gentle Flow" },
-            { "id": "hatha", "label": "Hatha" },
-            { "id": "vinyasa", "label": "Vinyasa" },
-            { "id": "restorative", "label": "Restorative" }
+            {
+              "id": "gentle-flow",
+              "label": "Gentle Flow"
+            },
+            {
+              "id": "hatha",
+              "label": "Hatha"
+            },
+            {
+              "id": "vinyasa",
+              "label": "Vinyasa"
+            },
+            {
+              "id": "restorative",
+              "label": "Restorative"
+            }
           ]
         },
         {
@@ -171,15 +300,33 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "single", "label": "Single Session" },
-            { "id": "pack-4", "label": "4 Session Pack" },
-            { "id": "pack-8", "label": "8 Session Pack" }
+            {
+              "id": "single",
+              "label": "Single Session"
+            },
+            {
+              "id": "pack-4",
+              "label": "4 Session Pack"
+            },
+            {
+              "id": "pack-8",
+              "label": "8 Session Pack"
+            }
           ]
         }
       ],
-      "location_modes": ["onsite", "remote"],
-      "badges": ["[Sample]"],
-      "faq": []
+      "location_modes": [
+        "onsite",
+        "remote"
+      ],
+      "badges": [
+        "[Sample]"
+      ],
+      "faq": [],
+      "cover_images": [
+        "/services/yoga/cover-1.jpg"
+      ],
+      "icon_path": "/services/yoga/icon.svg"
     },
     {
       "id": "beauty",
@@ -199,10 +346,22 @@
           "label": "Select Services",
           "input": "multiselect",
           "choices": [
-            { "id": "hair-styling", "label": "Hair Styling" },
-            { "id": "makeup-application", "label": "Makeup Application" },
-            { "id": "blowout", "label": "Blowout" },
-            { "id": "event-styling", "label": "Event Styling" }
+            {
+              "id": "hair-styling",
+              "label": "Hair Styling"
+            },
+            {
+              "id": "makeup-application",
+              "label": "Makeup Application"
+            },
+            {
+              "id": "blowout",
+              "label": "Blowout"
+            },
+            {
+              "id": "event-styling",
+              "label": "Event Styling"
+            }
           ]
         },
         {
@@ -211,9 +370,18 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "1", "label": "1" },
-            { "id": "2", "label": "2" },
-            { "id": "3-plus", "label": "3+" }
+            {
+              "id": "1",
+              "label": "1"
+            },
+            {
+              "id": "2",
+              "label": "2"
+            },
+            {
+              "id": "3-plus",
+              "label": "3+"
+            }
           ]
         },
         {
@@ -222,16 +390,36 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "everyday", "label": "Everyday" },
-            { "id": "photoshoot", "label": "Photoshoot" },
-            { "id": "wedding-event", "label": "Wedding/Event" },
-            { "id": "other", "label": "Other" }
+            {
+              "id": "everyday",
+              "label": "Everyday"
+            },
+            {
+              "id": "photoshoot",
+              "label": "Photoshoot"
+            },
+            {
+              "id": "wedding-event",
+              "label": "Wedding/Event"
+            },
+            {
+              "id": "other",
+              "label": "Other"
+            }
           ]
         }
       ],
-      "location_modes": ["onsite"],
-      "badges": ["[Sample]"],
-      "faq": []
+      "location_modes": [
+        "onsite"
+      ],
+      "badges": [
+        "[Sample]"
+      ],
+      "faq": [],
+      "cover_images": [
+        "/services/beauty/cover-1.jpg"
+      ],
+      "icon_path": "/services/beauty/icon.svg"
     },
     {
       "id": "nutrition-coaching",
@@ -252,8 +440,14 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "initial", "label": "Initial Consultation" },
-            { "id": "follow-up", "label": "Follow-Up Session" }
+            {
+              "id": "initial",
+              "label": "Initial Consultation"
+            },
+            {
+              "id": "follow-up",
+              "label": "Follow-Up Session"
+            }
           ]
         },
         {
@@ -262,8 +456,14 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "in-home", "label": "In Home" },
-            { "id": "virtual", "label": "Virtual" }
+            {
+              "id": "in-home",
+              "label": "In Home"
+            },
+            {
+              "id": "virtual",
+              "label": "Virtual"
+            }
           ]
         },
         {
@@ -272,10 +472,22 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "weight-management", "label": "Weight Management" },
-            { "id": "sports-nutrition", "label": "Sports Nutrition" },
-            { "id": "healthy-lifestyle", "label": "Healthy Lifestyle" },
-            { "id": "medical-support", "label": "Medical Nutrition Support" }
+            {
+              "id": "weight-management",
+              "label": "Weight Management"
+            },
+            {
+              "id": "sports-nutrition",
+              "label": "Sports Nutrition"
+            },
+            {
+              "id": "healthy-lifestyle",
+              "label": "Healthy Lifestyle"
+            },
+            {
+              "id": "medical-support",
+              "label": "Medical Nutrition Support"
+            }
           ]
         },
         {
@@ -284,14 +496,29 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "single", "label": "Single Session" },
-            { "id": "monthly", "label": "Monthly Coaching" }
+            {
+              "id": "single",
+              "label": "Single Session"
+            },
+            {
+              "id": "monthly",
+              "label": "Monthly Coaching"
+            }
           ]
         }
       ],
-      "location_modes": ["onsite", "remote"],
-      "badges": ["[Sample]"],
-      "faq": []
+      "location_modes": [
+        "onsite",
+        "remote"
+      ],
+      "badges": [
+        "[Sample]"
+      ],
+      "faq": [],
+      "cover_images": [
+        "/services/nutrition-coaching/cover-1.jpg"
+      ],
+      "icon_path": "/services/nutrition-coaching/icon.svg"
     },
     {
       "id": "life-coaching",
@@ -311,8 +538,14 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "in-home", "label": "In Home" },
-            { "id": "virtual", "label": "Virtual" }
+            {
+              "id": "in-home",
+              "label": "In Home"
+            },
+            {
+              "id": "virtual",
+              "label": "Virtual"
+            }
           ]
         },
         {
@@ -321,10 +554,22 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "career-growth", "label": "Career Growth" },
-            { "id": "work-life-balance", "label": "Work-Life Balance" },
-            { "id": "personal-development", "label": "Personal Development" },
-            { "id": "goal-setting", "label": "Goal Setting" }
+            {
+              "id": "career-growth",
+              "label": "Career Growth"
+            },
+            {
+              "id": "work-life-balance",
+              "label": "Work-Life Balance"
+            },
+            {
+              "id": "personal-development",
+              "label": "Personal Development"
+            },
+            {
+              "id": "goal-setting",
+              "label": "Goal Setting"
+            }
           ]
         },
         {
@@ -333,8 +578,14 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "60", "label": "60 Minutes" },
-            { "id": "90", "label": "90 Minutes" }
+            {
+              "id": "60",
+              "label": "60 Minutes"
+            },
+            {
+              "id": "90",
+              "label": "90 Minutes"
+            }
           ]
         },
         {
@@ -343,15 +594,33 @@
           "input": "select",
           "required": true,
           "choices": [
-            { "id": "single", "label": "Single Session" },
-            { "id": "pack-4", "label": "4 Session Pack" },
-            { "id": "pack-8", "label": "8 Session Pack" }
+            {
+              "id": "single",
+              "label": "Single Session"
+            },
+            {
+              "id": "pack-4",
+              "label": "4 Session Pack"
+            },
+            {
+              "id": "pack-8",
+              "label": "8 Session Pack"
+            }
           ]
         }
       ],
-      "location_modes": ["onsite", "remote"],
-      "badges": ["[Sample]"],
-      "faq": []
+      "location_modes": [
+        "onsite",
+        "remote"
+      ],
+      "badges": [
+        "[Sample]"
+      ],
+      "faq": [],
+      "cover_images": [
+        "/services/life-coaching/cover-1.jpg"
+      ],
+      "icon_path": "/services/life-coaching/icon.svg"
     },
     {
       "id": "physical-therapy",
@@ -366,9 +635,17 @@
       "icon": "Activity",
       "coming_soon": true,
       "config_options": [],
-      "location_modes": ["onsite"],
-      "badges": ["[Sample]"],
-      "faq": []
+      "location_modes": [
+        "onsite"
+      ],
+      "badges": [
+        "[Sample]"
+      ],
+      "faq": [],
+      "cover_images": [
+        "/services/physical-therapy/cover-1.jpg"
+      ],
+      "icon_path": "/services/physical-therapy/icon.svg"
     },
     {
       "id": "speech-therapy",
@@ -383,9 +660,18 @@
       "icon": "MessageCircle",
       "coming_soon": true,
       "config_options": [],
-      "location_modes": ["onsite", "remote"],
-      "badges": ["[Sample]"],
-      "faq": []
+      "location_modes": [
+        "onsite",
+        "remote"
+      ],
+      "badges": [
+        "[Sample]"
+      ],
+      "faq": [],
+      "cover_images": [
+        "/services/speech-therapy/cover-1.jpg"
+      ],
+      "icon_path": "/services/speech-therapy/icon.svg"
     }
   ]
 }

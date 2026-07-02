@@ -34,6 +34,9 @@ export interface BookingStepLayoutProps {
   summary?: React.ReactNode;
   /** Whether the summary also shows on mobile (below the form). Default true. */
   summaryMobile?: boolean;
+  /** On mobile, render the summary ABOVE the main content (e.g. payment step).
+   *  No effect on desktop, where it stays in the right rail. Default false. */
+  summaryMobileFirst?: boolean;
   children: React.ReactNode;
 }
 
@@ -51,6 +54,7 @@ export function BookingStepLayout({
   back,
   summary,
   summaryMobile = true,
+  summaryMobileFirst = false,
   children,
 }: BookingStepLayoutProps) {
   const Icon = getIcon(service.icon);
@@ -110,11 +114,19 @@ export function BookingStepLayout({
 
       {summary ? (
         <div className="mt-8 grid grid-cols-1 gap-8 lg:mt-10 lg:grid-cols-3 lg:gap-10">
-          <div className="min-w-0 lg:col-span-2">{main}</div>
+          <div
+            className={cn(
+              "min-w-0 lg:col-span-2",
+              summaryMobileFirst && "order-2 lg:order-none",
+            )}
+          >
+            {main}
+          </div>
           <aside
             className={cn(
               "min-w-0 lg:col-span-1",
               !summaryMobile && "hidden lg:block",
+              summaryMobileFirst && "order-1 lg:order-none",
             )}
           >
             <div className="lg:sticky lg:top-6">{summary}</div>

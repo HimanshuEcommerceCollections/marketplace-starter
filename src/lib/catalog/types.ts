@@ -33,12 +33,20 @@ export const ServiceSchema = z.object({
   // advancing past Configure until the DRAFT total reaches this floor, and the
   // displayed "From" price never reads below it (e.g. Beauty's $75 minimum).
   min_booking: z.number().optional(),
-  icon: z.string().optional(), // lucide icon name for cards
+  icon: z.string().optional(), // lucide icon name (legacy; superseded by icon_path)
+  // Root-relative SVG icon URL (served from client public/), e.g.
+  // "/services/massage/icon.svg". Mirrors the API's `iconPath` so the static
+  // catalog fallback renders the same icon as the live API.
+  icon_path: z.string().optional(),
   // Optional: card links to /services/<landing_slug> instead of /services/<id>.
   // Lets one service's card open another service's landing page (data-driven).
   landing_slug: z.string().optional(),
   coming_soon: z.boolean().default(false),
   image: z.string().optional(),
+  // Ordered cover image URLs (root-relative, served from client public/); first
+  // is the default card image. Mirrors the API's `coverImages` so the static
+  // catalog fallback shows the same photography when the API is unreachable.
+  cover_images: z.array(z.string()).default([]),
   config_options: z.array(ConfigOptionSchema).default([]),
   location_modes: z
     .array(z.enum(["onsite", "remote", "hybrid"]))

@@ -2,49 +2,22 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "@phosphor-icons/react";
 import { Container } from "@/components/layout/container";
-import { getIcon } from "@/lib/icons";
 import { useGsap, gsap, prefersReducedMotion } from "@/lib/anim/use-gsap";
 import type { GridCard } from "@/lib/catalog/cards";
 
 export interface HomeServicesProps {
   heading: string;
+  headingAccent?: string;
   subheading?: string;
   draftNote?: string;
   cards: GridCard[];
 }
 
-/** Presentational hover/preview imagery keyed by service slug (demo photography). */
-const ROW_IMAGES: Record<string, string> = {
-  massage:
-    "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=900&q=80",
-  "personal-training":
-    "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=80",
-  yoga: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=80",
-  beauty:
-    "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=900&q=80",
-  "nutrition-coaching":
-    "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80",
-  "life-coaching":
-    "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?auto=format&fit=crop&w=900&q=80",
-  "physical-therapy":
-    "https://images.unsplash.com/photo-1576678927484-cc907957088c?auto=format&fit=crop&w=900&q=80",
-  "speech-therapy":
-    "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80",
-};
-const FALLBACK_IMAGE =
-  "https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=900&q=80";
-
-function rowImage(card: GridCard): string {
-  const slug = card.href.split("/").filter(Boolean).pop() ?? "";
-  return (
-    card.coverImages?.[0] ?? ROW_IMAGES[card.id] ?? ROW_IMAGES[slug] ?? FALLBACK_IMAGE
-  );
-}
-
 export function HomeServices({
   heading,
+  headingAccent,
   subheading,
   draftNote,
   cards,
@@ -53,15 +26,19 @@ export function HomeServices({
   const previewImgRef = useRef<HTMLDivElement>(null);
   const previewLabelRef = useRef<HTMLSpanElement>(null);
 
-  // Scroll-reveal stagger (skipped under reduced motion by the hook).
+  // Scroll-reveal (skipped under reduced motion by the hook). Each row animates
+  // on its own trigger as it enters view — mirrors the mockup and avoids the
+  // batch-stagger that leaves lower rows shifted while the top ones settle.
   const scope = useGsap<HTMLElement>(({ gsap, scope }) => {
-    gsap.from(scope.querySelectorAll(".home-svc-row"), {
-      scrollTrigger: { trigger: scope.querySelector(".home-svc-list"), start: "top 82%" },
-      x: -36,
-      autoAlpha: 0,
-      duration: 0.55,
-      stagger: 0.07,
-      ease: "power2.out",
+    scope.querySelectorAll<HTMLElement>(".home-svc-row").forEach((row) => {
+      gsap.from(row, {
+        scrollTrigger: { trigger: row, start: "top 92%", toggleActions: "play none none none" },
+        x: -40,
+        autoAlpha: 0,
+        duration: 0.6,
+        ease: "power3.out",
+        clearProps: "transform,opacity,visibility",
+      });
     });
   }, []);
 
@@ -148,6 +125,12 @@ export function HomeServices({
               className="font-display text-3xl font-normal tracking-tight text-foreground md:text-5xl"
             >
               {heading}
+              {headingAccent ? (
+                <>
+                  <br />
+                  <em className="italic text-highlight">{headingAccent}</em>
+                </>
+              ) : null}
             </h2>
             {subheading ? (
               <p className="mt-3 max-w-xl text-base text-muted-foreground">{subheading}</p>
@@ -167,16 +150,15 @@ export function HomeServices({
           </p>
         ) : null}
 
-        <ul role="list" className="home-svc-list border-t border-border">
+        <ul role="list" className="home-svc-list">
           {cards.map((card, i) => {
-            const Icon = getIcon(card.icon);
             const num = String(i + 1).padStart(2, "0");
             return (
-              <li key={card.id} className="border-b border-border">
+              <li key={card.id} className="home-svc-item">
                 <Link
                   href={card.href}
                   aria-label={`View ${card.title}`}
-                  data-bg={rowImage(card)}
+                  data-bg={card.coverImages?.[0] ?? ""}
                   data-label={card.title}
                   className="home-svc-row group focus-visible:outline-none"
                 >
@@ -192,9 +174,7 @@ export function HomeServices({
                       {card.iconUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element -- token-sized inline SVG icon
                         <img src={card.iconUrl} alt="" aria-hidden className="size-5" loading="lazy" />
-                      ) : (
-                        <Icon className="size-5" strokeWidth={1.75} aria-hidden />
-                      )}
+                      ) : null}
                     </span>
                     <span className="home-svc-name home-svc-ink truncate text-foreground">
                       {card.title}
@@ -202,7 +182,7 @@ export function HomeServices({
                   </div>
 
                   {card.summary ? (
-                    <span className="home-svc-ink-muted hidden max-w-64 text-right text-sm leading-snug text-muted-foreground md:block">
+                    <span className="home-svc-ink-muted hidden max-w-64 text-right text-sm leading-snug text-muted-foreground md:line-clamp-2">
                       {card.summary}
                     </span>
                   ) : (
@@ -214,7 +194,7 @@ export function HomeServices({
                   </span>
 
                   <span className="home-svc-arrow home-svc-ink-muted flex items-center justify-end text-muted-foreground">
-                    <ArrowUpRight className="size-5" aria-hidden />
+                    <ArrowUpRight className="size-5" weight="bold" aria-hidden />
                   </span>
                 </Link>
               </li>

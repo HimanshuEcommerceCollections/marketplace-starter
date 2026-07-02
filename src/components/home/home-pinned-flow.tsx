@@ -2,14 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
-  HandHelping,
-  Dumbbell,
-  Flower2,
-  Sparkles,
-  Salad,
-  MessageCircle,
-  type LucideIcon,
-} from "lucide-react";
+  HandWaving,
+  Barbell,
+  PersonSimple,
+  Sparkle,
+  Leaf,
+  ChatCircle,
+  type Icon,
+} from "@phosphor-icons/react";
 import { Container } from "@/components/layout/container";
 import { cn } from "@/lib/utils";
 
@@ -30,7 +30,8 @@ interface Panel {
 /**
  * Presentational, demo-only walkthrough of the booking flow. The card is a
  * static visual mock — it is NOT wired to the real booking engine, pricing, or
- * any form submission. Numbers are illustrative.
+ * any form submission. Numbers are illustrative. A background image stack
+ * swaps with the active step.
  */
 const PANELS: Panel[] = [
   {
@@ -83,64 +84,55 @@ const PANELS: Panel[] = [
   },
 ];
 
-const CHIPS: { label: string; Icon: LucideIcon }[] = [
-  { label: "Massage", Icon: HandHelping },
-  { label: "Training", Icon: Dumbbell },
-  { label: "Yoga", Icon: Flower2 },
-  { label: "Beauty", Icon: Sparkles },
-  { label: "Nutrition", Icon: Salad },
-  { label: "Coaching", Icon: MessageCircle },
+const STEP_BG = [
+  "/assets/image-8.jpg",
+  "/assets/image-9.jpg",
+  "/assets/image-10.jpg",
+  "/assets/image-11.jpg",
+];
+
+const CHIPS: { label: string; Icon: Icon }[] = [
+  { label: "Massage", Icon: HandWaving },
+  { label: "Training", Icon: Barbell },
+  { label: "Yoga", Icon: PersonSimple },
+  { label: "Beauty", Icon: Sparkle },
+  { label: "Nutrition", Icon: Leaf },
+  { label: "Coaching", Icon: ChatCircle },
 ];
 
 function BookingCardMock({ state }: { state: CardState }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
-      <div className="flex items-center gap-3 border-b border-border bg-secondary px-5 py-3">
-        <div className="flex gap-1.5">
-          <span className="size-2.5 rounded-full bg-destructive" />
-          <span className="size-2.5 rounded-full bg-warning" />
-          <span className="size-2.5 rounded-full bg-success" />
+    <div className="home-bc">
+      <div className="home-bc-topbar">
+        <div className="home-bc-dots">
+          <span />
+          <span />
+          <span />
         </div>
-        <span className="flex-1 text-center text-xs text-muted-foreground">
-          elevate · /book
-        </span>
+        <span className="home-bc-url">elevate.app / book</span>
       </div>
 
-      <div className="p-6">
-        <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-          {state.step}
-        </p>
+      <div className="home-bc-body">
+        <p className="home-bc-step">{state.step}</p>
 
-        <div className="mb-4 grid grid-cols-2 gap-2">
-          {CHIPS.map((chip) => {
-            const selected = chip.label === "Massage";
-            return (
-              <span
-                key={chip.label}
-                className={cn(
-                  "flex items-center gap-1.5 rounded-lg border px-3 py-2.5 text-sm font-medium",
-                  selected
-                    ? "border-foreground bg-foreground text-background"
-                    : "border-border bg-secondary text-foreground",
-                )}
-              >
-                <chip.Icon className="size-3.5" aria-hidden />
-                {chip.label}
-              </span>
-            );
-          })}
+        <div className="home-bc-grid">
+          {CHIPS.map((chip) => (
+            <span
+              key={chip.label}
+              className={cn("home-bc-chip", chip.label === "Massage" && "is-selected")}
+            >
+              <chip.Icon className="size-4" weight="regular" aria-hidden />
+              {chip.label}
+            </span>
+          ))}
         </div>
 
-        <div className="mb-4 flex items-center justify-between rounded-xl border border-border bg-secondary px-5 py-4">
+        <div className="home-bc-price">
           <div>
-            <p className="mb-1 text-xs uppercase tracking-widest text-muted-foreground">
-              Your price
-            </p>
-            <p className="font-display text-4xl leading-none tracking-tight text-foreground">
-              {state.price}
-            </p>
+            <p className="home-bc-price-label">Your price</p>
+            <p className="home-bc-price-big">{state.price}</p>
           </div>
-          <p className="text-right text-xs leading-relaxed text-muted-foreground">
+          <p className="home-bc-price-note">
             {state.note.map((line, i) => (
               <span key={line}>
                 {i > 0 ? <br /> : null}
@@ -150,10 +142,8 @@ function BookingCardMock({ state }: { state: CardState }) {
           </p>
         </div>
 
-        <span className="block rounded-full bg-foreground py-3 text-center text-sm font-medium text-background">
-          {state.btn}
-        </span>
-        <p className="mt-2.5 text-center text-xs text-muted-foreground">{state.ref}</p>
+        <span className="home-bc-btn">{state.btn}</span>
+        <p className="home-bc-ref">{state.ref}</p>
       </div>
     </div>
   );
@@ -162,6 +152,17 @@ function BookingCardMock({ state }: { state: CardState }) {
 export function HomePinnedFlow() {
   const sectionRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
+
+  // Paint the step background images from data attributes (inline style is
+  // linted out).
+  useEffect(() => {
+    const root = sectionRef.current;
+    if (!root) return;
+    for (const el of root.querySelectorAll<HTMLElement>(".home-pinned-bg")) {
+      const src = el.dataset.bg;
+      if (src) el.style.backgroundImage = `url(${src})`;
+    }
+  }, []);
 
   // Scroll-spy: activate the panel crossing the viewport's vertical center.
   useEffect(() => {
@@ -184,8 +185,19 @@ export function HomePinnedFlow() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="border-b border-border">
-      <Container>
+    <section ref={sectionRef} className="home-pinned">
+      <div aria-hidden className="home-pinned-bg-stack">
+        {STEP_BG.map((src, i) => (
+          <div
+            key={src}
+            data-bg={src}
+            className={cn("home-pinned-bg", i === active && "is-active")}
+          />
+        ))}
+      </div>
+      <div aria-hidden className="home-pinned-overlay" />
+
+      <Container className="relative z-10">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20">
           <div className="py-16 md:py-24">
             {PANELS.map((panel, i) => (
@@ -193,23 +205,17 @@ export function HomePinnedFlow() {
                 key={panel.tag}
                 data-index={i}
                 data-active={i === active}
-                className="home-panel border-t border-border py-12 first:border-t-0 first:pt-0"
+                className="home-panel border-t border-white/12 py-12 first:border-t-0 first:pt-0"
               >
-                <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">
-                  {panel.tag}
-                </p>
-                <h3 className="font-display text-2xl font-normal tracking-tight text-foreground md:text-4xl">
-                  {panel.title}
-                </h3>
-                <p className="mt-3 max-w-sm text-base leading-relaxed text-muted-foreground">
-                  {panel.body}
-                </p>
+                <p className="home-panel-num">{panel.tag}</p>
+                <h3 className="home-panel-title">{panel.title}</h3>
+                <p className="home-panel-body">{panel.body}</p>
               </div>
             ))}
           </div>
 
           <div className="pb-16 lg:py-24">
-            <div className="lg:sticky lg:top-28">
+            <div className="home-pinned-sticky lg:sticky lg:top-28">
               <BookingCardMock state={PANELS[active].card} />
             </div>
           </div>

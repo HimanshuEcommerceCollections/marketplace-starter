@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/components/auth/auth-provider";
 import { submitBooking, BookingApiError } from "@/lib/booking/api";
+import { createPaymentIntent, PaymentApiError } from "@/lib/payments/api";
 import {
   BookingProvider,
   useBookingDraft,
@@ -14,15 +15,19 @@ import {
   selectionSummary,
   addOnsSummary,
   formatWindowLabel,
+  formatDateLabel,
+  formatTimeLabel,
   WIZARD_STEPS,
 } from "./booking-provider";
 import { BookingStepLayout } from "./booking-step-layout";
 import { BookingSummaryCard } from "./booking-summary-card";
 import { RequestSummaryCard } from "./request-summary-card";
+import { PaymentSummaryCard } from "./payment-summary-card";
 import { WizardStepConfig } from "./wizard-step-config";
 import { WizardStepPricing } from "./wizard-step-pricing";
 import { WizardStepDetails } from "./wizard-step-details";
 import { WizardStepReview } from "./wizard-step-review";
+import { WizardStepPayment } from "./wizard-step-payment";
 import { BookingSuccessScreen } from "./booking-success-screen";
 import { formatMoney } from "@/lib/money";
 import type { WizardStep } from "./booking-provider";
@@ -65,6 +70,7 @@ const FLOW_INDEX: Record<WizardStep, number> = {
   pricing: 2, // Pricing
   details: 3, // Details
   review: 4, // Confirm
+  payment: 4, // Payment is part of confirming — keeps the 6-step indicator intact
   success: 5, // Done
 };
 
@@ -73,6 +79,7 @@ const STEP_HEADING: Record<WizardStep, string> = {
   pricing: "Review Your Pricing",
   details: "Your Details",
   review: "Review & Confirm",
+  payment: "Secure Payment",
   success: "Done",
 };
 
@@ -85,6 +92,10 @@ function WizardInner() {
   const router = useRouter();
   const [fieldErrors, setFieldErrors] = React.useState<FieldErrors>();
   const [consent, setConsent] = React.useState(false);
+  // Sub-phase of the live submit, so the button can narrate progress.
+  const [submitPhase, setSubmitPhase] = React.useState<
+    "idle" | "creating" | "preparing"
+  >("idle");
   const stepRef = React.useRef<HTMLDivElement>(null);
   const index = WIZARD_STEPS.indexOf(state.step);
 
@@ -181,27 +192,57 @@ function WizardInner() {
 
     dispatch({ type: "SUBMIT_START" });
     try {
-      const created = await submitBooking(toServerBooking(ctx));
-      analytics.bookSubmit({
-        request_id: created.reference,
-        service_type: request.service_type,
-        displayed_price: created.priceAmount,
-        currency: created.currency,
-        is_stub: false,
+      // 1) Create the booking once. The id is retained in state so a payment
+      //    retry reuses it and never creates a duplicate booking.
+      let bookingId = state.bookingId;
+      if (!bookingId) {
+        setSubmitPhase("creating");
+        const created = await submitBooking(toServerBooking(ctx));
+        bookingId = created.id;
+        analytics.bookSubmit({
+          request_id: created.reference,
+          service_type: request.service_type,
+          displayed_price: created.priceAmount,
+          currency: created.currency,
+          is_stub: false,
+        });
+        dispatch({
+          type: "BOOKING_CREATED",
+          request,
+          reference: created.reference,
+          bookingId,
+        });
+      }
+
+      // 2) Create (or reuse) the PaymentIntent for that booking and advance to
+      //    the payment step. The charge amount is decided by the backend.
+      setSubmitPhase("preparing");
+      const intent = await createPaymentIntent(bookingId);
+      dispatch({
+        type: "PAYMENT_BEGIN",
+        paymentId: intent.paymentId,
+        clientSecret: intent.clientSecret,
+        publishableKey: intent.publishableKey,
+        amount: intent.amount,
+        currency: intent.currency,
       });
-      dispatch({ type: "SUBMIT_OK", request, reference: created.reference });
     } catch (err) {
-      if (err instanceof BookingApiError && err.status === 401) {
+      if (
+        (err instanceof BookingApiError || err instanceof PaymentApiError) &&
+        err.status === 401
+      ) {
         router.push(loginRedirect);
         return;
       }
       dispatch({
         type: "SUBMIT_ERROR",
         error:
-          err instanceof BookingApiError
+          err instanceof BookingApiError || err instanceof PaymentApiError
             ? err.message
-            : "Could not submit your booking. Please try again.",
+            : "Could not start payment. Please try again.",
       });
+    } finally {
+      setSubmitPhase("idle");
     }
   }
 
@@ -209,9 +250,10 @@ function WizardInner() {
   const isPricing = state.step === "pricing";
   const isDetails = state.step === "details";
   const isReview = state.step === "review";
+  const isPayment = state.step === "payment";
   const isSuccess = state.step === "success";
   const primaryStep = isConfig || isPricing || isDetails;
-  const showSummary = primaryStep || isReview;
+  const showSummary = primaryStep || isReview || isPayment;
   const breakdown = computePrice(pricing, toConfiguration(state, service));
   const baseLabel = selectionSummary(service, state.selections);
   // Minimum-booking gate (e.g. Beauty's $75): block leaving Configure until the
@@ -229,9 +271,47 @@ function WizardInner() {
     details: "Enter your contact information and preferred scheduling windows.",
     review:
       "Please review your booking request before submitting. A coordinator will confirm all details.",
+    payment:
+      "Your payment is encrypted and processed securely by Stripe — your card details never touch our servers.",
   };
 
-  const summaryNode = isReview ? (
+  // Payment-step summary values (derived from the confirmed selections).
+  const durationOpt = service.config_options.find((o) => o.id === "duration");
+  const durationLabel = durationOpt?.choices?.find(
+    (c) => c.id === state.selections["duration"],
+  )?.label;
+  const sessionLabel = service.config_options
+    .filter((o) => o.input === "select" && o.id !== "duration")
+    .map((o) => o.choices?.find((c) => c.id === state.selections[o.id])?.label)
+    .filter(Boolean)
+    .join(" · ");
+  const firstWindow = state.windows.find((w) => w.date) ?? state.windows[0];
+  const locationLabel =
+    state.address ||
+    (service.location_modes[0] === "remote"
+      ? "Remote session"
+      : "In-home appointment");
+
+  const summaryNode = isPayment ? (
+    <PaymentSummaryCard
+      service={{
+        title: service.title,
+        icon: service.icon,
+        image: service.image,
+      }}
+      breakdown={breakdown}
+      totalLabel={formatMoney({
+        amount: state.amount ?? breakdown.total.amount,
+        currency: state.currency ?? breakdown.total.currency,
+      })}
+      durationLabel={durationLabel}
+      dateLabel={formatDateLabel(firstWindow?.date ?? "") || undefined}
+      timeLabel={formatTimeLabel(firstWindow?.time ?? "") || undefined}
+      locationLabel={locationLabel}
+      sessionLabel={sessionLabel || undefined}
+      addOns={addOnsSummary(service, state.selections) || undefined}
+    />
+  ) : isReview ? (
     <RequestSummaryCard
       serviceTitle={service.title}
       session={baseLabel}
@@ -268,7 +348,8 @@ function WizardInner() {
               ? { label: "Back to Details", onBack: goBack }
               : undefined
       }
-      summaryMobile={isConfig}
+      summaryMobile={isConfig || isPayment}
+      summaryMobileFirst={isPayment}
       summary={showSummary ? summaryNode : undefined}
     >
       {fieldErrors && Object.keys(fieldErrors).length > 0 ? (
@@ -288,6 +369,7 @@ function WizardInner() {
           <WizardStepDetails errors={fieldErrors} />
         ) : null}
         {state.step === "review" ? <WizardStepReview /> : null}
+        {state.step === "payment" ? <WizardStepPayment /> : null}
         {state.step === "success" ? (
           <BookingSuccessScreen
             request={state.request}
@@ -340,9 +422,13 @@ function WizardInner() {
             className="w-full bg-highlight text-highlight-foreground hover:bg-highlight/90"
           >
             {state.status === "submitting"
-              ? "Submitting…"
+              ? submitPhase === "preparing"
+                ? "Preparing secure payment…"
+                : "Creating booking…"
               : consent
-                ? "Submit Booking Request"
+                ? ctx.liveServiceId
+                  ? "Continue to Payment"
+                  : "Submit Booking Request"
                 : "Submit Booking Request (Check box above to enable)"}
           </Button>
           <p className="text-xs text-muted-foreground">
