@@ -19,19 +19,19 @@ export interface HomeWhyProps {
 export function HomeWhy({ eyebrow, heading, sub, trustBadge, cards }: HomeWhyProps) {
   const scope = useGsap<HTMLElement>(({ gsap, scope }) => {
     gsap.from(scope.querySelectorAll(".js-why-intro > *"), {
-      scrollTrigger: { trigger: scope, start: "top 80%" },
+      scrollTrigger: { trigger: scope, start: "top bottom", once: true },
       y: 42,
       autoAlpha: 0,
-      duration: 0.8,
+      duration: 0.82,
       stagger: 0.12,
       ease: "power2.out",
     });
     gsap.from(scope.querySelectorAll(".home-why-card"), {
-      scrollTrigger: { trigger: scope, start: "top 78%" },
+      scrollTrigger: { trigger: scope, start: "top bottom", once: true },
       y: 48,
       autoAlpha: 0,
       duration: 0.6,
-      stagger: 0.08,
+      stagger: 0.07,
       ease: "power3.out",
       clearProps: "transform",
     });
@@ -47,6 +47,17 @@ export function HomeWhy({ eyebrow, heading, sub, trustBadge, cards }: HomeWhyPro
 
     const els = Array.from(root.querySelectorAll<HTMLElement>(".home-why-card"));
     const cleanups = els.map((card) => {
+      // Hovered card lifts; its siblings recede (featured card recedes less).
+      const onEnter = () => {
+        els.forEach((other) => {
+          if (other === card) return;
+          gsap.to(other, {
+            scale: other.classList.contains("is-featured") ? 0.985 : 0.97,
+            duration: 0.5,
+            ease: "power2.out",
+          });
+        });
+      };
       const onMove = (e: PointerEvent) => {
         const r = card.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width - 0.5;
@@ -61,7 +72,7 @@ export function HomeWhy({ eyebrow, heading, sub, trustBadge, cards }: HomeWhyPro
           ease: "power2.out",
         });
       };
-      const onLeave = () =>
+      const onLeave = () => {
         gsap.to(card, {
           rotateY: 0,
           rotateX: 0,
@@ -70,9 +81,16 @@ export function HomeWhy({ eyebrow, heading, sub, trustBadge, cards }: HomeWhyPro
           duration: 0.85,
           ease: "elastic.out(1,0.6)",
         });
+        els.forEach((other) => {
+          if (other === card) return;
+          gsap.to(other, { scale: 1, duration: 0.5, ease: "power2.out" });
+        });
+      };
+      card.addEventListener("pointerenter", onEnter);
       card.addEventListener("pointermove", onMove);
       card.addEventListener("pointerleave", onLeave);
       return () => {
+        card.removeEventListener("pointerenter", onEnter);
         card.removeEventListener("pointermove", onMove);
         card.removeEventListener("pointerleave", onLeave);
       };
@@ -82,7 +100,7 @@ export function HomeWhy({ eyebrow, heading, sub, trustBadge, cards }: HomeWhyPro
 
   return (
     <section ref={scope} className="home-why" aria-labelledby="why-heading">
-      <Container className="home-why-grid-wrap">
+      <Container size="full" className="home-why-grid-wrap">
         <div className="js-why-intro home-why-intro">
           {eyebrow ? <p className="home-eyebrow">{eyebrow}</p> : null}
           <h2 id="why-heading" className="home-why-heading">

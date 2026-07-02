@@ -15,13 +15,21 @@ export interface HomeTrustProps {
 
 export function HomeTrust({ heading, headingAccent, subheading, items }: HomeTrustProps) {
   const scope = useGsap<HTMLElement>(({ gsap, scope }) => {
-    gsap.from(scope.querySelectorAll(".home-trust-card"), {
-      scrollTrigger: { trigger: scope.querySelector(".home-trust-grid"), start: "top 82%" },
-      y: 32,
+    gsap.from(scope.querySelectorAll(".js-trust-intro > *"), {
+      scrollTrigger: { trigger: scope, start: "top bottom", once: true },
+      y: 30,
       autoAlpha: 0,
-      scale: 0.96,
-      duration: 0.7,
+      duration: 0.72,
       stagger: 0.12,
+      ease: "power2.out",
+    });
+    gsap.from(scope.querySelectorAll(".home-trust-card"), {
+      scrollTrigger: { trigger: scope, start: "top bottom", once: true },
+      y: 40,
+      autoAlpha: 0,
+      scale: 0.97,
+      duration: 0.6,
+      stagger: 0.08,
       ease: "power2.out",
     });
   }, []);
@@ -41,15 +49,15 @@ export function HomeTrust({ heading, headingAccent, subheading, items }: HomeTru
         const x = (e.clientX - r.left) / r.width - 0.5;
         const y = (e.clientY - r.top) / r.height - 0.5;
         gsap.to(card, {
-          rotateY: x * 12,
-          rotateX: -y * 12,
-          transformPerspective: 800,
+          rotateY: x * 17,
+          rotateX: -y * 17,
+          transformPerspective: 900,
           duration: 0.4,
           ease: "power2.out",
         });
       };
       const onLeave = () =>
-        gsap.to(card, { rotateY: 0, rotateX: 0, duration: 0.7, ease: "elastic.out(1,0.6)" });
+        gsap.to(card, { rotateY: 0, rotateX: 0, duration: 0.85, ease: "elastic.out(1,0.6)" });
       card.addEventListener("pointermove", onMove);
       card.addEventListener("pointerleave", onLeave);
       return () => {
@@ -61,47 +69,40 @@ export function HomeTrust({ heading, headingAccent, subheading, items }: HomeTru
   }, [items, scope]);
 
   return (
-    <section ref={scope} className="bg-muted py-20 md:py-28" aria-labelledby="trust-heading">
+    <section ref={scope} className="home-trust" aria-labelledby="trust-heading">
       <Container>
-        <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">
-          What people say
-        </p>
-        {heading ? (
-          <h2
-            id="trust-heading"
-            className="font-display text-3xl font-normal tracking-tight text-foreground md:text-5xl"
-          >
-            {heading}
-            {headingAccent ? (
-              <>
-                {" "}
-                <em className="italic text-highlight">{headingAccent}</em>
-              </>
-            ) : null}
-          </h2>
-        ) : null}
-        {subheading ? (
-          <p className="mt-3 max-w-xl text-base text-muted-foreground">{subheading}</p>
-        ) : null}
+        <div className="js-trust-intro">
+          <p className="home-eyebrow">What people say</p>
+          {heading ? (
+            <h2 id="trust-heading" className="home-trust-heading">
+              {heading}
+              {headingAccent ? (
+                <>
+                  <br />
+                  <em>{headingAccent}</em>
+                </>
+              ) : null}
+            </h2>
+          ) : null}
+          {subheading ? (
+            <p className="mt-3 max-w-xl text-base text-muted-foreground">{subheading}</p>
+          ) : null}
+        </div>
 
-        <ul role="list" className="home-trust-grid mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
+        <ul role="list" className="home-trust-grid mt-11 grid grid-cols-1 gap-5 md:grid-cols-3">
           {items.map((item) => (
-            <li
-              key={item.id}
-              className="home-trust-card rounded-2xl border border-border bg-card p-7 shadow-sm"
-            >
+            <li key={item.id} className="home-trust-card">
               <figure className="flex h-full flex-col">
-                <SampleBadge className="mb-3 self-start" />
-                <div aria-hidden className="home-trust-stars mb-3">
+                <SampleBadge className="mb-3.5 self-start" />
+                <div aria-hidden className="home-trust-stars mb-3.5">
                   ★★★★★
                 </div>
-                <blockquote className="text-sm leading-relaxed text-foreground">
+                <blockquote className="home-trust-quote">
                   &ldquo;{item.quote}&rdquo;
                 </blockquote>
-                <figcaption className="mt-5 flex flex-wrap items-center gap-2 text-xs font-medium text-muted-foreground">
+                <figcaption className="home-trust-meta mt-5 flex flex-wrap items-center gap-2">
                   {item.author}
                   {item.role ? <span>· {item.role}</span> : null}
-                  <SampleBadge />
                 </figcaption>
               </figure>
             </li>
