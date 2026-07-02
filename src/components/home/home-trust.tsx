@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { Star } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { SampleBadge } from "@/components/shared/sample-badge";
 import { useGsap, gsap, prefersReducedMotion } from "@/lib/anim/use-gsap";
@@ -9,11 +8,12 @@ import type { TestimonialItem } from "@/lib/brand/types";
 
 export interface HomeTrustProps {
   heading?: string;
+  headingAccent?: string;
   subheading?: string;
   items: TestimonialItem[];
 }
 
-export function HomeTrust({ heading, subheading, items }: HomeTrustProps) {
+export function HomeTrust({ heading, headingAccent, subheading, items }: HomeTrustProps) {
   const scope = useGsap<HTMLElement>(({ gsap, scope }) => {
     gsap.from(scope.querySelectorAll(".home-trust-card"), {
       scrollTrigger: { trigger: scope.querySelector(".home-trust-grid"), start: "top 82%" },
@@ -72,6 +72,12 @@ export function HomeTrust({ heading, subheading, items }: HomeTrustProps) {
             className="font-display text-3xl font-normal tracking-tight text-foreground md:text-5xl"
           >
             {heading}
+            {headingAccent ? (
+              <>
+                {" "}
+                <em className="italic text-highlight">{headingAccent}</em>
+              </>
+            ) : null}
           </h2>
         ) : null}
         {subheading ? (
@@ -86,10 +92,8 @@ export function HomeTrust({ heading, subheading, items }: HomeTrustProps) {
             >
               <figure className="flex h-full flex-col">
                 <SampleBadge className="mb-3 self-start" />
-                <div aria-hidden className="mb-3 flex gap-0.5 text-primary">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="size-3.5 fill-current" />
-                  ))}
+                <div aria-hidden className="home-trust-stars mb-3">
+                  ★★★★★
                 </div>
                 <blockquote className="text-sm leading-relaxed text-foreground">
                   &ldquo;{item.quote}&rdquo;

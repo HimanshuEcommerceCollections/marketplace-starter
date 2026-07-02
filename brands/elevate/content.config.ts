@@ -2,12 +2,23 @@ import type { BrandContent } from "@/lib/brand/types";
 
 export const elevateContent: BrandContent = {
   hero: {
-    eyebrow: "Raleigh · Wake County · 8 Disciplines",
-    title: "Your hour. Your home. Your pro.",
+    eyebrow: "Raleigh's Premier Wellness Platform",
+    title: "Move. Heal. Thrive.",
     subtitle:
-      "Vetted independent wellness professionals, delivered to your door across Wake County. One transparent price. A real coordinator confirms within one business hour.",
+      "8 disciplines. Vetted pros. Transparent pricing. Delivered to your home across Wake County.",
     primaryCta: { label: "Book a session", href: "/book" },
-    secondaryCta: { label: "See all services", href: "/#services" },
+    secondaryCta: { label: "Explore services", href: "/#services" },
+    // Cinematic background video + scroll-driven photo sequence. Drop the real
+    // files in Client/public/assets/ using these exact names.
+    videoSrc: "/assets/video-2.mp4",
+    videoPoster: "/assets/image-1.jpg",
+    photoSequence: [
+      "/assets/image-3.jpg",
+      "/assets/image-4.jpg",
+      "/assets/image-5.jpg",
+      "/assets/image-6.jpg",
+      "/assets/image-7.jpg",
+    ],
     trustIndicators: [
       "Background Checked",
       "Identity Verified",
@@ -73,9 +84,8 @@ export const elevateContent: BrandContent = {
   },
 
   servicesSection: {
-    heading: "Wellness services brought to your door",
-    subheading:
-      "Eight specialties. One trusted marketplace. All independent professionals.",
+    heading: "Eight disciplines.",
+    headingAccent: "One door.",
     draftNote: "DRAFT PRICING — FOR DEMONSTRATION PURPOSES ONLY",
   },
 
@@ -106,32 +116,102 @@ export const elevateContent: BrandContent = {
     ],
   },
 
+  whyElevate: {
+    eyebrow: "Why Elevate",
+    heading: "Why Clients Choose Elevate",
+    sub: "We've built the wellness experience that Raleigh deserves — and you've never seen anything like it.",
+    trustBadge:
+      "100% Background-Checked Professionals · Trusted Across Raleigh",
+    cards: [
+      {
+        icon: "ShieldCheck",
+        title: "Independent Professionals",
+        body: "Every professional is independently vetted, background-checked, and certified.",
+        featured: true,
+      },
+      {
+        icon: "Headset",
+        title: "Coordinator Support",
+        body: "Your personal coordinator handles scheduling, logistics, and follow-up — completely.",
+      },
+      {
+        icon: "House",
+        title: "In-Home Convenience",
+        body: "No commute, no waiting rooms. Pure wellness delivered to your door.",
+      },
+      {
+        icon: "MapPin",
+        title: "Raleigh-Wide Coverage",
+        body: "We serve all of Wake County. Book from anywhere in the Raleigh metro.",
+      },
+    ],
+  },
+
+  findYourFit: {
+    eyebrow: "Find your fit",
+    heading: "Find the Right Service for You",
+    sub: "Not sure where to start? Your coordinator helps you choose.",
+    cards: [
+      {
+        title: "I need physical relief",
+        sub: "Massage or Physical Therapy",
+        href: "/services/massage",
+      },
+      {
+        title: "I want to get fit",
+        sub: "Personal Training or Yoga",
+        href: "/services/training",
+      },
+      {
+        title: "I want to look my best",
+        sub: "Beauty Services",
+        href: "/services/beauty",
+      },
+      {
+        title: "I need clarity & focus",
+        sub: "Life or Nutrition Coaching",
+        href: "/services/coaching",
+      },
+      {
+        title: "I'm recovering from injury",
+        sub: "Physical or Speech Therapy",
+        href: "/services/physical-therapy",
+      },
+      {
+        title: "Help me choose",
+        sub: "Talk to your coordinator",
+        href: "/book/concierge",
+        dark: true,
+      },
+    ],
+  },
+
   testimonials: {
-    heading: "Trusted by busy professionals",
-    subheading: "Illustrative [Sample] testimonials — not real clients.",
+    heading: "Real experiences.",
+    headingAccent: "Real results.",
     items: [
       {
         id: "t1",
         quote:
-          "I was nervous about having someone come to my home, but the vetting process gave me real confidence. The session was seamless.",
-        author: "A.M.",
-        role: "Massage — 90 min",
+          "Booked a 90-minute massage for the same afternoon. The price was clear upfront — no negotiation, no awkwardness.",
+        author: "Sarah M.",
+        role: "Massage · Raleigh",
         isSample: true,
       },
       {
         id: "t2",
         quote:
-          "My trainer adapts every session to what I actually need that day. It has completely changed how I think about fitness.",
-        author: "D.K.",
-        role: "Personal Training",
+          "Finally a platform that just tells you the price. The 4-session training pack saves me $40 every month.",
+        author: "Marcus T.",
+        role: "Training · Cary",
         isSample: true,
       },
       {
         id: "t3",
         quote:
-          "I have tried other in-home services before. Elevate is different — it feels curated, not just convenient.",
-        author: "R.T.",
-        role: "Massage — Swedish",
+          "Booked private yoga for six of us. Semi-private pricing was transparent. Coordinator confirmed in 40 minutes.",
+        author: "Priya K.",
+        role: "Yoga · Durham",
         isSample: true,
       },
     ],
@@ -176,9 +256,9 @@ export const elevateContent: BrandContent = {
   },
 
   finalCta: {
-    eyebrow: "Your home, your schedule",
+    eyebrow: "Ready?",
     title: "Wellness shouldn't require a commute.",
-    body: "Start with your first session. Every independent professional on Elevate is vetted, confirmed, and ready to come to you.",
+    body: "Book your first session in under two minutes.",
     primaryCta: { label: "Book Now", href: "/book" },
     secondaryCta: { label: "Explore Services", href: "/services" },
   },

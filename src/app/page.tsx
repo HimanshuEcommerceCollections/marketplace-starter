@@ -1,13 +1,14 @@
+import { HomeLoader } from "@/components/home/home-loader";
 import { HomeHero } from "@/components/home/home-hero";
 import { HomeMarquee } from "@/components/home/home-marquee";
 import { HomeStatement } from "@/components/home/home-statement";
 import { HomeServices } from "@/components/home/home-services";
 import { HomePinnedFlow } from "@/components/home/home-pinned-flow";
-import { HomePhotoStrip } from "@/components/home/home-photo-strip";
-import { HomeHowItWorks } from "@/components/home/home-how-it-works";
+import { HomeWhy } from "@/components/home/home-why";
+import { HomeFit } from "@/components/home/home-fit";
 import { HomeTrust } from "@/components/home/home-trust";
 import { HomeCta } from "@/components/home/home-cta";
-import { getBrandContent } from "@/lib/brand/load";
+import { getBrandConfig, getBrandContent } from "@/lib/brand/load";
 import { getServices } from "@/lib/catalog/load";
 import { serviceToGridCard } from "@/lib/catalog/cards";
 import {
@@ -20,6 +21,7 @@ import {
 export const revalidate = 60;
 
 export default async function HomePage() {
+  const config = getBrandConfig();
   const content = getBrandContent();
   // Live services from the API; fall back to the static catalog if it's down.
   const apiServices = await fetchPublicServices();
@@ -35,6 +37,8 @@ export default async function HomePage() {
 
   return (
     <>
+      <HomeLoader brandName={config.shortName} tag="Raleigh · Wake County" />
+
       <HomeHero {...content.hero} />
 
       <HomeMarquee items={marqueeItems} />
@@ -47,9 +51,9 @@ export default async function HomePage() {
 
       <HomePinnedFlow />
 
-      <HomePhotoStrip />
+      {content.whyElevate ? <HomeWhy {...content.whyElevate} /> : null}
 
-      {content.howItWorks ? <HomeHowItWorks {...content.howItWorks} /> : null}
+      {content.findYourFit ? <HomeFit {...content.findYourFit} /> : null}
 
       <HomeTrust {...content.testimonials} />
 

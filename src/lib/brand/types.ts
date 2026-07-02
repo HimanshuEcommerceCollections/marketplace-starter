@@ -99,6 +99,24 @@ export interface ComparisonRow {
   elevate: string;
 }
 
+/** A "Why Elevate" value-prop card (Phosphor icon name). */
+export interface WhyCard {
+  icon: string;
+  title: string;
+  body: string;
+  /** Renders as the larger focal card in the grid. */
+  featured?: boolean;
+}
+
+/** A "Find your fit" router card linking an intent to a service route. */
+export interface FitCard {
+  title: string;
+  sub: string;
+  href: string;
+  /** Terracotta-tinted "help me choose" style card. */
+  dark?: boolean;
+}
+
 /** Brand-variable marketing copy. */
 export interface BrandContent {
   hero: {
@@ -113,12 +131,20 @@ export interface BrandContent {
     imageCaption?: { title: string; lines: string[] };
     /** Lifestyle photo trio shown beneath the hero (redesigned homepage). */
     photos?: { src: string; alt: string; label: string }[];
+    /** Background video for the cinematic hero (redesigned homepage). */
+    videoSrc?: string;
+    /** Poster frame shown before the video loads / as reduced-motion fallback. */
+    videoPoster?: string;
+    /** Photos that crossfade in behind the hero copy as the user scrolls. */
+    photoSequence?: string[];
   };
   features: { heading?: string; subheading?: string; items: FeatureItem[] };
   faq: { heading?: string; items: FaqItem[] };
   cta: { title: string; body?: string; cta: NavItem };
   testimonials: {
     heading?: string;
+    /** Italic terracotta clause appended after the heading. */
+    headingAccent?: string;
     subheading?: string;
     items: TestimonialItem[];
   };
@@ -131,6 +157,8 @@ export interface BrandContent {
   };
   servicesSection?: {
     heading: string;
+    /** Italic terracotta clause appended after the heading. */
+    headingAccent?: string;
     subheading?: string;
     draftNote?: string;
   };
@@ -146,6 +174,21 @@ export interface BrandContent {
     heading: string;
     subheading?: string;
     steps: HowItWorksStep[];
+  };
+  /** "Why clients choose Elevate" — value-prop card grid (redesigned homepage). */
+  whyElevate?: {
+    eyebrow?: string;
+    heading: string;
+    sub?: string;
+    trustBadge?: string;
+    cards: WhyCard[];
+  };
+  /** "Find your fit" — intent-to-service router cards (redesigned homepage). */
+  findYourFit?: {
+    eyebrow?: string;
+    heading: string;
+    sub?: string;
+    cards: FitCard[];
   };
   comparison?: {
     heading: string;

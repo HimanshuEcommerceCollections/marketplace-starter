@@ -53,6 +53,7 @@ export function liveToBookingInputs(live: ApiServiceWithConfig): LiveBookingInpu
     landing_slug: undefined,
     coming_soon: live.status === "COMING_SOON",
     image: undefined,
+    cover_images: [],
     config_options: activeGroups.map((g) => ({
       id: g.key,
       label: g.label,

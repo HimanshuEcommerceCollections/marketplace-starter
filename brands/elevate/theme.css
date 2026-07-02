@@ -7,6 +7,8 @@
   /* Redesigned homepage uses DM Serif Display for all editorial headings. */
   --brand-font-heading: var(--font-dm-serif), Georgia, serif;
   --font-display: var(--font-dm-serif), Georgia, serif;
+  /* Oversized hero wordmark (MOVE. HEAL. THRIVE.) uses heavy Montserrat. */
+  --font-display-bold: var(--font-montserrat), var(--font-inter), sans-serif;
   --radius: 0.875rem;
 
   /* surfaces — warm cream / warm white */

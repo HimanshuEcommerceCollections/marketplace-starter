@@ -1,11 +1,9 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
-import { useGsap } from "@/lib/anim/use-gsap";
+import { useGsap, prefersReducedMotion } from "@/lib/anim/use-gsap";
 import type { NavItem } from "@/lib/brand/types";
 
 export interface HomeHeroProps {
@@ -17,6 +15,9 @@ export interface HomeHeroProps {
   imageSrc?: string;
   imageAlt?: string;
   photos?: { src: string; alt: string; label: string }[];
+  videoSrc?: string;
+  videoPoster?: string;
+  photoSequence?: string[];
 }
 
 export function HomeHero({
@@ -25,63 +26,124 @@ export function HomeHero({
   subtitle,
   primaryCta,
   secondaryCta,
-  imageSrc,
-  imageAlt = "",
-  photos = [],
+  videoSrc,
+  videoPoster,
+  photoSequence = [],
 }: HomeHeroProps) {
-  // "Your hour. Your home. Your pro." -> three serif lines, last one accented.
+  // "Move. Heal. Thrive." -> three uppercase lines, last one accented.
   const lines = title.split(/(?<=\.)\s+/).filter(Boolean);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  const scope = useGsap(({ gsap, scope }) => {
+  const scope = useGsap<HTMLElement>(({ gsap, scope }) => {
     const q = gsap.utils.selector(scope);
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
+    // Entrance timeline.
     gsap.set(q(".home-hero-line-inner"), { yPercent: 110 });
-    gsap.set([q(".js-hero-eyebrow"), q(".js-hero-sub"), q(".js-hero-btns")], {
+    gsap.set([q(".js-hero-eyebrow"), q(".js-hero-sub"), q(".js-hero-btns"), q(".js-hero-scroll")], {
       autoAlpha: 0,
       y: 14,
     });
-    gsap.set(q(".home-hero-photo"), { autoAlpha: 0, y: 36 });
+    gsap
+      .timeline({ defaults: { ease: "power3.out" } })
+      .to(q(".js-hero-eyebrow"), { autoAlpha: 1, y: 0, duration: 0.7 }, 0.15)
+      .to(q(".home-hero-line-inner"), { yPercent: 0, duration: 1.05, stagger: 0.13 }, 0.3)
+      .to(q(".js-hero-sub"), { autoAlpha: 1, y: 0, duration: 0.8 }, 0.85)
+      .to(q(".js-hero-btns"), { autoAlpha: 1, y: 0, duration: 0.7 }, 1.05)
+      .to(q(".js-hero-scroll"), { autoAlpha: 1, y: 0, duration: 0.7 }, 1.4);
 
-    tl.to(q(".js-hero-eyebrow"), { autoAlpha: 1, y: 0, duration: 0.7 }, 0.1)
-      .to(q(".home-hero-line-inner"), { yPercent: 0, duration: 1.05, stagger: 0.12 }, 0.2)
-      .to(q(".js-hero-sub"), { autoAlpha: 1, y: 0, duration: 0.8 }, 0.6)
-      .to(q(".js-hero-btns"), { autoAlpha: 1, y: 0, duration: 0.7 }, 0.78)
-      .to(
-        q(".home-hero-photo"),
-        { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "power2.out" },
-        0.95,
+    // Scroll-scrubbed media: video fades, photos crossfade through, ambient
+    // layers dissolve into the next section.
+    const imgs = q(".home-hero-image");
+    if (imgs.length) {
+      const media = gsap.timeline({
+        scrollTrigger: { trigger: scope, start: "top top", end: "+=220%", scrub: 1.1 },
+      });
+      media.to(q(".home-hero-video"), { opacity: 0, duration: 1 }, 0);
+      media.to(imgs[0], { opacity: 1, duration: 1 }, 0.15);
+      imgs.forEach((img, i) => {
+        if (i === 0) return;
+        media.to(imgs[i - 1], { opacity: 0, duration: 1 }, i * 2);
+        media.to(img, { opacity: 1, duration: 1 }, i * 2);
+      });
+      const last = imgs.length * 2;
+      media.to(imgs[imgs.length - 1], { opacity: 0, duration: 1 }, last);
+      media.to(
+        q(".home-hero-atmosphere, .home-hero-breath, .home-hero-overlay, .home-hero-scrim"),
+        { opacity: 0, duration: 1 },
+        last,
       );
-  }, []);
+    }
+
+    // Parallax the copy out as the hero pins away.
+    gsap.to(q(".js-hero-eyebrow, .home-hero-line-inner"), {
+      scrollTrigger: { trigger: scope, start: "top top", end: "+=50%", scrub: 1.2 },
+      y: -80,
+      opacity: 0,
+    });
+    gsap.to(q(".js-hero-sub, .js-hero-btns"), {
+      scrollTrigger: { trigger: scope, start: "top top", end: "+=45%", scrub: 1.2 },
+      y: -50,
+      opacity: 0,
+    });
+  }, [photoSequence.length]);
+
+  // Paint the crossfade backgrounds from data attributes (inline style is
+  // linted out). Under reduced motion, freeze the video and show frame one.
+  useEffect(() => {
+    const root = scope.current;
+    if (!root) return;
+    const imgs = Array.from(root.querySelectorAll<HTMLElement>(".home-hero-image"));
+    for (const el of imgs) {
+      const src = el.dataset.bg;
+      if (src) el.style.backgroundImage = `url(${src})`;
+    }
+    if (prefersReducedMotion()) {
+      const video = videoRef.current;
+      if (video) {
+        video.pause();
+        video.style.opacity = "0";
+      }
+      if (imgs[0]) imgs[0].style.opacity = "1";
+    }
+  }, [scope, photoSequence]);
 
   return (
-    <section ref={scope} aria-labelledby="hero-heading" className="home-hero bg-foreground">
-      {imageSrc ? (
-        <Image
-          src={imageSrc}
-          alt={imageAlt}
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-      ) : null}
+    <section ref={scope} aria-labelledby="hero-heading" className="home-hero">
+      <div aria-hidden className="home-hero-media">
+        {videoSrc ? (
+          <video
+            ref={videoRef}
+            className="home-hero-video"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={videoPoster}
+          >
+            <source src={videoSrc} type="video/mp4" />
+          </video>
+        ) : null}
+        {photoSequence.map((src) => (
+          <div key={src} className="home-hero-image" data-bg={src} />
+        ))}
+      </div>
       <div aria-hidden className="home-hero-overlay" />
+      <div aria-hidden className="home-hero-atmosphere" />
+      <div aria-hidden className="home-hero-breath" />
+      <div aria-hidden className="home-hero-scrim" />
 
-      <Container className="home-hero-content flex flex-col items-center gap-7">
+      <div className="home-hero-content">
         {eyebrow ? (
-          <p className="js-hero-eyebrow text-xs font-semibold uppercase tracking-widest text-white/55">
-            {eyebrow}
-          </p>
+          <p className="js-hero-eyebrow home-hero-eyebrow">{eyebrow}</p>
         ) : null}
 
-        <h1 id="hero-heading" className="home-hero-title text-white">
+        <h1 id="hero-heading" className="home-hero-title">
           {lines.map((line, i) => (
             <span key={line} className="home-hero-line">
               <span
                 className={
                   i === lines.length - 1
-                    ? "home-hero-line-inner italic text-primary"
+                    ? "home-hero-line-inner home-hero-line-accent"
                     : "home-hero-line-inner"
                 }
               >
@@ -91,46 +153,28 @@ export function HomeHero({
           ))}
         </h1>
 
-        {subtitle ? (
-          <p className="js-hero-sub max-w-md text-base leading-relaxed text-white/60">
-            {subtitle}
-          </p>
-        ) : null}
+        {subtitle ? <p className="js-hero-sub home-hero-sub">{subtitle}</p> : null}
 
-        <div className="js-hero-btns flex flex-col items-center gap-3 sm:flex-row">
+        <div className="js-hero-btns home-hero-btns">
           <Button
             asChild
             size="lg"
-            className="rounded-full bg-card px-7 text-foreground hover:bg-card/90 focus-visible:ring-offset-foreground"
+            className="rounded-full bg-primary px-8 text-primary-foreground hover:bg-primary/90 focus-visible:ring-offset-transparent"
           >
-            <Link href={primaryCta.href}>
-              {primaryCta.label}
-              <ArrowRight aria-hidden />
-            </Link>
+            <Link href={primaryCta.href}>{primaryCta.label} →</Link>
           </Button>
           {secondaryCta ? (
-            <Link
-              href={secondaryCta.href}
-              className="rounded-full px-4 py-2 text-sm text-white/55 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
-            >
+            <Link href={secondaryCta.href} className="home-hero-btn-ghost">
               {secondaryCta.label} →
             </Link>
           ) : null}
         </div>
+      </div>
 
-        {photos.length > 0 ? (
-          <ul role="list" className="mt-10 grid w-full max-w-4xl grid-cols-3 gap-3">
-            {photos.map((photo) => (
-              <li key={photo.label} className="home-hero-photo">
-                <Image src={photo.src} alt={photo.alt} fill sizes="33vw" />
-                <span className="absolute bottom-3 left-3 rounded-full bg-card/85 px-3 py-1 text-xs font-medium text-foreground backdrop-blur">
-                  {photo.label}
-                </span>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </Container>
+      <div aria-hidden className="js-hero-scroll home-hero-scroll">
+        <span className="home-hero-scroll-line" />
+        <span className="home-hero-scroll-label">Scroll</span>
+      </div>
     </section>
   );
 }

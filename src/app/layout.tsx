@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, Fraunces, Inter, Lora } from "next/font/google";
+import { DM_Serif_Display, Fraunces, Inter, Lora, Montserrat } from "next/font/google";
 import "@/styles/globals.css";
 
 import { getActiveBrandId } from "@/lib/brand/registry";
@@ -37,6 +37,13 @@ const dmSerifDisplay = DM_Serif_Display({
   variable: "--font-dm-serif",
   display: "swap",
 });
+// Heavy grotesque for the homepage hero wordmark (MOVE. HEAL. THRIVE.).
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
 
 export function generateMetadata(): Metadata {
   const brand = getBrandConfig();
@@ -70,7 +77,7 @@ export default function RootLayout({
     <html
       lang={config.locale}
       data-brand={brandId}
-      className={`${inter.variable} ${fraunces.variable} ${lora.variable} ${dmSerifDisplay.variable}`}
+      className={`${inter.variable} ${fraunces.variable} ${lora.variable} ${dmSerifDisplay.variable} ${montserrat.variable}`}
       suppressHydrationWarning
     >
       <body className="flex min-h-screen flex-col">

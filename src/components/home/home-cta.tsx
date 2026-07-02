@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import * as THREE from "three";
 import { Container } from "@/components/layout/container";
 import { useGsap, gsap, prefersReducedMotion } from "@/lib/anim/use-gsap";
 import type { NavItem } from "@/lib/brand/types";
@@ -15,6 +16,7 @@ export interface HomeCtaProps {
 
 export function HomeCta({ eyebrow, title, body, primaryCta }: HomeCtaProps) {
   const btnRef = useRef<HTMLAnchorElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Split "... require a commute." -> accent the closing phrase if present.
   const splitAt = title.indexOf("require ");
@@ -30,6 +32,70 @@ export function HomeCta({ eyebrow, title, body, primaryCta }: HomeCtaProps) {
       stagger: 0.12,
       ease: "power3.out",
     });
+  }, []);
+
+  // Three.js drifting particle field behind the CTA (motion only).
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || prefersReducedMotion()) return;
+
+    const H = 600;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(72, window.innerWidth / H, 0.1, 1000);
+    camera.position.z = 380;
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, H);
+
+    const N = 350;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(N * 3);
+    const colors = new Float32Array(N * 3);
+    for (let i = 0; i < N; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 1300;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 750;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 450;
+      const t = Math.random();
+      colors[i * 3] = 0.31 + t * 0.25;
+      colors[i * 3 + 1] = 0.48 + t * 0.26;
+      colors[i * 3 + 2] = 0.38 + t * 0.24;
+    }
+    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    const material = new THREE.PointsMaterial({
+      size: 1.6,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.38,
+    });
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
+
+    const onResize = () => {
+      camera.aspect = window.innerWidth / H;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, H);
+    };
+    window.addEventListener("resize", onResize);
+
+    let raf = 0;
+    let ct = 0;
+    const loop = () => {
+      raf = requestAnimationFrame(loop);
+      ct += 0.004;
+      points.rotation.y += 0.0008;
+      points.rotation.x = Math.sin(ct * 0.28) * 0.06;
+      renderer.render(scene, camera);
+    };
+    loop();
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", onResize);
+      geometry.dispose();
+      material.dispose();
+      renderer.dispose();
+    };
   }, []);
 
   // Magnetic button (motion + fine pointer only).
@@ -60,9 +126,11 @@ export function HomeCta({ eyebrow, title, body, primaryCta }: HomeCtaProps) {
     <section
       ref={scope}
       aria-labelledby="cta-heading"
-      className="bg-foreground py-24 text-center md:py-32"
+      className="home-cta bg-foreground py-24 text-center md:py-32"
     >
-      <Container className="flex flex-col items-center">
+      <canvas ref={canvasRef} aria-hidden className="home-cta-canvas" />
+      <div aria-hidden className="home-cta-glow" />
+      <Container className="relative z-10 flex flex-col items-center">
         {eyebrow ? (
           <p className="js-cta-reveal mb-5 text-xs font-semibold uppercase tracking-widest text-primary">
             {eyebrow}
