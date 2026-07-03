@@ -1,32 +1,14 @@
 import type { Metadata } from "next";
-import { PartnerLandingPage } from "@/components/marketplace/partner-landing-page";
-import { getPartnerLanding } from "@/lib/brand/load";
-import { getServices } from "@/lib/catalog/load";
-import type { FeatureItem } from "@/lib/brand/types";
+import { ForProsLandingPage } from "@/components/marketing/for-pros-landing-page";
+import { getForProsPage } from "@/lib/brand/load";
 
 export const metadata: Metadata = {
-  title: "Become a Pro",
+  title: "For Pros",
   description:
-    "Partner with us to connect with clients seeking premium in-home wellness services.",
+    "Join Raleigh's premier wellness platform. Keep 80% of every session, set your own hours, and let a coordinator fill your calendar with quality clients.",
 };
 
 export default function ProApplyPage() {
-  const partner = getPartnerLanding();
-  const services = getServices();
-
-  const whoItems: FeatureItem[] = services.map((s) => ({
-    icon: s.icon,
-    title: s.title,
-    description: s.summary,
-    badge: s.coming_soon ? "Coming Soon" : undefined,
-  }));
-  const categories = services.map((s) => s.title);
-
-  return (
-    <PartnerLandingPage
-      config={partner}
-      whoItems={whoItems}
-      categories={categories}
-    />
-  );
+  const config = getForProsPage();
+  return <ForProsLandingPage config={config} />;
 }
