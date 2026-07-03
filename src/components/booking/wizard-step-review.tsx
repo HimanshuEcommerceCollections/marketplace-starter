@@ -53,10 +53,10 @@ export function WizardStepReview() {
 
       {/* Pricing */}
       <ReviewCard
-        title="Pricing (DRAFT)"
+        title="Pricing (Estimate)"
         badge={
           <span className="inline-flex items-center rounded-md bg-muted-foreground/15 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Draft
+            Estimate
           </span>
         }
       >

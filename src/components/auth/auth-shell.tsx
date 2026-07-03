@@ -1,13 +1,8 @@
 import * as React from "react";
 import Link from "next/link";
-import { TriangleAlert } from "lucide-react";
 import { SampleBadge } from "@/components/shared/sample-badge";
-import { isEnabled } from "@/lib/flags/resolve";
 import type { AuthUserType } from "@/lib/auth/user-type";
 import type { TestimonialItem } from "@/lib/brand/types";
-
-const DRAFT_NOTICE =
-  "DRAFT EXPERIENCE — Pricing and service availability shown for demonstration purposes.";
 
 export interface AuthShellProps {
   /** Which audience this screen serves — switches the whole layout. */
@@ -22,29 +17,6 @@ export interface AuthShellProps {
   categories?: string[];
   quote?: TestimonialItem;
   children: React.ReactNode;
-}
-
-/** Top draft banner (RULE: the draft notice appears on every page; the auth
- *  screens drop the global navbar, so they render their own — like /book). */
-function DraftBanner({ tone }: { tone: "light" | "dark" }) {
-  if (!isEnabled("demoBanner")) return null;
-  return (
-    <div
-      role="region"
-      aria-label="Draft experience notice"
-      className={
-        tone === "dark"
-          ? "bg-surface-inverse px-4 py-2 text-center text-xs font-medium text-surface-inverse-foreground"
-          : "bg-secondary px-4 py-2 text-center text-xs font-medium text-secondary-foreground"
-      }
-    >
-      <TriangleAlert
-        className="mr-1.5 inline size-3.5 -translate-y-px"
-        aria-hidden
-      />
-      {DRAFT_NOTICE}
-    </div>
-  );
 }
 
 function Wordmark({
@@ -126,7 +98,6 @@ export function AuthShell({
   if (userType === "system") {
     return (
       <div className="flex min-h-screen flex-col bg-surface-inverse text-surface-inverse-foreground">
-        <DraftBanner tone="dark" />
         <div className="flex flex-1 items-center justify-center px-4 py-12">
           <div className="w-full max-w-md">
             <div className="mb-6 flex flex-col items-center text-center">
@@ -157,7 +128,6 @@ export function AuthShell({
   // userType === "user" — customer-facing split-screen.
   return (
     <div className="flex min-h-screen flex-col">
-      <DraftBanner tone="light" />
       <div className="grid flex-1 lg:grid-cols-2">
         {/* Brand panel */}
         <aside className="relative hidden flex-col justify-between gap-10 bg-primary p-10 text-primary-foreground lg:flex xl:p-14">

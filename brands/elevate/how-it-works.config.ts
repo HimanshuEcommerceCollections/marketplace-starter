@@ -30,7 +30,7 @@ export const elevateHowItWorks: HowItWorksPageConfig = {
     steps: [
       { title: "Pick a Service", description: "Browse the service catalog and select the type of wellness service you need." },
       { title: "Configure Your Request", description: "Choose your session details — duration, format, and any preferences or add-ons." },
-      { title: "See the Price", description: "Your draft price breakdown appears before you enter any contact information." },
+      { title: "See the Price", description: "Your price breakdown appears before you enter any contact information." },
       { title: "Details + Schedule", description: "Enter your contact info and preferred appointment time windows." },
       { title: "Confirm + Submit", description: "Review your full summary and submit your booking request to the coordinator." },
       { title: "Success", description: "A coordinator confirms your request and follows up within one business hour." },

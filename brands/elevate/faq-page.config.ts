@@ -33,7 +33,7 @@ export const elevateFaqPage: FaqPageConfig = {
           id: "booking-how",
           question: "How do I book a service?",
           answer:
-            "Browse our service catalog, select a service, configure your session details (duration, format, add-ons), review the draft price breakdown, then enter your contact information and preferred time windows. A coordinator reviews your submission and follows up within one business hour.",
+            "Browse our service catalog, select a service, configure your session details (duration, format, add-ons), review the price breakdown, then enter your contact information and preferred time windows. A coordinator reviews your submission and follows up within one business hour.",
         },
         {
           id: "booking-after-submit",
@@ -65,7 +65,7 @@ export const elevateFaqPage: FaqPageConfig = {
           id: "pricing-final",
           question: "Are prices final?",
           answer:
-            "No. All prices displayed are draft starting prices for demonstration purposes only [Sample]. Final pricing is confirmed by the coordinator after you submit your booking request. The price breakdown you see in the booking flow is a draft estimate, not a final charge.",
+            "No. All prices displayed are starting prices [Sample]. Final pricing is confirmed by the coordinator after you submit your booking request. The price breakdown you see in the booking flow is an estimate, not a final charge.",
         },
         {
           id: "pricing-vary",

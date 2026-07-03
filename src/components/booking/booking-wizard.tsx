@@ -432,8 +432,8 @@ function WizardInner() {
                 : "Submit Booking Request (Check box above to enable)"}
           </Button>
           <p className="text-xs text-muted-foreground">
-            DRAFT EXPERIENCE — This request will be reviewed by a coordinator.
-            Pricing and availability subject to confirmation.
+            This request will be reviewed by a coordinator. Pricing and
+            availability subject to confirmation.
           </p>
         </div>
       ) : null}

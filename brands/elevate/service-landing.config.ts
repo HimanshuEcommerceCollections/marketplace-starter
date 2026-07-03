@@ -1288,9 +1288,9 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
         eyebrow: "Service Tiers",
         heading: "Session Pricing",
         subheading:
-          "All pricing is draft and shown for planning purposes only. Final rates will be confirmed when service availability opens in your area.",
+          "All pricing is shown for planning purposes only. Final rates will be confirmed when service availability opens in your area.",
         draftNote:
-          "DRAFT PRICING — Do not use for financial decisions. Availability not yet confirmed for your area.",
+          "Availability not yet confirmed for your area.",
         tiers: [
           {
             featured: true,
@@ -1571,9 +1571,9 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
         eyebrow: "Service Tiers",
         heading: "Session Pricing",
         subheading:
-          "All pricing is draft and shown for planning purposes only. Final rates are confirmed when service availability opens in your area.",
+          "All pricing is shown for planning purposes only. Final rates are confirmed when service availability opens in your area.",
         draftNote:
-          "DRAFT PRICING — Do not use for financial decisions. Availability not yet confirmed for your area.",
+          "Availability not yet confirmed for your area.",
         tiers: [
           {
             featured: true,

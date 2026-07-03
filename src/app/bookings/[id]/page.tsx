@@ -179,7 +179,7 @@ export default function BookingDetailPage() {
           </Card>
 
           <p className="text-xs text-muted-foreground">
-            DRAFT EXPERIENCE — A coordinator will confirm availability and final pricing.
+            A coordinator will confirm availability and final pricing.
           </p>
         </div>
       )}

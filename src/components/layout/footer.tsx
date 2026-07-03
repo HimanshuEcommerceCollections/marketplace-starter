@@ -16,7 +16,7 @@ const SOCIALS = [
   { label: "LinkedIn", Icon: Linkedin },
 ];
 
-/** Site footer (dark). RULE: MUST render the literal string "INTERNAL DRAFT". */
+/** Site footer (dark). */
 export function Footer({ brandName, tagline, columns, legalLinks }: FooterProps) {
   const year = new Date().getFullYear();
   return (
@@ -92,13 +92,6 @@ export function Footer({ brandName, tagline, columns, legalLinks }: FooterProps)
             ))}
           </ul>
         </div>
-
-        <p
-          data-testid="internal-draft"
-          className="mt-6 text-center text-xs font-semibold uppercase tracking-widest text-surface-inverse-foreground/60"
-        >
-          INTERNAL DRAFT
-        </p>
       </Container>
     </footer>
   );

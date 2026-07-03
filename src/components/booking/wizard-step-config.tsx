@@ -52,8 +52,8 @@ export function WizardStepConfig() {
           </span>
           <span className={metMin ? "text-highlight" : undefined}>
             {metMin
-              ? `Minimum met — current ${money(currentTotal)} (DRAFT)`
-              : `Add services to continue — current ${money(currentTotal)} (DRAFT)`}
+              ? `Minimum met — current ${money(currentTotal)} (estimate)`
+              : `Add services to continue — current ${money(currentTotal)} (estimate)`}
           </span>
         </div>
       ) : null}
@@ -102,13 +102,13 @@ export function WizardStepConfig() {
         </legend>
         {option.input === "multiselect" ? (
           <p className="mt-1 text-sm text-muted-foreground">
-            Optional enhancements — pricing shown as DRAFT estimate.
+            Optional enhancements — pricing shown as estimate.
           </p>
         ) : null}
       </>
     );
 
-    // Multi-select (add-ons): checkbox rows with "+$X DRAFT".
+    // Multi-select (add-ons): checkbox rows with "+$X estimate".
     if (option.input === "multiselect") {
       const selected = Array.isArray(state.selections[option.id])
         ? (state.selections[option.id] as string[])
@@ -154,7 +154,7 @@ export function WizardStepConfig() {
                     <span className="text-sm font-medium">
                       <span className="text-highlight">+{money(delta)}</span>{" "}
                       <span className="text-xs uppercase tracking-wide text-muted-foreground">
-                        Draft
+                        Estimate
                       </span>
                     </span>
                   ) : null}
