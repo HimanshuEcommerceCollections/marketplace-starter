@@ -39,7 +39,7 @@ export function BookingSummaryCard({
   const base = baseLabel || serviceTitle;
   const draftBadge = (
     <span className="inline-flex w-fit items-center rounded-md bg-muted-foreground/15 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground lg:bg-surface-inverse-foreground/15 lg:text-surface-inverse-foreground/80">
-      Draft Pricing
+      Estimated Pricing
     </span>
   );
   // Only lines that carry a non-zero amount (a $0 base — e.g. Beauty, whose
@@ -91,7 +91,7 @@ export function BookingSummaryCard({
           </div>
           {!condensed ? (
             <p className="mt-2 text-xs text-muted-foreground lg:text-surface-inverse-foreground/60">
-              DRAFT — Final price confirmed by coordinator.
+              Estimate — Final price confirmed by coordinator.
             </p>
           ) : null}
         </div>

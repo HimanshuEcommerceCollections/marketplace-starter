@@ -130,7 +130,7 @@ export function PricingTiersSection({
                         {priceLabel(tier.price)}
                       </span>
                       <Badge variant="secondary" className="uppercase tracking-wide">
-                        Draft
+                        Estimate
                       </Badge>
                       <SampleBadge
                         className={

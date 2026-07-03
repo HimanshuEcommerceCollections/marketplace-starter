@@ -69,7 +69,7 @@ export const elevateAbout: AboutPageConfig = {
         icon: "Globe",
         title: "Marketplace Flexibility",
         description:
-          "A growing range of service categories with transparent draft pricing. Configure your session before you commit.",
+          "A growing range of service categories with transparent pricing. Configure your session before you commit.",
       },
     ],
   },

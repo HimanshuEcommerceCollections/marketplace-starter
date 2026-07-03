@@ -6,22 +6,22 @@ export const elevatePricingPage: PricingPageConfig = {
     variant: "dark",
     title: "Simple, Transparent Pricing",
     subtitle:
-      "Every service starts with a draft starting price. Final pricing depends on selections made during booking and coordinator confirmation.",
+      "Every service starts with a starting price. Final pricing depends on selections made during booking and coordinator confirmation.",
     primaryCta: { label: "Book Now", href: "/book" },
     secondaryCta: { label: "How It Works", href: "#how-it-works" },
     image: {
       caption: {
         title: "Transparent pricing",
-        lines: ["Draft estimates · Coordinator confirmed"],
+        lines: ["Estimates · Coordinator confirmed"],
       },
     },
   },
 
   servicePricing: {
     heading: "Service Pricing",
-    subheading: "All prices are draft starting prices. Final pricing is confirmed during booking.",
+    subheading: "All prices are starting prices. Final pricing is confirmed during booking.",
     footnote:
-      "All prices shown are draft starting prices for demonstration purposes. Actual pricing confirmed by coordinator during booking.",
+      "All prices shown are starting prices. Actual pricing confirmed by coordinator during booking.",
     extras: {
       beauty: {
         minimumBadge: "$75 Min.",
@@ -101,11 +101,11 @@ export const elevatePricingPage: PricingPageConfig = {
   howYouSee: {
     heading: "How You'll See Pricing",
     subheading: "Pricing appears during the booking flow — before you submit anything.",
-    note: "Your draft price breakdown appears at Step 3 — before you submit any contact information.",
+    note: "Your price breakdown appears at Step 3 — before you submit any contact information.",
     steps: [
       { title: "Pick Service", description: "Browse and select your service from the catalog." },
       { title: "Configure", description: "Choose duration, format, and any add-ons." },
-      { title: "See Price", description: "Your draft price breakdown appears before submission." },
+      { title: "See Price", description: "Your price breakdown appears before submission." },
       { title: "Details + Schedule", description: "Enter contact info and preferred time windows." },
       { title: "Confirm + Submit", description: "Review your full summary and submit the request." },
       { title: "Success", description: "A coordinator confirms your booking within one business hour." },
@@ -120,7 +120,7 @@ export const elevatePricingPage: PricingPageConfig = {
         id: "final",
         question: "Are these final prices?",
         answer:
-          "No. All prices shown are draft starting prices for demonstration purposes. Final pricing is confirmed by a coordinator after you submit your booking request.",
+          "No. All prices shown are starting prices. Final pricing is confirmed by a coordinator after you submit your booking request.",
       },
       {
         id: "vary",

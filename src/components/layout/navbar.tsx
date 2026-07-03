@@ -10,9 +10,6 @@ import { NAV_ITEMS } from "@/config/navigation";
 import { cn } from "@/lib/utils";
 import type { NavItem } from "@/lib/brand/types";
 
-const DRAFT_NOTICE =
-  "Demo site · Do not submit real information · INTERNAL DRAFT";
-
 export interface NavbarProps {
   brandName: string;
   logoSublabel?: string;
@@ -22,10 +19,9 @@ export interface NavbarProps {
 }
 
 /**
- * Floating-pill primary navigation (redesigned). A full-width demo banner sits
- * at the very top; below it a centered frosted pill holds the wordmark, links,
- * and the Book Now CTA. The header is fixed, so SiteChrome offsets page content
- * (the homepage hero deliberately sits behind it).
+ * Floating-pill primary navigation (redesigned). A centered frosted pill holds
+ * the wordmark, links, and the Book Now CTA. The header is fixed, so SiteChrome
+ * offsets page content (the homepage hero deliberately sits behind it).
  */
 export function Navbar({
   brandName,
@@ -34,7 +30,6 @@ export function Navbar({
 }: NavbarProps) {
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
-  const showBanner = useFlag("demoBanner");
   const showAuth = useFlag("authEnabled");
 
   const closeMenu = React.useCallback(() => setOpen(false), []);
@@ -65,16 +60,6 @@ export function Navbar({
 
   return (
     <header className="z-sticky fixed inset-x-0 top-0">
-      {showBanner ? (
-        <div
-          role="region"
-          aria-label="Draft experience notice"
-          className="bg-foreground px-4 py-2 text-center text-xs font-medium uppercase tracking-widest text-background/45"
-        >
-          {DRAFT_NOTICE}
-        </div>
-      ) : null}
-
       <div className="flex justify-center px-3 pt-3">
         <nav
           aria-label="Primary"

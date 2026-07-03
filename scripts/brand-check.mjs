@@ -4,7 +4,7 @@
  * - required files present
  * - theme.css is scoped to [data-brand="<slug>"] and defines required tokens
  * - services.json / pricing.v1.json parse and cross-reference correctly
- * - proof content is [Sample]-labelled; footer carries INTERNAL DRAFT
+ * - proof content is [Sample]-labelled
  */
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -34,12 +34,6 @@ const err = (msg) => {
   errors++;
   console.error(`✖ ${msg}`);
 };
-
-// Global rule: footer must contain INTERNAL DRAFT.
-const footer = join(ROOT, "src/components/layout/footer.tsx");
-if (!existsSync(footer) || !readFileSync(footer, "utf8").includes("INTERNAL DRAFT")) {
-  err('Footer is missing the required "INTERNAL DRAFT" marker.');
-}
 
 for (const slug of BRANDS) {
   const dir = join(ROOT, "brands", slug);

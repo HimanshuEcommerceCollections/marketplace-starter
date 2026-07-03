@@ -148,8 +148,8 @@ export function BookingSuccessScreen({
 
       <p className="mx-auto mt-6 max-w-md text-xs text-muted-foreground">
         {live
-          ? "DRAFT EXPERIENCE — Your booking request has been recorded. A coordinator will confirm availability and final pricing."
-          : "DRAFT EXPERIENCE — This confirmation is a demonstration only. No actual booking has been made."}
+          ? "Your booking request has been recorded. A coordinator will confirm availability and final pricing."
+          : "This is a preview — no actual booking has been made."}
       </p>
     </div>
   );

@@ -86,7 +86,6 @@ export const elevateContent: BrandContent = {
   servicesSection: {
     heading: "Eight disciplines.",
     headingAccent: "One door.",
-    draftNote: "DRAFT PRICING — FOR DEMONSTRATION PURPOSES ONLY",
   },
 
   howItWorks: {

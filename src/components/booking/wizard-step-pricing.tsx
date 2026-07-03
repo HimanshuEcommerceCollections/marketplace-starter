@@ -30,11 +30,11 @@ export function WizardStepPricing() {
 
   return (
     <div className="space-y-6">
-      {/* DRAFT notice */}
+      {/* Estimate notice */}
       <div className="flex items-start gap-2 rounded-xl bg-muted p-4 text-sm text-muted-foreground">
         <Info className="mt-0.5 size-4 shrink-0" aria-hidden />
         <p>
-          All pricing is a DRAFT estimate. Final pricing confirmed by coordinator
+          All pricing is an estimate. Final pricing confirmed by coordinator
           before your session.
         </p>
       </div>
@@ -53,7 +53,7 @@ export function WizardStepPricing() {
               </span>
             ) : null}
             <Badge variant="secondary" className="uppercase tracking-wide">
-              Draft Pricing
+              Estimate
             </Badge>
           </div>
         </div>
@@ -77,7 +77,7 @@ export function WizardStepPricing() {
                 </span>
                 {li.kind !== "base" ? (
                   <Badge variant="secondary" className="uppercase tracking-wide">
-                    Draft
+                    Estimate
                   </Badge>
                 ) : null}
               </dd>
@@ -88,7 +88,7 @@ export function WizardStepPricing() {
         <div className="border-t border-border bg-muted/60 p-6">
           <div className="flex flex-wrap items-baseline justify-between gap-3">
             <span className="text-sm font-semibold text-foreground">
-              {breakdown.is_estimate ? "Estimated Total (DRAFT)" : "Total"}
+              {breakdown.is_estimate ? "Estimated Total" : "Total"}
             </span>
             <span className="font-heading text-2xl font-semibold text-highlight">
               {breakdown.is_estimate ? "From " : ""}
@@ -96,7 +96,7 @@ export function WizardStepPricing() {
             </span>
           </div>
           <p className="mt-2 text-xs text-muted-foreground">
-            This is a draft estimate. The coordinator will confirm final pricing
+            This is an estimate. The coordinator will confirm final pricing
             before confirming your session.
           </p>
         </div>

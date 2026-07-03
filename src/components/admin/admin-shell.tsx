@@ -1,13 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { Menu, X, TriangleAlert } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AdminSidebar } from "./admin-sidebar";
-import { isEnabled } from "@/lib/flags/resolve";
-
-const DRAFT_NOTICE =
-  "DRAFT EXPERIENCE — Pricing and service availability shown for demonstration purposes.";
 
 export interface AdminShellProps {
   brandName: string;
@@ -15,28 +11,9 @@ export interface AdminShellProps {
   children: React.ReactNode;
 }
 
-/** Top draft banner — dark tone to sit on the admin canvas (mirrors auth-shell). */
-function DraftBanner() {
-  if (!isEnabled("demoBanner")) return null;
-  return (
-    <div
-      role="region"
-      aria-label="Draft experience notice"
-      className="bg-surface-inverse px-4 py-2 text-center text-xs font-medium text-surface-inverse-foreground"
-    >
-      <TriangleAlert
-        className="mr-1.5 inline size-3.5 -translate-y-px"
-        aria-hidden
-      />
-      {DRAFT_NOTICE}
-    </div>
-  );
-}
-
 /**
  * Frame for the SYSTEM (internal/admin) console: a fixed dark sidebar on desktop,
- * a slide-in drawer on mobile, plus the draft banner + INTERNAL DRAFT footer
- * (rendered here so screens never repeat them).
+ * and a slide-in drawer on mobile.
  */
 export function AdminShell({
   brandName,
@@ -133,10 +110,9 @@ export function AdminShell({
 
       {/* Main column */}
       <div className="lg:pl-64">
-        <DraftBanner />
         <main>{children}</main>
         <footer className="border-t border-border px-4 py-6 text-center text-xs text-muted-foreground">
-          INTERNAL DRAFT · System console · Illustrative draft data only.
+          System console · Illustrative sample data only.
         </footer>
       </div>
     </div>
