@@ -11,7 +11,13 @@ import {
   type Icon,
 } from "@phosphor-icons/react";
 import { Container } from "@/components/layout/container";
+import { useGsap, gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/anim/use-gsap";
 import { cn } from "@/lib/utils";
+
+// Focus-slot height per step, as a fraction of the viewport. MUST stay in sync
+// with --home-slot in home.css (62vh) so the JS emphasis math and the CSS
+// layout agree.
+const SLOT_VH = 0.62;
 
 interface CardState {
   step: string;
@@ -150,77 +156,173 @@ function BookingCardMock({ state }: { state: CardState }) {
 }
 
 export function HomePinnedFlow() {
-  const sectionRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
+  const activeRef = useRef(0);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const panelRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const firstStepTween = useRef(true);
+  const prevPrice = useRef(PANELS[0].card.price);
+
+  // Card entrance reveal (scroll-triggered; skipped under reduced motion by the
+  // hook, which leaves the card in its final, visible state).
+  const scope = useGsap<HTMLElement>(({ gsap, scope }) => {
+    const card = scope.querySelector(".home-bc");
+    if (!card) return;
+    gsap.set(card, { autoAlpha: 0, y: 36 });
+    ScrollTrigger.create({
+      trigger: scope,
+      start: "top 70%",
+      onEnter: () =>
+        gsap.to(card, { autoAlpha: 1, y: 0, duration: 0.85, ease: "power3.out" }),
+      onLeaveBack: () => gsap.to(card, { autoAlpha: 0, y: 36, duration: 0.4 }),
+    });
+  }, []);
 
   // Paint the step background images from data attributes (inline style is
   // linted out).
   useEffect(() => {
-    const root = sectionRef.current;
+    const root = scope.current;
     if (!root) return;
     for (const el of root.querySelectorAll<HTMLElement>(".home-pinned-bg")) {
       const src = el.dataset.bg;
       if (src) el.style.backgroundImage = `url(${src})`;
     }
-  }, []);
+  }, [scope]);
 
-  // Scroll-spy: activate the panel crossing the viewport's vertical center.
+  // Pinned scrub: the section owns the scroll for its full (multi-viewport)
+  // height while the stage stays fixed, so the user can't reach the next
+  // section until every step is traversed. Scroll progress translates the step
+  // column continuously (no discrete swap), and each step's opacity + scale is
+  // set per-frame from its distance to the focus line, so the highlight travels
+  // smoothly with the scroll. The translate IS the scroll, so it runs under
+  // reduced motion too; only the scale emphasis is dropped in that case.
   useEffect(() => {
-    const root = sectionRef.current;
-    if (!root) return;
-    const panels = Array.from(root.querySelectorAll<HTMLElement>(".home-panel"));
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const idx = Number((entry.target as HTMLElement).dataset.index);
-            if (!Number.isNaN(idx)) setActive(idx);
-          }
+    const root = scope.current;
+    const track = trackRef.current;
+    if (!root || !track) return;
+    const reduce = prefersReducedMotion();
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const vh = window.innerHeight;
+      const rect = root.getBoundingClientRect();
+      const scrollable = rect.height - vh;
+      if (scrollable <= 0) return;
+      const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
+      const travel = track.scrollHeight - vh;
+      track.style.transform = `translate3d(0, ${-(progress * travel)}px, 0)`;
+
+      const centerY = vh / 2;
+      const slotPx = SLOT_VH * vh;
+      let best = 0;
+      let bestDist = Infinity;
+      const panels = panelRefs.current;
+      for (let i = 0; i < panels.length; i++) {
+        const el = panels[i];
+        if (!el) continue;
+        const r = el.getBoundingClientRect();
+        const centre = r.top + r.height / 2;
+        const dist = Math.abs(centre - centerY);
+        // 1 at the focus line, easing to 0 one slot away.
+        const t = Math.min(1, Math.max(0, 1 - dist / slotPx));
+        el.style.opacity = String(0.3 + 0.7 * t);
+        el.style.transform = reduce ? "none" : `scale(${0.94 + 0.06 * t})`;
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = i;
         }
-      },
-      { rootMargin: "-45% 0% -45% 0%", threshold: 0 },
-    );
-    panels.forEach((p) => observer.observe(p));
-    return () => observer.disconnect();
-  }, []);
+      }
+      if (activeRef.current !== best) {
+        activeRef.current = best;
+        setActive(best);
+      }
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [scope]);
+
+  // Card micro-interactions on focus change: a small settle nudge on every step
+  // so the swapped card content reads as motion (not a hard cut), plus a price
+  // pop only when the number actually changes. First activation and reduced
+  // motion are skipped.
+  useEffect(() => {
+    const nextPrice = PANELS[active].card.price;
+    const priceChanged = nextPrice !== prevPrice.current;
+    prevPrice.current = nextPrice;
+    if (firstStepTween.current) {
+      firstStepTween.current = false;
+      return;
+    }
+    if (prefersReducedMotion()) return;
+    const root = scope.current;
+    if (!root) return;
+    const card = root.querySelector(".home-bc");
+    if (card) {
+      gsap.fromTo(card, { y: -7 }, { y: 0, duration: 0.35, ease: "power2.out" });
+    }
+    if (priceChanged) {
+      const price = root.querySelector(".home-bc-price-big");
+      if (price) {
+        gsap.fromTo(
+          price,
+          { autoAlpha: 0, y: 10 },
+          { autoAlpha: 1, y: 0, duration: 0.38, ease: "power2.out" },
+        );
+      }
+    }
+  }, [active, scope]);
 
   return (
-    <section ref={sectionRef} className="home-pinned">
-      <div aria-hidden className="home-pinned-bg-stack">
-        {STEP_BG.map((src, i) => (
-          <div
-            key={src}
-            data-bg={src}
-            className={cn("home-pinned-bg", i === active && "is-active")}
-          />
-        ))}
-      </div>
-      <div aria-hidden className="home-pinned-overlay" />
+    <section ref={scope} className="home-pinned">
+      <div className="home-pinned-stage">
+        <div aria-hidden className="home-pinned-bg-stack">
+          {STEP_BG.map((src, i) => (
+            <div
+              key={src}
+              data-bg={src}
+              className={cn("home-pinned-bg", i === active && "is-active")}
+            />
+          ))}
+        </div>
+        <div aria-hidden className="home-pinned-overlay" />
 
-      <Container className="relative z-10">
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20">
-          <div className="py-16 md:py-24">
-            {PANELS.map((panel, i) => (
-              <div
-                key={panel.tag}
-                data-index={i}
-                data-active={i === active}
-                className="home-panel border-t border-white/12 py-12 first:border-t-0 first:pt-0"
-              >
-                <p className="home-panel-num">{panel.tag}</p>
-                <h3 className="home-panel-title">{panel.title}</h3>
-                <p className="home-panel-body">{panel.body}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="pb-16 lg:py-24">
-            <div className="home-pinned-sticky lg:sticky lg:top-28">
-              <BookingCardMock state={PANELS[active].card} />
+        <Container className="home-pinned-inner">
+          {/* One continuously scrolling column: the track is translated with
+              scroll, all steps stay visible, and emphasis is set per-frame. */}
+          <div className="home-panel-viewport">
+            <div ref={trackRef} className="home-panel-track">
+              {PANELS.map((panel, i) => (
+                <div
+                  key={panel.tag}
+                  ref={(el) => {
+                    panelRefs.current[i] = el;
+                  }}
+                  className="home-panel"
+                >
+                  <p className="home-panel-num">{panel.tag}</p>
+                  <h3 className="home-panel-title">{panel.title}</h3>
+                  <p className="home-panel-body">{panel.body}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </Container>
+
+          {/* Booking card is desktop-only for now; mobile placement is a
+              follow-up per the agreed "implement, then evaluate" plan. */}
+          <div className="home-pinned-sticky hidden lg:block">
+            <BookingCardMock state={PANELS[active].card} />
+          </div>
+        </Container>
+      </div>
     </section>
   );
 }

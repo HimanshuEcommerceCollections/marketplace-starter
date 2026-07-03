@@ -441,13 +441,28 @@
   background-position: center;
 }
 
-/* ───────────────────────── PINNED FLOW ───────────────────────── */
+/* ───────────────────────── PINNED FLOW ─────────────────────────
+   Pinned scrub: the wrapper is taller than the viewport and the stage is
+   sticky for the wrapper's full length, so the section owns the scroll until
+   every step is traversed. Inside, the step column is translated continuously
+   with scroll progress (no discrete swap) and each step's emphasis is set from
+   its distance to the focus line — both driven per-frame in JS. The wrapper
+   height is kept equal to the track height so the column tracks scroll ~1:1. */
 .home-pinned {
+  --home-slot: 62vh;
   position: relative;
-  overflow: hidden;
+  /* 4 steps → 3 slots of travel + one viewport (matches the track height). */
+  height: calc(3 * var(--home-slot) + 100vh);
   background: #14201a;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
+}
+.home-pinned-stage {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 .home-pinned-bg-stack {
   position: absolute;
@@ -477,14 +492,48 @@
     rgba(10, 14, 11, 0.58) 100%
   );
 }
-.home-panel {
-  opacity: 0.28;
-  transition:
-    opacity 0.45s ease,
-    transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+/* Continuous scrub column. The track holds every step in one vertical flow and
+   is translated by scroll progress in JS; each step's opacity + scale is set
+   per-frame from its distance to the focus line. No CSS transition on the
+   panels — the smoothness comes from the per-frame updates tracking scroll, so
+   the highlight travels continuously and never reads as a discrete swap. */
+.home-pinned-inner {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  height: 100%;
 }
-.home-panel[data-active="true"] {
+@media (min-width: 1024px) {
+  .home-pinned-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+}
+.home-panel-viewport {
+  position: relative;
+  align-self: stretch;
+  height: 100%;
+}
+.home-panel-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  /* Top/bottom spacers center the first and last steps at the focus line. */
+  padding-block: calc(50vh - var(--home-slot) / 2);
+  will-change: transform;
+}
+.home-panel {
+  min-height: var(--home-slot);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   opacity: 1;
+  transform-origin: left center;
 }
 .home-panel-num {
   margin-bottom: 14px;
@@ -492,7 +541,8 @@
   font-weight: 700;
   letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: var(--primary-foreground);
+  /* Light-green step accent (matches the design's --green-light). */
+  color: color-mix(in oklab, var(--primary) 40%, white);
 }
 .home-panel-title {
   font-family: var(--font-display);
@@ -530,6 +580,22 @@
   );
   animation: home-card-aura 4s ease-in-out infinite;
 }
+/* Second, tighter ring running in reverse for depth. */
+.home-pinned-sticky::after {
+  content: "";
+  position: absolute;
+  inset: -20px;
+  z-index: -1;
+  border-radius: 30px;
+  filter: blur(16px);
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    color-mix(in oklab, var(--primary) 12%, transparent) 0%,
+    transparent 60%
+  );
+  animation: home-card-aura 4s ease-in-out infinite reverse;
+}
 @keyframes home-card-aura {
   0%,
   100% {
@@ -542,7 +608,9 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .home-pinned-sticky::before {
+  .home-pinned-sticky::before,
+  .home-pinned-sticky::after,
+  .home-bc {
     animation: none;
   }
 }
@@ -556,6 +624,22 @@
     0 0 60px color-mix(in oklab, var(--primary) 20%, transparent),
     0 40px 80px -24px rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(40px);
+  /* Gentle border-glow pulse (matches the design's cardBorderGlow). */
+  animation: home-bc-glow 4s ease-in-out infinite;
+}
+@keyframes home-bc-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 60px color-mix(in oklab, var(--primary) 20%, transparent),
+      0 40px 80px -24px rgba(0, 0, 0, 0.6);
+  }
+  50% {
+    box-shadow:
+      0 0 80px color-mix(in oklab, var(--primary) 30%, transparent),
+      0 0 160px color-mix(in oklab, var(--primary) 14%, transparent),
+      0 40px 80px -24px rgba(0, 0, 0, 0.6);
+  }
 }
 .home-bc-topbar {
   display: flex;
