@@ -14,6 +14,11 @@ import {
   MapPin,
   ArrowUpRight,
   ArrowRight,
+  Certificate,
+  Star,
+  Lock,
+  Clock,
+  CurrencyDollar,
 } from "@phosphor-icons/react";
 
 /**
@@ -30,6 +35,11 @@ const PHOSPHOR_ICONS: Record<string, Icon> = {
   MapPin,
   ArrowUpRight,
   ArrowRight,
+  Certificate,
+  Star,
+  Lock,
+  Clock,
+  CurrencyDollar,
   // Lucide service-icon names -> closest Phosphor glyph (matches the mockup).
   HandHelping: HandWaving,
   Dumbbell: Barbell,

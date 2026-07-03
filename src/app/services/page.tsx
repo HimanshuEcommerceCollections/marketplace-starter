@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { ServicesGridSection } from "@/components/sections/services-grid-section";
+import { ServicesHero } from "@/components/services/services-hero";
+import { ServicesExplorer } from "@/components/services/services-explorer";
+import { ServicesTrustStrip } from "@/components/services/services-trust-strip";
+import { ServicesSteps } from "@/components/services/services-steps";
+import { ServicesCta } from "@/components/services/services-cta";
 import { getServicesPage } from "@/lib/brand/load";
-import { getServices } from "@/lib/catalog/load";
+import { getServices, getCategories } from "@/lib/catalog/load";
 import { serviceToGridCard } from "@/lib/catalog/cards";
 import {
   fetchPublicServices,
@@ -22,5 +27,24 @@ export default async function ServicesPage() {
     ? apiServices.map(apiServiceToGridCard)
     : getServices().map(serviceToGridCard);
 
-  return <ServicesGridSection {...config} cards={serviceCards} />;
+  // Brands without showcase config keep the plain grid layout.
+  if (!config.hero) {
+    return <ServicesGridSection {...config} cards={serviceCards} />;
+  }
+
+  const categories = getCategories().map(({ id, title }) => ({ id, title }));
+
+  return (
+    <>
+      <ServicesHero {...config.hero} />
+      <ServicesExplorer
+        categories={categories}
+        cards={serviceCards}
+        draftNote={config.draftNote}
+      />
+      {config.trustStrip ? <ServicesTrustStrip {...config.trustStrip} /> : null}
+      {config.stepsSection ? <ServicesSteps {...config.stepsSection} /> : null}
+      {config.ctaBand ? <ServicesCta {...config.ctaBand} /> : null}
+    </>
+  );
 }

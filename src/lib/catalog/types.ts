@@ -42,6 +42,13 @@ export const ServiceSchema = z.object({
   // Lets one service's card open another service's landing page (data-driven).
   landing_slug: z.string().optional(),
   coming_soon: z.boolean().default(false),
+  // Editorial flags for the services showcase grid: a featured card spans two
+  // columns, and tag_label renders as its corner ribbon (e.g. "Most Popular").
+  featured: z.boolean().default(false),
+  tag_label: z.string().optional(),
+  // Static sub-style pills shown on the showcase card (display only — the
+  // bookable variants remain config_options; keep these in sync by hand).
+  tags: z.array(z.string()).default([]),
   image: z.string().optional(),
   // Ordered cover image URLs (root-relative, served from client public/); first
   // is the default card image. Mirrors the API's `coverImages` so the static

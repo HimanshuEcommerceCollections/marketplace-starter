@@ -22,14 +22,17 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   const authFlow = pathname === "/login" || pathname === "/signup";
   const adminFlow = pathname?.startsWith("/admin") ?? false;
   const bareLayout = bookingFlow || authFlow || adminFlow;
-  const isHome = pathname === "/";
+  // Pages with a full-bleed photo hero that deliberately sits behind the
+  // floating nav: the homepage and the services showcase (listing only —
+  // /services/<slug> detail pages keep the offset).
+  const fullBleedHero = pathname === "/" || pathname === "/services";
 
   return (
     <>
       {!bareLayout ? navbar : null}
-      {/* The fixed floating nav overlaps content; offset every page except the
-          homepage, whose full-bleed hero deliberately sits behind the nav. */}
-      <main className={cn("flex-1", !bareLayout && !isHome && "pt-28")}>
+      {/* The fixed floating nav overlaps content; offset every page except
+          those whose hero deliberately sits behind the nav. */}
+      <main className={cn("flex-1", !bareLayout && !fullBleedHero && "pt-28")}>
         {children}
       </main>
       {!bareLayout ? footer : null}
