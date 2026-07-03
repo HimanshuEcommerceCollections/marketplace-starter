@@ -1,0 +1,618 @@
+/* ══════════════════════════════════════════════════════════════════
+   SERVICES PAGE — photo-card showcase (hero → filter bar → grid →
+   trust strip → steps → CTA band). Mirrors the approved mock; brand
+   colors flow through tokens so the theme layer still applies.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ───────────────────────── PAGE HERO ───────────────────────── */
+.svcs-hero {
+  position: relative;
+  min-height: 68vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+@media (max-width: 640px) {
+  .svcs-hero {
+    min-height: 58vh;
+  }
+}
+.svcs-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(10, 14, 11, 0.4) 0%,
+      rgba(10, 14, 11, 0.55) 40%,
+      rgba(10, 14, 11, 0.92) 100%
+    ),
+    url("/assets/services-hero-bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.svcs-hero-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 140px 24px 56px;
+}
+@media (min-width: 900px) {
+  .svcs-hero-inner {
+    padding: 160px 48px 72px;
+  }
+}
+.svcs-eyebrow {
+  margin-bottom: 22px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--primary) 40%, white);
+}
+.svcs-hero-title {
+  margin-bottom: 24px;
+  font-family: var(--font-display-bold);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(42px, 7vw, 104px);
+  letter-spacing: -0.02em;
+  line-height: 0.94;
+  color: #faf8f4;
+  text-shadow:
+    0 3px 28px rgba(0, 0, 0, 0.6),
+    0 1px 4px rgba(0, 0, 0, 0.7);
+}
+.svcs-hero-title em {
+  font-style: normal;
+  color: var(--highlight);
+}
+.svcs-hero-sub {
+  max-width: 500px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(250, 248, 244, 0.88);
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55);
+}
+
+/* ───────────────────────── FILTER BAR ─────────────────────────
+   Sticks below the fixed floating nav (banner + pill ≈ 100px tall);
+   z-index stays under --z-sticky (1100) so the nav always wins. */
+.svcs-filter-bar {
+  position: sticky;
+  top: 104px;
+  z-index: 100;
+  background: color-mix(in oklab, var(--background) 94%, transparent);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border-bottom: 1px solid var(--border);
+}
+@media (max-width: 640px) {
+  .svcs-filter-bar {
+    top: 84px;
+  }
+}
+.svcs-filter-inner {
+  display: flex;
+  gap: 4px;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.svcs-filter-inner::-webkit-scrollbar {
+  display: none;
+}
+.svcs-filter-btn {
+  flex-shrink: 0;
+  padding: 7px 18px;
+  border: none;
+  border-radius: 100px;
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  color: color-mix(in oklab, var(--foreground) 50%, transparent);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.svcs-filter-btn:hover {
+  background: color-mix(in oklab, var(--primary) 8%, transparent);
+  color: var(--primary);
+}
+.svcs-filter-btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.svcs-filter-btn.is-active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 0 4px 14px color-mix(in oklab, var(--primary) 32%, transparent);
+}
+
+/* ───────────────────────── SERVICES GRID ───────────────────────── */
+.svcs-section {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 56px 20px 80px;
+}
+@media (min-width: 900px) {
+  .svcs-section {
+    padding: 80px 48px 120px;
+  }
+}
+.svcs-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 340px;
+  gap: 20px;
+}
+@media (min-width: 641px) {
+  .svcs-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 360px;
+  }
+  .svcs-card.is-featured {
+    grid-column: span 2;
+  }
+}
+@media (min-width: 1101px) {
+  .svcs-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 380px;
+  }
+}
+.svcs-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 4px 24px rgba(30, 28, 25, 0.08),
+    0 20px 48px -16px rgba(30, 28, 25, 0.12);
+  transition:
+    transform 0.55s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.55s ease,
+    border-color 0.4s,
+    opacity 0.35s ease;
+}
+/* Filtered-out cards dim in place (no grid reflow); inert in the markup. */
+.svcs-card.is-dimmed {
+  opacity: 0.18;
+  transform: scale(0.97);
+  pointer-events: none;
+}
+.svcs-card:hover,
+.svcs-card:focus-within {
+  transform: translateY(-10px) scale(1.01);
+  border-color: color-mix(in oklab, var(--primary) 22%, transparent);
+  box-shadow:
+    0 2px 4px rgba(30, 28, 25, 0.04),
+    0 24px 56px -12px color-mix(in oklab, var(--primary) 22%, transparent),
+    0 40px 72px -24px rgba(30, 28, 25, 0.16);
+}
+.svcs-card:focus-within {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.svcs-card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.7s ease;
+}
+.svcs-card:hover .svcs-card-bg,
+.svcs-card:focus-within .svcs-card-bg {
+  transform: scale(1.06);
+}
+.svcs-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 14, 11, 0.08) 0%,
+    rgba(10, 14, 11, 0.15) 30%,
+    rgba(10, 14, 11, 0.55) 62%,
+    rgba(10, 14, 11, 0.88) 100%
+  );
+}
+.svcs-card-tag {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 3;
+  padding: 4px 13px;
+  border-radius: 100px;
+  background: color-mix(in oklab, var(--background) 88%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+.svcs-card-price {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 3;
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: rgba(10, 14, 11, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: #faf8f4;
+}
+.svcs-card-price small {
+  margin-left: 2px;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 400;
+  opacity: 0.65;
+}
+.svcs-card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 24px 24px 26px;
+}
+.svcs-card-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.svcs-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--background) 82%, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--primary);
+}
+.svcs-card-icon img,
+.svcs-card-icon svg {
+  width: 16px;
+  height: 16px;
+}
+.svcs-card-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  color: #faf8f4;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+/* Stretched link: the card title link covers the whole card, keeping the
+   markup a single anchor (Book Now sits above it at z-index 3). */
+.svcs-card-link {
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+}
+.svcs-card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.svcs-card-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 14px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: rgba(250, 248, 244, 0.72);
+}
+.svcs-card-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 16px;
+}
+.svcs-card-pill {
+  padding: 3px 10px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  font-size: 10.5px;
+  font-weight: 500;
+  color: rgba(250, 248, 244, 0.72);
+}
+.svcs-card-book {
+  position: relative;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  border-radius: 100px;
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    color-mix(in oklab, var(--primary) 65%, black)
+  );
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--primary-foreground);
+  box-shadow: 0 4px 16px color-mix(in oklab, var(--primary) 38%, transparent);
+  transition: all 0.3s;
+}
+.svcs-card-book:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px color-mix(in oklab, var(--primary) 52%, transparent);
+}
+.svcs-card-book:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+/* Coming-soon cards keep the photo but read as a quieter waitlist invite. */
+.svcs-card.is-coming .svcs-card-book {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #faf8f4;
+  box-shadow: none;
+}
+.svcs-card.is-coming .svcs-card-book:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ───────────────────────── TRUST STRIP ───────────────────────── */
+.svcs-trust {
+  padding: 72px 24px;
+  text-align: center;
+  background: var(--foreground);
+}
+.svcs-trust-inner {
+  max-width: 1220px;
+  margin: 0 auto;
+}
+.svcs-trust-heading {
+  margin-bottom: 40px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(26px, 3vw, 40px);
+  letter-spacing: -0.025em;
+  color: rgba(250, 248, 244, 0.92);
+}
+.svcs-trust-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+.svcs-trust-pill {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 22px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 13px;
+  color: rgba(250, 248, 244, 0.72);
+}
+.svcs-trust-pill svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: color-mix(in oklab, var(--primary) 40%, white);
+}
+
+/* ───────────────────────── HOW (4 STEPS) ───────────────────────── */
+.svcs-steps {
+  padding: 100px 24px;
+  border-top: 1px solid var(--border);
+  background-image:
+    linear-gradient(
+      color-mix(in oklab, var(--muted) 94%, transparent),
+      color-mix(in oklab, var(--muted) 96%, transparent)
+    ),
+    url("/assets/why-elevate-bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.svcs-steps-inner {
+  max-width: 1220px;
+  margin: 0 auto;
+}
+.svcs-steps .svcs-eyebrow {
+  color: var(--primary);
+}
+.svcs-steps-heading {
+  margin-bottom: 10px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(32px, 4vw, 52px);
+  letter-spacing: -0.03em;
+  color: var(--foreground);
+}
+.svcs-steps-sub {
+  margin-bottom: 56px;
+  font-size: 15px;
+  color: var(--muted-foreground);
+}
+.svcs-steps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px 28px;
+}
+@media (min-width: 641px) {
+  .svcs-steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1101px) {
+  .svcs-steps-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+}
+.svcs-step {
+  position: relative;
+}
+/* Connector line between steps (desktop only). */
+@media (min-width: 1101px) {
+  .svcs-step::after {
+    content: "";
+    position: absolute;
+    top: 22px;
+    left: calc(100% + 4px);
+    width: calc(100% - 40px);
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      color-mix(in oklab, var(--primary) 22%, transparent),
+      transparent
+    );
+  }
+  .svcs-step:last-child::after {
+    display: none;
+  }
+}
+.svcs-step-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--primary) 9%, transparent);
+  border: 1px solid color-mix(in oklab, var(--primary) 22%, transparent);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+}
+.svcs-step-title {
+  margin-bottom: 8px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 19px;
+  letter-spacing: -0.4px;
+  color: var(--foreground);
+}
+.svcs-step-body {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted-foreground);
+}
+
+/* ───────────────────────── CTA BAND ───────────────────────── */
+.svcs-cta {
+  position: relative;
+  overflow: hidden;
+  padding: 120px 24px;
+  text-align: center;
+  background-image:
+    linear-gradient(rgba(10, 14, 11, 0.72), rgba(10, 14, 11, 0.82)),
+    url("/assets/services-cta-bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.svcs-cta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.svcs-cta .svcs-eyebrow {
+  margin-bottom: 22px;
+}
+.svcs-cta-heading {
+  margin-bottom: 16px;
+  font-family: var(--font-display-bold);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(32px, 5vw, 60px);
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  color: #faf8f4;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+.svcs-cta-heading em {
+  font-style: normal;
+  color: var(--highlight);
+}
+.svcs-cta-body {
+  margin-bottom: 40px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(250, 248, 244, 0.65);
+}
+.svcs-cta-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+.svcs-btn-p {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 34px;
+  border-radius: 100px;
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    color-mix(in oklab, var(--primary) 65%, black)
+  );
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--primary-foreground);
+  box-shadow: 0 6px 24px color-mix(in oklab, var(--primary) 38%, transparent);
+  transition: all 0.3s;
+}
+.svcs-btn-p:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px color-mix(in oklab, var(--primary) 52%, transparent);
+}
+.svcs-btn-o {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 34px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  font-size: 14px;
+  text-decoration: none;
+  color: #faf8f4;
+  transition: all 0.3s;
+}
+.svcs-btn-o:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.svcs-btn-p:focus-visible,
+.svcs-btn-o:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}

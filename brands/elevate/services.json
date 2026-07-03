@@ -4,12 +4,12 @@
   "categories": [
     {
       "id": "bodywork",
-      "title": "Bodywork",
+      "title": "Massage & Recovery",
       "description": "Massage and recovery (Sample)."
     },
     {
       "id": "fitness",
-      "title": "Fitness",
+      "title": "Movement",
       "description": "Training and movement (Sample)."
     },
     {
@@ -26,8 +26,8 @@
   "services": [
     {
       "id": "massage",
-      "title": "Massage",
-      "summary": "Swedish, deep tissue, and sports massage in the comfort of your home.",
+      "title": "Massage Therapy",
+      "summary": "Swedish, deep tissue, sports, and aromatherapy massage by certified therapists in the comfort of your home.",
       "description": "A [Sample] in-home massage session with a vetted independent professional. Placeholder description for the INTERNAL DRAFT starter.",
       "category": "bodywork",
       "service_type": "bodywork",
@@ -108,14 +108,24 @@
       ],
       "faq": [],
       "cover_images": [
-        "/services/massage/cover-1.jpg"
+        "/services/massage/cover-1.jpg",
+        "/services/massage/cover-2.jpg"
       ],
-      "icon_path": "/services/massage/icon.svg"
+      "icon_path": "/services/massage/icon.svg",
+      "featured": true,
+      "tag_label": "Most Popular",
+      "tags": [
+        "Swedish",
+        "Deep Tissue",
+        "Sports",
+        "Aromatherapy",
+        "Hot Stones"
+      ]
     },
     {
       "id": "personal-training",
       "title": "Personal Training",
-      "summary": "Custom workouts with certified trainers who come to you.",
+      "summary": "One-on-one sessions with certified trainers — strength, weight loss, mobility, or general fitness.",
       "description": "A [Sample] in-home personal training session. Placeholder description.",
       "category": "fitness",
       "service_type": "fitness",
@@ -218,14 +228,21 @@
       ],
       "faq": [],
       "cover_images": [
-        "/services/personal-training/cover-1.jpg"
+        "/services/personal-training/cover-1.jpg",
+        "/services/personal-training/cover-2.jpg"
       ],
-      "icon_path": "/services/personal-training/icon.svg"
+      "icon_path": "/services/personal-training/icon.svg",
+      "tags": [
+        "Strength",
+        "Weight Loss",
+        "Mobility",
+        "Partner Sessions"
+      ]
     },
     {
       "id": "yoga",
       "title": "Yoga",
-      "summary": "Private yoga sessions tailored to your level and goals.",
+      "summary": "Private sessions in your home or garden. All styles and levels.",
       "description": "A [Sample] private yoga session. Placeholder description.",
       "category": "fitness",
       "service_type": "fitness",
@@ -324,14 +341,21 @@
       ],
       "faq": [],
       "cover_images": [
-        "/services/yoga/cover-1.jpg"
+        "/services/yoga/cover-1.jpg",
+        "/services/yoga/cover-2.jpg"
       ],
-      "icon_path": "/services/yoga/icon.svg"
+      "icon_path": "/services/yoga/icon.svg",
+      "tags": [
+        "Gentle Flow",
+        "Hatha",
+        "Vinyasa",
+        "Restorative"
+      ]
     },
     {
       "id": "beauty",
       "title": "Beauty",
-      "summary": "Facials, blowouts, and beauty services at your convenience.",
+      "summary": "Hair styling, makeup, and blowouts by licensed stylists at your door.",
       "description": "A [Sample] in-home beauty service. Placeholder description.",
       "category": "wellness",
       "service_type": "wellness",
@@ -417,14 +441,21 @@
       ],
       "faq": [],
       "cover_images": [
-        "/services/beauty/cover-1.jpg"
+        "/services/beauty/cover-1.jpg",
+        "/services/beauty/cover-2.jpg"
       ],
-      "icon_path": "/services/beauty/icon.svg"
+      "icon_path": "/services/beauty/icon.svg",
+      "tags": [
+        "Hair Styling",
+        "Makeup",
+        "Blowout",
+        "Event Styling"
+      ]
     },
     {
       "id": "nutrition-coaching",
       "title": "Nutrition Coaching",
-      "summary": "Evidence-based nutrition guidance from registered practitioners.",
+      "summary": "Sustainable eating plans and ongoing support from certified nutrition professionals.",
       "description": "A [Sample] nutrition coaching package. Placeholder description.",
       "category": "wellness",
       "service_type": "wellness",
@@ -516,14 +547,20 @@
       ],
       "faq": [],
       "cover_images": [
-        "/services/nutrition-coaching/cover-1.jpg"
+        "/services/nutrition-coaching/cover-1.jpg",
+        "/services/nutrition-coaching/cover-2.jpg"
       ],
-      "icon_path": "/services/nutrition-coaching/icon.svg"
+      "icon_path": "/services/nutrition-coaching/icon.svg",
+      "tags": [
+        "Weight Management",
+        "Sports Nutrition",
+        "Healthy Lifestyle"
+      ]
     },
     {
       "id": "life-coaching",
       "title": "Life Coaching",
-      "summary": "Goal-focused coaching sessions in your own environment.",
+      "summary": "Career growth, work-life balance, and personal development with a certified coach.",
       "description": "A [Sample] life coaching session. Placeholder description.",
       "category": "wellness",
       "service_type": "wellness",
@@ -618,9 +655,18 @@
       ],
       "faq": [],
       "cover_images": [
-        "/services/life-coaching/cover-1.jpg"
+        "/services/life-coaching/cover-1.jpg",
+        "/services/life-coaching/cover-2.jpg"
       ],
-      "icon_path": "/services/life-coaching/icon.svg"
+      "icon_path": "/services/life-coaching/icon.svg",
+      "featured": true,
+      "tag_label": "New",
+      "tags": [
+        "Career Growth",
+        "Work-Life Balance",
+        "Personal Development",
+        "Goal Setting"
+      ]
     },
     {
       "id": "physical-therapy",
@@ -643,9 +689,15 @@
       ],
       "faq": [],
       "cover_images": [
-        "/services/physical-therapy/cover-1.jpg"
+        "/services/physical-therapy/cover-1.jpg",
+        "/services/physical-therapy/cover-2.jpg"
       ],
-      "icon_path": "/services/physical-therapy/icon.svg"
+      "icon_path": "/services/physical-therapy/icon.svg",
+      "tags": [
+        "Rehabilitation",
+        "Mobility",
+        "Recovery"
+      ]
     },
     {
       "id": "speech-therapy",
@@ -669,9 +721,15 @@
       ],
       "faq": [],
       "cover_images": [
-        "/services/speech-therapy/cover-1.jpg"
+        "/services/speech-therapy/cover-1.jpg",
+        "/services/speech-therapy/cover-2.jpg"
       ],
-      "icon_path": "/services/speech-therapy/icon.svg"
+      "icon_path": "/services/speech-therapy/icon.svg",
+      "tags": [
+        "Speech",
+        "Language",
+        "Communication"
+      ]
     }
   ]
 }
