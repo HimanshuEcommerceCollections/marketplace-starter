@@ -12,6 +12,9 @@
 /* Bespoke layout + motion for the services showcase page. */
 @import "./services.css";
 
+/* Bespoke layout + motion for the How It Works walkthrough page. */
+@import "./how-it-works.css";
+
 /* Bespoke layout + motion for the For Pros recruiting page. */
 @import "./for-pros.css";
 
