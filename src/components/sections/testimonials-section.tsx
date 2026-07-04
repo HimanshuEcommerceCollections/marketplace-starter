@@ -1,6 +1,5 @@
 import { Container } from "@/components/layout/container";
 import { Card } from "@/components/ui/card";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { cn } from "@/lib/utils";
 import type { TestimonialItem } from "@/lib/brand/types";
 import type { Surface } from "@/lib/services/landing";
@@ -24,8 +23,6 @@ const SURFACE: Record<
     quote: string;
     author: string;
     role: string;
-    /** Override for the author-line [Sample] badge on dark surfaces. */
-    badge?: string;
   }
 > = {
   default: {
@@ -54,12 +51,11 @@ const SURFACE: Record<
     quote: "text-surface-inverse-foreground",
     author: "text-surface-inverse-foreground",
     role: "text-surface-inverse-foreground/70",
-    badge: "border-surface-inverse-foreground/30 text-surface-inverse-foreground/80",
   },
 };
 
 /**
- * Testimonials — social proof, always visibly [Sample]-labeled (rule).
+ * Testimonials — social proof.
  * Server component, token-only, data-driven. Supports light, muted, and dark
  * (inverse) bands.
  */
@@ -104,7 +100,6 @@ export function TestimonialsSection({
             <li key={item.id}>
               <Card className={cn("h-full rounded-xl p-6", s.card)}>
                 <figure className="flex h-full flex-col gap-4">
-                  <SampleBadge className="self-start border-transparent bg-accent text-accent-foreground" />
                   <blockquote
                     className={cn(
                       "font-heading text-lg leading-relaxed",
@@ -121,7 +116,6 @@ export function TestimonialsSection({
                       )}
                     >
                       {item.author}
-                      <SampleBadge className={s.badge} />
                     </p>
                     {item.role ? (
                       <p className={cn("mt-1 text-sm", s.role)}>{item.role}</p>

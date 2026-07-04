@@ -28,7 +28,7 @@
       "id": "massage",
       "title": "Massage Therapy",
       "summary": "Swedish, deep tissue, sports, and aromatherapy massage by certified therapists in the comfort of your home.",
-      "description": "A [Sample] in-home massage session with a vetted independent professional. Placeholder description for the INTERNAL DRAFT starter.",
+      "description": "An in-home massage session with a vetted independent professional. Placeholder description for the INTERNAL DRAFT starter.",
       "category": "bodywork",
       "service_type": "bodywork",
       "pricing_ref": "massage",
@@ -103,9 +103,7 @@
       "location_modes": [
         "onsite"
       ],
-      "badges": [
-        "[Sample]"
-      ],
+      "badges": [],
       "faq": [],
       "cover_images": [
         "/services/massage/cover-1.jpg",
@@ -126,7 +124,7 @@
       "id": "personal-training",
       "title": "Personal Training",
       "summary": "One-on-one sessions with certified trainers — strength, weight loss, mobility, or general fitness.",
-      "description": "A [Sample] in-home personal training session. Placeholder description.",
+      "description": "An in-home personal training session. Placeholder description.",
       "category": "fitness",
       "service_type": "fitness",
       "pricing_ref": "personal-training",
@@ -223,9 +221,7 @@
         "onsite",
         "remote"
       ],
-      "badges": [
-        "[Sample]"
-      ],
+      "badges": [],
       "faq": [],
       "cover_images": [
         "/services/personal-training/cover-1.jpg",
@@ -243,7 +239,7 @@
       "id": "yoga",
       "title": "Yoga",
       "summary": "Private sessions in your home or garden. All styles and levels.",
-      "description": "A [Sample] private yoga session. Placeholder description.",
+      "description": "A private yoga session. Placeholder description.",
       "category": "fitness",
       "service_type": "fitness",
       "pricing_ref": "yoga",
@@ -336,9 +332,7 @@
         "onsite",
         "remote"
       ],
-      "badges": [
-        "[Sample]"
-      ],
+      "badges": [],
       "faq": [],
       "cover_images": [
         "/services/yoga/cover-1.jpg",
@@ -356,7 +350,7 @@
       "id": "beauty",
       "title": "Beauty",
       "summary": "Hair styling, makeup, and blowouts by licensed stylists at your door.",
-      "description": "A [Sample] in-home beauty service. Placeholder description.",
+      "description": "An in-home beauty service. Placeholder description.",
       "category": "wellness",
       "service_type": "wellness",
       "pricing_ref": "beauty",
@@ -436,9 +430,7 @@
       "location_modes": [
         "onsite"
       ],
-      "badges": [
-        "[Sample]"
-      ],
+      "badges": [],
       "faq": [],
       "cover_images": [
         "/services/beauty/cover-1.jpg",
@@ -456,7 +448,7 @@
       "id": "nutrition-coaching",
       "title": "Nutrition Coaching",
       "summary": "Sustainable eating plans and ongoing support from certified nutrition professionals.",
-      "description": "A [Sample] nutrition coaching package. Placeholder description.",
+      "description": "A nutrition coaching package. Placeholder description.",
       "category": "wellness",
       "service_type": "wellness",
       "pricing_ref": "nutrition-coaching",
@@ -542,9 +534,7 @@
         "onsite",
         "remote"
       ],
-      "badges": [
-        "[Sample]"
-      ],
+      "badges": [],
       "faq": [],
       "cover_images": [
         "/services/nutrition-coaching/cover-1.jpg",
@@ -561,7 +551,7 @@
       "id": "life-coaching",
       "title": "Life Coaching",
       "summary": "Career growth, work-life balance, and personal development with a certified coach.",
-      "description": "A [Sample] life coaching session. Placeholder description.",
+      "description": "A life coaching session. Placeholder description.",
       "category": "wellness",
       "service_type": "wellness",
       "pricing_ref": "life-coaching",
@@ -650,9 +640,7 @@
         "onsite",
         "remote"
       ],
-      "badges": [
-        "[Sample]"
-      ],
+      "badges": [],
       "faq": [],
       "cover_images": [
         "/services/life-coaching/cover-1.jpg",
@@ -672,7 +660,7 @@
       "id": "physical-therapy",
       "title": "Physical Therapy",
       "summary": "PT and rehabilitation with licensed independent therapists.",
-      "description": "A [Sample] physical therapy service. Coming soon — placeholder description.",
+      "description": "A physical therapy service. Coming soon — placeholder description.",
       "category": "therapy",
       "service_type": "therapy",
       "pricing_ref": "physical-therapy",
@@ -684,9 +672,7 @@
       "location_modes": [
         "onsite"
       ],
-      "badges": [
-        "[Sample]"
-      ],
+      "badges": [],
       "faq": [],
       "cover_images": [
         "/services/physical-therapy/cover-1.jpg",
@@ -703,7 +689,7 @@
       "id": "speech-therapy",
       "title": "Speech Therapy",
       "summary": "Speech and language therapy from licensed independent providers.",
-      "description": "A [Sample] speech therapy service. Coming soon — placeholder description.",
+      "description": "A speech therapy service. Coming soon — placeholder description.",
       "category": "therapy",
       "service_type": "therapy",
       "pricing_ref": "speech-therapy",
@@ -716,9 +702,7 @@
         "onsite",
         "remote"
       ],
-      "badges": [
-        "[Sample]"
-      ],
+      "badges": [],
       "faq": [],
       "cover_images": [
         "/services/speech-therapy/cover-1.jpg",

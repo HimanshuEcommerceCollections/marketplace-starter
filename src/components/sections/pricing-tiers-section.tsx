@@ -4,7 +4,6 @@ import { Container } from "@/components/layout/container";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { formatMoney } from "@/lib/money";
 import { cn } from "@/lib/utils";
 import type { PricingTier, Surface } from "@/lib/services/landing";
@@ -26,7 +25,7 @@ function priceLabel(price: PricingTier["price"]): string {
 /**
  * "Session Pricing" — side-by-side draft pricing tiers. Server component,
  * token-only. Featured tiers use the dark (inverse) treatment; every price
- * carries a "Draft" pill and a [Sample] badge. Each card CTA typically joins
+ * carries a "Draft" pill. Each card CTA typically joins
  * the interest list for a coming-soon service.
  * Desktop: row of cards · Mobile: stacked.
  */
@@ -132,13 +131,6 @@ export function PricingTiersSection({
                       <Badge variant="secondary" className="uppercase tracking-wide">
                         Estimate
                       </Badge>
-                      <SampleBadge
-                        className={
-                          featured
-                            ? "border-surface-inverse-foreground/30 text-surface-inverse-foreground/80"
-                            : undefined
-                        }
-                      />
                     </p>
 
                     {tier.duration ? (

@@ -72,13 +72,12 @@ export interface FaqItem {
   answer: string;
 }
 
-/** Proof element — `isSample` is required and always true (RULE). */
+/** Testimonial / social-proof element. */
 export interface TestimonialItem {
   id: string;
   quote: string;
   author: string;
   role?: string;
-  isSample: true;
 }
 
 export interface ProcessCard {

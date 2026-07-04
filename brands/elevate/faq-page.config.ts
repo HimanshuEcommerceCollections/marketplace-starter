@@ -2,7 +2,7 @@ import type { FaqPageConfig } from "@/lib/faq/page";
 
 /**
  * "Frequently Asked Questions" page content for Elevate. All copy is draft /
- * [Sample] demonstration content — no real claims, statistics, or final prices.
+ * Demonstration content — no real claims, statistics, or final prices.
  */
 export const elevateFaqPage: FaqPageConfig = {
   hero: {
@@ -65,7 +65,7 @@ export const elevateFaqPage: FaqPageConfig = {
           id: "pricing-final",
           question: "Are prices final?",
           answer:
-            "No. All prices displayed are starting prices [Sample]. Final pricing is confirmed by the coordinator after you submit your booking request. The price breakdown you see in the booking flow is an estimate, not a final charge.",
+            "No. All prices displayed are starting prices. Final pricing is confirmed by the coordinator after you submit your booking request. The price breakdown you see in the booking flow is an estimate, not a final charge.",
         },
         {
           id: "pricing-vary",
@@ -77,13 +77,13 @@ export const elevateFaqPage: FaqPageConfig = {
           id: "pricing-beauty-minimum",
           question: "How does Beauty minimum pricing work?",
           answer:
-            "Beauty services require a minimum booking value of $75 [Sample]. If the services you select total less than $75, you will be prompted to add more items before proceeding. The minimum applies to the total of all Beauty items selected — not per item.",
+            "Beauty services require a minimum booking value of $75. If the services you select total less than $75, you will be prompted to add more items before proceeding. The minimum applies to the total of all Beauty items selected — not per item.",
         },
         {
           id: "pricing-pt-speech",
           question: "Why are PT and Speech priced differently?",
           answer:
-            "Physical Therapy and Speech Therapy are currently Coming Soon services using a coordinator-reviewed pricing model. FROM-based pricing is shown for planning only [Sample] — no live pricing calculator is available. A coordinator reviews each request individually and confirms pricing directly with you.",
+            "Physical Therapy and Speech Therapy are currently Coming Soon services using a coordinator-reviewed pricing model. FROM-based pricing is shown for planning only — no live pricing calculator is available. A coordinator reviews each request individually and confirms pricing directly with you.",
         },
       ],
     },

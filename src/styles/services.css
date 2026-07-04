@@ -27,7 +27,7 @@
       rgba(10, 14, 11, 0.55) 40%,
       rgba(10, 14, 11, 0.92) 100%
     ),
-    url("/assets/services-hero-bg.jpg");
+    url("/assets/services/hero-bg.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -432,7 +432,7 @@
       color-mix(in oklab, var(--muted) 94%, transparent),
       color-mix(in oklab, var(--muted) 96%, transparent)
     ),
-    url("/assets/why-elevate-bg.jpg");
+    url("/assets/shared/why-elevate-bg.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -530,7 +530,7 @@
   text-align: center;
   background-image:
     linear-gradient(rgba(10, 14, 11, 0.72), rgba(10, 14, 11, 0.82)),
-    url("/assets/services-cta-bg.jpg");
+    url("/assets/services/cta-bg.jpg");
   background-size: cover;
   background-position: center;
 }

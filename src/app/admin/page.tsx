@@ -5,7 +5,6 @@ import { TriangleAlert } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { AdminTopbar } from "@/components/admin/admin-topbar";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
-import { SampleNotice } from "@/components/admin/sample-notice";
 import { KpiGrid } from "@/components/admin/overview/kpi-grid";
 import { SectionHeading } from "@/components/admin/overview/section-heading";
 import { PendingReviewTable } from "@/components/admin/overview/pending-review-table";
@@ -29,7 +28,7 @@ import {
 /**
  * Admin Overview / Dashboard. The Pending Review + Active Bookings tables are
  * live (server data via the bookings API); the KPI tiles + Services Overview
- * remain [Sample] placeholders for now.
+ * remain illustrative placeholders for now.
  */
 export default function AdminOverviewPage() {
   const [bookings, setBookings] = React.useState<AdminBookingRow[] | null>(null);
@@ -76,7 +75,6 @@ export default function AdminOverviewPage() {
       <AdminTopbar searchPlaceholder="Search bookings, clients..." date={TODAY_LABEL} />
       <div className="px-4 py-6 sm:px-6 lg:px-8">
         <AdminPageHeader title="Dashboard" subtitle={DASHBOARD_SUBTITLE} />
-        <SampleNotice className="mb-6" />
 
         <KpiGrid kpis={KPIS} />
 

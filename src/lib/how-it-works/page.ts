@@ -47,7 +47,7 @@ export interface HowItWorksCoordinator {
   /** Italic accent line in the highlight color (e.g. "not an algorithm."). */
   titleAccent?: string;
   body?: string;
-  /** Illustrative stats — each is rendered with a [Sample] badge. */
+  /** Illustrative stats. */
   stats: HowItWorksStat[];
 }
 

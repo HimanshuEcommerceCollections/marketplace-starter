@@ -1,6 +1,6 @@
 # Fable Portfolio Starter
 
-> **INTERNAL DRAFT — demo only.** All content, pricing, and proof are `[Sample]`
+> **INTERNAL DRAFT — demo only.** All content, pricing, and proof are illustrative
 > placeholders. Forms do not submit anywhere.
 
 A single Next.js 15 + TypeScript + Tailwind v4 + shadcn/ui starter that renders as

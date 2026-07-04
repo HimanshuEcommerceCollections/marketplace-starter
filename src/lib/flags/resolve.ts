@@ -26,8 +26,6 @@ export function resolveFlags(): FlagState {
   for (const k of FLAG_KEYS) {
     out[k] = brandFlags[k] ?? FLAG_REGISTRY[k].default;
   }
-  // RULE: [Sample] labels are non-negotiable — always on.
-  out.showSampleLabels = true;
   // Demo banner additionally honors NEXT_PUBLIC_DEMO_MODE.
   const demo = demoModeOverride();
   if (demo !== undefined) out.demoBanner = demo;

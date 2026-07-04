@@ -4,7 +4,6 @@ import { Check } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { cn } from "@/lib/utils";
 import type { NavItem } from "@/lib/brand/types";
 
@@ -14,7 +13,7 @@ export interface ServiceLandingHeroProps {
   eyebrow?: string;
   title: string;
   subtitle?: string;
-  /** Pre-formatted, e.g. "From $109.00". Rendered with a [Sample] badge. */
+  /** Pre-formatted, e.g. "From $109.00". */
   priceLabel?: string;
   primaryCta: NavItem;
   secondaryCta?: NavItem;
@@ -113,13 +112,6 @@ export function ServiceLandingHero({
               <span className="font-heading text-2xl font-semibold text-highlight md:text-3xl">
                 {priceLabel}
               </span>
-              <SampleBadge
-                className={
-                  variant === "dark"
-                    ? "border-surface-inverse-foreground/30 text-surface-inverse-foreground/80"
-                    : undefined
-                }
-              />
             </p>
           ) : null}
 

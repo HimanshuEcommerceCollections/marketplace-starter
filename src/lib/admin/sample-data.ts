@@ -41,7 +41,7 @@ export const SERVICES_OVERVIEW: ServicesOverviewItem[] = [
 ];
 
 /**
- * All [Sample] booking rows. Status counts are exact so tab counts stay
+ * All illustrative booking rows. Status counts are exact so tab counts stay
  * truthful: 3 pending, 7 active, 12 completed, 2 cancelled (24 total).
  */
 export const ALL_BOOKINGS: AdminBooking[] = [

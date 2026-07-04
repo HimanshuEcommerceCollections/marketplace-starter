@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { AdminTable, type AdminColumn } from "@/components/admin/admin-table";
 import { StatusDot } from "@/components/admin/status-pill";
 import type { AdminBooking } from "@/lib/admin/types";
@@ -54,7 +53,6 @@ const columns: AdminColumn<AdminBooking>[] = [
     header: (
       <span className="inline-flex items-center justify-end gap-1.5">
         Total
-        <SampleBadge />
       </span>
     ),
     align: "right",

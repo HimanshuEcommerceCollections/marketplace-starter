@@ -91,10 +91,10 @@ const PANELS: Panel[] = [
 ];
 
 const STEP_BG = [
-  "/assets/image-8.jpg",
-  "/assets/image-9.jpg",
-  "/assets/image-10.jpg",
-  "/assets/image-11.jpg",
+  "/assets/home/image-8.jpg",
+  "/assets/home/image-9.jpg",
+  "/assets/home/image-10.jpg",
+  "/assets/home/image-11.jpg",
 ];
 
 const CHIPS: { label: string; Icon: Icon }[] = [

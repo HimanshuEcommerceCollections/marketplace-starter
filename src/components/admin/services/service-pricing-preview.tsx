@@ -4,7 +4,6 @@ import * as React from "react";
 import { TriangleAlert } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { formatCents } from "@/lib/admin/format";
 import { ServiceApiError } from "@/lib/admin/services";
 import {
@@ -132,7 +131,7 @@ export function ServicePricingPreview({
         <p className="mt-2 text-sm text-muted-foreground">
           This service has no active configuration groups, so the price is just the base price:{" "}
           <span className="inline-flex items-center gap-1.5 font-medium text-foreground">
-            {formatCents(basePrice)} <SampleBadge />
+            {formatCents(basePrice)}
           </span>
           .
         </p>
@@ -190,7 +189,6 @@ export function ServicePricingPreview({
         <aside className="h-fit rounded-lg border border-border bg-muted/20 p-4">
           <div className="flex items-center gap-2">
             <h3 className="font-heading text-sm font-semibold text-foreground">Estimated price</h3>
-            <SampleBadge />
           </div>
           <dl className="mt-3 space-y-1.5 text-sm">
             <div className="flex items-center justify-between">

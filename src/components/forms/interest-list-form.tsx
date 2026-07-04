@@ -56,7 +56,7 @@ export function InterestListForm({
         role="status"
         className="rounded-lg border border-success/40 bg-success/10 p-4 text-sm text-foreground"
       >
-        You&apos;re on the [Sample] interest list (stub — nothing was sent).
+        You&apos;re on the interest list (stub — nothing was sent).
         We&apos;ll reach out when service availability opens.
       </p>
     );

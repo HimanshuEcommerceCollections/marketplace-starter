@@ -143,7 +143,7 @@ export interface NoticeSection extends BaseSection {
 
 /**
  * A single pricing tier (e.g. "Evaluation Visit"). Prices are draft/illustrative
- * and always rendered with a "Draft" pill and a [Sample] badge.
+ * and always rendered with a "Draft" pill.
  */
 export interface PricingTier {
   /** Small badge above the name, e.g. "Initial Visit" / "Ongoing Care". */

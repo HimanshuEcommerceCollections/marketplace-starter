@@ -6,10 +6,8 @@ import { useRouter } from "next/navigation";
 import { Plus, TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { AdminTopbar } from "@/components/admin/admin-topbar";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
-import { SampleNotice } from "@/components/admin/sample-notice";
 import { ServiceStatusPill } from "@/components/admin/status-pill";
 import { AdminTable, type AdminColumn } from "@/components/admin/admin-table";
 import { ServiceActions } from "@/components/admin/services/service-actions";
@@ -101,7 +99,6 @@ export default function AdminServicesPage() {
       header: (
         <span className="inline-flex items-center gap-2">
           Base Price
-          <SampleBadge />
         </span>
       ),
       align: "right",
@@ -142,8 +139,6 @@ export default function AdminServicesPage() {
           title="Services"
           subtitle="Manage the bookable services in the customer marketplace and control what's published."
         />
-        <SampleNotice className="mb-6" />
-
         {/* Toolbar: status filter + count */}
         <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div role="group" aria-label="Filter by status" className="flex flex-wrap gap-1.5">

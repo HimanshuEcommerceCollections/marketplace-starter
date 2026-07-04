@@ -10,7 +10,7 @@ export default function WaitlistPage() {
     <Container size="md" className="py-12">
       <h1 className="text-3xl font-bold tracking-tight">Join the waitlist</h1>
       <p className="mt-2 text-muted-foreground">
-        Be the first to know when new [Sample] services launch. Stub-only form.
+        Be the first to know when new services launch. Stub-only form.
       </p>
       <div className="mt-8">
         {isEnabled("waitlistForm") ? (

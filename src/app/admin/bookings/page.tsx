@@ -4,10 +4,8 @@ import * as React from "react";
 import { TriangleAlert } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { AdminTopbar } from "@/components/admin/admin-topbar";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
-import { SampleNotice } from "@/components/admin/sample-notice";
 import { StatusDot } from "@/components/admin/status-pill";
 import { MasterDetail } from "@/components/admin/master-detail";
 import { AdminTable, type AdminColumn } from "@/components/admin/admin-table";
@@ -93,7 +91,7 @@ export default function AdminBookingsPage() {
       key: "total",
       header: (
         <span className="inline-flex items-center gap-1.5">
-          Total <SampleBadge />
+          Total
         </span>
       ),
       align: "right",
@@ -128,7 +126,6 @@ export default function AdminBookingsPage() {
       <AdminTopbar searchPlaceholder="Search by client, ref, or service..." />
       <div className="px-4 py-6 sm:px-6 lg:px-8">
         <AdminPageHeader title="Bookings" />
-        <SampleNotice className="mb-6" />
 
         {error ? (
           <Card className="mb-6 flex items-center gap-2 px-4 py-3 text-sm text-destructive">

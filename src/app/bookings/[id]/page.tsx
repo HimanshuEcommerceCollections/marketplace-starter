@@ -8,7 +8,6 @@ import { Container } from "@/components/layout/container";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { useAuth } from "@/components/auth/auth-provider";
 import {
   getMyBooking,
@@ -125,7 +124,7 @@ export default function BookingDetailPage() {
           {/* Price breakdown */}
           <Card className="p-5">
             <h2 className="mb-3 flex items-center gap-2 font-heading text-sm font-semibold text-foreground">
-              Price <SampleBadge />
+              Price
             </h2>
             <dl className="space-y-1.5 text-sm">
               <Row label="Base" value={formatMoney({ amount: base, currency: booking.currency })} />

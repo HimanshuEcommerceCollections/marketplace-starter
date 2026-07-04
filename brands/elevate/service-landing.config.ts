@@ -142,7 +142,7 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
           { id: "massage-prep", question: "What should I prepare before a massage? (Sample)", answer: "Just a quiet, comfortable space — your professional brings everything needed. Placeholder answer for the INTERNAL DRAFT starter." },
           { id: "massage-matching", question: "How does provider matching work? (Sample)", answer: "A coordinator matches you with a vetted independent professional based on your preferences and schedule." },
           { id: "massage-reschedule", question: "What happens if I need to reschedule? (Sample)", answer: "This demo does not process real bookings — rescheduling would be handled by your coordinator." },
-          { id: "massage-vetting", question: "Are professionals vetted? (Sample)", answer: "Yes — every professional passes a [Sample] background and identity check before joining." },
+          { id: "massage-vetting", question: "Are professionals vetted? (Sample)", answer: "Yes — every professional passes a background and identity check before joining." },
         ],
       },
       {
@@ -283,11 +283,11 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
       {
         type: "testimonials",
         heading: "What clients are saying.",
-        subheading: "[Sample] testimonials — for demonstration purposes",
+        subheading: "Testimonials — for demonstration purposes",
         items: [
-          { id: "pt-1", quote: "The convenience alone was worth it. Having a professional come to my home changed everything.", author: "J.M.", role: "Personal Training — 60 min · Raleigh, NC", isSample: true },
-          { id: "pt-2", quote: "I'd tried gym memberships for years and nothing stuck. This is what I needed.", author: "T.R.", role: "Personal Training — Strength · Cary, NC", isSample: true },
-          { id: "pt-3", quote: "My trainer adapted the session around what equipment I had at home. It never felt like a limitation — it felt personalized.", author: "S.L.", role: "Personal Training — 45 min · Wake Forest, NC", isSample: true },
+          { id: "pt-1", quote: "The convenience alone was worth it. Having a professional come to my home changed everything.", author: "J.M.", role: "Personal Training — 60 min · Raleigh, NC" },
+          { id: "pt-2", quote: "I'd tried gym memberships for years and nothing stuck. This is what I needed.", author: "T.R.", role: "Personal Training — Strength · Cary, NC" },
+          { id: "pt-3", quote: "My trainer adapted the session around what equipment I had at home. It never felt like a limitation — it felt personalized.", author: "S.L.", role: "Personal Training — 45 min · Wake Forest, NC" },
         ],
       },
       {
@@ -462,11 +462,11 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
         type: "testimonials",
         surface: "muted",
         heading: "What clients are saying.",
-        subheading: "[Sample] testimonials — for demonstration purposes",
+        subheading: "Testimonials — for demonstration purposes",
         items: [
-          { id: "yoga-1", quote: "Having an instructor come to my apartment completely changed how I approach mornings. It's the one habit that's actually stuck.", author: "A.R.", role: "In-Home Yoga · Raleigh, NC", isSample: true },
-          { id: "yoga-2", quote: "I'd been intimidated by yoga for years. Working with someone in my own living room made it feel approachable from day one.", author: "M.C.", role: "In-Home Yoga · Cary, NC", isSample: true },
-          { id: "yoga-3", quote: "The matching process was easy and the instructor clearly understood what I was looking for — gentle but real.", author: "K.W.", role: "In-Home Yoga · Wake County, NC", isSample: true },
+          { id: "yoga-1", quote: "Having an instructor come to my apartment completely changed how I approach mornings. It's the one habit that's actually stuck.", author: "A.R.", role: "In-Home Yoga · Raleigh, NC" },
+          { id: "yoga-2", quote: "I'd been intimidated by yoga for years. Working with someone in my own living room made it feel approachable from day one.", author: "M.C.", role: "In-Home Yoga · Cary, NC" },
+          { id: "yoga-3", quote: "The matching process was easy and the instructor clearly understood what I was looking for — gentle but real.", author: "K.W.", role: "In-Home Yoga · Wake County, NC" },
         ],
       },
       {
@@ -635,11 +635,11 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
         type: "testimonials",
         surface: "muted",
         heading: "What clients are saying.",
-        subheading: "[Sample] testimonials shown for demonstration purposes",
+        subheading: "Testimonials shown for demonstration purposes",
         items: [
-          { id: "nutrition-1", quote: "Having someone talk through my habits in my own kitchen made the guidance feel completely realistic, not like a plan from a magazine.", author: "Raleigh, NC", isSample: true },
-          { id: "nutrition-2", quote: "I appreciated that the focus was on what I could actually do, not some ideal version of my life. It felt practical from the first session.", author: "Cary, NC", isSample: true },
-          { id: "nutrition-3", quote: "The scheduling flexibility was what made this work for me. I'd tried this before and consistency was always the problem.", author: "Wake County, NC", isSample: true },
+          { id: "nutrition-1", quote: "Having someone talk through my habits in my own kitchen made the guidance feel completely realistic, not like a plan from a magazine.", author: "Raleigh, NC" },
+          { id: "nutrition-2", quote: "I appreciated that the focus was on what I could actually do, not some ideal version of my life. It felt practical from the first session.", author: "Cary, NC" },
+          { id: "nutrition-3", quote: "The scheduling flexibility was what made this work for me. I'd tried this before and consistency was always the problem.", author: "Wake County, NC" },
         ],
       },
       {
@@ -806,11 +806,11 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
         type: "testimonials",
         surface: "muted",
         heading: "What clients are saying.",
-        subheading: "[Sample] testimonials shown for demonstration purposes",
+        subheading: "Testimonials shown for demonstration purposes",
         items: [
-          { id: "life-coaching-1", quote: "I was surprised by how natural it felt to have someone come to my home for this. It was a much easier environment to be honest in.", author: "Raleigh, NC", isSample: true },
-          { id: "life-coaching-2", quote: "Having the flexibility to book sessions around my actual schedule made this something I could actually stick to.", author: "Cary, NC", isSample: true },
-          { id: "life-coaching-3", quote: "The professional I was matched with genuinely understood what I was trying to work on. The matching process clearly wasn't random.", author: "Wake County, NC", isSample: true },
+          { id: "life-coaching-1", quote: "I was surprised by how natural it felt to have someone come to my home for this. It was a much easier environment to be honest in.", author: "Raleigh, NC" },
+          { id: "life-coaching-2", quote: "Having the flexibility to book sessions around my actual schedule made this something I could actually stick to.", author: "Cary, NC" },
+          { id: "life-coaching-3", quote: "The professional I was matched with genuinely understood what I was trying to work on. The matching process clearly wasn't random.", author: "Wake County, NC" },
         ],
       },
       {
@@ -1023,7 +1023,7 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
         type: "testimonials",
         surface: "muted",
         heading: "What Clients Are Looking For",
-        subheading: "[Sample] testimonials — not real client reviews",
+        subheading: "Testimonials — not real client reviews",
         items: [
           {
             id: "beauty-1",
@@ -1031,7 +1031,6 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
               "I had my makeup and hair done at home the morning of my sister's wedding. No rushing to a salon — just calm, beautiful results.",
             author: "Raleigh, NC",
             role: "In-Home Beauty · Event Preparation",
-            isSample: true,
           },
           {
             id: "beauty-2",
@@ -1039,7 +1038,6 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
               "The coordinator made everything so easy. I described what I wanted and the professional arrived with exactly the right products and setup.",
             author: "Wake County, NC",
             role: "In-Home Beauty · Makeup Application",
-            isSample: true,
           },
           {
             id: "beauty-3",
@@ -1047,7 +1045,6 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
               "I never realized how much more relaxed I feel getting ready at home — honestly better — than any salon I've visited.",
             author: "Cary, NC",
             role: "In-Home Beauty · Hair Styling",
-            isSample: true,
           },
         ],
       },
@@ -1157,7 +1154,7 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
             id: "beauty-vetted",
             question: "How are beauty professionals vetted?",
             answer:
-              "Every professional passes a [Sample] identity verification and background check before joining the Elevate marketplace, and each booking is reviewed by a coordinator.",
+              "Every professional passes an identity verification and background check before joining the Elevate marketplace, and each booking is reviewed by a coordinator.",
           },
         ],
         viewAll: { label: "View Full FAQ", href: "/faq" },
@@ -1399,7 +1396,6 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
               "After my ACL surgery, I couldn't imagine getting to a clinic three times a week. Having a PT come to my home made recovery manageable and honestly more effective.",
             author: "M.L.",
             role: "Physical Therapy · ACL Rehabilitation",
-            isSample: true,
           },
           {
             id: "pt-2",
@@ -1407,7 +1403,6 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
               "My PT knew exactly how to work around the space I had. She used my stairs, my furniture — real functional training. Nothing like a generic gym routine.",
             author: "G.P.",
             role: "Physical Therapy · Mobility Recovery",
-            isSample: true,
           },
           {
             id: "pt-3",
@@ -1415,7 +1410,6 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
               "No waiting rooms, no rushing to park. I'd show up in my own home, focused. That mental shift alone helped me show up better for every session.",
             author: "T.R.",
             role: "Physical Therapy · Chronic Pain",
-            isSample: true,
           },
         ],
       },
@@ -1686,7 +1680,6 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
               "I was nervous about having someone come to our home for my son's sessions, but it made such a difference. He was relaxed, engaged, and the sessions felt natural.",
             author: "A.M.",
             role: "Speech Therapy · Pediatric Language",
-            isSample: true,
           },
           {
             id: "speech-2",
@@ -1694,7 +1687,6 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
               "After my stroke, getting to a clinic three times a week wasn't realistic. Having therapy in my own environment was a game-changer.",
             author: "R.T.",
             role: "Speech Therapy · Post-Stroke Recovery",
-            isSample: true,
           },
           {
             id: "speech-3",
@@ -1702,7 +1694,6 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
               "The convenience alone made it worth it, but the personalized pace was what really helped. My therapist knew exactly what I needed in each session.",
             author: "S.K.",
             role: "Speech Therapy · Adult Communication",
-            isSample: true,
           },
         ],
       },
