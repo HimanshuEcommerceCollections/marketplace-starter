@@ -4,7 +4,6 @@
  * - required files present
  * - theme.css is scoped to [data-brand="<slug>"] and defines required tokens
  * - services.json / pricing.v1.json parse and cross-reference correctly
- * - proof content is [Sample]-labelled
  */
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -50,17 +49,6 @@ for (const slug of BRANDS) {
     }
     for (const t of REQUIRED_TOKENS) {
       if (!css.includes(t)) err(`[${slug}] theme.css missing token: ${t}`);
-    }
-  }
-
-  // content proof labelling
-  const contentPath = join(dir, "content.config.ts");
-  if (existsSync(contentPath)) {
-    const content = readFileSync(contentPath, "utf8");
-    const testimonials = (content.match(/quote:/g) || []).length;
-    const samples = (content.match(/isSample:\s*true/g) || []).length;
-    if (testimonials > 0 && samples < testimonials) {
-      err(`[${slug}] every testimonial must set isSample: true (${samples}/${testimonials}).`);
     }
   }
 

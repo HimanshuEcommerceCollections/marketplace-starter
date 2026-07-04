@@ -1,7 +1,6 @@
 /** Feature flag registry — reusable across all brands. */
 export const FLAG_KEYS = [
   "demoBanner", // global demo / INTERNAL DRAFT banner
-  "showSampleLabels", // force [Sample] labels on proof (RULE: always on)
   "bookingWizard", // multi-step booking flow
   "pricingEngine", // show computed prices vs "Contact us"
   "proApplyForm", // "become a pro" application form
@@ -25,11 +24,6 @@ export const FLAG_REGISTRY: Record<FlagKey, FlagDefinition> = {
   demoBanner: {
     key: "demoBanner",
     description: "Global demo / internal-draft banner",
-    default: true,
-  },
-  showSampleLabels: {
-    key: "showSampleLabels",
-    description: "Force [Sample] labels on all proof elements",
     default: true,
   },
   bookingWizard: {

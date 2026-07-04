@@ -66,7 +66,7 @@ export function ProApplyForm({ categories }: { categories: string[] }) {
         role="status"
         className="rounded-xl border border-success/40 bg-success/10 p-6 text-sm"
       >
-        Thanks! Your [Sample] application was captured (stub — nothing is sent to
+        Thanks! Your application was captured (stub — nothing is sent to
         a backend). A coordinator would follow up in the real experience.
       </p>
     );

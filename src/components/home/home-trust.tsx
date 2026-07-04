@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { Container } from "@/components/layout/container";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { useGsap, gsap, prefersReducedMotion } from "@/lib/anim/use-gsap";
 import type { TestimonialItem } from "@/lib/brand/types";
 
@@ -93,7 +92,6 @@ export function HomeTrust({ heading, headingAccent, subheading, items }: HomeTru
           {items.map((item) => (
             <li key={item.id} className="home-trust-card">
               <figure className="flex h-full flex-col">
-                <SampleBadge className="mb-3.5 self-start" />
                 <div aria-hidden className="home-trust-stars mb-3.5">
                   ★★★★★
                 </div>

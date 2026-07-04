@@ -146,7 +146,6 @@ export const elevateAbout: AboutPageConfig = {
           "I was hesitant to book an in-home service — not because of Elevate, but because I'd had bad experiences elsewhere. The coordinator process completely changed that for me.",
         author: "P.L.",
         role: "Raleigh",
-        isSample: true,
       },
       {
         id: "about-2",
@@ -154,7 +153,6 @@ export const elevateAbout: AboutPageConfig = {
           "The verification process is what made me trust it. Knowing the professional was background-checked before arriving at my home meant a lot.",
         author: "C.M.",
         role: "Cary",
-        isSample: true,
       },
       {
         id: "about-3",
@@ -162,7 +160,6 @@ export const elevateAbout: AboutPageConfig = {
           "Clean, transparent, and the coordinator actually called me before the session to confirm everything. That level of care is rare.",
         author: "N.A.",
         role: "Wake Forest",
-        isSample: true,
       },
     ],
   },

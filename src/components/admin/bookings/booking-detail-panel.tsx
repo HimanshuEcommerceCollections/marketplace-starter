@@ -3,7 +3,6 @@
 import * as React from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { StatusPill } from "@/components/admin/status-pill";
 import {
   setBookingStatus,
@@ -22,17 +21,14 @@ export interface BookingDetailPanelProps {
 function Row({
   label,
   value,
-  sample,
 }: {
   label: string;
   value: React.ReactNode;
-  sample?: boolean;
 }) {
   return (
     <div className="flex items-start justify-between gap-4 px-5 py-3">
       <dt className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-muted-foreground">
         {label}
-        {sample ? <SampleBadge /> : null}
       </dt>
       <dd className="text-right text-sm font-medium text-foreground">{value}</dd>
     </div>
@@ -99,7 +95,6 @@ export function BookingDetailPanel({ booking, onChanged }: BookingDetailPanelPro
         <Row label="Professional" value={booking.providerName ?? "Unassigned"} />
         <Row
           label="Total"
-          sample
           value={formatMoney({ amount: booking.priceAmount, currency: booking.currency })}
         />
         {options.length > 0 ? <Row label="Options" value={options.join(" · ")} /> : null}

@@ -6,7 +6,6 @@ import { useParams } from "next/navigation";
 import { ArrowLeft, Pencil, TriangleAlert } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { ServiceStatusPill } from "@/components/admin/status-pill";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ServiceStatusControl } from "@/components/admin/services/service-status-control";
@@ -98,7 +97,6 @@ export default function ServiceDetailsPage() {
                     value={
                       <span className="inline-flex items-center gap-2">
                         {formatCents(service.basePrice)}
-                        <SampleBadge />
                       </span>
                     }
                   />

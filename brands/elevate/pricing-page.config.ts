@@ -153,7 +153,6 @@ export const elevatePricingPage: PricingPageConfig = {
           "I appreciated seeing the price breakdown before I submitted anything. No surprises.",
         author: "K.M.",
         role: "Raleigh",
-        isSample: true,
       },
       {
         id: "price-2",
@@ -161,7 +160,6 @@ export const elevatePricingPage: PricingPageConfig = {
           "The transparency about PT pricing gave me confidence that the coordinator would be fair.",
         author: "D.L.",
         role: "Cary",
-        isSample: true,
       },
       {
         id: "price-3",
@@ -169,7 +167,6 @@ export const elevatePricingPage: PricingPageConfig = {
           "Beauty minimum makes sense once you understand it. The coordinator explained everything clearly.",
         author: "A.T.",
         role: "Wake Forest",
-        isSample: true,
       },
     ],
   },

@@ -32,7 +32,7 @@ export function WaitlistForm() {
         role="status"
         className="rounded-lg border border-success/40 bg-success/10 p-4 text-sm"
       >
-        You&apos;re on the [Sample] waitlist (stub — nothing sent).
+        You&apos;re on the waitlist (stub — nothing sent).
       </p>
     );
   }

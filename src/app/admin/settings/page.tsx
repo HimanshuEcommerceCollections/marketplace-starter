@@ -1,9 +1,7 @@
 import * as React from "react";
 import { Card } from "@/components/ui/card";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { AdminTopbar } from "@/components/admin/admin-topbar";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
-import { SampleNotice } from "@/components/admin/sample-notice";
 
 export default function AdminSettingsPage() {
   return (
@@ -14,9 +12,7 @@ export default function AdminSettingsPage() {
           title="Settings"
           subtitle="Console preferences and account configuration."
         />
-        <SampleNotice className="mb-6" />
         <Card className="flex flex-col items-start gap-3 p-8">
-          <SampleBadge />
           <h2 className="font-heading text-xl font-semibold text-foreground">
             Coming soon
           </h2>

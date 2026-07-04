@@ -1,7 +1,6 @@
 "use client";
 
 import { useGsap } from "@/lib/anim/use-gsap";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import type { HowItWorksCoordinator } from "@/lib/how-it-works/page";
 
 /** Dark photo band — "a real human, not an algorithm" + illustrative stats. */
@@ -56,9 +55,6 @@ export function CoordinatorBand({
             <div key={stat.label} className="hiw-coord-stat">
               <span className="n">{stat.value}</span>
               <span className="l">{stat.label}</span>
-              <span className="hiw-stat-sample">
-                <SampleBadge className="border-surface-inverse-foreground/40 text-surface-inverse-foreground/70" />
-              </span>
             </div>
           ))}
         </div>

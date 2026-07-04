@@ -1,6 +1,5 @@
 import * as React from "react";
 import Link from "next/link";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import type { AuthUserType } from "@/lib/auth/user-type";
 import type { TestimonialItem } from "@/lib/brand/types";
 
@@ -60,11 +59,6 @@ function SampleQuote({
 }) {
   return (
     <figure className="border-l-2 border-highlight pl-4">
-      <SampleBadge
-        className={
-          onDark ? "mb-2 border-primary-foreground/40 text-primary-foreground" : "mb-2"
-        }
-      />
       <blockquote
         className={
           onDark

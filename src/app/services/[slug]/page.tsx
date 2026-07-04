@@ -168,7 +168,6 @@ export default async function ServiceDetailPage({
         sidebar={
           <PriceSummaryCard
             breakdown={breakdown}
-            sample
             ctaSlot={
               <Button asChild className="w-full">
                 <Link href={`/book?service=${svc.id}`}>Book now</Link>

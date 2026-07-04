@@ -9,15 +9,15 @@ export const elevateContent: BrandContent = {
     primaryCta: { label: "Book a session", href: "/book" },
     secondaryCta: { label: "Explore services", href: "/#services" },
     // Cinematic background video + scroll-driven photo sequence. Drop the real
-    // files in Client/public/assets/ using these exact names.
-    videoSrc: "/assets/video-2.mp4",
-    videoPoster: "/assets/image-1.jpg",
+    // files in Client/public/assets/home/ using these exact names.
+    videoSrc: "/assets/home/video-2.mp4",
+    videoPoster: "/assets/home/image-1.jpg",
     photoSequence: [
-      "/assets/image-3.jpg",
-      "/assets/image-4.jpg",
-      "/assets/image-5.jpg",
-      "/assets/image-6.jpg",
-      "/assets/image-7.jpg",
+      "/assets/home/image-3.jpg",
+      "/assets/home/image-4.jpg",
+      "/assets/home/image-5.jpg",
+      "/assets/home/image-6.jpg",
+      "/assets/home/image-7.jpg",
     ],
     trustIndicators: [
       "Background Checked",
@@ -66,7 +66,7 @@ export const elevateContent: BrandContent = {
         icon: "ShieldCheck",
         title: "Rigorous Vetting",
         description:
-          "Every independent professional on Elevate passes a [Sample] background and identity check before joining.",
+          "Every independent professional on Elevate passes a background and identity check before joining.",
       },
       {
         icon: "Handshake",
@@ -195,7 +195,6 @@ export const elevateContent: BrandContent = {
           "Booked a 90-minute massage for the same afternoon. The price was clear upfront — no negotiation, no awkwardness.",
         author: "Sarah M.",
         role: "Massage · Raleigh",
-        isSample: true,
       },
       {
         id: "t2",
@@ -203,7 +202,6 @@ export const elevateContent: BrandContent = {
           "Finally a platform that just tells you the price. The 4-session training pack saves me $40 every month.",
         author: "Marcus T.",
         role: "Training · Cary",
-        isSample: true,
       },
       {
         id: "t3",
@@ -211,7 +209,6 @@ export const elevateContent: BrandContent = {
           "Booked private yoga for six of us. Semi-private pricing was transparent. Coordinator confirmed in 40 minutes.",
         author: "Priya K.",
         role: "Yoga · Durham",
-        isSample: true,
       },
     ],
   },
@@ -269,7 +266,7 @@ export const elevateContent: BrandContent = {
       {
         icon: "HeartPulse",
         title: "Vetted pros",
-        description: "Work with qualified [Sample] wellness professionals.",
+        description: "Work with qualified wellness professionals.",
       },
       {
         icon: "CalendarCheck",
@@ -291,7 +288,7 @@ export const elevateContent: BrandContent = {
         id: "f1",
         question: "Is this a real service? (Sample)",
         answer:
-          "No — this is an INTERNAL DRAFT demo with [Sample] placeholder content.",
+          "No — this is an INTERNAL DRAFT demo with placeholder content.",
       },
       {
         id: "f2",
@@ -309,7 +306,7 @@ export const elevateContent: BrandContent = {
 
   cta: {
     title: "Ready to start?",
-    body: "Build your [Sample] wellness plan in minutes.",
+    body: "Build your wellness plan in minutes.",
     cta: { label: "Book a session", href: "/book" },
   },
 
@@ -322,7 +319,6 @@ export const elevateContent: BrandContent = {
         quote:
           "Exactly what I needed — professional, convenient, and always on time.",
         author: "Elevate client",
-        isSample: true,
       },
     },
     signup: {
@@ -331,7 +327,6 @@ export const elevateContent: BrandContent = {
         id: "auth-signup",
         quote: "From yoga to beauty — all my wellness needs, handled at home.",
         author: "Elevate client",
-        isSample: true,
       },
     },
   },

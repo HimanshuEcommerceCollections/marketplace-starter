@@ -184,7 +184,6 @@ export const elevateCorporate: CorporatePageConfig = {
           "The coordinator made the entire process seamless. From first contact to the day of our team wellness event, every detail was handled professionally.",
         author: "Director of People Operations",
         role: "Sample Company",
-        isSample: true,
       },
       {
         id: "corp-2",
@@ -192,7 +191,6 @@ export const elevateCorporate: CorporatePageConfig = {
           "We had 40 team members participate in chair massages during our annual offsite. The coordination was flawless and the professionals were excellent.",
         author: "HR Manager",
         role: "Sample Company",
-        isSample: true,
       },
       {
         id: "corp-3",
@@ -200,7 +198,6 @@ export const elevateCorporate: CorporatePageConfig = {
           "Elevate was the right choice for our leadership retreat. The coordinator understood our goals and delivered a tailored wellness experience.",
         author: "Executive Assistant to CEO",
         role: "Sample Company",
-        isSample: true,
       },
     ],
   },

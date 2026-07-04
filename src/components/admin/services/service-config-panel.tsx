@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { formatCents } from "@/lib/admin/format";
 import { ServiceApiError } from "@/lib/admin/services";
 import {
@@ -562,7 +561,6 @@ function OptionForm({
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="cfg-option-price" className="flex items-center gap-1.5">
             Price modifier (USD)
-            <SampleBadge />
           </Label>
           <Input
             id="cfg-option-price"

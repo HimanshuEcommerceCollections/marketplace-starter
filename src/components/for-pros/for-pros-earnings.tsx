@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { useGsap } from "@/lib/anim/use-gsap";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import type { ForProsEarnings as ForProsEarningsConfig } from "@/lib/for-pros/page";
 
 /** Dark photo band — "get paid what you're worth" + illustrative earnings stats. */
@@ -62,9 +61,6 @@ export function ForProsEarnings({
             <div key={stat.label} className="fp-earn-stat">
               <span className="n">{stat.value}</span>
               <span className="l">{stat.label}</span>
-              <span className="fp-stat-sample">
-                <SampleBadge className="border-surface-inverse-foreground/40 text-surface-inverse-foreground/70" />
-              </span>
             </div>
           ))}
         </div>

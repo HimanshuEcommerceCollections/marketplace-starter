@@ -7,7 +7,7 @@ How to revive this starter into a working brand, what is real vs stubbed, and wh
 
 A **demo-grade master starter** for the Fable Portfolio marketplaces. It is
 intentionally incomplete: no real backend, no payments, no auth, and all content,
-pricing, and proof are clearly-labelled `[Sample]` placeholders. It exists to be
+pricing, and proof are illustrative placeholders. It exists to be
 **cloned per brand** and built on.
 
 ## How to revive
@@ -17,7 +17,7 @@ pricing, and proof are clearly-labelled `[Sample]` placeholders. It exists to be
 3. `cp .env.example .env.local` and set `NEXT_PUBLIC_BRAND` to one of
    `elevate | apex | events | education`.
 4. `npm run dev` — the full Core Flow (browse → configure → book → success) works
-   immediately on that brand's `[Sample]` data.
+   immediately on that brand's placeholder data.
 5. `npm run check` to validate types, tokens, and brand data.
 
 ## <a id="create-brand-5"></a>Create brand #5 (runbook)
@@ -27,8 +27,8 @@ Standing up a new marketplace touches only `brands/<new>/` plus one registry lin
 1. `cp -r brands/elevate brands/<new>`
 2. Edit `brands/<new>/brand.config.ts` — `id`, `name`, `nav`, `footerColumns`, `org`,
    `serviceCategories`. (`id` must equal the folder name and theme scope.)
-3. Edit `brands/<new>/content.config.ts` — hero/features/FAQ/CTA copy. Keep every
-   testimonial `isSample: true`.
+3. Edit `brands/<new>/content.config.ts` — hero/features/FAQ/CTA copy. Keep
+   testimonials illustrative (never fabricate real customer claims).
 4. Replace `brands/<new>/services.json` and `pricing.v1.json` (keep ids in sync:
    `service.id === service.pricing_ref === pricing.services key`; option ids match
    modifier ids).
@@ -51,7 +51,7 @@ You never open `src/components`, `src/app`, or `src/lib` business logic to add a
 | Booking submission | **Stub** | `src/lib/forms/stub-submit.ts` + booking wizard. |
 | Analytics | **Stub** | Console transport (`src/lib/analytics/transport.ts`); pluggable. |
 | Pricing | **Sample** | `pricing.v1.json` holds placeholder amounts; engine is real & deterministic. |
-| Testimonials / stats | **Sample** | `[Sample]`-labelled placeholders only. |
+| Testimonials / stats | **Sample** | Illustrative placeholders only. |
 | Payments / auth / CMS / i18n | **None** | Out of scope; see "must replace". |
 
 ## Backend plug-in point
@@ -65,7 +65,7 @@ endpoint URLs/keys from server-only env vars). The wizard assembles a full
 
 - [ ] Wire a real booking/lead backend at the stub seam; add payments if needed.
 - [ ] Swap the analytics console transport for a real provider (GA4 / PostHog / …).
-- [ ] Replace `[Sample]` proof with real, consented testimonials/stats (GDPR).
+- [ ] Replace illustrative proof with real, consented testimonials/stats (GDPR).
 - [ ] Remove the demo banner and `INTERNAL DRAFT` footer marker.
 - [ ] Supply real brand colors/fonts (verify WCAG AA contrast) and load fonts via
       `next/font`; tokens reference families that must be provisioned.

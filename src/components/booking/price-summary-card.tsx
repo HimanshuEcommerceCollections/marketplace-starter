@@ -6,19 +6,16 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { formatMoney } from "@/lib/money";
 import type { DisplayedPrice } from "@/lib/booking/contract";
 
 export interface PriceSummaryCardProps {
   breakdown: DisplayedPrice;
-  sample?: boolean;
   ctaSlot?: React.ReactNode;
 }
 
 export function PriceSummaryCard({
   breakdown,
-  sample = false,
   ctaSlot,
 }: PriceSummaryCardProps) {
   return (
@@ -26,7 +23,6 @@ export function PriceSummaryCard({
       <CardHeader>
         <div className="flex items-center justify-between gap-2">
           <CardTitle>Price summary</CardTitle>
-          {sample ? <SampleBadge /> : null}
         </div>
       </CardHeader>
       <CardContent>
@@ -44,8 +40,8 @@ export function PriceSummaryCard({
           <span>{formatMoney(breakdown.total)}</span>
         </div>
         <p className="mt-2 text-xs text-muted-foreground">
-          Pricing {breakdown.pricing_version} · [Sample] illustrative estimate,
-          not a quote.
+          Pricing {breakdown.pricing_version} · illustrative estimate, not a
+          quote.
         </p>
         {ctaSlot ? <div className="mt-4">{ctaSlot}</div> : null}
       </CardContent>

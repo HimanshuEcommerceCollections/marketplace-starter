@@ -11,9 +11,9 @@ Education & Creative). It is **INTERNAL DRAFT / demo-grade** — not production.
    `@theme inline`. Use semantic utilities (`bg-primary`, `text-muted-foreground`,
    `rounded-lg`). Literals are allowed **only** in `src/styles/**` and
    `brands/*/theme.css`. Enforced by ESLint + `npm run lint:tokens`.
-2. **`[Sample]` on all proof.** Every testimonial, statistic, or illustrative price
-   must render `<SampleBadge>` (`src/components/shared/sample-badge.tsx`). Never type
-   the literal. The `showSampleLabels` flag is forced on and not overridable.
+2. **Proof is illustrative only.** Testimonials, statistics, and prices are
+   placeholder INTERNAL DRAFT content — never present them as real customer claims,
+   and never fabricate specific ones.
 3. **Footer carries `INTERNAL DRAFT`.** Do not remove the marker in
    `src/components/layout/footer.tsx`.
 4. **Global draft banner.** The "DRAFT EXPERIENCE" banner is rendered by the
@@ -23,7 +23,7 @@ Education & Creative). It is **INTERNAL DRAFT / demo-grade** — not production.
    `src/lib/forms/stub-submit.ts`.
 6. **Secrets via env vars.** Only `NEXT_PUBLIC_*` values are public; never commit
    secrets, never inline them. `.env*` is gitignored (except `.env.example`).
-7. **No fabricated testimonials or statistics.** Only `[Sample]` placeholders.
+7. **No fabricated testimonials or statistics.** Use only illustrative placeholders.
 8. **Plan before code. Core Flow first.** Build browse → configure → book → success
    before marketing polish.
 
@@ -74,7 +74,7 @@ Accept brand data via props/`useBrand()`, be mobile-first, accessible (use Radix
 ## PR / done checklist
 
 - [ ] Token-clean (no new literals outside `src/styles` / `brands/*/theme.css`)
-- [ ] `[Sample]` present on any proof; footer still says `INTERNAL DRAFT`
+- [ ] Proof is illustrative only; footer still says `INTERNAL DRAFT`
 - [ ] No secrets; forms still stub-only
 - [ ] Contracts intact; `npm run check` passes for ≥1 brand
 - [ ] Works at mobile width; keyboard-accessible

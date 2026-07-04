@@ -56,7 +56,7 @@ export interface ForProsEarnings {
   body?: string;
   /** Dark-band background photo (public path). */
   image: string;
-  /** Illustrative earnings figures — each renders with a [Sample] badge. */
+  /** Illustrative earnings figures. */
   stats: ForProsStat[];
 }
 

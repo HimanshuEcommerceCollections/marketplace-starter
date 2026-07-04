@@ -8,7 +8,6 @@ import { Container } from "@/components/layout/container";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { useAuth } from "@/components/auth/auth-provider";
 import {
   listMyBookings,
@@ -126,7 +125,6 @@ export default function MyBookingsPage() {
                     <div className="text-right">
                       <span className="inline-flex items-center gap-1.5 text-lg font-semibold text-foreground">
                         {formatMoney({ amount: b.priceAmount, currency: b.currency })}
-                        <SampleBadge />
                       </span>
                     </div>
                   </div>

@@ -5,7 +5,6 @@ import { Container } from "@/components/layout/container";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { SampleBadge } from "@/components/shared/sample-badge";
 import { getIcon } from "@/lib/icons";
 import { formatMoney } from "@/lib/money";
 import { cn } from "@/lib/utils";
@@ -188,7 +187,6 @@ export function ComingSoonConfiguratorSection({
                       <Badge variant="secondary" className="uppercase tracking-wide">
                         Draft
                       </Badge>
-                      <SampleBadge className="border-surface-inverse-foreground/30 text-surface-inverse-foreground/80" />
                     </p>
                   </div>
                 </React.Fragment>
