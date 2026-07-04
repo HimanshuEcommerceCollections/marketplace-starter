@@ -19,6 +19,8 @@ import {
   Lock,
   Clock,
   CurrencyDollar,
+  CheckCircle,
+  Plus,
 } from "@phosphor-icons/react";
 
 /**
@@ -40,6 +42,8 @@ const PHOSPHOR_ICONS: Record<string, Icon> = {
   Lock,
   Clock,
   CurrencyDollar,
+  CheckCircle,
+  Plus,
   // Lucide service-icon names -> closest Phosphor glyph (matches the mockup).
   HandHelping: HandWaving,
   Dumbbell: Barbell,

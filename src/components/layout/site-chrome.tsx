@@ -23,9 +23,12 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   const adminFlow = pathname?.startsWith("/admin") ?? false;
   const bareLayout = bookingFlow || authFlow || adminFlow;
   // Pages with a full-bleed photo hero that deliberately sits behind the
-  // floating nav: the homepage and the services showcase (listing only —
-  // /services/<slug> detail pages keep the offset).
-  const fullBleedHero = pathname === "/" || pathname === "/services";
+  // floating nav: the homepage, the services showcase (listing only —
+  // /services/<slug> detail pages keep the offset), and How It Works.
+  const fullBleedHero =
+    pathname === "/" ||
+    pathname === "/services" ||
+    pathname === "/how-it-works";
 
   return (
     <>
