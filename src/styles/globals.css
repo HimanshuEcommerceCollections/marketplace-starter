@@ -15,6 +15,9 @@
 /* Bespoke layout + motion for the How It Works walkthrough page. */
 @import "./how-it-works.css";
 
+/* Bespoke layout + motion for the For Pros recruiting page. */
+@import "./for-pros.css";
+
 /* Named z-index utilities so components stay class-based (no magic numbers). */
 @utility z-sticky {
   z-index: var(--z-sticky);

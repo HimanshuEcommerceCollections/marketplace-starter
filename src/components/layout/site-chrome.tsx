@@ -24,11 +24,12 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   const bareLayout = bookingFlow || authFlow || adminFlow;
   // Pages with a full-bleed photo hero that deliberately sits behind the
   // floating nav: the homepage, the services showcase (listing only —
-  // /services/<slug> detail pages keep the offset), and How It Works.
+  // /services/<slug> detail pages keep the offset), How It Works, and For Pros.
   const fullBleedHero =
     pathname === "/" ||
     pathname === "/services" ||
-    pathname === "/how-it-works";
+    pathname === "/how-it-works" ||
+    pathname === "/pros/apply";
 
   return (
     <>

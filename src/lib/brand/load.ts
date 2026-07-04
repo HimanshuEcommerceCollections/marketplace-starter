@@ -4,9 +4,9 @@ import type {
   ServiceLandingConfig,
   ServiceLandingRegistry,
 } from "@/lib/services/landing";
-import type { PartnerLandingConfig } from "@/lib/partner/landing";
 import type { PricingPageConfig } from "@/lib/pricing/page";
 import type { HowItWorksPageConfig } from "@/lib/how-it-works/page";
+import type { ForProsPageConfig } from "@/lib/for-pros/page";
 import type { AboutPageConfig } from "@/lib/about/page";
 import type { CorporatePageConfig } from "@/lib/corporate/page";
 import type { FaqPageConfig } from "@/lib/faq/page";
@@ -16,9 +16,9 @@ import type { ServicesPageConfig } from "@/lib/services/page";
 import { elevateConfig } from "@brands/elevate/brand.config";
 import { elevateContent } from "@brands/elevate/content.config";
 import { elevateServiceLanding } from "@brands/elevate/service-landing.config";
-import { elevatePartner } from "@brands/elevate/partner.config";
 import { elevatePricingPage } from "@brands/elevate/pricing-page.config";
 import { elevateHowItWorks } from "@brands/elevate/how-it-works.config";
+import { elevateForPros } from "@brands/elevate/for-pros.config";
 import { elevateAbout } from "@brands/elevate/about-page.config";
 import { elevateCorporate } from "@brands/elevate/corporate.config";
 import { elevateFaqPage } from "@brands/elevate/faq-page.config";
@@ -34,12 +34,12 @@ export interface LoadedBrand {
   content: BrandContent;
   /** Per-service landing page configs, keyed by service slug. */
   serviceLanding: ServiceLandingRegistry;
-  /** "Partner with Elevate" (Become a Pro) page content. */
-  partner: PartnerLandingConfig;
   /** "Simple, Transparent Pricing" page content. */
   pricingPage: PricingPageConfig;
   /** "How Elevate Works" page content. */
   howItWorks: HowItWorksPageConfig;
+  /** "For Pros" (Become a Pro) recruiting page content. */
+  forPros: ForProsPageConfig;
   /** "About" page content. */
   about: AboutPageConfig;
   /** "Corporate Wellness" page content. */
@@ -63,9 +63,9 @@ const REGISTRY: Record<BrandId, LoadedBrand> = {
     config: elevateConfig,
     content: elevateContent,
     serviceLanding: elevateServiceLanding,
-    partner: elevatePartner,
     pricingPage: elevatePricingPage,
     howItWorks: elevateHowItWorks,
+    forPros: elevateForPros,
     about: elevateAbout,
     corporate: elevateCorporate,
     faqPage: elevateFaqPage,
@@ -101,11 +101,6 @@ export function getServiceLandingSlugs(): string[] {
   return Object.keys(loadBrand().serviceLanding);
 }
 
-/** The active brand's "Partner with Elevate" (Become a Pro) page content. */
-export function getPartnerLanding(): PartnerLandingConfig {
-  return loadBrand().partner;
-}
-
 /** The active brand's "Simple, Transparent Pricing" page content. */
 export function getPricingPage(): PricingPageConfig {
   return loadBrand().pricingPage;
@@ -114,6 +109,11 @@ export function getPricingPage(): PricingPageConfig {
 /** The active brand's "How Elevate Works" page content. */
 export function getHowItWorksPage(): HowItWorksPageConfig {
   return loadBrand().howItWorks;
+}
+
+/** The active brand's "For Pros" (Become a Pro) page content. */
+export function getForProsPage(): ForProsPageConfig {
+  return loadBrand().forPros;
 }
 
 /** The active brand's "About" page content. */
