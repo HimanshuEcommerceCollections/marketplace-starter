@@ -27,6 +27,9 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   // /services/<slug> detail pages keep the offset), How It Works, and For Pros.
   const fullBleedHero =
     pathname === "/" ||
+    // During ISR regeneration on Vercel the root route is rendered as
+    // "/index", so the server-side pathname never equals "/" there.
+    pathname === "/index" ||
     pathname === "/services" ||
     pathname === "/how-it-works" ||
     pathname === "/pros/apply";
