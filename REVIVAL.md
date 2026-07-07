@@ -66,7 +66,6 @@ endpoint URLs/keys from server-only env vars). The wizard assembles a full
 - [ ] Wire a real booking/lead backend at the stub seam; add payments if needed.
 - [ ] Swap the analytics console transport for a real provider (GA4 / PostHog / …).
 - [ ] Replace illustrative proof with real, consented testimonials/stats (GDPR).
-- [ ] Remove the demo banner and `INTERNAL DRAFT` footer marker.
 - [ ] Supply real brand colors/fonts (verify WCAG AA contrast) and load fonts via
       `next/font`; tokens reference families that must be provisioned.
 - [ ] Verify pricing with finance; add tax/region logic if required.

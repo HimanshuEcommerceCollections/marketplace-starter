@@ -1,6 +1,5 @@
 /** Feature flag registry — reusable across all brands. */
 export const FLAG_KEYS = [
-  "demoBanner", // global demo / INTERNAL DRAFT banner
   "bookingWizard", // multi-step booking flow
   "pricingEngine", // show computed prices vs "Contact us"
   "proApplyForm", // "become a pro" application form
@@ -21,11 +20,6 @@ export interface FlagDefinition {
 }
 
 export const FLAG_REGISTRY: Record<FlagKey, FlagDefinition> = {
-  demoBanner: {
-    key: "demoBanner",
-    description: "Global demo / internal-draft banner",
-    default: true,
-  },
   bookingWizard: {
     key: "bookingWizard",
     description: "Multi-step booking wizard (Core Flow)",

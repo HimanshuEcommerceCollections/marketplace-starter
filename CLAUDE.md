@@ -14,17 +14,13 @@ Education & Creative). It is **INTERNAL DRAFT / demo-grade** — not production.
 2. **Proof is illustrative only.** Testimonials, statistics, and prices are
    placeholder INTERNAL DRAFT content — never present them as real customer claims,
    and never fabricate specific ones.
-3. **Footer carries `INTERNAL DRAFT`.** Do not remove the marker in
-   `src/components/layout/footer.tsx`.
-4. **Global draft banner.** The "DRAFT EXPERIENCE" banner is rendered by the
-   Navbar (`src/components/layout/navbar.tsx`), so it appears on every page.
-5. **Forms are stub-only.** Validate → emit analytics → return a fake `request_id`.
+3. **Forms are stub-only.** Validate → emit analytics → return a fake `request_id`.
    No `fetch`/backend calls. The real backend would plug in at
    `src/lib/forms/stub-submit.ts`.
-6. **Secrets via env vars.** Only `NEXT_PUBLIC_*` values are public; never commit
+4. **Secrets via env vars.** Only `NEXT_PUBLIC_*` values are public; never commit
    secrets, never inline them. `.env*` is gitignored (except `.env.example`).
-7. **No fabricated testimonials or statistics.** Use only illustrative placeholders.
-8. **Plan before code. Core Flow first.** Build browse → configure → book → success
+5. **No fabricated testimonials or statistics.** Use only illustrative placeholders.
+6. **Plan before code. Core Flow first.** Build browse → configure → book → success
    before marketing polish.
 
 ## Reusability tiers
@@ -74,7 +70,7 @@ Accept brand data via props/`useBrand()`, be mobile-first, accessible (use Radix
 ## PR / done checklist
 
 - [ ] Token-clean (no new literals outside `src/styles` / `brands/*/theme.css`)
-- [ ] Proof is illustrative only; footer still says `INTERNAL DRAFT`
+- [ ] Proof is illustrative only
 - [ ] No secrets; forms still stub-only
 - [ ] Contracts intact; `npm run check` passes for ≥1 brand
 - [ ] Works at mobile width; keyboard-accessible

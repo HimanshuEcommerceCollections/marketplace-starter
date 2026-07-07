@@ -65,7 +65,6 @@ color — enforced by `npm run lint:tokens` and ESLint.
 | --- | --- | --- |
 | `NEXT_PUBLIC_BRAND` | yes | Active brand slug |
 | `NEXT_PUBLIC_SITE_URL` | yes | Canonical URL / sitemap / JSON-LD |
-| `NEXT_PUBLIC_DEMO_MODE` | yes | Forces the demo banner on (default) |
 
 Secrets must **not** use the `NEXT_PUBLIC_` prefix and must never be committed.
 

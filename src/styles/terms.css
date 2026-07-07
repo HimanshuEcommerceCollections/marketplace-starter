@@ -1,0 +1,375 @@
+/* ══════════════════════════════════════════════════════════════════
+   TERMS OF SERVICE PAGE — plain-English legal document (photo hero →
+   two-column body with sticky TOC + numbered sections + scroll-spy →
+   dark CTA band). Mirrors the approved mock; brand colors flow through
+   tokens so the theme layer still applies. On-photo whites and dark
+   image overlays stay literal (permitted in src/styles/**).
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Shared eyebrow — small uppercase label. Light "green-light" tint on the
+   photo hero; solid green on light sections. */
+.terms-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--primary) 40%, white);
+}
+
+/* ───────────────────────── HERO ───────────────────────── */
+.terms-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 48vh;
+  overflow: hidden;
+}
+.terms-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(10, 14, 11, 0.42) 0%,
+      rgba(10, 14, 11, 0.56) 40%,
+      rgba(10, 14, 11, 0.92) 100%
+    ),
+    url("/assets/terms/hero-bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.terms-hero-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1220px;
+  /* Left-align the hero copy (matches the current site direction). */
+  margin-right: auto;
+  padding: 0 80px 64px;
+}
+.terms-hero-eyebrow {
+  margin-bottom: 22px;
+}
+.terms-hero-title {
+  margin-bottom: 22px;
+  font-family: var(--font-display-bold);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(42px, 6.6vw, 98px);
+  letter-spacing: -0.02em;
+  line-height: 0.94;
+  color: #faf8f4;
+  text-shadow:
+    0 3px 28px rgba(0, 0, 0, 0.6),
+    0 1px 4px rgba(0, 0, 0, 0.7);
+}
+.terms-hero-title em {
+  font-style: normal;
+  color: var(--highlight);
+}
+.terms-hero-sub {
+  max-width: 520px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(250, 248, 244, 0.88);
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55);
+}
+
+/* ───────────────────────── BODY (TOC + sections) ───────────────────────── */
+.terms-wrap {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 56px;
+  align-items: start;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 72px 80px 100px;
+}
+
+/* Sticky table of contents */
+.terms-toc {
+  position: sticky;
+  top: 118px;
+}
+.terms-toc-title {
+  margin-bottom: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--muted-foreground) 90%, transparent);
+}
+.terms-toc ul {
+  list-style: none;
+  border-left: 1px solid var(--border);
+}
+.terms-toc a {
+  display: block;
+  margin-left: -1.5px;
+  padding: 7px 0 7px 16px;
+  border-left: 2px solid transparent;
+  font-size: 13px;
+  line-height: 1.4;
+  text-decoration: none;
+  color: var(--muted-foreground);
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+.terms-toc a:hover {
+  color: var(--primary);
+}
+.terms-toc a.on {
+  color: var(--primary);
+  border-left-color: var(--primary);
+  font-weight: 500;
+}
+
+/* Sections */
+.terms-section {
+  margin-bottom: 52px;
+  scroll-margin-top: 120px;
+}
+.terms-section:last-child {
+  margin-bottom: 0;
+}
+.terms-num {
+  margin-bottom: 10px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--highlight);
+}
+.terms-section h2 {
+  margin-bottom: 14px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+.terms-section p {
+  max-width: 660px;
+  margin-bottom: 14px;
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: color-mix(in oklab, var(--foreground) 62%, transparent);
+}
+.terms-section p:last-child {
+  margin-bottom: 0;
+}
+.terms-section a {
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: none;
+}
+.terms-section a:hover {
+  text-decoration: underline;
+}
+
+/* Bullet list */
+.terms-bullets {
+  list-style: none;
+  max-width: 660px;
+  margin: 0 0 16px;
+}
+.terms-bullets li {
+  position: relative;
+  padding: 5px 0 5px 24px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: color-mix(in oklab, var(--foreground) 60%, transparent);
+}
+.terms-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 14px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--primary) 55%, white);
+}
+.terms-bullets li b,
+.terms-callout b {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+/* Emphasized callout box */
+.terms-callout {
+  max-width: 660px;
+  margin: 20px 0 0;
+  padding: 18px 22px;
+  border-left: 3px solid var(--primary);
+  border-radius: 0 16px 16px 0;
+  background: var(--muted);
+}
+.terms-callout p {
+  margin: 0;
+  max-width: none;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: color-mix(in oklab, var(--foreground) 65%, transparent);
+}
+
+/* ───────────────────────── DARK CTA BAND ───────────────────────── */
+.terms-band {
+  position: relative;
+  padding: 100px 80px;
+  background-image:
+    radial-gradient(
+      ellipse 60% 80% at 20% 10%,
+      color-mix(in oklab, var(--primary) 35%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 50% 70% at 85% 90%,
+      color-mix(in oklab, var(--highlight) 18%, transparent),
+      transparent 55%
+    ),
+    linear-gradient(160deg, #1e2b22 0%, #141f19 100%);
+}
+.terms-band-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+.terms-band h2 {
+  margin-bottom: 16px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 3.8vw, 48px);
+  letter-spacing: -0.02em;
+  color: #faf8f4;
+}
+.terms-band h2 em {
+  font-style: italic;
+  color: var(--highlight);
+}
+.terms-band-body {
+  max-width: 540px;
+  margin: 0 auto 40px;
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: rgba(250, 248, 244, 0.66);
+}
+.terms-band-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+.terms-btn-p {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 32px;
+  border-radius: 100px;
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    color-mix(in oklab, var(--primary) 65%, black)
+  );
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--primary-foreground);
+  box-shadow: 0 6px 24px color-mix(in oklab, var(--primary) 38%, transparent);
+  transition: all 0.3s;
+}
+.terms-btn-p:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px color-mix(in oklab, var(--primary) 52%, transparent);
+}
+.terms-btn-glass {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 32px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  font-size: 14px;
+  text-decoration: none;
+  color: #faf8f4;
+  transition: all 0.3s;
+}
+.terms-btn-glass:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.terms-btn-p:focus-visible,
+.terms-btn-glass:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.terms-band-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 28px;
+}
+.terms-chip {
+  padding: 7px 16px;
+  border-radius: 100px;
+  background: rgba(20, 28, 22, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 11.5px;
+  font-weight: 500;
+  color: rgba(250, 248, 244, 0.85);
+}
+
+/* ───────────────────────── RESPONSIVE ───────────────────────── */
+@media (max-width: 960px) {
+  .terms-hero-inner {
+    padding: 0 32px 52px;
+  }
+  .terms-wrap {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 52px 32px 80px;
+  }
+  .terms-toc {
+    position: static;
+  }
+  .terms-toc ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 14px;
+    border-left: none;
+  }
+  .terms-toc a {
+    margin-left: 0;
+    padding: 5px 0;
+    border-left: none;
+  }
+  .terms-toc a.on {
+    border-left-color: transparent;
+  }
+  .terms-band {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+@media (max-width: 640px) {
+  .terms-hero {
+    min-height: 52vh;
+  }
+  .terms-hero-inner {
+    padding: 0 20px 42px;
+  }
+  .terms-wrap {
+    padding: 44px 20px 64px;
+  }
+  .terms-band {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

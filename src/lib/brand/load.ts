@@ -11,6 +11,7 @@ import type { AboutPageConfig } from "@/lib/about/page";
 import type { CorporatePageConfig } from "@/lib/corporate/page";
 import type { FaqPageConfig } from "@/lib/faq/page";
 import type { LegalPageConfig } from "@/lib/legal/page";
+import type { TermsPageConfig } from "@/lib/terms/page";
 import type { ServicesPageConfig } from "@/lib/services/page";
 
 import { elevateConfig } from "@brands/elevate/brand.config";
@@ -48,8 +49,8 @@ export interface LoadedBrand {
   faqPage: FaqPageConfig;
   /** "Privacy Policy" page content. */
   privacyPage: LegalPageConfig;
-  /** "Terms & Conditions" page content (reuses the legal-page system). */
-  termsPage: LegalPageConfig;
+  /** "Terms of Service" page content (redesigned bespoke layout). */
+  termsPage: TermsPageConfig;
   /** Standalone "Services" page content (same card grid as the home page). */
   servicesPage: ServicesPageConfig;
   /** Raw JSON — validated lazily by catalog/pricing loaders via zod. */
@@ -136,8 +137,8 @@ export function getPrivacyPage(): LegalPageConfig {
   return loadBrand().privacyPage;
 }
 
-/** The active brand's "Terms & Conditions" page content. */
-export function getTermsPage(): LegalPageConfig {
+/** The active brand's "Terms of Service" page content. */
+export function getTermsPage(): TermsPageConfig {
   return loadBrand().termsPage;
 }
 
