@@ -36,7 +36,9 @@
   z-index: 1;
   width: 100%;
   max-width: 1220px;
-  margin: 0 auto;
+  /* Left-align the hero copy (matches the mock); keep centered layout for the
+     section heads below. Do not restore margin: 0 auto here. */
+  margin-right: auto;
   padding: 140px 24px 56px;
 }
 @media (min-width: 900px) {
