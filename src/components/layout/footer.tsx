@@ -1,53 +1,74 @@
 import Link from "next/link";
-import { Instagram, Facebook, Linkedin } from "lucide-react";
+import { Instagram, Linkedin, Facebook } from "lucide-react";
 import { Container } from "./container";
-import type { FooterColumn, NavItem } from "@/lib/brand/types";
+import type { FooterColumn } from "@/lib/brand/types";
 
 export interface FooterProps {
   brandName: string;
-  tagline?: string;
+  /** Full name for the copyright line (e.g. "Elevate Health & Wellness"). */
+  fullName?: string;
   columns: FooterColumn[];
-  legalLinks: NavItem[];
+  /** Short brand description shown beside the columns. */
+  blurb?: string;
+  /** Oversized closing line; `accent` renders as the italic second line. */
+  tagline?: { lead: string; accent?: string };
 }
 
 const SOCIALS = [
   { label: "Instagram", Icon: Instagram },
-  { label: "Facebook", Icon: Facebook },
   { label: "LinkedIn", Icon: Linkedin },
+  { label: "Facebook", Icon: Facebook },
 ];
 
-/** Site footer (dark). */
-export function Footer({ brandName, tagline, columns, legalLinks }: FooterProps) {
+/** Site footer (dark, editorial): closing line → columns → bottom bar. */
+export function Footer({
+  brandName,
+  fullName,
+  columns,
+  blurb,
+  tagline,
+}: FooterProps) {
   const year = new Date().getFullYear();
   return (
     <footer className="bg-surface-inverse text-surface-inverse-foreground">
-      <Container className="py-12">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5">
-          <div className="sm:col-span-2 lg:col-span-1">
-            <div className="flex items-center gap-2">
-              <span
-                aria-hidden
-                className="inline-flex size-7 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground"
-              >
-                {brandName.charAt(0)}
-              </span>
-              <p className="font-heading text-lg font-semibold">{brandName}</p>
-            </div>
-            {tagline ? (
-              <p className="mt-2 text-sm text-surface-inverse-foreground/70">
-                {tagline}
+      {tagline ? (
+        <div className="border-b border-surface-inverse-foreground/10 px-6 py-14 text-center md:py-16">
+          <p className="mx-auto max-w-3xl font-heading text-2xl leading-snug tracking-tight text-surface-inverse-foreground/20 md:text-3xl">
+            {tagline.lead}
+            {tagline.accent ? (
+              <>
+                <br />
+                <em className="text-surface-brand/50">{tagline.accent}</em>
+              </>
+            ) : null}
+          </p>
+        </div>
+      ) : null}
+
+      <Container className="py-14 md:py-16">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-6">
+          <div className="sm:col-span-2">
+            <p className="font-heading text-xl font-semibold text-surface-inverse-foreground/85">
+              {brandName}
+            </p>
+            {blurb ? (
+              <p className="mt-3 max-w-xs text-sm leading-relaxed text-surface-inverse-foreground/45">
+                {blurb}
               </p>
             ) : null}
           </div>
+
           {columns.map((col) => (
             <div key={col.heading}>
-              <h2 className="text-sm font-semibold">{col.heading}</h2>
-              <ul className="mt-3 space-y-2">
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-surface-inverse-foreground/40">
+                {col.heading}
+              </h2>
+              <ul className="mt-4 space-y-2.5">
                 {col.links.map((link) => (
                   <li key={`${col.heading}-${link.label}`}>
                     <Link
                       href={link.href}
-                      className="text-sm text-surface-inverse-foreground/70 transition-colors hover:text-surface-inverse-foreground"
+                      className="text-sm text-surface-inverse-foreground/55 transition-colors hover:text-surface-brand"
                     >
                       {link.label}
                     </Link>
@@ -57,42 +78,28 @@ export function Footer({ brandName, tagline, columns, legalLinks }: FooterProps)
             </div>
           ))}
         </div>
+      </Container>
 
-        <div className="my-8 border-t border-surface-inverse-foreground/15" />
-
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap items-center gap-4">
-            <p className="text-xs text-surface-inverse-foreground/70">
-              © {year} {brandName}
-            </p>
-            <ul className="flex flex-wrap gap-3">
-              {legalLinks.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-xs text-surface-inverse-foreground/70 transition-colors hover:text-surface-inverse-foreground"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+      <div className="border-t border-surface-inverse-foreground/10">
+        <Container className="flex flex-col items-center gap-4 py-6 sm:flex-row sm:justify-between">
+          <p className="text-xs text-surface-inverse-foreground/50">
+            © {year} {fullName ?? brandName}. All rights reserved.
+          </p>
           <ul className="flex gap-3">
             {SOCIALS.map(({ label, Icon }) => (
               <li key={label}>
                 <Link
                   href="#"
                   aria-label={label}
-                  className="inline-flex rounded-md p-1 text-surface-inverse-foreground/70 transition-colors hover:text-surface-inverse-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="inline-flex rounded-md p-1 text-surface-inverse-foreground/45 transition-colors hover:text-surface-brand"
                 >
                   <Icon className="size-4" aria-hidden />
                 </Link>
               </li>
             ))}
           </ul>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </footer>
   );
 }

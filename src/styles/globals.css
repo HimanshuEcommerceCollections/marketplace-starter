@@ -18,6 +18,9 @@
 /* Bespoke layout + motion for the For Pros recruiting page. */
 @import "./for-pros.css";
 
+/* Bespoke layout + motion for the Pricing page. */
+@import "./pricing.css";
+
 /* Named z-index utilities so components stay class-based (no magic numbers). */
 @utility z-sticky {
   z-index: var(--z-sticky);

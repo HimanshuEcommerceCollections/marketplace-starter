@@ -67,6 +67,11 @@ export const elevateConfig: BrandConfig = {
     { label: "Privacy", href: "/privacy" },
     { label: "Terms", href: "/terms" },
   ],
+  footer: {
+    tagline: { lead: "Your wellness. Your terms.", accent: "Your Elevate." },
+    blurb:
+      "Raleigh's premier in-home wellness platform. Vetted pros, transparent pricing, delivered to your door.",
+  },
   serviceCategories: ["training", "nutrition", "recovery"],
   organization: {
     legalName: "Elevate Health & Wellness LLC (Sample)",

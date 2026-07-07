@@ -30,6 +30,13 @@ export interface BrandConfig {
   nav: NavItem[];
   footerColumns: FooterColumn[];
   legalLinks: NavItem[];
+  /** Editorial copy for the site footer (big serif line + brand blurb). */
+  footer?: {
+    /** Oversized closing line; `accent` renders as the italic second line. */
+    tagline?: { lead: string; accent?: string };
+    /** Short brand description shown beside the columns. */
+    blurb?: string;
+  };
   serviceCategories: string[];
   organization: {
     legalName: string;
