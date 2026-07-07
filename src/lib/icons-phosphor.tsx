@@ -21,6 +21,13 @@ import {
   CurrencyDollar,
   CheckCircle,
   Plus,
+  SlidersHorizontal,
+  UserCheck,
+  PlusCircle,
+  SealCheck,
+  ArrowsCounterClockwise,
+  Heart,
+  HandCoins,
 } from "@phosphor-icons/react";
 
 /**
@@ -44,6 +51,13 @@ const PHOSPHOR_ICONS: Record<string, Icon> = {
   CurrencyDollar,
   CheckCircle,
   Plus,
+  SlidersHorizontal,
+  UserCheck,
+  PlusCircle,
+  SealCheck,
+  ArrowsCounterClockwise,
+  Heart,
+  HandCoins,
   // Lucide service-icon names -> closest Phosphor glyph (matches the mockup).
   HandHelping: HandWaving,
   Dumbbell: Barbell,

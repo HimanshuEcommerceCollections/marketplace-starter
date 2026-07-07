@@ -94,9 +94,10 @@ export default function RootLayout({
             footer={
               <Footer
                 brandName={config.shortName}
-                tagline={content.hero.title}
+                fullName={config.name}
                 columns={config.footerColumns}
-                legalLinks={config.legalLinks}
+                blurb={config.footer?.blurb}
+                tagline={config.footer?.tagline}
               />
             }
           >

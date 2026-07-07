@@ -1,0 +1,750 @@
+/* ══════════════════════════════════════════════════════════════════
+   PRICING PAGE — transparent-pricing redesign (hero → service grid +
+   factors → session packs → guarantees → FAQ → CTA). Mirrors the
+   approved mock; brand colors flow through tokens so the theme layer
+   still applies. On-photo whites and dark image overlays stay literal
+   (permitted in src/styles/**).
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Shared eyebrow — small uppercase label. Green on light sections. */
+.pr-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+/* Shared centered section head. */
+.pr-section-head {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.pr-section-head .pr-eyebrow {
+  margin-bottom: 14px;
+}
+.pr-section-head h2 {
+  margin-bottom: 14px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(32px, 4.5vw, 56px);
+  letter-spacing: -0.03em;
+  color: var(--foreground);
+}
+.pr-section-head p {
+  max-width: 480px;
+  margin: 0 auto;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+}
+
+/* ───────────────────────── HERO ───────────────────────── */
+.pr-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 68vh;
+  overflow: hidden;
+}
+.pr-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(10, 14, 11, 0.42) 0%,
+      rgba(10, 14, 11, 0.56) 40%,
+      rgba(10, 14, 11, 0.92) 100%
+    ),
+    url("/assets/pricing/hero-bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.pr-hero-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1220px;
+  margin-right: auto;
+  padding: 0 80px 72px;
+}
+.pr-hero .pr-eyebrow {
+  margin-bottom: 22px;
+  color: color-mix(in oklab, var(--primary) 45%, white);
+}
+.pr-hero-title {
+  margin-bottom: 24px;
+  font-family: var(--font-display-bold);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(42px, 7vw, 104px);
+  letter-spacing: -0.02em;
+  line-height: 0.94;
+  color: #faf8f4;
+  text-shadow:
+    0 3px 28px rgba(0, 0, 0, 0.6),
+    0 1px 4px rgba(0, 0, 0, 0.7);
+}
+.pr-hero-title em {
+  font-style: normal;
+  color: var(--highlight);
+}
+.pr-hero-sub {
+  max-width: 480px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(250, 248, 244, 0.88);
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55);
+}
+
+/* ───────────────────────── SERVICE GRID ───────────────────────── */
+.pr-grid-section {
+  padding: 100px 80px;
+  border-bottom: 1px solid var(--border);
+  background-image:
+    linear-gradient(
+      color-mix(in oklab, var(--background) 95%, transparent),
+      color-mix(in oklab, var(--background) 92%, transparent)
+    ),
+    url("/assets/pricing/grid-bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.pr-svc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  max-width: 1380px;
+  margin: 0 auto;
+}
+.pr-svc-card {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 26px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--card);
+  box-shadow: 0 4px 20px rgba(30, 28, 25, 0.06);
+  transition:
+    transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.5s,
+    border-color 0.4s;
+}
+.pr-svc-card:hover {
+  transform: translateY(-6px);
+  border-color: color-mix(in oklab, var(--primary) 22%, transparent);
+  box-shadow:
+    0 2px 4px rgba(30, 28, 25, 0.04),
+    0 22px 48px -14px color-mix(in oklab, var(--primary) 18%, transparent);
+}
+.pr-svc-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.pr-svc-icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--primary) 9%, transparent);
+  border: 1px solid color-mix(in oklab, var(--primary) 22%, transparent);
+}
+.pr-svc-icon svg {
+  width: 19px;
+  height: 19px;
+  color: var(--primary);
+}
+.pr-svc-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--foreground);
+}
+.pr-svc-price {
+  margin-bottom: 6px;
+}
+.pr-svc-price .f {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--muted-foreground) 85%, transparent);
+}
+.pr-svc-price .p {
+  font-family: var(--font-display);
+  font-size: 36px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--foreground);
+}
+.pr-svc-dur {
+  margin-bottom: 14px;
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.pr-svc-coord {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 14px;
+  padding: 4px 11px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--highlight);
+  background: color-mix(in oklab, var(--highlight) 10%, transparent);
+  border: 1px solid color-mix(in oklab, var(--highlight) 22%, transparent);
+}
+.pr-svc-coord svg {
+  width: 12px;
+  height: 12px;
+}
+.pr-svc-conf {
+  flex: 1;
+  margin-bottom: 20px;
+  list-style: none;
+  padding: 0;
+}
+.pr-svc-conf li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: color-mix(in oklab, var(--muted-foreground) 90%, transparent);
+}
+.pr-svc-conf li svg {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  margin-top: 2px;
+  color: var(--primary);
+}
+.pr-svc-btn {
+  display: block;
+  padding: 11px;
+  border-radius: 100px;
+  border: 1px solid color-mix(in oklab, var(--foreground) 16%, transparent);
+  background: transparent;
+  font-size: 12.5px;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  color: var(--foreground);
+  transition:
+    background 0.25s,
+    border-color 0.25s,
+    color 0.25s,
+    box-shadow 0.25s;
+}
+.pr-svc-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 0 4px 16px color-mix(in oklab, var(--primary) 36%, transparent);
+}
+.pr-svc-btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* ───────────────────────── PRICE FACTORS ───────────────────────── */
+.pr-factors {
+  max-width: 1380px;
+  margin: 44px auto 0;
+  padding: 32px 36px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--card);
+  box-shadow: 0 8px 40px rgba(30, 28, 25, 0.08);
+}
+.pr-factors-title {
+  margin-bottom: 22px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  text-align: center;
+  color: color-mix(in oklab, var(--muted-foreground) 90%, transparent);
+}
+.pr-factors-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+.pr-factor {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+}
+.pr-factor svg {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  color: var(--primary);
+}
+.pr-factor b {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+.pr-factor span {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+/* ───────────────────────── SESSION PACKS ───────────────────────── */
+.pr-packs {
+  padding: 100px 80px 120px;
+  border-top: 1px solid var(--border);
+  background-image:
+    linear-gradient(
+      color-mix(in oklab, var(--muted) 95%, transparent),
+      color-mix(in oklab, var(--muted) 97%, transparent)
+    ),
+    url("/assets/pricing/packs-bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.pr-packs-inner {
+  max-width: 1220px;
+  margin: 0 auto;
+}
+.pr-packs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+.pr-pack-card {
+  position: relative;
+  padding: 40px 34px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: color-mix(in oklab, var(--card) 90%, transparent);
+  box-shadow: 0 4px 20px rgba(30, 28, 25, 0.05);
+  transition:
+    transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.5s,
+    border-color 0.4s;
+}
+.pr-pack-card:hover {
+  transform: translateY(-8px);
+  border-color: color-mix(in oklab, var(--primary) 22%, transparent);
+  box-shadow:
+    0 2px 4px rgba(30, 28, 25, 0.04),
+    0 24px 52px -14px color-mix(in oklab, var(--primary) 20%, transparent);
+}
+.pr-pack-card.is-popular {
+  border-color: color-mix(in oklab, var(--primary) 28%, transparent);
+  background: linear-gradient(
+    165deg,
+    var(--surface-inverse) 0%,
+    color-mix(in oklab, var(--surface-inverse) 82%, black) 100%
+  );
+  box-shadow: 0 12px 44px color-mix(in oklab, var(--surface-inverse) 35%, transparent);
+}
+.pr-pack-badge {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 18px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary-foreground);
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    color-mix(in oklab, var(--primary) 65%, black)
+  );
+  box-shadow: 0 4px 16px color-mix(in oklab, var(--primary) 40%, transparent);
+}
+.pr-pack-name {
+  margin-bottom: 6px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+.pr-pack-card.is-popular .pr-pack-name {
+  color: #faf8f4;
+}
+.pr-pack-tagline {
+  margin-bottom: 28px;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.pr-pack-card.is-popular .pr-pack-tagline {
+  color: rgba(250, 248, 244, 0.55);
+}
+.pr-pack-price {
+  margin-bottom: 4px;
+  font-family: var(--font-display);
+  font-size: 52px;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: var(--foreground);
+}
+.pr-pack-price .pr-pack-mo {
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+.pr-pack-card.is-popular .pr-pack-price {
+  color: #faf8f4;
+}
+.pr-pack-per {
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: color-mix(in oklab, var(--muted-foreground) 85%, transparent);
+}
+.pr-pack-card.is-popular .pr-pack-per {
+  color: rgba(250, 248, 244, 0.46);
+}
+.pr-pack-save {
+  display: inline-block;
+  margin-bottom: 28px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--highlight);
+  background: color-mix(in oklab, var(--highlight) 10%, transparent);
+  border: 1px solid color-mix(in oklab, var(--highlight) 20%, transparent);
+}
+.pr-pack-features {
+  margin-bottom: 32px;
+  list-style: none;
+  padding: 0;
+}
+.pr-pack-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+.pr-pack-card.is-popular .pr-pack-features li {
+  color: rgba(250, 248, 244, 0.68);
+}
+.pr-pack-features li svg {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  margin-top: 2px;
+  color: var(--primary);
+}
+.pr-pack-card.is-popular .pr-pack-features li svg {
+  color: color-mix(in oklab, var(--primary) 55%, white);
+}
+.pr-pack-btn {
+  display: block;
+  padding: 14px;
+  border-radius: 100px;
+  border: 1px solid color-mix(in oklab, var(--foreground) 18%, transparent);
+  background: transparent;
+  font-size: 13.5px;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  color: var(--foreground);
+  transition: all 0.3s;
+}
+.pr-pack-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 0 6px 22px color-mix(in oklab, var(--primary) 40%, transparent);
+}
+.pr-pack-card.is-popular .pr-pack-btn {
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    color-mix(in oklab, var(--primary) 65%, black)
+  );
+  border-color: transparent;
+  color: var(--primary-foreground);
+  box-shadow: 0 6px 24px color-mix(in oklab, var(--primary) 45%, transparent);
+}
+.pr-pack-card.is-popular .pr-pack-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px color-mix(in oklab, var(--primary) 60%, transparent);
+}
+.pr-pack-btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.pr-packs-note {
+  margin: 32px auto 0;
+  max-width: 640px;
+  text-align: center;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: color-mix(in oklab, var(--muted-foreground) 82%, transparent);
+}
+
+/* ───────────────────────── GUARANTEE STRIP ───────────────────────── */
+.pr-guarantee {
+  padding: 64px 80px;
+  background: var(--surface-inverse);
+}
+.pr-guarantee-inner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  max-width: 1220px;
+  margin: 0 auto;
+}
+.pr-g-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pr-g-item svg {
+  width: 26px;
+  height: 26px;
+  color: color-mix(in oklab, var(--primary) 55%, white);
+}
+.pr-g-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: color-mix(in oklab, var(--surface-inverse-foreground) 90%, transparent);
+}
+.pr-g-body {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: color-mix(in oklab, var(--surface-inverse-foreground) 50%, transparent);
+}
+
+/* ───────────────────────── FAQ ───────────────────────── */
+.pr-faq {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 100px 80px 120px;
+}
+.pr-faq-item {
+  border-bottom: 1px solid var(--border);
+}
+.pr-faq-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 26px 0;
+  border: none;
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.pr-faq-trigger:hover {
+  color: var(--primary);
+}
+.pr-faq-trigger:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.pr-faq-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
+  transition: transform 0.35s;
+}
+.pr-faq-trigger[data-state="open"] .pr-faq-icon {
+  transform: rotate(45deg);
+}
+.pr-faq-content {
+  overflow: hidden;
+}
+.pr-faq-content[data-state="open"] {
+  animation: pr-faq-down 0.4s ease;
+}
+.pr-faq-content[data-state="closed"] {
+  animation: pr-faq-up 0.4s ease;
+}
+.pr-faq-content p {
+  max-width: 640px;
+  padding-bottom: 26px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--muted-foreground);
+}
+@keyframes pr-faq-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+@keyframes pr-faq-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+/* ───────────────────────── CTA BAND ───────────────────────── */
+.pr-cta {
+  position: relative;
+  overflow: hidden;
+  padding: 120px 80px;
+  text-align: center;
+  background-image:
+    linear-gradient(rgba(10, 14, 11, 0.72), rgba(10, 14, 11, 0.82)),
+    url("/assets/pricing/cta-bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.pr-cta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.pr-cta .pr-eyebrow {
+  margin-bottom: 22px;
+  color: color-mix(in oklab, var(--primary) 45%, white);
+}
+.pr-cta-heading {
+  margin-bottom: 16px;
+  font-family: var(--font-display-bold);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(32px, 5vw, 60px);
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  color: #faf8f4;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+.pr-cta-heading em {
+  font-style: normal;
+  color: var(--highlight);
+}
+.pr-cta-body {
+  margin-bottom: 40px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(250, 248, 244, 0.65);
+}
+.pr-btn-p {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 34px;
+  border-radius: 100px;
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    color-mix(in oklab, var(--primary) 65%, black)
+  );
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--primary-foreground);
+  box-shadow: 0 6px 24px color-mix(in oklab, var(--primary) 38%, transparent);
+  transition: all 0.3s;
+}
+.pr-btn-p:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px color-mix(in oklab, var(--primary) 52%, transparent);
+}
+.pr-btn-p:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* ───────────────────────── RESPONSIVE ───────────────────────── */
+@media (max-width: 1100px) {
+  .pr-svc-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pr-factors-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pr-packs-grid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .pr-guarantee-inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 960px) {
+  .pr-hero-inner {
+    padding: 0 32px 56px;
+  }
+  .pr-grid-section,
+  .pr-packs,
+  .pr-guarantee,
+  .pr-faq,
+  .pr-cta {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+@media (max-width: 640px) {
+  .pr-hero {
+    min-height: 56vh;
+  }
+  .pr-hero-inner {
+    padding: 0 20px 44px;
+  }
+  .pr-grid-section {
+    padding: 64px 16px 80px;
+  }
+  .pr-svc-grid {
+    grid-template-columns: 1fr;
+  }
+  .pr-factors {
+    padding: 26px 22px;
+  }
+  .pr-factors-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .pr-packs,
+  .pr-faq {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .pr-guarantee,
+  .pr-cta {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .pr-guarantee-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}

@@ -32,6 +32,7 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
     pathname === "/index" ||
     pathname === "/services" ||
     pathname === "/how-it-works" ||
+    pathname === "/pricing" ||
     pathname === "/pros/apply";
 
   return (
