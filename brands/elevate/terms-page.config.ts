@@ -1,132 +1,153 @@
-import type { LegalPageConfig } from "@/lib/legal/page";
+import type { TermsPageConfig } from "@/lib/terms/page";
 
 /**
- * "Terms & Conditions" page content for Elevate. All copy is draft / placeholder
- * demonstration content — no real legal language, dates, or obligations. Final
- * copy is pending counsel review. Reuses the shared {@link LegalPageConfig}.
+ * "Terms of Service" page content for the Elevate brand — the redesigned,
+ * plain-English document (hero → sticky-TOC sections → dark CTA band). Uses the
+ * dedicated {@link TermsPageConfig}; email/phone references become mailto:/tel:
+ * links at render time.
  */
-export const elevateTermsPage: LegalPageConfig = {
+export const elevateTermsPage: TermsPageConfig = {
   hero: {
-    variant: "light",
-    breadcrumb: [
-      { label: "Home", href: "/" },
-      { label: "Terms & Conditions", href: "/terms" },
-    ],
-    eyebrow: "Legal Placeholder — Final copy pending",
-    title: "Terms & Conditions",
-    subtitle:
-      "This page is a placeholder and will be updated with final Terms & Conditions before launch. Do not rely on this content for legal guidance.",
-    divider: true,
-    meta: [
-      { label: "Last Updated", value: "TBD" },
-      { label: "Effective Date", value: "TBD" },
-      { label: "Version", value: "Draft 1.0" },
+    eyebrow: "Legal · Effective July 1, 2026",
+    title: "Terms.",
+    titleAccent: "In plain English.",
+    sub: "The agreement behind every booking — written to be read, not skimmed past.",
+  },
+
+  body: {
+    tocHeading: "On this page",
+    sections: [
+      {
+        id: "acceptance",
+        title: "Acceptance of these terms",
+        body: [
+          "These Terms of Service are an agreement between you and Elevate Health & Wellness LLC. By creating an account, requesting a booking, or using elevatewellness.com, you accept them. If you don't agree, please don't use the service.",
+        ],
+      },
+      {
+        id: "service",
+        title: "What Elevate is",
+        body: [
+          "Elevate is a coordination platform: we match you with independent, vetted wellness professionals who deliver sessions in your home or chosen location across Wake County, NC. Our coordinators review every booking, verify every professional, and stand behind every session.",
+        ],
+      },
+      {
+        id: "eligibility",
+        title: "Eligibility & accounts",
+        body: [
+          "You must be 18 or older to hold an account and book sessions. Sessions for minors — such as pediatric speech therapy — must be booked by a parent or legal guardian who remains present throughout. You're responsible for keeping your account details accurate and your login private.",
+        ],
+      },
+      {
+        id: "booking",
+        title: "Bookings & payment",
+        body: [
+          "Prices shown are all-in: professional time, travel within Wake County, equipment, and gratuity. You configure your session — service, duration, add-ons — and see your exact price before confirming.",
+        ],
+        bullets: [
+          {
+            text: "A booking is a request until a coordinator confirms it, typically within one business hour",
+          },
+          { text: "Your card is charged only at confirmation" },
+          {
+            text: "Physical and speech therapy begin with an evaluation; final quotes are confirmed by your coordinator before any charge",
+          },
+        ],
+      },
+      {
+        id: "cancellation",
+        title: "Cancellations & rescheduling",
+        body: [
+          "Plans change — here's how we handle it fairly for you and your professional:",
+        ],
+        bullets: [
+          {
+            lead: "4+ hours before",
+            text: " your session: cancel or reschedule free, unlimited",
+          },
+          {
+            lead: "Inside 4 hours",
+            text: ": a 50% fee applies, paid to your professional for their committed time",
+          },
+          {
+            lead: "Professional no-show or our error",
+            text: ": full refund plus a credit, no questions",
+          },
+        ],
+      },
+      {
+        id: "responsibilities",
+        title: "Your responsibilities",
+        body: [
+          "You agree to provide a safe, lawful environment for your session: accurate address and access instructions, a reasonably clear space, secured pets if requested, and respectful conduct. Professionals may end a session — with full charge — if they feel unsafe or the environment is materially misrepresented.",
+        ],
+      },
+      {
+        id: "professionals",
+        title: "Our professionals",
+        body: [
+          "Professionals on Elevate are independent practitioners, not Elevate employees. Every one passes license/certification verification, background check, insurance review, and an in-person interview before their first session — and must maintain those standards to stay on the platform.",
+        ],
+      },
+      {
+        id: "health",
+        title: "Health disclaimer",
+        body: [
+          "Elevate coordinates wellness services; we don't provide medical advice. Content on this site is informational only.",
+        ],
+        callout: {
+          label: "Licensed care:",
+          body: "physical therapy and speech therapy sessions are delivered by independent North Carolina-licensed providers responsible for their own clinical judgment. Always consult your physician before starting new treatment or exercise — and in an emergency, call 911.",
+        },
+      },
+      {
+        id: "liability",
+        title: "Limitation of liability",
+        body: [
+          "To the fullest extent permitted by North Carolina law, Elevate's liability for any claim arising from the service is limited to the amount you paid for the session giving rise to the claim. We're not liable for indirect or consequential damages. Nothing in these terms limits liability that can't lawfully be limited.",
+        ],
+      },
+      {
+        id: "law",
+        title: "Governing law & disputes",
+        body: [
+          "These terms are governed by the laws of North Carolina. Before any formal dispute, contact us — almost everything is resolved by a coordinator making it right. Unresolved disputes will be handled in the state or federal courts of Wake County, NC.",
+        ],
+      },
+      {
+        id: "accessibility",
+        title: "Accessibility",
+        body: [
+          "We want Elevate usable by everyone. The site is built toward WCAG 2.1 AA — semantic structure, keyboard navigation, reduced-motion support, and readable contrast. If anything gets in your way, tell us at hello@elevatewellness.com and we'll fix it or help you book by phone at (919) 555-0142.",
+        ],
+      },
+      {
+        id: "changes",
+        title: "Changes to these terms",
+        body: [
+          "We may update these terms as the service evolves. Significant changes are announced by email before taking effect; the date above always reflects the current version. Using Elevate after changes means you accept them.",
+        ],
+      },
+      {
+        id: "contact",
+        title: "Contact",
+        body: [
+          "Questions about these terms? legal@elevatewellness.com — a human reads it, promise.",
+        ],
+      },
     ],
   },
 
-  contents: {
-    heading: "Jump to Section",
-  },
-
-  sections: {
-    items: [
-      {
-        id: "marketplace-usage",
-        title: "Marketplace Usage",
-        questions: [
-          "What is Elevate and how does the marketplace work?",
-          "Who is eligible to create an account and book services?",
-          "Are Elevate professionals employees of Elevate?",
-          "What happens if a professional cannot fulfill a booking?",
-        ],
-      },
-      {
-        id: "service-requests",
-        title: "Service Requests",
-        questions: [
-          "How do I submit a service request through Elevate?",
-          "Can I specify preferences when requesting a professional?",
-          "How long does the coordinator matching process take?",
-          "Can I cancel or reschedule a confirmed booking?",
-        ],
-      },
-      {
-        id: "pricing-payments",
-        title: "Pricing & Payments",
-        questions: [
-          "How is service pricing determined on the platform?",
-          "What is the minimum booking value and how does it apply?",
-          "When am I charged for a booked session?",
-          "What is the refund policy for cancellations?",
-        ],
-      },
-      {
-        id: "professional-relationships",
-        title: "Professional Relationships",
-        questions: [
-          "What does independent professional status mean for users?",
-          "Does Elevate verify credentials and conduct background checks?",
-          "Who bears responsibility for professional conduct during sessions?",
-          "How does Elevate's coordinator process protect both parties?",
-        ],
-      },
-      {
-        id: "user-responsibilities",
-        title: "User Responsibilities",
-        questions: [
-          "What accurate information must I provide when booking?",
-          "Am I responsible for ensuring a safe environment for sessions?",
-          "What actions constitute misuse of the Elevate platform?",
-          "How do I report a concern about a professional or session?",
-        ],
-      },
-      {
-        id: "contact-information",
-        title: "Contact Information",
-        questions: [
-          "What services does Elevate directly provide vs. facilitate?",
-          "Is Elevate liable for professional services delivered in sessions?",
-          "How are disputes between users and professionals resolved?",
-          "What law governs these Terms & Conditions?",
-        ],
-      },
-    ],
-  },
-
-  disclosure: {
-    eyebrow: "Marketplace Disclosure",
-    heading: "Marketplace Disclosure",
-    body: "This section is reserved for important marketplace disclosures required by applicable regulations. Final content will be added before launch.",
-    items: [
-      {
-        icon: "Handshake",
-        title: "Independent Professional Relationship Disclosure",
-        description: "Placeholder — Content pending legal review",
-        badge: "Pending",
-      },
-      {
-        icon: "DollarSign",
-        title: "Payment Processing & Fee Disclosure",
-        description: "Placeholder — Content pending legal review",
-        badge: "Pending",
-      },
-      {
-        icon: "Shield",
-        title: "Service Liability Limitation Disclosure",
-        description: "Placeholder — Content pending legal review",
-        badge: "Pending",
-      },
-    ],
-    note: "The above disclosures are structural placeholders. No legal obligations or representations are made by this page.",
-  },
-
-  contact: {
-    heading: "Questions About These Terms?",
-    body: "Contact a coordinator for general questions while legal content is being finalized. We're happy to clarify anything in plain language.",
-    note: "A coordinator will respond within 24 hours",
-    actions: [
-      { label: "Contact Coordinator", href: "/book" },
-      { label: "Return Home", href: "/" },
+  darkBand: {
+    title: "Clear terms.",
+    titleAccent: "Clearer sessions.",
+    body: "Everything else you'd want to know lives in our FAQ — or ask a coordinator directly.",
+    primaryCta: { label: "Read the FAQ", href: "/faq" },
+    secondaryCta: { label: "Privacy Policy", href: "/privacy" },
+    chips: [
+      "legal@elevatewellness.com",
+      "Free cancellation ≥ 4 hrs",
+      "Charged only on confirmation",
     ],
   },
 };

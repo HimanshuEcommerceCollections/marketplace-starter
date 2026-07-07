@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { LegalLandingPage } from "@/components/marketing/legal-landing-page";
+import { TermsLandingPage } from "@/components/marketing/terms-landing-page";
 import { getTermsPage } from "@/lib/brand/load";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions",
+  title: "Terms of Service",
   description:
-    "Terms & Conditions for the Elevate marketplace. Draft placeholder document — final legal language pending counsel review.",
+    "The terms behind every Elevate booking, in plain English — bookings and payment, cancellations, our vetted professionals, and your responsibilities.",
 };
 
 export default function TermsPage() {
-  const config = getTermsPage();
-  return <LegalLandingPage config={config} />;
+  return <TermsLandingPage config={getTermsPage()} />;
 }
