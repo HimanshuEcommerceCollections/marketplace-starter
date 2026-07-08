@@ -24,14 +24,16 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   const bareLayout = bookingFlow || authFlow || adminFlow;
   // Pages with a full-bleed photo hero that deliberately sits behind the
   // floating nav: the homepage, the services showcase (listing only —
-  // /services/<slug> detail pages keep the offset), How It Works, For Pros,
-  // Pricing, and Terms.
+  // generic /services/<slug> detail pages keep the offset, but the bespoke
+  // /services/massage landing has its own full-bleed hero), How It Works,
+  // For Pros, Pricing, and Terms.
   const fullBleedHero =
     pathname === "/" ||
     // During ISR regeneration on Vercel the root route is rendered as
     // "/index", so the server-side pathname never equals "/" there.
     pathname === "/index" ||
     pathname === "/services" ||
+    pathname === "/services/massage" ||
     pathname === "/how-it-works" ||
     pathname === "/pricing" ||
     pathname === "/terms" ||

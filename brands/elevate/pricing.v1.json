@@ -26,6 +26,7 @@
             { "id": "swedish", "label": "Swedish (Relaxation)", "delta": { "amount": 0, "currency": "USD" } },
             { "id": "deep-tissue", "label": "Deep Tissue", "delta": { "amount": 0, "currency": "USD" } },
             { "id": "sports", "label": "Sports Massage", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "prenatal", "label": "Prenatal Massage", "delta": { "amount": 0, "currency": "USD" } },
             { "id": "aromatherapy", "label": "Aromatherapy", "delta": { "amount": 0, "currency": "USD" } }
           ]
         },
