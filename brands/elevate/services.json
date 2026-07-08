@@ -64,19 +64,28 @@
           "choices": [
             {
               "id": "swedish",
-              "label": "Swedish (Relaxation)"
+              "label": "Swedish (Relaxation)",
+              "description": "Classic full-body relaxation"
             },
             {
               "id": "deep-tissue",
-              "label": "Deep Tissue"
+              "label": "Deep Tissue",
+              "description": "Targeted work on chronic tension"
             },
             {
               "id": "sports",
-              "label": "Sports Massage"
+              "label": "Sports Massage",
+              "description": "Recovery and performance focus"
+            },
+            {
+              "id": "prenatal",
+              "label": "Prenatal Massage",
+              "description": "Safe, supported comfort"
             },
             {
               "id": "aromatherapy",
-              "label": "Aromatherapy"
+              "label": "Aromatherapy",
+              "description": "Essential oils to calm the senses"
             }
           ]
         },
@@ -87,15 +96,18 @@
           "choices": [
             {
               "id": "hot-stones",
-              "label": "Hot Stones"
+              "label": "Hot Stones",
+              "description": "Heated stones for deep release"
             },
             {
               "id": "aromatherapy-oil",
-              "label": "Aromatherapy Oil"
+              "label": "Aromatherapy Oil",
+              "description": "A calming essential-oil blend"
             },
             {
               "id": "extended-focus",
-              "label": "Extended Focus Area"
+              "label": "Extended Focus Area",
+              "description": "Extra time on a problem area"
             }
           ]
         }

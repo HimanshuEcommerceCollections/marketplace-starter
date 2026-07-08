@@ -13,6 +13,7 @@ import type { FaqPageConfig } from "@/lib/faq/page";
 import type { LegalPageConfig } from "@/lib/legal/page";
 import type { TermsPageConfig } from "@/lib/terms/page";
 import type { ServicesPageConfig } from "@/lib/services/page";
+import type { MassagePageConfig } from "@/lib/massage/page";
 
 import { elevateConfig } from "@brands/elevate/brand.config";
 import { elevateContent } from "@brands/elevate/content.config";
@@ -26,6 +27,7 @@ import { elevateFaqPage } from "@brands/elevate/faq-page.config";
 import { elevatePrivacyPage } from "@brands/elevate/privacy-page.config";
 import { elevateTermsPage } from "@brands/elevate/terms-page.config";
 import { elevateServicesPage } from "@brands/elevate/services-page.config";
+import { elevateMassage } from "@brands/elevate/massage.config";
 import elevateServices from "@brands/elevate/services.json";
 import elevatePricing from "@brands/elevate/pricing.v1.json";
 
@@ -53,6 +55,8 @@ export interface LoadedBrand {
   termsPage: TermsPageConfig;
   /** Standalone "Services" page content (same card grid as the home page). */
   servicesPage: ServicesPageConfig;
+  /** Bespoke "Massage" service landing page content. */
+  massagePage: MassagePageConfig;
   /** Raw JSON — validated lazily by catalog/pricing loaders via zod. */
   services: unknown;
   pricing: unknown;
@@ -73,6 +77,7 @@ const REGISTRY: Record<BrandId, LoadedBrand> = {
     privacyPage: elevatePrivacyPage,
     termsPage: elevateTermsPage,
     servicesPage: elevateServicesPage,
+    massagePage: elevateMassage,
     services: elevateServices,
     pricing: elevatePricing,
   },
@@ -145,6 +150,11 @@ export function getTermsPage(): TermsPageConfig {
 /** The active brand's standalone "Services" page content. */
 export function getServicesPage(): ServicesPageConfig {
   return loadBrand().servicesPage;
+}
+
+/** The active brand's bespoke "Massage" service landing page content. */
+export function getMassagePage(): MassagePageConfig {
+  return loadBrand().massagePage;
 }
 
 export function allBrands(): LoadedBrand[] {

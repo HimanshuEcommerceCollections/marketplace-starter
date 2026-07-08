@@ -1,6 +1,12 @@
 import { z } from "zod";
 
-export const ChoiceSchema = z.object({ id: z.string(), label: z.string() });
+export const ChoiceSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  // Optional editorial blurb for the choice. Seeded into
+  // ServiceConfigOption.description so the API/marketing pages can render it.
+  description: z.string().optional(),
+});
 
 export const ConfigOptionSchema = z.object({
   id: z.string(), // MUST match a modifier id in pricing.v1.json

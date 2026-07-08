@@ -35,7 +35,12 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
 export const revalidate = 60;
 
 export function generateStaticParams() {
-  return getServices().map((s) => ({ slug: s.id }));
+  // "massage" has a bespoke static route at /services/massage that takes
+  // precedence over this dynamic segment — exclude it here so the same path
+  // isn't statically generated twice.
+  return getServices()
+    .filter((s) => s.id !== "massage")
+    .map((s) => ({ slug: s.id }));
 }
 
 export async function generateMetadata({
