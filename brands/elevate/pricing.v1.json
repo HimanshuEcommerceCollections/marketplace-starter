@@ -146,18 +146,28 @@
       "fees": []
     },
     "beauty": {
-      "base_price": { "amount": 0, "currency": "USD" },
+      "base_price": { "amount": 7500, "currency": "USD" },
       "modifiers": [
+        {
+          "id": "duration",
+          "label": "Session Duration",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "45", "label": "45 minutes", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "60", "label": "60 minutes", "delta": { "amount": 2000, "currency": "USD" } }
+          ]
+        },
         {
           "id": "services",
           "label": "Select Services",
           "type": "multiselect",
           "applies": "flat",
           "options": [
-            { "id": "hair-styling", "label": "Hair Styling", "delta": { "amount": 5500, "currency": "USD" } },
-            { "id": "makeup-application", "label": "Makeup Application", "delta": { "amount": 6500, "currency": "USD" } },
-            { "id": "blowout", "label": "Blowout", "delta": { "amount": 4500, "currency": "USD" } },
-            { "id": "event-styling", "label": "Event Styling", "delta": { "amount": 9500, "currency": "USD" } }
+            { "id": "hair-styling", "label": "Hair", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "makeup-application", "label": "Makeup", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "nails", "label": "Nails", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "event-styling", "label": "Events", "delta": { "amount": 0, "currency": "USD" } }
           ]
         },
         {
@@ -190,6 +200,16 @@
       "base_price": { "amount": 12900, "currency": "USD" },
       "modifiers": [
         {
+          "id": "duration",
+          "label": "Session Duration",
+          "type": "select",
+          "applies": "flat",
+          "options": [
+            { "id": "60", "label": "60 minutes", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "90", "label": "90 minutes", "delta": { "amount": 4000, "currency": "USD" } }
+          ]
+        },
+        {
           "id": "consultation-type",
           "label": "Consultation Type",
           "type": "select",
@@ -215,10 +235,10 @@
           "type": "select",
           "applies": "flat",
           "options": [
+            { "id": "meal-planning", "label": "Meal Planning", "delta": { "amount": 0, "currency": "USD" } },
             { "id": "weight-management", "label": "Weight Management", "delta": { "amount": 0, "currency": "USD" } },
             { "id": "sports-nutrition", "label": "Sports Nutrition", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "healthy-lifestyle", "label": "Healthy Lifestyle", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "medical-support", "label": "Medical Nutrition Support", "delta": { "amount": 0, "currency": "USD" } }
+            { "id": "programs", "label": "Programs", "delta": { "amount": 0, "currency": "USD" } }
           ]
         },
         {
@@ -228,7 +248,8 @@
           "applies": "flat",
           "options": [
             { "id": "single", "label": "Single Session", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "monthly", "label": "Monthly Coaching", "delta": { "amount": 30000, "currency": "USD" } }
+            { "id": "4-week", "label": "4-Week Program", "delta": { "amount": 30000, "currency": "USD" } },
+            { "id": "12-week", "label": "12-Week Program", "delta": { "amount": 75000, "currency": "USD" } }
           ]
         }
       ],

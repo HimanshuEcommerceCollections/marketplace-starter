@@ -10,6 +10,7 @@ import {
   getBrandConfig,
   getBrandContent,
   getServiceLanding,
+  getShowcasePageSlugs,
 } from "@/lib/brand/load";
 import { formatMoney } from "@/lib/money";
 import { ServiceHero } from "@/components/marketplace/service-hero";
@@ -35,11 +36,12 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
 export const revalidate = 60;
 
 export function generateStaticParams() {
-  // "massage" has a bespoke static route at /services/massage that takes
-  // precedence over this dynamic segment — exclude it here so the same path
-  // isn't statically generated twice.
+  // Massage and the showcase pages (beauty, nutrition-coaching) have bespoke
+  // static routes that take precedence over this dynamic segment — exclude
+  // them here so the same paths aren't statically generated twice.
+  const bespoke = new Set(["massage", ...getShowcasePageSlugs()]);
   return getServices()
-    .filter((s) => s.id !== "massage")
+    .filter((s) => !bespoke.has(s.id))
     .map((s) => ({ slug: s.id }));
 }
 
