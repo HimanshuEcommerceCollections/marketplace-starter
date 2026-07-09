@@ -588,6 +588,16 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
         cta: { label: "Book Nutrition Coaching", href: "/book?service=nutrition-coaching" },
         groups: [
           {
+            id: "duration",
+            label: "Session Duration",
+            type: "single",
+            defaultOptionId: "60",
+            options: [
+              { id: "60", label: "60 minutes" },
+              { id: "90", label: "90 minutes" },
+            ],
+          },
+          {
             id: "consultation-type",
             label: "Consultation Type",
             type: "single",
@@ -611,12 +621,12 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
             id: "goal",
             label: "Goal",
             type: "single",
-            defaultOptionId: "weight-management",
+            defaultOptionId: "meal-planning",
             options: [
+              { id: "meal-planning", label: "Meal Planning" },
               { id: "weight-management", label: "Weight Management" },
               { id: "sports-nutrition", label: "Sports Nutrition" },
-              { id: "healthy-lifestyle", label: "Healthy Lifestyle" },
-              { id: "medical-support", label: "Medical Nutrition Support" },
+              { id: "programs", label: "Programs" },
             ],
           },
           {
@@ -626,7 +636,8 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
             defaultOptionId: "single",
             options: [
               { id: "single", label: "Single Session" },
-              { id: "monthly", label: "Monthly Coaching" },
+              { id: "4-week", label: "4-Week Program" },
+              { id: "12-week", label: "12-Week Program" },
             ],
           },
         ],
@@ -863,7 +874,7 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
         variant: "stacked",
         heading: "Choose Your Beauty Experience",
         subheading:
-          "Six premium service categories — mix and match to meet the $75 minimum or create a full luxury session.",
+          "Six premium service categories — sessions start at $75 all-in, from a single service to a full luxury session.",
         columns: 3,
         items: [
           {
@@ -961,7 +972,7 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
           {
             title: "Select Services",
             description:
-              "Choose specific beauty services to reach the $75 minimum.",
+              "Pick your session length and the services you want.",
           },
           {
             title: "Coordinator Review",
@@ -984,14 +995,24 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
         cta: { label: "Book Beauty", href: "/book?service=beauty" },
         groups: [
           {
+            id: "duration",
+            label: "Session Duration",
+            type: "single",
+            defaultOptionId: "45",
+            options: [
+              { id: "45", label: "45 minutes" },
+              { id: "60", label: "60 minutes" },
+            ],
+          },
+          {
             id: "services",
             label: "Select Services",
             type: "multi",
             options: [
-              { id: "hair-styling", label: "Hair Styling" },
-              { id: "makeup-application", label: "Makeup Application" },
-              { id: "blowout", label: "Blowout" },
-              { id: "event-styling", label: "Event Styling" },
+              { id: "hair-styling", label: "Hair" },
+              { id: "makeup-application", label: "Makeup" },
+              { id: "nails", label: "Nails" },
+              { id: "event-styling", label: "Events" },
             ],
           },
           {
@@ -1136,7 +1157,7 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
             id: "beauty-minimum",
             question: "What is the $75 minimum booking requirement?",
             answer:
-              "The $75 minimum ensures our independent beauty professionals are fairly compensated for their time, preparation, and travel. You can meet it by combining services — for example, pairing a blowout with makeup — or by choosing premium options within a single service.",
+              "The $75 minimum ensures our independent beauty professionals are fairly compensated for their time, preparation, and travel. Every session starts at $75 all-in for 45 minutes — most single services fall right around it — and your professional quotes any additional services or guests upfront before you confirm.",
           },
           {
             id: "beauty-multiple",

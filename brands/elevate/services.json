@@ -361,7 +361,7 @@
     {
       "id": "beauty",
       "title": "Beauty",
-      "summary": "Hair styling, makeup, and blowouts by licensed stylists at your door.",
+      "summary": "Hair, makeup, and nail services by licensed stylists at your door.",
       "description": "An in-home beauty service. Placeholder description.",
       "category": "wellness",
       "service_type": "wellness",
@@ -372,25 +372,47 @@
       "icon": "Sparkles",
       "config_options": [
         {
+          "id": "duration",
+          "label": "Session Duration",
+          "input": "select",
+          "required": true,
+          "choices": [
+            {
+              "id": "45",
+              "label": "45 minutes",
+              "description": "A focused single service"
+            },
+            {
+              "id": "60",
+              "label": "60 minutes",
+              "description": "Room for the full look"
+            }
+          ]
+        },
+        {
           "id": "services",
           "label": "Select Services",
           "input": "multiselect",
           "choices": [
             {
               "id": "hair-styling",
-              "label": "Hair Styling"
+              "label": "Hair",
+              "description": "Styling, blowouts & updos"
             },
             {
               "id": "makeup-application",
-              "label": "Makeup Application"
+              "label": "Makeup",
+              "description": "Natural looks to full glam"
             },
             {
-              "id": "blowout",
-              "label": "Blowout"
+              "id": "nails",
+              "label": "Nails",
+              "description": "Manicures & pedicures"
             },
             {
               "id": "event-styling",
-              "label": "Event Styling"
+              "label": "Events",
+              "description": "Bridal & occasion packages"
             }
           ]
         },
@@ -402,15 +424,18 @@
           "choices": [
             {
               "id": "1",
-              "label": "1"
+              "label": "1",
+              "description": "Just you"
             },
             {
               "id": "2",
-              "label": "2"
+              "label": "2",
+              "description": "You plus one"
             },
             {
               "id": "3-plus",
-              "label": "3+"
+              "label": "3+",
+              "description": "Groups & bridal parties — quoted upfront"
             }
           ]
         },
@@ -422,19 +447,23 @@
           "choices": [
             {
               "id": "everyday",
-              "label": "Everyday"
+              "label": "Everyday",
+              "description": "Great hair, no reason needed"
             },
             {
               "id": "photoshoot",
-              "label": "Photoshoot"
+              "label": "Photoshoot",
+              "description": "Camera-ready finish"
             },
             {
               "id": "wedding-event",
-              "label": "Wedding/Event"
+              "label": "Wedding/Event",
+              "description": "Bridal and formal styling"
             },
             {
               "id": "other",
-              "label": "Other"
+              "label": "Other",
+              "description": "Tell us what you're planning"
             }
           ]
         }
@@ -450,16 +479,16 @@
       ],
       "icon_path": "/services/beauty/icon.svg",
       "tags": [
-        "Hair Styling",
+        "Hair",
         "Makeup",
-        "Blowout",
-        "Event Styling"
+        "Nails",
+        "Events"
       ]
     },
     {
       "id": "nutrition-coaching",
       "title": "Nutrition Coaching",
-      "summary": "Sustainable eating plans and ongoing support from certified nutrition professionals.",
+      "summary": "Certified nutrition coaches build sustainable eating habits through 4-week and 12-week programs.",
       "description": "A nutrition coaching package. Placeholder description.",
       "category": "wellness",
       "service_type": "wellness",
@@ -467,8 +496,25 @@
       "currency": "USD",
       "from_price": 12900,
       "icon": "Salad",
-      "landing_slug": "life-coaching",
       "config_options": [
+        {
+          "id": "duration",
+          "label": "Session Duration",
+          "input": "select",
+          "required": true,
+          "choices": [
+            {
+              "id": "60",
+              "label": "60 minutes",
+              "description": "A focused coaching session"
+            },
+            {
+              "id": "90",
+              "label": "90 minutes",
+              "description": "Deep-dive with meal-planning time"
+            }
+          ]
+        },
         {
           "id": "consultation-type",
           "label": "Consultation Type",
@@ -477,11 +523,13 @@
           "choices": [
             {
               "id": "initial",
-              "label": "Initial Consultation"
+              "label": "Initial Consultation",
+              "description": "Full assessment and personalized plan"
             },
             {
               "id": "follow-up",
-              "label": "Follow-Up Session"
+              "label": "Follow-Up Session",
+              "description": "Progress check and plan adjustments"
             }
           ]
         },
@@ -493,11 +541,13 @@
           "choices": [
             {
               "id": "in-home",
-              "label": "In Home"
+              "label": "In Home",
+              "description": "Coaching at your kitchen table"
             },
             {
               "id": "virtual",
-              "label": "Virtual"
+              "label": "Virtual",
+              "description": "Video session from anywhere"
             }
           ]
         },
@@ -508,20 +558,24 @@
           "required": true,
           "choices": [
             {
+              "id": "meal-planning",
+              "label": "Meal Planning",
+              "description": "Weekly plans that fit your life"
+            },
+            {
               "id": "weight-management",
-              "label": "Weight Management"
+              "label": "Weight Management",
+              "description": "Sustainable, not extreme"
             },
             {
               "id": "sports-nutrition",
-              "label": "Sports Nutrition"
+              "label": "Sports Nutrition",
+              "description": "Fuel for performance"
             },
             {
-              "id": "healthy-lifestyle",
-              "label": "Healthy Lifestyle"
-            },
-            {
-              "id": "medical-support",
-              "label": "Medical Nutrition Support"
+              "id": "programs",
+              "label": "Programs",
+              "description": "4-wk & 12-wk coaching"
             }
           ]
         },
@@ -533,11 +587,18 @@
           "choices": [
             {
               "id": "single",
-              "label": "Single Session"
+              "label": "Single Session",
+              "description": "One-time consultation"
             },
             {
-              "id": "monthly",
-              "label": "Monthly Coaching"
+              "id": "4-week",
+              "label": "4-Week Program",
+              "description": "Weekly sessions, evolving plan, message support"
+            },
+            {
+              "id": "12-week",
+              "label": "12-Week Program",
+              "description": "Adds quarterly goal reviews and maintenance planning"
             }
           ]
         }
@@ -554,9 +615,10 @@
       ],
       "icon_path": "/services/nutrition-coaching/icon.svg",
       "tags": [
+        "Meal Planning",
         "Weight Management",
         "Sports Nutrition",
-        "Healthy Lifestyle"
+        "Programs"
       ]
     },
     {
