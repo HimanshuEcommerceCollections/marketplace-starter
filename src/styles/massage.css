@@ -128,7 +128,9 @@
   max-width: 1220px;
   /* Left-align the hero copy (matches the mock); keep centered heads below. */
   margin-right: auto;
-  padding: 0 80px 72px;
+  /* Top inset is the nav-clearance floor: with align-items: flex-end it only
+     binds on short viewports, keeping the copy below the fixed nav pill. */
+  padding: var(--hero-safe-top) 80px 72px;
 }
 .msg-hero-eyebrow {
   margin-bottom: 22px;
@@ -309,12 +311,13 @@
   color: var(--muted-foreground);
 }
 
-/* Add-ons sub-group inside the specialties band. */
+/* Add-ons sub-group inside the specialties band. Larger gap above separates it
+   from the session-type grid; tight gap below groups the heading with its cards. */
 .msg-addons {
-  margin-top: 40px;
+  margin-top: 64px;
 }
 .msg-addons-head {
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   text-align: center;
   font-size: 11px;
   font-weight: 600;
@@ -567,7 +570,7 @@
     padding-right: 32px;
   }
   .msg-hero-inner {
-    padding: 0 32px 56px;
+    padding: var(--hero-safe-top) 32px 56px;
   }
   .msg-about-grid {
     grid-template-columns: 1fr;
@@ -583,7 +586,7 @@
     min-height: 58vh;
   }
   .msg-hero-inner {
-    padding: 0 20px 44px;
+    padding: var(--hero-safe-top) 20px 44px;
   }
   .msg-about {
     padding: 64px 20px 80px;
