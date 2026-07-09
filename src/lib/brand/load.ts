@@ -14,6 +14,7 @@ import type { LegalPageConfig } from "@/lib/legal/page";
 import type { TermsPageConfig } from "@/lib/terms/page";
 import type { ServicesPageConfig } from "@/lib/services/page";
 import type { MassagePageConfig } from "@/lib/massage/page";
+import type { ShowcasePageConfig } from "@/lib/service-showcase/page";
 
 import { elevateConfig } from "@brands/elevate/brand.config";
 import { elevateContent } from "@brands/elevate/content.config";
@@ -28,6 +29,8 @@ import { elevatePrivacyPage } from "@brands/elevate/privacy-page.config";
 import { elevateTermsPage } from "@brands/elevate/terms-page.config";
 import { elevateServicesPage } from "@brands/elevate/services-page.config";
 import { elevateMassage } from "@brands/elevate/massage.config";
+import { elevateBeauty } from "@brands/elevate/beauty.config";
+import { elevateNutrition } from "@brands/elevate/nutrition.config";
 import elevateServices from "@brands/elevate/services.json";
 import elevatePricing from "@brands/elevate/pricing.v1.json";
 
@@ -57,6 +60,8 @@ export interface LoadedBrand {
   servicesPage: ServicesPageConfig;
   /** Bespoke "Massage" service landing page content. */
   massagePage: MassagePageConfig;
+  /** Shared-template showcase landing pages (Beauty, Nutrition), by slug. */
+  showcasePages: Record<string, ShowcasePageConfig>;
   /** Raw JSON — validated lazily by catalog/pricing loaders via zod. */
   services: unknown;
   pricing: unknown;
@@ -78,6 +83,10 @@ const REGISTRY: Record<BrandId, LoadedBrand> = {
     termsPage: elevateTermsPage,
     servicesPage: elevateServicesPage,
     massagePage: elevateMassage,
+    showcasePages: {
+      [elevateBeauty.slug]: elevateBeauty,
+      [elevateNutrition.slug]: elevateNutrition,
+    },
     services: elevateServices,
     pricing: elevatePricing,
   },
@@ -155,6 +164,24 @@ export function getServicesPage(): ServicesPageConfig {
 /** The active brand's bespoke "Massage" service landing page content. */
 export function getMassagePage(): MassagePageConfig {
   return loadBrand().massagePage;
+}
+
+/**
+ * A showcase landing page config by service slug. Throws (build-time) rather
+ * than returning undefined — the static routes that call this only exist for
+ * slugs registered in the brand's showcasePages map.
+ */
+export function getShowcasePage(slug: string): ShowcasePageConfig {
+  const page = loadBrand().showcasePages[slug];
+  if (!page) {
+    throw new Error(`No showcase page config registered for slug "${slug}"`);
+  }
+  return page;
+}
+
+/** All service slugs rendered by the shared showcase template. */
+export function getShowcasePageSlugs(): string[] {
+  return Object.keys(loadBrand().showcasePages);
 }
 
 export function allBrands(): LoadedBrand[] {

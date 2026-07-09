@@ -25,8 +25,8 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   // Pages with a full-bleed photo hero that deliberately sits behind the
   // floating nav: the homepage, the services showcase (listing only —
   // generic /services/<slug> detail pages keep the offset, but the bespoke
-  // /services/massage landing has its own full-bleed hero), How It Works,
-  // For Pros, Pricing, and Terms.
+  // massage/beauty/nutrition landings have their own full-bleed heroes),
+  // How It Works, For Pros, Pricing, and Terms.
   const fullBleedHero =
     pathname === "/" ||
     // During ISR regeneration on Vercel the root route is rendered as
@@ -34,6 +34,8 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
     pathname === "/index" ||
     pathname === "/services" ||
     pathname === "/services/massage" ||
+    pathname === "/services/beauty" ||
+    pathname === "/services/nutrition-coaching" ||
     pathname === "/how-it-works" ||
     pathname === "/pricing" ||
     pathname === "/terms" ||
