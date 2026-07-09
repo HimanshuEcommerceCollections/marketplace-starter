@@ -80,11 +80,12 @@
 }
 
 /* ───────────────────────── FILTER BAR ─────────────────────────
-   Sticks below the fixed floating nav (banner + pill ≈ 100px tall);
+   Sticks below the fixed floating nav (--nav-height) with a gap sized to
+   match the previous hardcoded 104px/84px offsets at 16px root;
    z-index stays under --z-sticky (1100) so the nav always wins. */
 .svcs-filter-bar {
   position: sticky;
-  top: 104px;
+  top: calc(var(--nav-height) + 2.125rem);
   z-index: 100;
   background: color-mix(in oklab, var(--background) 94%, transparent);
   backdrop-filter: blur(28px);
@@ -93,7 +94,7 @@
 }
 @media (max-width: 640px) {
   .svcs-filter-bar {
-    top: 84px;
+    top: calc(var(--nav-height) + 0.875rem);
   }
 }
 .svcs-filter-inner {

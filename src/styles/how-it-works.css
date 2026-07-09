@@ -71,7 +71,9 @@
   /* Left-align the hero copy (matches the mock); keep centered layout for the
      section heads below. Do not restore margin: 0 auto here. */
   margin-right: auto;
-  padding: 0 80px 72px;
+  /* Top inset is the nav-clearance floor: with align-items: flex-end it only
+     binds on short viewports, keeping the copy below the fixed nav pill. */
+  padding: var(--hero-safe-top) 80px 72px;
 }
 .hiw-hero-title {
   margin-bottom: 24px;
@@ -510,7 +512,7 @@
 /* ───────────────────────── RESPONSIVE ───────────────────────── */
 @media (max-width: 960px) {
   .hiw-hero-inner {
-    padding: 0 32px 56px;
+    padding: var(--hero-safe-top) 32px 56px;
   }
   .hiw-steps,
   .hiw-coord,
@@ -545,7 +547,7 @@
     min-height: 56vh;
   }
   .hiw-hero-inner {
-    padding: 0 20px 44px;
+    padding: var(--hero-safe-top) 20px 44px;
   }
   .hiw-steps {
     padding: 64px 20px 80px;

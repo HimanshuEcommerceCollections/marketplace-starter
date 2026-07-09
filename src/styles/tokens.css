@@ -79,6 +79,19 @@
      --container-* scale powers max-w-* utilities; overriding it collides with
      max-w-sm/md/lg/xl/2xl. The shared page container uses max-w-7xl (1280px). */
 
+  /* ---- FIXED-NAV GEOMETRY ---- (single source of truth for nav clearance)
+     The floating nav pill (components/layout/navbar.tsx) spans, from the
+     viewport top: pt-3 wrapper (0.75rem) + 1px border + py-2 (0.5rem) +
+     tallest child (h-10 hamburger 2.5rem below lg; 2.25rem links/CTA at lg+)
+     + py-2 (0.5rem) + 1px border = 4.25rem + 2px worst case. rem-based so it
+     tracks the pill when the browser font-size setting scales it. */
+  --nav-height: calc(4.25rem + 2px);
+  /* Minimum space a full-bleed hero keeps above its first text line: nav
+     depth + breathing room = 112px at 16px root — the same clearance as the
+     pt-28 (7rem) offset SiteChrome gives non-hero pages. Bottom-anchored
+     heroes use it as padding-top, so it binds only on short viewports. */
+  --hero-safe-top: calc(var(--nav-height) + 2.625rem);
+
   /* ---- Z-INDEX SCALE ---- (named layers; no magic numbers in components) */
   --z-docked: 10;
   --z-dropdown: 1000;

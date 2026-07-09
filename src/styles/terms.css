@@ -45,7 +45,9 @@
   max-width: 1220px;
   /* Left-align the hero copy (matches the current site direction). */
   margin-right: auto;
-  padding: 0 80px 64px;
+  /* Top inset is the nav-clearance floor: with align-items: flex-end it only
+     binds on short viewports, keeping the copy below the fixed nav pill. */
+  padding: var(--hero-safe-top) 80px 64px;
 }
 .terms-hero-eyebrow {
   margin-bottom: 22px;
@@ -86,10 +88,11 @@
   padding: 72px 80px 100px;
 }
 
-/* Sticky table of contents */
+/* Sticky table of contents — parks below the fixed nav (--nav-height) with a
+   3rem reading gap (= the previous hardcoded 118px at 16px root). */
 .terms-toc {
   position: sticky;
-  top: 118px;
+  top: calc(var(--nav-height) + 3rem);
 }
 .terms-toc-title {
   margin-bottom: 16px;
@@ -125,10 +128,10 @@
   font-weight: 500;
 }
 
-/* Sections */
+/* Sections — anchor jumps land below the fixed nav (was hardcoded 120px). */
 .terms-section {
   margin-bottom: 52px;
-  scroll-margin-top: 120px;
+  scroll-margin-top: calc(var(--nav-height) + 3.125rem);
 }
 .terms-section:last-child {
   margin-bottom: 0;
@@ -329,7 +332,7 @@
 /* ───────────────────────── RESPONSIVE ───────────────────────── */
 @media (max-width: 960px) {
   .terms-hero-inner {
-    padding: 0 32px 52px;
+    padding: var(--hero-safe-top) 32px 52px;
   }
   .terms-wrap {
     grid-template-columns: 1fr;
@@ -363,7 +366,7 @@
     min-height: 52vh;
   }
   .terms-hero-inner {
-    padding: 0 20px 42px;
+    padding: var(--hero-safe-top) 20px 42px;
   }
   .terms-wrap {
     padding: 44px 20px 64px;

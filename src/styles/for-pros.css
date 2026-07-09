@@ -128,7 +128,9 @@
   /* Left-align the hero copy (matches the mock); keep centered layout for the
      section heads below. Do not restore margin: 0 auto here. */
   margin-right: auto;
-  padding: 0 80px 72px;
+  /* Top inset is the nav-clearance floor: with align-items: flex-end it only
+     binds on short viewports, keeping the copy below the fixed nav pill. */
+  padding: var(--hero-safe-top) 80px 72px;
 }
 .fp-hero-eyebrow {
   margin-bottom: 22px;
@@ -584,7 +586,7 @@
     padding-right: 32px;
   }
   .fp-hero-inner {
-    padding: 0 32px 56px;
+    padding: var(--hero-safe-top) 32px 56px;
   }
   .fp-benefits-grid {
     grid-template-columns: 1fr;
@@ -598,7 +600,7 @@
     min-height: 60vh;
   }
   .fp-hero-inner {
-    padding: 0 20px 44px;
+    padding: var(--hero-safe-top) 20px 44px;
   }
   .fp-benefits {
     padding: 64px 20px 80px;
