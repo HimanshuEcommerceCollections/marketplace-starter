@@ -72,13 +72,19 @@
 .faqp-hero {
   position: relative;
   display: flex;
-  align-items: flex-end;
-  min-height: 62vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 68vh;
   overflow: hidden;
+  /* --hero-safe-top reserves clearance for the fixed floating nav pill. */
+  padding: var(--hero-safe-top) 48px 90px;
 }
 .faqp-hero-bg {
   position: absolute;
   inset: 0;
+  z-index: 0;
   background-size: cover;
   background-position: center;
 }
@@ -89,47 +95,42 @@
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(10, 14, 11, 0.42) 0%,
-    rgba(10, 14, 11, 0.56) 40%,
-    rgba(10, 14, 11, 0.92) 100%
+    rgba(8, 8, 8, 0.72) 0%,
+    rgba(8, 8, 8, 0.62) 50%,
+    rgba(8, 8, 8, 0.78) 100%
   );
 }
-.faqp-hero-inner {
+.faqp-hero > *:not(.faqp-hero-bg) {
   position: relative;
   z-index: 1;
-  width: 100%;
-  max-width: 1220px;
-  margin-right: auto;
-  /* --hero-safe-top reserves clearance for the fixed floating nav pill so
-     the bottom-aligned copy can never rise underneath it on short viewports. */
-  padding: var(--hero-safe-top) 80px 64px;
 }
 .faqp-hero-eyebrow {
-  margin-bottom: 22px;
+  margin-bottom: 26px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.55);
 }
 .faqp-hero-title {
-  margin-bottom: 22px;
-  font-family: var(--font-display-bold);
-  font-weight: 900;
-  text-transform: uppercase;
-  font-size: clamp(42px, 6.6vw, 98px);
-  letter-spacing: -0.02em;
-  line-height: 0.94;
+  margin-bottom: 26px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(52px, 7.5vw, 96px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
   color: #faf8f4;
   text-shadow:
-    0 3px 28px rgba(0, 0, 0, 0.6),
-    0 1px 4px rgba(0, 0, 0, 0.7);
+    0 3px 28px rgba(0, 0, 0, 0.5),
+    0 1px 4px rgba(0, 0, 0, 0.6);
 }
 .faqp-hero-title em {
-  font-style: normal;
+  font-style: italic;
   color: var(--highlight);
 }
 .faqp-hero-sub {
-  max-width: 520px;
-  font-size: 16px;
+  max-width: 460px;
+  font-size: clamp(15px, 1.6vw, 17px);
   line-height: 1.7;
-  color: rgba(250, 248, 244, 0.88);
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55);
+  color: rgba(255, 255, 255, 0.62);
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.5);
 }
 
 /* ───────────────────────── FILTER BAR ─────────────────────────
@@ -328,10 +329,10 @@
 
 /* ───────────────────────── RESPONSIVE ───────────────────────── */
 @media (max-width: 960px) {
-  .faqp-hero-inner {
+  .faqp-hero {
     padding-left: 32px;
     padding-right: 32px;
-    padding-bottom: 52px;
+    padding-bottom: 72px;
   }
   .faqp-filter {
     padding: 0 32px;
@@ -346,12 +347,10 @@
 }
 @media (max-width: 640px) {
   .faqp-hero {
-    min-height: 52vh;
-  }
-  .faqp-hero-inner {
+    min-height: 56vh;
     padding-left: 20px;
     padding-right: 20px;
-    padding-bottom: 42px;
+    padding-bottom: 64px;
   }
   .faqp-filter {
     top: calc(var(--nav-height) + 0.875rem);

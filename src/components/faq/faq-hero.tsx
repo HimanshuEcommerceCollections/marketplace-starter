@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useGsap } from "@/lib/anim/use-gsap";
 import type { FaqHero as FaqHeroConfig } from "@/lib/faq/page";
 
-/** Full-bleed photo hero for the FAQ page (sits behind the floating nav). */
+/** Centered full-bleed photo hero for the FAQ page (sits behind the nav). */
 export function FaqHero({ eyebrow, title, titleAccent, sub, image }: FaqHeroConfig) {
   const scope = useGsap<HTMLElement>(({ gsap, scope }) => {
     gsap.from(scope.querySelector(".faqp-hero-bg"), {
@@ -13,7 +13,7 @@ export function FaqHero({ eyebrow, title, titleAccent, sub, image }: FaqHeroConf
       ease: "power2.out",
     });
     gsap.from(scope.querySelectorAll(".js-faqp-hero-reveal"), {
-      y: 40,
+      y: 34,
       autoAlpha: 0,
       duration: 0.9,
       stagger: 0.12,
@@ -32,23 +32,19 @@ export function FaqHero({ eyebrow, title, titleAccent, sub, image }: FaqHeroConf
   return (
     <section ref={scope} className="faqp-hero" aria-labelledby="faqp-hero-title">
       <div aria-hidden className="faqp-hero-bg" />
-      <div className="faqp-hero-inner">
-        {eyebrow ? (
-          <p className="js-faqp-hero-reveal faqp-eyebrow faqp-hero-eyebrow">
-            {eyebrow}
-          </p>
+      {eyebrow ? (
+        <p className="js-faqp-hero-reveal faqp-eyebrow faqp-hero-eyebrow">{eyebrow}</p>
+      ) : null}
+      <h1 id="faqp-hero-title" className="js-faqp-hero-reveal faqp-hero-title">
+        {title}
+        {titleAccent ? (
+          <>
+            <br />
+            <em>{titleAccent}</em>
+          </>
         ) : null}
-        <h1 id="faqp-hero-title" className="js-faqp-hero-reveal faqp-hero-title">
-          {title}
-          {titleAccent ? (
-            <>
-              <br />
-              <em>{titleAccent}</em>
-            </>
-          ) : null}
-        </h1>
-        {sub ? <p className="js-faqp-hero-reveal faqp-hero-sub">{sub}</p> : null}
-      </div>
+      </h1>
+      {sub ? <p className="js-faqp-hero-reveal faqp-hero-sub">{sub}</p> : null}
     </section>
   );
 }
