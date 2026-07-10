@@ -36,6 +36,9 @@
 /* Bespoke layout + motion for the Contact page. */
 @import "./contact.css";
 
+/* Bespoke layout + motion for the redesigned Privacy Policy page. */
+@import "./privacy.css";
+
 /* Shared showcase template for the Beauty + Nutrition service pages. */
 @import "./service-showcase.css";
 

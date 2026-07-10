@@ -11,7 +11,7 @@ import type { AboutPageConfig } from "@/lib/about/page";
 import type { ContactPageConfig } from "@/lib/contact/page";
 import type { CorporatePageConfig } from "@/lib/corporate/page";
 import type { FaqPageConfig } from "@/lib/faq/page";
-import type { LegalPageConfig } from "@/lib/legal/page";
+import type { PrivacyPageConfig } from "@/lib/privacy/page";
 import type { TermsPageConfig } from "@/lib/terms/page";
 import type { ServicesPageConfig } from "@/lib/services/page";
 import type { MassagePageConfig } from "@/lib/massage/page";
@@ -56,8 +56,8 @@ export interface LoadedBrand {
   corporate: CorporatePageConfig;
   /** "Frequently Asked Questions" page content. */
   faqPage: FaqPageConfig;
-  /** "Privacy Policy" page content. */
-  privacyPage: LegalPageConfig;
+  /** "Privacy Policy" page content (redesigned bespoke layout). */
+  privacyPage: PrivacyPageConfig;
   /** "Terms of Service" page content (redesigned bespoke layout). */
   termsPage: TermsPageConfig;
   /** Standalone "Services" page content (same card grid as the home page). */
@@ -157,7 +157,7 @@ export function getFaqPage(): FaqPageConfig {
 }
 
 /** The active brand's "Privacy Policy" page content. */
-export function getPrivacyPage(): LegalPageConfig {
+export function getPrivacyPage(): PrivacyPageConfig {
   return loadBrand().privacyPage;
 }
 
