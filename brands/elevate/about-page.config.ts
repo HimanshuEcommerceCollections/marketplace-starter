@@ -1,204 +1,85 @@
 import type { AboutPageConfig } from "@/lib/about/page";
 
-/** "About" page content for the Elevate brand. */
+/**
+ * "About" page content for the Elevate brand (redesigned bespoke layout).
+ * Photography currently hotlinks Unsplash like the homepage (see
+ * next.config.ts remotePatterns); swap for /assets/about/* files once the
+ * designer supplies final art. Stats in the dark band are illustrative
+ * INTERNAL DRAFT placeholders, not real claims.
+ */
 export const elevateAbout: AboutPageConfig = {
   hero: {
-    variant: "dark",
-    eyebrow: "Vetted Professionals · Coordinator-Confirmed Bookings",
-    title: "A More Thoughtful Way to Access Wellness Services",
-    subtitle:
-      "Elevate helps connect people across Raleigh and Wake County with vetted independent wellness professionals who provide services directly in clients' homes.",
-    primaryCta: { label: "Book Now", href: "/book" },
-    secondaryCta: { label: "How It Works", href: "/how-it-works" },
-    trustIndicators: [
-      "Identity Verified",
-      "Background Checked",
-      "Coordinator Confirmed",
+    eyebrow: "The Elevate Story",
+    title: "Care.",
+    titleAccent: "Delivered.",
+    sub: "We started with a simple frustration: the best wellness in Raleigh required the worst logistics. So we flipped it — the professionals come to you.",
+    image:
+      "https://images.unsplash.com/photo-1745327883508-b6cd32e5dde5?w=1600&q=85&fit=crop&auto=format",
+  },
+
+  story: {
+    kicker: "Why we exist",
+    heading: "Wellness shouldn't require a commute",
+    paragraphs: [
+      "Elevate began in Raleigh with one question: why does taking care of yourself mean fighting traffic, waiting rooms, and rushed appointments? The therapists, trainers, and coaches here are exceptional — the experience of reaching them wasn't.",
+      "So we built the missing layer: a platform where every professional is personally vetted, every price is all-in and visible before you commit, and a real human coordinator — not an algorithm — stands behind every single booking.",
+      "Today, Elevate delivers eight disciplines across all of Wake County, from a Tuesday-evening massage in Cary to a twelve-week coaching program in Wake Forest.",
     ],
     image: {
-      caption: {
-        title: "About imagery",
-        lines: ["Vetted professionals · Raleigh & Wake County"],
-      },
+      src: "https://images.unsplash.com/photo-1598901986949-f593ff2a31a6?w=1000&q=85&fit=crop&auto=format",
+      alt: "Care in human hands",
     },
   },
 
-  mission: {
-    heading: "Why Elevate Exists",
-    paragraphs: [
-      "Getting a wellness service shouldn't mean scrolling through unknown listings, making cold calls, or hoping the person who shows up is trustworthy.",
-      "Elevate was built to solve that problem — a structured marketplace with coordinator support, professional verification, and clear pricing, so clients can focus on their wellness, not the logistics.",
-    ],
-    quote: {
-      text: "Your hour. Your home. Your pro.",
-      body: "Elevate connects clients in Raleigh and Wake County with vetted, independent wellness professionals — coordinated, confirmed, and delivered to your home.",
-      attribution: "Elevate Health & Wellness",
-    },
-    values: [
-      { icon: "Home", label: "Convenience" },
-      { icon: "ShieldCheck", label: "Trust" },
-      { icon: "Handshake", label: "Coordination" },
-      { icon: "Star", label: "Quality" },
-    ],
-  },
-
-  difference: {
-    heading: "What Makes Elevate Different",
-    subheading:
-      "Not a directory. Not a booking app. A coordinated marketplace built around your safety and comfort.",
+  values: {
+    eyebrow: "What we stand on",
+    heading: "Four things we won't compromise",
     items: [
       {
-        icon: "Headphones",
-        title: "Coordinator Support",
-        description:
-          "Every booking is reviewed by a coordinator before anyone is dispatched. You have a human point of contact throughout.",
+        icon: "UsersThree",
+        title: "Humans coordinate, always",
+        body: "Every booking is reviewed by a coordinator who knows our professionals personally. Matching is done by judgment and care — availability alone is never enough.",
       },
       {
-        icon: "BadgeCheck",
-        title: "Vetted Professionals",
-        description:
-          "Identity verification and background checks are completed for every professional before marketplace activation.",
+        icon: "ShieldCheck",
+        title: "A vetting bar that stays high",
+        body: "License verification, background check, insurance review, and an in-person interview — for every professional, every time. Most applicants don't make it. That's the point.",
       },
       {
-        icon: "Home",
-        title: "In-Home Convenience",
-        description:
-          "Services come to you. No commute, no unfamiliar spaces — just your own home, on your schedule.",
+        icon: "Receipt",
+        title: "Honest, all-in pricing",
+        body: "The price you see includes travel, equipment, and gratuity. You'll always see your exact price before confirming — and it never changes at the door.",
       },
       {
-        icon: "Globe",
-        title: "Marketplace Flexibility",
-        description:
-          "A growing range of service categories with transparent pricing. Configure your session before you commit.",
+        icon: "MapPin",
+        title: "Raleigh roots, local pride",
+        body: "We're not a franchise from somewhere else. Our coordinators live here, our professionals practice here, and all of Wake County is home turf — travel included, always.",
       },
     ],
   },
 
-  review: {
-    heading: "How Professionals Are Reviewed",
-    subheading: "A structured verification process before anyone enters your home.",
-    note: "No professional is activated on the Elevate marketplace until all identity and background verification is complete.",
-    items: [
-      {
-        icon: "BadgeCheck",
-        title: "Identity Verification",
-        description:
-          "Every professional submits a government-issued ID, which is verified before any marketplace activation can occur.",
-      },
-      {
-        icon: "Search",
-        title: "Background Checks",
-        description:
-          "Third-party background screening is completed for all professionals. Results are reviewed before approval.",
-      },
-      {
-        icon: "ClipboardCheck",
-        title: "Service Standards",
-        description:
-          "All marketplace partners agree to Elevate's quality and conduct guidelines before their profile is activated.",
-      },
-      {
-        icon: "RefreshCw",
-        title: "Ongoing Review",
-        description:
-          "Professional standing is monitored on an ongoing basis. Client feedback directly influences marketplace status.",
-      },
+  band: {
+    title: "Built around one belief:",
+    titleAccent: "your wellness, your terms.",
+    body: "Not a marketplace. Not an app that shrugs when things go wrong. A service — with people behind it.",
+    chips: [
+      { value: "8", label: "Disciplines" },
+      { value: "100%", label: "Vetted Pros" },
+      { value: "<1hr", label: "Confirmation" },
+      { value: "12", label: "Areas Served" },
     ],
-  },
-
-  serviceCategories: {
-    heading: "Our Service Categories",
-    subheading:
-      "Eight categories of vetted in-home wellness services, with more planned.",
-  },
-
-  serviceArea: {
-    heading: "Local to Raleigh and Wake County",
-    paragraphs: [
-      "Elevate currently serves clients across Raleigh and Wake County, NC. Our service area includes Raleigh, Cary, Apex, Wake Forest, Morrisville, and surrounding communities.",
-      "All independent professionals partnered with Elevate serve clients within this area. As the marketplace grows, coverage will expand.",
-    ],
-    mapLabel: "Raleigh & Wake County, NC",
-    areas: [
-      "Raleigh",
-      "Cary",
-      "Apex",
-      "Wake Forest",
-      "Morrisville",
-      "Holly Springs",
-    ],
-    image: {
-      caption: {
-        title: "Service-area map",
-        lines: ["Raleigh & Wake County, NC"],
-      },
-    },
-  },
-
-  testimonials: {
-    heading: "What Clients Say",
-    subheading:
-      "Experiences from clients on trust, verification, and the coordinator process.",
-    items: [
-      {
-        id: "about-1",
-        quote:
-          "I was hesitant to book an in-home service — not because of Elevate, but because I'd had bad experiences elsewhere. The coordinator process completely changed that for me.",
-        author: "P.L.",
-        role: "Raleigh",
-      },
-      {
-        id: "about-2",
-        quote:
-          "The verification process is what made me trust it. Knowing the professional was background-checked before arriving at my home meant a lot.",
-        author: "C.M.",
-        role: "Cary",
-      },
-      {
-        id: "about-3",
-        quote:
-          "Clean, transparent, and the coordinator actually called me before the session to confirm everything. That level of care is rare.",
-        author: "N.A.",
-        role: "Wake Forest",
-      },
-    ],
-  },
-
-  faq: {
-    heading: "Frequently Asked Questions",
-    viewAll: { label: "View FAQ", href: "/faq" },
-    items: [
-      {
-        id: "reviewed",
-        question: "How are professionals reviewed?",
-        answer:
-          "Every professional on the Elevate marketplace completes identity verification and a third-party background check. No one is activated until all requirements are met.",
-      },
-      {
-        id: "coordinator",
-        question: "What does the coordinator do?",
-        answer:
-          "The coordinator reviews every booking request, manages professional matching, confirms scheduling, and serves as your human point of contact before and after your session.",
-      },
-      {
-        id: "matching",
-        question: "How does matching work?",
-        answer:
-          "After you submit a request, the coordinator selects an available, vetted professional based on your service type, location, and scheduling preferences.",
-      },
-      {
-        id: "areas",
-        question: "What areas are served?",
-        answer:
-          "Elevate currently serves Raleigh and Wake County, NC — including Raleigh, Cary, Apex, Wake Forest, Morrisville, Holly Springs, and surrounding communities.",
-      },
-    ],
+    image:
+      "https://images.unsplash.com/photo-1544717304-a2db4a7b16ee?w=1600&q=85&fit=crop&auto=format",
   },
 
   cta: {
-    title: "Wellness shouldn't require a commute.",
-    body: "Book a vetted professional who comes to you — coordinated, confirmed, and ready.",
-    primaryCta: { label: "Book Now", href: "/book" },
-    secondaryCta: { label: "How It Works", href: "/how-it-works" },
+    eyebrow: "Your turn",
+    title: "Ready when",
+    titleAccent: "you are.",
+    body: "Pick a service, set your time, and meet the professional who comes to you.",
+    primaryCta: { label: "Book a session", href: "/book" },
+    secondaryCta: { label: "Browse services", href: "/services" },
+    image:
+      "https://images.unsplash.com/photo-1531299204812-e6d44d9a185c?w=1600&q=85&fit=crop&auto=format",
   },
 };

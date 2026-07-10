@@ -16,7 +16,7 @@ export const elevateConfig: BrandConfig = {
     { label: "Services", href: "/services" },
     { label: "Pricing", href: "/pricing" },
     { label: "How It Works", href: "/#how-it-works" },
-    { label: "About", href: "/#about" },
+    { label: "About", href: "/about" },
     { label: "Corporate", href: "/#corporate" },
     { label: "Become a Pro", href: "/pros/apply" },
     { label: "FAQ", href: "/faq" },
@@ -36,7 +36,7 @@ export const elevateConfig: BrandConfig = {
     {
       heading: "Company",
       links: [
-        { label: "About Us", href: "/#about" },
+        { label: "About Us", href: "/about" },
         { label: "How It Works", href: "/#how-it-works" },
         { label: "Corporate Wellness", href: "/#corporate" },
         { label: "FAQ", href: "/faq" },

@@ -1,0 +1,367 @@
+/* ══════════════════════════════════════════════════════════════════
+   FAQ PAGE — help center (hero → sticky category filter + accordion →
+   "ask a human" dark band). Mirrors the approved mock; brand colors flow
+   through tokens so the theme layer still applies. Literals (px /
+   gradients / keyframes) are sanctioned here because this file lives
+   under src/styles/ (see lint:tokens + CLAUDE.md). On-photo whites and
+   dark image overlays stay literal.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Shared eyebrow — light "green-light" tint on photo bands. */
+.faqp-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--primary) 40%, white);
+}
+
+/* Shared on-photo buttons (dark band). */
+.faqp-btn-p {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 32px;
+  border-radius: 100px;
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    color-mix(in oklab, var(--primary) 60%, black)
+  );
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--primary-foreground);
+  box-shadow: 0 6px 24px color-mix(in oklab, var(--primary) 38%, transparent);
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+}
+.faqp-btn-p:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px color-mix(in oklab, var(--primary) 52%, transparent);
+}
+.faqp-btn-glass {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 32px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  font-size: 14px;
+  text-decoration: none;
+  color: #faf8f4;
+  transition:
+    background 0.3s,
+    border-color 0.3s;
+}
+.faqp-btn-glass:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.faqp-btn-p:focus-visible,
+.faqp-btn-glass:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* ───────────────────────── HERO ───────────────────────── */
+.faqp-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 62vh;
+  overflow: hidden;
+}
+.faqp-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+/* Dark scrim over the photo (image is painted on .faqp-hero-bg from config). */
+.faqp-hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 14, 11, 0.42) 0%,
+    rgba(10, 14, 11, 0.56) 40%,
+    rgba(10, 14, 11, 0.92) 100%
+  );
+}
+.faqp-hero-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1220px;
+  margin-right: auto;
+  /* --hero-safe-top reserves clearance for the fixed floating nav pill so
+     the bottom-aligned copy can never rise underneath it on short viewports. */
+  padding: var(--hero-safe-top) 80px 64px;
+}
+.faqp-hero-eyebrow {
+  margin-bottom: 22px;
+}
+.faqp-hero-title {
+  margin-bottom: 22px;
+  font-family: var(--font-display-bold);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(42px, 6.6vw, 98px);
+  letter-spacing: -0.02em;
+  line-height: 0.94;
+  color: #faf8f4;
+  text-shadow:
+    0 3px 28px rgba(0, 0, 0, 0.6),
+    0 1px 4px rgba(0, 0, 0, 0.7);
+}
+.faqp-hero-title em {
+  font-style: normal;
+  color: var(--highlight);
+}
+.faqp-hero-sub {
+  max-width: 520px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(250, 248, 244, 0.88);
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55);
+}
+
+/* ───────────────────────── FILTER BAR ─────────────────────────
+   Sticks below the fixed floating nav (--nav-height); z-index stays under
+   --z-sticky (1100) so the nav always wins. */
+.faqp-filter {
+  position: sticky;
+  top: calc(var(--nav-height) + 2.125rem);
+  z-index: var(--z-docked);
+  padding: 0 80px;
+  background: color-mix(in oklab, var(--background) 94%, transparent);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border-bottom: 1px solid var(--border);
+}
+.faqp-filter-inner {
+  display: flex;
+  gap: 4px;
+  max-width: 900px;
+  margin: 0 auto;
+  /* 6px inline padding keeps the first/last buttons' focus ring (2px outline
+     + 2px offset) inside the overflow-x scrollport instead of clipped. */
+  padding: 14px 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.faqp-filter-inner::-webkit-scrollbar {
+  display: none;
+}
+.faqp-f-btn {
+  flex-shrink: 0;
+  padding: 7px 18px;
+  border: none;
+  border-radius: 100px;
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
+}
+.faqp-f-btn:hover {
+  background: color-mix(in oklab, var(--primary) 8%, transparent);
+  color: var(--primary);
+}
+.faqp-f-btn.is-active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 0 4px 14px color-mix(in oklab, var(--primary) 32%, transparent);
+}
+.faqp-f-btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* ───────────────────────── QUESTION LIST ───────────────────────── */
+.faqp-list {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 72px 80px 110px;
+}
+.faqp-item {
+  border-bottom: 1px solid var(--border);
+}
+/* Category filtering hides (not unmounts) so open state survives switches. */
+.faqp-item-hidden {
+  display: none;
+}
+.faqp-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  /* Asymmetric per the mock: the question sits closer to its answer. */
+  padding: 18px 0 24px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.faqp-trigger:hover {
+  color: var(--primary);
+}
+.faqp-trigger:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+.faqp-trigger-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
+  transition: transform 0.35s;
+}
+.faqp-trigger[data-state="open"] .faqp-trigger-icon {
+  transform: rotate(45deg);
+}
+.faqp-content {
+  overflow: hidden;
+}
+.faqp-content[data-state="open"] {
+  animation: faqp-down 0.4s ease;
+}
+.faqp-content[data-state="closed"] {
+  animation: faqp-up 0.4s ease;
+}
+.faqp-content p {
+  max-width: 640px;
+  padding-bottom: 26px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--muted-foreground);
+}
+@keyframes faqp-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+@keyframes faqp-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+/* ───────────────────────── DARK BAND ───────────────────────── */
+.faqp-band {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 80px;
+  text-align: center;
+}
+.faqp-band-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+.faqp-band-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(16, 22, 17, 0.6),
+    rgba(16, 22, 17, 0.76)
+  );
+}
+.faqp-band-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.faqp-band h2 {
+  margin-bottom: 16px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 3.8vw, 48px);
+  letter-spacing: -0.02em;
+  color: #faf8f4;
+}
+.faqp-band h2 em {
+  font-style: italic;
+  color: var(--highlight);
+}
+.faqp-band-body {
+  max-width: 540px;
+  margin: 0 auto 40px;
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: rgba(250, 248, 244, 0.66);
+}
+.faqp-band-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+
+/* ───────────────────────── RESPONSIVE ───────────────────────── */
+@media (max-width: 960px) {
+  .faqp-hero-inner {
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-bottom: 52px;
+  }
+  .faqp-filter {
+    padding: 0 32px;
+  }
+  .faqp-list {
+    padding: 56px 32px 90px;
+  }
+  .faqp-band {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+@media (max-width: 640px) {
+  .faqp-hero {
+    min-height: 52vh;
+  }
+  .faqp-hero-inner {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 42px;
+  }
+  .faqp-filter {
+    top: calc(var(--nav-height) + 0.875rem);
+    padding: 0 20px;
+  }
+  .faqp-list {
+    padding: 44px 20px 72px;
+  }
+  .faqp-band {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

@@ -27,6 +27,12 @@
 /* Bespoke layout + motion for the Massage service page. */
 @import "./massage.css";
 
+/* Bespoke layout + motion for the redesigned About page. */
+@import "./about.css";
+
+/* Bespoke layout + motion for the redesigned FAQ page. */
+@import "./faq.css";
+
 /* Shared showcase template for the Beauty + Nutrition service pages. */
 @import "./service-showcase.css";
 
