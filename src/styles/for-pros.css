@@ -340,22 +340,27 @@
 }
 .fp-step {
   position: relative;
+  /* Center each step's content so the four numbers are evenly spaced and the
+     first/last chips are equidistant from the section's left/right edges. */
+  text-align: center;
 }
 /* Connector line between step chips (hidden on the last item and <=1100px).
-   Spans the gap between this chip and the next — starts just past this 44px
-   chip (54px = 44 + 10 breathing) and ends ~10px before the next chip (which
-   sits at 100% + 32px gap), so the line never crosses a number. Sits at the
-   chip's vertical center (top: 22px = half the 44px chip). */
+   Chips are centered in their columns, so span from just past this chip's
+   right edge (50% + 22px chip half + 10px breathing) to ~10px before the next
+   centered chip (which sits at 150% + 10px). The gradient peaks mid-gap and
+   fades toward both chips, so it reads as a balanced divider between the two
+   numbers. Sits at the chip's vertical center (top: 22px = half the 44px chip). */
 .fp-step::after {
   content: "";
   position: absolute;
   top: 22px;
-  left: 54px;
+  left: calc(50% + 32px);
   width: calc(100% - 32px);
   height: 1px;
   background: linear-gradient(
     to right,
-    color-mix(in oklab, var(--primary) 22%, transparent),
+    transparent,
+    color-mix(in oklab, var(--primary) 30%, transparent) 50%,
     transparent
   );
 }
@@ -368,7 +373,8 @@
   justify-content: center;
   width: 44px;
   height: 44px;
-  margin-bottom: 18px;
+  /* Auto inline margins center the fixed-width chip within its centered column. */
+  margin: 0 auto 18px;
   border-radius: 12px;
   background: color-mix(in oklab, var(--primary) 9%, transparent);
   border: 1px solid color-mix(in oklab, var(--primary) 22%, transparent);
