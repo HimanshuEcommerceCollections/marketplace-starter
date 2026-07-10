@@ -36,27 +36,28 @@ export function ShowcaseSpecialties({
       stagger: 0.1,
       ease: "power2.out",
     });
+    // Fade-in only (no vertical travel): a single row of equal-height cards
+    // must stay top-aligned throughout the reveal, so staggering their Y would
+    // read as a misaligned "staircase" mid-animation.
     gsap.from(scope.querySelectorAll(".ssp-style-card"), {
       scrollTrigger: {
         trigger: scope.querySelector(".ssp-styles-grid"),
         start: "top 88%",
         once: true,
       },
-      y: 28,
       autoAlpha: 0,
-      duration: 0.55,
-      stagger: 0.06,
-      ease: "power3.out",
+      duration: 0.5,
+      stagger: 0.08,
+      ease: "power2.out",
     });
     const addonGrid = scope.querySelector(".ssp-addons-grid");
     if (addonGrid) {
       gsap.from(scope.querySelectorAll(".ssp-addon-card"), {
         scrollTrigger: { trigger: addonGrid, start: "top 90%", once: true },
-        y: 24,
         autoAlpha: 0,
         duration: 0.5,
-        stagger: 0.06,
-        ease: "power3.out",
+        stagger: 0.08,
+        ease: "power2.out",
       });
     }
   }, []);
