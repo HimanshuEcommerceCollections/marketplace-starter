@@ -30,6 +30,11 @@ import {
   HandCoins,
   UsersThree,
   Receipt,
+  CalendarCheck,
+  ChatCircleDots,
+  Briefcase,
+  Buildings,
+  Phone,
 } from "@phosphor-icons/react";
 
 /**
@@ -63,6 +68,11 @@ const PHOSPHOR_ICONS: Record<string, Icon> = {
   HandCoins,
   UsersThree,
   Receipt,
+  CalendarCheck,
+  ChatCircleDots,
+  Briefcase,
+  Buildings,
+  Phone,
   // Lucide service-icon names -> closest Phosphor glyph (matches the mockup).
   HandHelping: HandWaving,
   Dumbbell: Barbell,

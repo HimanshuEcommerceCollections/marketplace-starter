@@ -26,7 +26,7 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   // floating nav: the homepage, the services showcase (listing only —
   // generic /services/<slug> detail pages keep the offset, but the bespoke
   // massage/beauty/nutrition landings have their own full-bleed heroes),
-  // How It Works, For Pros, Pricing, Terms, About, and FAQ.
+  // How It Works, For Pros, Pricing, Terms, About, FAQ, and Contact.
   const fullBleedHero =
     pathname === "/" ||
     // During ISR regeneration on Vercel the root route is rendered as
@@ -41,7 +41,8 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
     pathname === "/terms" ||
     pathname === "/pros/apply" ||
     pathname === "/about" ||
-    pathname === "/faq";
+    pathname === "/faq" ||
+    pathname === "/contact";
 
   return (
     <>

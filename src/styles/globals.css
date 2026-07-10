@@ -33,6 +33,9 @@
 /* Bespoke layout + motion for the redesigned FAQ page. */
 @import "./faq.css";
 
+/* Bespoke layout + motion for the Contact page. */
+@import "./contact.css";
+
 /* Shared showcase template for the Beauty + Nutrition service pages. */
 @import "./service-showcase.css";
 

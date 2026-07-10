@@ -8,6 +8,7 @@ import type { PricingPageConfig } from "@/lib/pricing/page";
 import type { HowItWorksPageConfig } from "@/lib/how-it-works/page";
 import type { ForProsPageConfig } from "@/lib/for-pros/page";
 import type { AboutPageConfig } from "@/lib/about/page";
+import type { ContactPageConfig } from "@/lib/contact/page";
 import type { CorporatePageConfig } from "@/lib/corporate/page";
 import type { FaqPageConfig } from "@/lib/faq/page";
 import type { LegalPageConfig } from "@/lib/legal/page";
@@ -23,6 +24,7 @@ import { elevatePricingPage } from "@brands/elevate/pricing-page.config";
 import { elevateHowItWorks } from "@brands/elevate/how-it-works.config";
 import { elevateForPros } from "@brands/elevate/for-pros.config";
 import { elevateAbout } from "@brands/elevate/about-page.config";
+import { elevateContact } from "@brands/elevate/contact-page.config";
 import { elevateCorporate } from "@brands/elevate/corporate.config";
 import { elevateFaqPage } from "@brands/elevate/faq-page.config";
 import { elevatePrivacyPage } from "@brands/elevate/privacy-page.config";
@@ -48,6 +50,8 @@ export interface LoadedBrand {
   forPros: ForProsPageConfig;
   /** "About" page content. */
   about: AboutPageConfig;
+  /** "Contact" page content. */
+  contact: ContactPageConfig;
   /** "Corporate Wellness" page content. */
   corporate: CorporatePageConfig;
   /** "Frequently Asked Questions" page content. */
@@ -77,6 +81,7 @@ const REGISTRY: Record<BrandId, LoadedBrand> = {
     howItWorks: elevateHowItWorks,
     forPros: elevateForPros,
     about: elevateAbout,
+    contact: elevateContact,
     corporate: elevateCorporate,
     faqPage: elevateFaqPage,
     privacyPage: elevatePrivacyPage,
@@ -134,6 +139,11 @@ export function getForProsPage(): ForProsPageConfig {
 /** The active brand's "About" page content. */
 export function getAboutPage(): AboutPageConfig {
   return loadBrand().about;
+}
+
+/** The active brand's "Contact" page content. */
+export function getContactPage(): ContactPageConfig {
+  return loadBrand().contact;
 }
 
 /** The active brand's "Corporate Wellness" page content. */

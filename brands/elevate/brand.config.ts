@@ -40,8 +40,7 @@ export const elevateConfig: BrandConfig = {
         { label: "How It Works", href: "/how-it-works" },
         { label: "Corporate Wellness", href: "/corporate" },
         { label: "FAQ", href: "/faq" },
-        { label: "Log In", href: "/login" },
-        { label: "Create Account", href: "/signup" },
+        { label: "Contact", href: "/contact" },
       ],
     },
     {

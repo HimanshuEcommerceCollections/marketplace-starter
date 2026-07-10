@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 import { useGsap } from "@/lib/anim/use-gsap";
 import type { FaqDarkBand } from "@/lib/faq/page";
 
@@ -45,15 +46,14 @@ export function FaqBand({
           ) : null}
         </h2>
         {body ? <p className="js-faqp-band-reveal faqp-band-body">{body}</p> : null}
-        {/* Plain anchors (not next/link): the primary CTA is a mailto. */}
         <div className="js-faqp-band-reveal faqp-band-btns">
-          <a href={primaryCta.href} className="faqp-btn-p">
+          <Link href={primaryCta.href} className="faqp-btn-p">
             {primaryCta.label} →
-          </a>
+          </Link>
           {secondaryCta ? (
-            <a href={secondaryCta.href} className="faqp-btn-glass">
+            <Link href={secondaryCta.href} className="faqp-btn-glass">
               {secondaryCta.label} →
-            </a>
+            </Link>
           ) : null}
         </div>
       </div>

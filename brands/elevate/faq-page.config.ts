@@ -146,10 +146,7 @@ export const elevateFaqPage: FaqPageConfig = {
     title: "Didn't find it?",
     titleAccent: "Ask a human.",
     body: "Our coordinators answer every message personally — usually within the hour on business days.",
-    primaryCta: {
-      label: "Contact us",
-      href: "mailto:hello@elevatewellness.com?subject=Question%20for%20Elevate",
-    },
+    primaryCta: { label: "Contact us", href: "/contact" },
     secondaryCta: { label: "Just book — ask along the way", href: "/book" },
     image:
       "https://images.unsplash.com/photo-1620302044868-e061ebf02bfb?w=1600&q=85&fit=crop&auto=format",
