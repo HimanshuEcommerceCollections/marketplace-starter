@@ -33,7 +33,7 @@
   --primary-foreground: oklch(0.98 0.008 84);
 
   /* extended semantic surfaces */
-  --highlight: oklch(0.63 0.135 47); /* terracotta */
+  --highlight: #6b8f6b; /* sage green (exact design accent) */
   --highlight-foreground: oklch(0.99 0.006 84);
   --notice: #a06a45; /* exact draft-notice terracotta (design reference) */
   --surface-inverse: oklch(0.25 0.014 62); /* espresso */
