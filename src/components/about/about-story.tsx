@@ -5,7 +5,13 @@ import { useGsap } from "@/lib/anim/use-gsap";
 import type { AboutStory as AboutStoryConfig } from "@/lib/about/page";
 
 /** Two-column origin story: kicker + narrative on the left, photo right. */
-export function AboutStory({ kicker, heading, paragraphs, image }: AboutStoryConfig) {
+export function AboutStory({
+  kicker,
+  heading,
+  headingAccent,
+  paragraphs,
+  image,
+}: AboutStoryConfig) {
   const scope = useGsap<HTMLElement>(({ gsap, scope }) => {
     gsap.from(scope.querySelector(".ab-story-txt"), {
       scrollTrigger: { trigger: scope, start: "top 80%", once: true },
@@ -29,7 +35,15 @@ export function AboutStory({ kicker, heading, paragraphs, image }: AboutStoryCon
       <div className="ab-story-grid">
         <div className="ab-story-txt">
           {kicker ? <p className="ab-kicker">{kicker}</p> : null}
-          <h2 id="ab-story-heading">{heading}</h2>
+          <h2 id="ab-story-heading">
+            {heading}
+            {headingAccent ? (
+              <>
+                {" "}
+                <em>{headingAccent}</em>
+              </>
+            ) : null}
+          </h2>
           {paragraphs.map((paragraph) => (
             <p key={paragraph} className="ab-story-body">
               {paragraph}

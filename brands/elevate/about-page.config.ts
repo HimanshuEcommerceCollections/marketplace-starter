@@ -19,7 +19,8 @@ export const elevateAbout: AboutPageConfig = {
 
   story: {
     kicker: "Why we exist",
-    heading: "Wellness shouldn't require a commute",
+    heading: "Wellness shouldn't require",
+    headingAccent: "a commute",
     paragraphs: [
       "Elevate began in Raleigh with one question: why does taking care of yourself mean fighting traffic, waiting rooms, and rushed appointments? The therapists, trainers, and coaches here are exceptional — the experience of reaching them wasn't.",
       "So we built the missing layer: a platform where every professional is personally vetted, every price is all-in and visible before you commit, and a real human coordinator — not an algorithm — stands behind every single booking.",
@@ -33,7 +34,8 @@ export const elevateAbout: AboutPageConfig = {
 
   values: {
     eyebrow: "What we stand on",
-    heading: "Four things we won't compromise",
+    heading: "Four things we",
+    headingAccent: "won't compromise",
     items: [
       {
         icon: "UsersThree",
@@ -68,8 +70,6 @@ export const elevateAbout: AboutPageConfig = {
       { value: "<1hr", label: "Confirmation" },
       { value: "12", label: "Areas Served" },
     ],
-    image:
-      "https://images.unsplash.com/photo-1544717304-a2db4a7b16ee?w=1600&q=85&fit=crop&auto=format",
   },
 
   cta: {
@@ -79,7 +79,5 @@ export const elevateAbout: AboutPageConfig = {
     body: "Pick a service, set your time, and meet the professional who comes to you.",
     primaryCta: { label: "Book a session", href: "/book" },
     secondaryCta: { label: "Browse services", href: "/services" },
-    image:
-      "https://images.unsplash.com/photo-1531299204812-e6d44d9a185c?w=1600&q=85&fit=crop&auto=format",
   },
 };
