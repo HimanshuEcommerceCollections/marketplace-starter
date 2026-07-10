@@ -1,35 +1,23 @@
-import { PageHero } from "@/components/sections/page-hero";
-import { FaqExplorer } from "@/components/marketing/faq-explorer";
-import { FaqContactSection } from "@/components/sections/faq-contact-section";
+import { FaqHero } from "@/components/faq/faq-hero";
+import { FaqBrowser } from "@/components/faq/faq-browser";
+import { FaqBand } from "@/components/faq/faq-band";
 import type { FaqPageConfig } from "@/lib/faq/page";
 
 export interface FaqLandingPageProps {
   config: FaqPageConfig;
 }
 
-/** Composes the full "/faq" page from the shared sections + FAQ explorer. */
+/**
+ * Composes the redesigned FAQ page from its bespoke sections (photo hero →
+ * sticky category filter + accordion → "ask a human" dark band). Server
+ * component — each section opts into "use client" for its own state/GSAP.
+ */
 export function FaqLandingPage({ config }: FaqLandingPageProps) {
   return (
     <>
-      <PageHero
-        variant={config.hero.variant}
-        eyebrow={config.hero.eyebrow}
-        title={config.hero.title}
-        subtitle={config.hero.subtitle}
-        primaryCta={config.hero.primaryCta}
-        secondaryCta={config.hero.secondaryCta}
-      />
-
-      <FaqExplorer search={config.search} categories={config.categories} />
-
-      <FaqContactSection
-        heading={config.contact.heading}
-        body={config.contact.body}
-        note={config.contact.note}
-        primaryCta={config.contact.primaryCta}
-        secondaryCta={config.contact.secondaryCta}
-        card={config.contact.card}
-      />
+      <FaqHero {...config.hero} />
+      <FaqBrowser {...config.browser} />
+      <FaqBand {...config.band} />
     </>
   );
 }

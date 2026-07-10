@@ -1,0 +1,371 @@
+/* ══════════════════════════════════════════════════════════════════
+   PRIVACY POLICY PAGE — plain-English legal document (centered photo hero
+   → two-column body with sticky TOC + numbered sections + scroll-spy →
+   solid-dark CTA band with chips). Mirrors the approved mock; brand colors
+   flow through tokens so the theme layer still applies. On-photo whites and
+   dark image overlays stay literal (permitted in src/styles/**). The legal
+   body matches the Terms page treatment so the two policy pages read as a
+   consistent pair.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ───────────────────────── HERO (centered) ───────────────────────── */
+.pv-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 68vh;
+  overflow: hidden;
+  /* --hero-safe-top reserves clearance for the fixed floating nav pill. */
+  padding: var(--hero-safe-top) 48px 90px;
+}
+.pv-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+}
+.pv-hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 8, 8, 0.72) 0%,
+    rgba(8, 8, 8, 0.62) 50%,
+    rgba(8, 8, 8, 0.78) 100%
+  );
+}
+.pv-hero > *:not(.pv-hero-bg) {
+  position: relative;
+  z-index: 1;
+}
+.pv-hero-eyebrow {
+  margin-bottom: 26px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+.pv-hero-title {
+  margin-bottom: 26px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(52px, 7.5vw, 96px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: #faf8f4;
+  text-shadow:
+    0 3px 28px rgba(0, 0, 0, 0.5),
+    0 1px 4px rgba(0, 0, 0, 0.6);
+}
+.pv-hero-title em {
+  font-style: italic;
+  color: var(--highlight);
+}
+.pv-hero-sub {
+  max-width: 460px;
+  font-size: clamp(15px, 1.6vw, 17px);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.62);
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.5);
+}
+
+/* ───────────────────────── BODY (TOC + sections) ───────────────────────── */
+.pv-wrap {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 64px;
+  align-items: start;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 90px 48px 110px;
+}
+
+/* Sticky table of contents — parks below the fixed nav (--nav-height). */
+.pv-toc {
+  position: sticky;
+  top: calc(var(--nav-height) + 3rem);
+}
+.pv-toc-title {
+  margin-bottom: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.pv-toc ul {
+  list-style: none;
+  border-left: 1px solid var(--border);
+}
+.pv-toc a {
+  display: block;
+  margin-left: -1.5px;
+  padding: 7px 0 7px 16px;
+  border-left: 2px solid transparent;
+  font-size: 13px;
+  line-height: 1.4;
+  text-decoration: none;
+  color: var(--muted-foreground);
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+.pv-toc a:hover {
+  color: var(--foreground);
+}
+.pv-toc a.on {
+  color: var(--foreground);
+  border-left-color: var(--primary);
+  font-weight: 500;
+}
+
+/* Sections — anchor jumps land below the fixed nav. */
+.pv-section {
+  margin-bottom: 56px;
+  padding-bottom: 52px;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: calc(var(--nav-height) + 3.125rem);
+}
+.pv-section:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.pv-num {
+  margin-bottom: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--highlight);
+}
+.pv-section h2 {
+  margin-bottom: 16px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(24px, 2.6vw, 34px);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--foreground);
+}
+.pv-section p {
+  max-width: 640px;
+  margin-bottom: 14px;
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: color-mix(in oklab, var(--foreground) 62%, transparent);
+}
+.pv-section p:last-child {
+  margin-bottom: 0;
+}
+.pv-section a {
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: none;
+}
+.pv-section a:hover {
+  text-decoration: underline;
+}
+
+/* Bullet list */
+.pv-bullets {
+  list-style: none;
+  max-width: 640px;
+  margin: 0 0 16px;
+}
+.pv-bullets li {
+  position: relative;
+  padding: 5px 0 5px 22px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: color-mix(in oklab, var(--foreground) 60%, transparent);
+}
+.pv-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 14px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+.pv-bullets li b,
+.pv-callout b {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+/* Emphasized callout box */
+.pv-callout {
+  max-width: 640px;
+  margin: 20px 0 0;
+  padding: 18px 22px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 14px 14px 0;
+  background: var(--muted);
+}
+.pv-callout p {
+  margin: 0;
+  max-width: none;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: color-mix(in oklab, var(--foreground) 65%, transparent);
+}
+
+/* ───────────────────────── DARK CTA BAND ───────────────────────── */
+.pv-cta {
+  position: relative;
+  overflow: hidden;
+  padding: 110px 48px;
+  text-align: center;
+  background: var(--surface-inverse);
+}
+.pv-cta-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.pv-cta-eyebrow {
+  margin-bottom: 24px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--highlight);
+}
+.pv-cta-heading {
+  max-width: 720px;
+  margin: 0 auto 20px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 68px);
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  color: var(--surface-inverse-foreground);
+}
+.pv-cta-heading em {
+  font-style: italic;
+  color: var(--highlight);
+}
+.pv-cta-body {
+  margin-bottom: 40px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.42);
+}
+.pv-cta-btns {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.pv-btn-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 14px 34px;
+  border-radius: 100px;
+  background: var(--surface-inverse-foreground);
+  font-size: 14.5px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--surface-inverse);
+  transition:
+    transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.3s;
+}
+.pv-btn-white:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px -8px rgba(255, 255, 255, 0.3);
+}
+.pv-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.2s;
+}
+.pv-btn-ghost:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+.pv-btn-white:focus-visible,
+.pv-btn-ghost:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.pv-cta-chips {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 36px;
+}
+.pv-cta-chip {
+  padding: 8px 18px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ───────────────────────── RESPONSIVE ───────────────────────── */
+@media (max-width: 960px) {
+  .pv-hero {
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-bottom: 72px;
+  }
+  .pv-wrap {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 64px 32px 90px;
+  }
+  .pv-toc {
+    position: static;
+  }
+  .pv-toc ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 14px;
+    border-left: none;
+  }
+  .pv-toc a {
+    margin-left: 0;
+    padding: 5px 0;
+    border-left: none;
+  }
+  .pv-toc a.on {
+    border-left-color: transparent;
+  }
+  .pv-cta {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+@media (max-width: 640px) {
+  .pv-hero {
+    min-height: 56vh;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 64px;
+  }
+  .pv-wrap {
+    padding: 52px 20px 72px;
+  }
+  .pv-cta {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

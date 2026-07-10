@@ -28,13 +28,21 @@ import {
   ArrowsCounterClockwise,
   Heart,
   HandCoins,
+  UsersThree,
+  Receipt,
+  CalendarCheck,
+  ChatCircleDots,
+  Briefcase,
+  Buildings,
+  Phone,
 } from "@phosphor-icons/react";
 
 /**
- * Phosphor icon resolver for the redesigned homepage. Keyed both by the Lucide
- * names used in `services.json` (so service cards translate cleanly) and by the
- * Phosphor names used directly in content (e.g. the "Why Elevate" cards). The
- * rest of the app keeps using the Lucide resolver in `@/lib/icons`.
+ * Shared Phosphor icon resolver for the redesigned pages (home, pricing,
+ * services, how-it-works, about, …). Keyed both by the Lucide names used in
+ * `services.json` (so service cards translate cleanly) and by the Phosphor
+ * names used directly in content configs. Legacy components keep using the
+ * Lucide resolver in `@/lib/icons`.
  */
 const PHOSPHOR_ICONS: Record<string, Icon> = {
   // Direct Phosphor names (content-authored).
@@ -58,6 +66,13 @@ const PHOSPHOR_ICONS: Record<string, Icon> = {
   ArrowsCounterClockwise,
   Heart,
   HandCoins,
+  UsersThree,
+  Receipt,
+  CalendarCheck,
+  ChatCircleDots,
+  Briefcase,
+  Buildings,
+  Phone,
   // Lucide service-icon names -> closest Phosphor glyph (matches the mockup).
   HandHelping: HandWaving,
   Dumbbell: Barbell,

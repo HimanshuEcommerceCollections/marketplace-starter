@@ -8,9 +8,10 @@ import type { PricingPageConfig } from "@/lib/pricing/page";
 import type { HowItWorksPageConfig } from "@/lib/how-it-works/page";
 import type { ForProsPageConfig } from "@/lib/for-pros/page";
 import type { AboutPageConfig } from "@/lib/about/page";
+import type { ContactPageConfig } from "@/lib/contact/page";
 import type { CorporatePageConfig } from "@/lib/corporate/page";
 import type { FaqPageConfig } from "@/lib/faq/page";
-import type { LegalPageConfig } from "@/lib/legal/page";
+import type { PrivacyPageConfig } from "@/lib/privacy/page";
 import type { TermsPageConfig } from "@/lib/terms/page";
 import type { ServicesPageConfig } from "@/lib/services/page";
 import type { MassagePageConfig } from "@/lib/massage/page";
@@ -23,6 +24,7 @@ import { elevatePricingPage } from "@brands/elevate/pricing-page.config";
 import { elevateHowItWorks } from "@brands/elevate/how-it-works.config";
 import { elevateForPros } from "@brands/elevate/for-pros.config";
 import { elevateAbout } from "@brands/elevate/about-page.config";
+import { elevateContact } from "@brands/elevate/contact-page.config";
 import { elevateCorporate } from "@brands/elevate/corporate.config";
 import { elevateFaqPage } from "@brands/elevate/faq-page.config";
 import { elevatePrivacyPage } from "@brands/elevate/privacy-page.config";
@@ -48,12 +50,14 @@ export interface LoadedBrand {
   forPros: ForProsPageConfig;
   /** "About" page content. */
   about: AboutPageConfig;
+  /** "Contact" page content. */
+  contact: ContactPageConfig;
   /** "Corporate Wellness" page content. */
   corporate: CorporatePageConfig;
   /** "Frequently Asked Questions" page content. */
   faqPage: FaqPageConfig;
-  /** "Privacy Policy" page content. */
-  privacyPage: LegalPageConfig;
+  /** "Privacy Policy" page content (redesigned bespoke layout). */
+  privacyPage: PrivacyPageConfig;
   /** "Terms of Service" page content (redesigned bespoke layout). */
   termsPage: TermsPageConfig;
   /** Standalone "Services" page content (same card grid as the home page). */
@@ -77,6 +81,7 @@ const REGISTRY: Record<BrandId, LoadedBrand> = {
     howItWorks: elevateHowItWorks,
     forPros: elevateForPros,
     about: elevateAbout,
+    contact: elevateContact,
     corporate: elevateCorporate,
     faqPage: elevateFaqPage,
     privacyPage: elevatePrivacyPage,
@@ -136,6 +141,11 @@ export function getAboutPage(): AboutPageConfig {
   return loadBrand().about;
 }
 
+/** The active brand's "Contact" page content. */
+export function getContactPage(): ContactPageConfig {
+  return loadBrand().contact;
+}
+
 /** The active brand's "Corporate Wellness" page content. */
 export function getCorporateLanding(): CorporatePageConfig {
   return loadBrand().corporate;
@@ -147,7 +157,7 @@ export function getFaqPage(): FaqPageConfig {
 }
 
 /** The active brand's "Privacy Policy" page content. */
-export function getPrivacyPage(): LegalPageConfig {
+export function getPrivacyPage(): PrivacyPageConfig {
   return loadBrand().privacyPage;
 }
 
