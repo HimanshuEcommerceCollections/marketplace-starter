@@ -341,13 +341,17 @@
 .fp-step {
   position: relative;
 }
-/* Connector line between step chips (hidden on the last item and <=1100px). */
+/* Connector line between step chips (hidden on the last item and <=1100px).
+   Spans the gap between this chip and the next — starts just past this 44px
+   chip (54px = 44 + 10 breathing) and ends ~10px before the next chip (which
+   sits at 100% + 32px gap), so the line never crosses a number. Sits at the
+   chip's vertical center (top: 22px = half the 44px chip). */
 .fp-step::after {
   content: "";
   position: absolute;
   top: 22px;
-  left: calc(100% + 4px);
-  width: calc(100% - 40px);
+  left: 54px;
+  width: calc(100% - 32px);
   height: 1px;
   background: linear-gradient(
     to right,
