@@ -345,7 +345,10 @@
    Spans the gap between this chip and the next — starts just past this 44px
    chip (54px = 44 + 10 breathing) and ends ~10px before the next chip (which
    sits at 100% + 32px gap), so the line never crosses a number. Sits at the
-   chip's vertical center (top: 22px = half the 44px chip). */
+   chip's vertical center (top: 22px = half the 44px chip). The gradient peaks
+   in the MIDDLE of the gap and fades toward both chips, so it reads as a
+   balanced divider centered between the two numbers with breathing space on
+   each side — rather than a stub hugging one number. */
 .fp-step::after {
   content: "";
   position: absolute;
@@ -355,7 +358,8 @@
   height: 1px;
   background: linear-gradient(
     to right,
-    color-mix(in oklab, var(--primary) 22%, transparent),
+    transparent,
+    color-mix(in oklab, var(--primary) 30%, transparent) 50%,
     transparent
   );
 }
