@@ -25,7 +25,8 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   // Pages with a full-bleed photo hero that deliberately sits behind the
   // floating nav: the homepage, the services showcase (listing only —
   // generic /services/<slug> detail pages keep the offset, but the bespoke
-  // massage/beauty/nutrition landings have their own full-bleed heroes),
+  // massage/yoga/life-coaching/beauty/nutrition landings have their own
+  // full-bleed heroes),
   // How It Works, For Pros, Pricing, Terms, About, FAQ, Contact, and Privacy.
   const fullBleedHero =
     pathname === "/" ||
@@ -34,6 +35,8 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
     pathname === "/index" ||
     pathname === "/services" ||
     pathname === "/services/massage" ||
+    pathname === "/services/yoga" ||
+    pathname === "/services/life-coaching" ||
     pathname === "/services/beauty" ||
     pathname === "/services/nutrition-coaching" ||
     pathname === "/how-it-works" ||

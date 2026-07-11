@@ -125,10 +125,10 @@
           "type": "select",
           "applies": "flat",
           "options": [
-            { "id": "gentle-flow", "label": "Gentle Flow", "delta": { "amount": 0, "currency": "USD" } },
             { "id": "hatha", "label": "Hatha", "delta": { "amount": 0, "currency": "USD" } },
             { "id": "vinyasa", "label": "Vinyasa", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "restorative", "label": "Restorative", "delta": { "amount": 0, "currency": "USD" } }
+            { "id": "restorative", "label": "Restorative", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "yin", "label": "Yin", "delta": { "amount": 0, "currency": "USD" } }
           ]
         },
         {
@@ -274,10 +274,10 @@
           "type": "select",
           "applies": "flat",
           "options": [
-            { "id": "career-growth", "label": "Career Growth", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "work-life-balance", "label": "Work-Life Balance", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "personal-development", "label": "Personal Development", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "goal-setting", "label": "Goal Setting", "delta": { "amount": 0, "currency": "USD" } }
+            { "id": "direction", "label": "Direction", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "habits", "label": "Habits", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "career", "label": "Career", "delta": { "amount": 0, "currency": "USD" } },
+            { "id": "accountability", "label": "Accountability", "delta": { "amount": 0, "currency": "USD" } }
           ]
         },
         {
@@ -287,7 +287,7 @@
           "applies": "flat",
           "options": [
             { "id": "60", "label": "60 Minutes", "delta": { "amount": 0, "currency": "USD" } },
-            { "id": "90", "label": "90 Minutes", "delta": { "amount": 3000, "currency": "USD" } }
+            { "id": "90", "label": "90 Minutes", "delta": { "amount": 4000, "currency": "USD" } }
           ]
         },
         {

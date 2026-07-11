@@ -36,10 +36,15 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
 export const revalidate = 60;
 
 export function generateStaticParams() {
-  // Massage and the showcase pages (beauty, nutrition-coaching) have bespoke
-  // static routes that take precedence over this dynamic segment — exclude
-  // them here so the same paths aren't statically generated twice.
-  const bespoke = new Set(["massage", ...getShowcasePageSlugs()]);
+  // Massage, Yoga, and the showcase pages (beauty, nutrition-coaching) have
+  // bespoke static routes that take precedence over this dynamic segment —
+  // exclude them here so the same paths aren't statically generated twice.
+  const bespoke = new Set([
+    "massage",
+    "yoga",
+    "life-coaching",
+    ...getShowcasePageSlugs(),
+  ]);
   return getServices()
     .filter((s) => !bespoke.has(s.id))
     .map((s) => ({ slug: s.id }));

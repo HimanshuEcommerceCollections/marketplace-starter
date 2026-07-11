@@ -32,9 +32,9 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  text-align: left;
+  text-align: center;
   overflow: hidden;
   padding: 140px 24px 100px;
 }
@@ -163,12 +163,12 @@
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
 }
 .home-hero-title {
-  font-family: var(--font-display-bold);
-  font-weight: 900;
-  font-size: clamp(56px, 10vw, 140px);
-  line-height: 0.92;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+  /* Match the Yoga hero: Lora serif, regular weight, natural case. */
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(52px, 8vw, 112px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
   margin-bottom: 32px;
   color: #faf8f4;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.55);
@@ -183,10 +183,11 @@
 }
 .home-hero-line-accent {
   color: var(--highlight);
+  font-style: italic;
 }
 .home-hero-sub {
   max-width: 440px;
-  margin: 0 0 40px;
+  margin: 0 auto 40px;
   font-size: clamp(14px, 1.4vw, 17px);
   line-height: 1.72;
   color: rgba(250, 248, 244, 0.92);
@@ -197,6 +198,7 @@
   flex-wrap: wrap;
   gap: 14px;
   align-items: center;
+  justify-content: center;
 }
 .home-hero-btn-ghost {
   display: inline-flex;
