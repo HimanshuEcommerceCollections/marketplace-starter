@@ -307,185 +307,152 @@ export const elevateServiceLanding: ServiceLandingRegistry = {
     ],
   },
 
-  /* ───────────────────────────────── Yoga ──────────────────────────── */
+  /* ───────────────────────────────── Yoga ──────────────────────────────
+   * Editorial "Yoga. Your space." redesign: a photo hero, a "What to expect"
+   * split, a dark specialties band, an all-in pricing notice, a numbered
+   * "how your session flows" sequence, a focused FAQ, and the brand CTA.
+   * Booking price ($89 / $119) is derived from pricing.v1.json — not stored here.
+   */
   yoga: {
     slug: "yoga",
     hero: {
-      variant: "light",
-      eyebrow: "In-Home Yoga",
-      title: "Yoga That Fits Your Schedule, Space, and Goals",
+      variant: "dark",
+      eyebrow: "Yoga · Delivered across Wake County",
+      title: "Yoga. Your space.",
       subtitle:
-        "Personalized yoga sessions delivered to your home by vetted independent professionals — tailored to your goals, flexible around your schedule.",
+        "Private yoga in your home, garden, or rooftop — every style, every level, mats included.",
       primaryCta: { label: "Book Yoga", href: "/book?service=yoga" },
+      secondaryCta: { label: "All Services", href: "/services" },
       image: {
-        gradient: true,
-        caption: {
-          title: "Instructor guiding a session inside a real residential home",
-          lines: ["Calm · Natural light · One-on-one"],
-        },
+        src: "/assets/yoga/hero-bg.jpg",
+        alt: "A private yoga session in a calm, light-filled home",
       },
     },
     sections: [
       {
-        type: "cards",
-        variant: "stacked",
-        heading: "Why Choose In-Home Yoga?",
-        columns: 4,
+        type: "sessionSteps",
+        heading: "What to expect",
+        subheading:
+          "A private session means the whole practice is built around you — your level, your body, your goals. No keeping up with a class, no self-consciousness, just focused guidance.",
+        imagePosition: "right",
+        image: {
+          src: "/assets/yoga/about.jpg",
+          alt: "An instructor guiding a private in-home yoga session",
+        },
         items: [
-          { icon: "Target", title: "Personalized Attention", description: "Your instructor focuses entirely on you — adjusting form, breath, and pace to match your body and goals." },
-          { icon: "CalendarDays", title: "Flexible Scheduling", description: "Morning flows or evening wind-downs — book sessions that fit your calendar, not the other way around." },
-          { icon: "Home", title: "Comfort of Home", description: "Practice in your own space with your own rhythm. No commute, no crowds, no self-consciousness." },
-          { icon: "TrendingUp", title: "Support for Every Level", description: "Beginner or advanced, our professionals meet you where you are and guide you forward with care." },
+          {
+            icon: "Package",
+            title: "Everything provided",
+            description:
+              "Your instructor brings mats, blocks, and straps for everyone — you just bring yourself.",
+          },
+          {
+            icon: "Users",
+            title: "Solo or semi-private",
+            description:
+              "Practice on your own or invite up to three others for a semi-private session at no extra cost.",
+          },
+          {
+            icon: "TrendingUp",
+            title: "Every level welcome",
+            description:
+              "From true beginners to seasoned practitioners, the session meets you exactly where you are.",
+          },
         ],
       },
       {
         type: "cards",
         variant: "stacked",
-        surface: "muted",
-        heading: "Find the practice that fits you",
-        subheading: "Your sessions adapt to your goals — the exact focus is configured during booking.",
+        surface: "inverse",
+        heading: "Choose your focus",
+        subheading:
+          "Tell us your preference at booking — or describe your goal and let your coordinator match you.",
         columns: 4,
         items: [
-          { icon: "Flower2", title: "Gentle Flow", description: "Slow, connected movement sequences designed to build warmth and ease in the body." },
-          { icon: "Activity", title: "Mobility Focus", description: "Targeted work on specific areas — hips, shoulders, spine — to restore function and freedom of movement." },
-          { icon: "Star", title: "Beginner Sessions", description: "A welcoming introduction to yoga fundamentals, terminology, and foundational postures." },
-          { icon: "Compass", title: "General Wellness", description: "A balanced mix of movement, breath, and rest tailored to how you feel on a given day." },
+          {
+            icon: "Flower2",
+            title: "Hatha",
+            description: "Foundational postures held at a steady, grounding pace.",
+          },
+          {
+            icon: "Activity",
+            title: "Vinyasa",
+            description: "Flowing, breath-led movement that builds gentle heat.",
+          },
+          {
+            icon: "RefreshCw",
+            title: "Restorative",
+            description: "Slow, fully supported poses for deep rest and release.",
+          },
+          {
+            icon: "Clock",
+            title: "Yin",
+            description: "Long, quiet holds that reach deep connective tissue.",
+          },
         ],
       },
       {
-        type: "cards",
-        variant: "stacked",
-        heading: "Why practice at home?",
-        subheading: "Your home is the calmest studio you'll ever roll out a mat in.",
-        columns: 4,
-        items: [
-          { icon: "Car", title: "No Travel Required", description: "Your session starts the moment your instructor arrives. No commute, no parking, no rushing." },
-          { icon: "Home", title: "Comfortable Environment", description: "Practice in your own space where you feel most at ease — floor, mat, or however you prefer." },
-          { icon: "CalendarDays", title: "Flexible Scheduling", description: "Early morning, midday, or evening — sessions adapt to your calendar, not the other way around." },
-          { icon: "Target", title: "Personalized Attention", description: "Every session is entirely yours. Your instructor watches only you and adjusts in real time." },
-        ],
+        type: "notice",
+        icon: "DollarSign",
+        heading: "Simple, all-in prices",
+        body: "One transparent price per session — $89 for 60 minutes, $119 for 90 minutes. Travel, equipment, and gratuity are all included. The price you see is the price you pay.",
+        tag: "All-In",
       },
       {
         type: "processCards",
         surface: "muted",
-        columns: 4,
+        columns: 3,
+        heading: "How your session flows",
         steps: [
-          { title: "Submit Request", description: "Tell us about your experience level, goals, and when you'd like to practice through our quick intake form." },
-          { title: "Coordinator Review", description: "Our team reviews your request to understand what kind of instructor will serve you best." },
-          { title: "Professional Match", description: "We identify an independent instructor whose background and style aligns with your specific needs." },
-          { title: "Schedule Confirmation", description: "You confirm availability and your first session is scheduled at your home, on your terms." },
-        ],
-      },
-      {
-        type: "sessionSteps",
-        heading: "What Happens During a Session?",
-        imagePosition: "left",
-        image: {
-          caption: {
-            title: "Lifestyle photography placeholder",
-            lines: ["Home yoga session in progress"],
-          },
-        },
-        items: [
-          { icon: "MessageCircle", title: "Initial Discussion", description: "Your professional begins by understanding your goals, any physical considerations, and what you'd like to work on." },
-          { icon: "Target", title: "Goal Setting", description: "Together you'll set clear intentions for the session — whether strength, flexibility, relaxation, or breath work." },
-          { icon: "Activity", title: "Guided Practice", description: "A fully tailored sequence designed around your body, pace, and environment — guided and adjusted in real time." },
-          { icon: "ClipboardCheck", title: "Recommendations", description: "Your professional shares simple guidance to carry between sessions, so your practice keeps progressing." },
-        ],
-      },
-      {
-        type: "stepper",
-        heading: "Six steps from intent to first session.",
-        subheading: "Transparent and designed to respect your time.",
-        activeIndex: 2,
-        steps: [
-          "Pick Service",
-          "Configure",
-          "See the Price",
-          "Details + Schedule",
-          "Confirm + Submit",
-          "Success",
-        ],
-      },
-      {
-        type: "configurator",
-        variant: "interactive",
-        cta: { label: "Book Yoga", href: "/book?service=yoga" },
-        groups: [
           {
-            id: "session-format",
-            label: "Session Format",
-            type: "single",
-            defaultOptionId: "individual",
-            options: [
-              { id: "individual", label: "Individual" },
-              { id: "couple", label: "Couple" },
-              { id: "small-group", label: "Small Group" },
-            ],
+            title: "Before",
+            description:
+              "Your pro confirms timing the day before and arrives 10 minutes early to set up. You don't prepare anything.",
           },
           {
-            id: "duration",
-            label: "Duration",
-            type: "single",
-            defaultOptionId: "60",
-            options: [
-              { id: "60", label: "60 Minutes" },
-              { id: "90", label: "90 Minutes" },
-            ],
+            title: "During",
+            description:
+              "A brief check-in on your goals and preferences, then the session is entirely yours — adjusted live to your feedback.",
           },
           {
-            id: "yoga-style",
-            label: "Yoga Style",
-            type: "single",
-            defaultOptionId: "gentle-flow",
-            options: [
-              { id: "gentle-flow", label: "Gentle Flow" },
-              { id: "hatha", label: "Hatha" },
-              { id: "vinyasa", label: "Vinyasa" },
-              { id: "restorative", label: "Restorative" },
-            ],
+            title: "After",
+            description:
+              "Your pro packs down and leaves your space exactly as found. Rate the session and rebook your favorite in two taps.",
           },
-          {
-            id: "package",
-            label: "Package",
-            type: "single",
-            defaultOptionId: "single",
-            options: [
-              { id: "single", label: "Single Session" },
-              { id: "pack-4", label: "4 Session Pack" },
-              { id: "pack-8", label: "8 Session Pack" },
-            ],
-          },
-        ],
-      },
-      {
-        type: "testimonials",
-        surface: "muted",
-        heading: "What clients are saying.",
-        subheading: "Testimonials — for demonstration purposes",
-        items: [
-          { id: "yoga-1", quote: "Having an instructor come to my apartment completely changed how I approach mornings. It's the one habit that's actually stuck.", author: "A.R.", role: "In-Home Yoga · Raleigh, NC" },
-          { id: "yoga-2", quote: "I'd been intimidated by yoga for years. Working with someone in my own living room made it feel approachable from day one.", author: "M.C.", role: "In-Home Yoga · Cary, NC" },
-          { id: "yoga-3", quote: "The matching process was easy and the instructor clearly understood what I was looking for — gentle but real.", author: "K.W.", role: "In-Home Yoga · Wake County, NC" },
         ],
       },
       {
         type: "faq",
-        heading: "Common Questions",
+        heading: "Yoga FAQ",
         items: [
-          { id: "yoga-process", question: "How does the booking and coordinator process work?", answer: "You submit a request detailing your goals, preferred times, and home setup. Our coordination team reviews it personally and matches you with the most suitable independent professional available — then confirms the details directly with you before the session." },
-          { id: "yoga-employment", question: "Are the yoga professionals employees of Elevate?", answer: "No. All professionals on the Elevate marketplace are independent, vetted practitioners. Elevate provides coordination, matching, and support — the professional delivers the session." },
-          { id: "yoga-same-pro", question: "Can I request the same professional for future sessions?", answer: "Yes. If you'd like to continue with the same professional, let your coordinator know and they'll do their best to match their availability for your future sessions." },
-          { id: "yoga-prep", question: "What should I have ready at home for a yoga session?", answer: "Just a clear, comfortable space about the size of a yoga mat, plus any props you already own. Your professional brings the expertise — you bring the space." },
+          {
+            id: "yoga-beginner",
+            question: "I've never done yoga. Is that okay?",
+            answer:
+              "It's ideal, actually — a private first session builds proper foundations without the intimidation of a class. Tell us you're new and we'll match you with an instructor who loves teaching beginners.",
+          },
+          {
+            id: "yoga-group",
+            question: "Can my partner or friends join?",
+            answer:
+              "Yes — up to 4 people per session at the same price. Just mention the group size when booking so your instructor brings enough equipment.",
+          },
+          {
+            id: "yoga-equipment",
+            question: "Do I need any equipment?",
+            answer:
+              "None. Your instructor brings mats and props for everyone. Comfortable clothes are all you need.",
+          },
         ],
         viewAll: { label: "View Full FAQ", href: "/faq" },
       },
       {
         type: "cta",
-        title: "Wellness shouldn't require a commute.",
-        body: "Book your first in-home yoga session with a vetted independent professional.",
+        eyebrow: "Ready?",
+        title: "Book your session.",
+        body: "Vetted professionals. Transparent pricing. Delivered across Wake County.",
         primaryCta: { label: "Book Yoga", href: "/book?service=yoga" },
-        secondaryCta: { label: "View Pricing", href: "/pricing" },
+        secondaryCta: { label: "View All Pricing", href: "/pricing" },
       },
     ],
   },

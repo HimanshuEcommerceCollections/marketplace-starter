@@ -30,7 +30,7 @@ export function HomeHero({
   videoPoster,
   photoSequence = [],
 }: HomeHeroProps) {
-  // "Move. Heal. Thrive." -> three uppercase lines, last one accented.
+  // "Move. Heal. Thrive." -> three centered serif lines, last one accented.
   const lines = title.split(/(?<=\.)\s+/).filter(Boolean);
   const videoRef = useRef<HTMLVideoElement>(null);
 

@@ -302,20 +302,24 @@
           "required": true,
           "choices": [
             {
-              "id": "gentle-flow",
-              "label": "Gentle Flow"
-            },
-            {
               "id": "hatha",
-              "label": "Hatha"
+              "label": "Hatha",
+              "description": "Foundational postures, steady pace"
             },
             {
               "id": "vinyasa",
-              "label": "Vinyasa"
+              "label": "Vinyasa",
+              "description": "Flowing, breath-led movement"
             },
             {
               "id": "restorative",
-              "label": "Restorative"
+              "label": "Restorative",
+              "description": "Deep rest and release"
+            },
+            {
+              "id": "yin",
+              "label": "Yin",
+              "description": "Long holds, deep tissue"
             }
           ]
         },
@@ -656,20 +660,24 @@
           "required": true,
           "choices": [
             {
-              "id": "career-growth",
-              "label": "Career Growth"
+              "id": "direction",
+              "label": "Direction",
+              "description": "Clarity on what's next"
             },
             {
-              "id": "work-life-balance",
-              "label": "Work-Life Balance"
+              "id": "habits",
+              "label": "Habits",
+              "description": "Systems that make change automatic"
             },
             {
-              "id": "personal-development",
-              "label": "Personal Development"
+              "id": "career",
+              "label": "Career",
+              "description": "Transitions and growth"
             },
             {
-              "id": "goal-setting",
-              "label": "Goal Setting"
+              "id": "accountability",
+              "label": "Accountability",
+              "description": "12-week structured program"
             }
           ]
         },

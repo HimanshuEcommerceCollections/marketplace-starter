@@ -15,6 +15,8 @@ import type { PrivacyPageConfig } from "@/lib/privacy/page";
 import type { TermsPageConfig } from "@/lib/terms/page";
 import type { ServicesPageConfig } from "@/lib/services/page";
 import type { MassagePageConfig } from "@/lib/massage/page";
+import type { YogaPageConfig } from "@/lib/yoga/page";
+import type { LifeCoachingPageConfig } from "@/lib/life-coaching/page";
 import type { ShowcasePageConfig } from "@/lib/service-showcase/page";
 
 import { elevateConfig } from "@brands/elevate/brand.config";
@@ -31,6 +33,8 @@ import { elevatePrivacyPage } from "@brands/elevate/privacy-page.config";
 import { elevateTermsPage } from "@brands/elevate/terms-page.config";
 import { elevateServicesPage } from "@brands/elevate/services-page.config";
 import { elevateMassage } from "@brands/elevate/massage.config";
+import { elevateYoga } from "@brands/elevate/yoga.config";
+import { elevateLifeCoaching } from "@brands/elevate/life-coaching.config";
 import { elevateBeauty } from "@brands/elevate/beauty.config";
 import { elevateNutrition } from "@brands/elevate/nutrition.config";
 import elevateServices from "@brands/elevate/services.json";
@@ -64,6 +68,10 @@ export interface LoadedBrand {
   servicesPage: ServicesPageConfig;
   /** Bespoke "Massage" service landing page content. */
   massagePage: MassagePageConfig;
+  /** Bespoke "Yoga" service landing page content. */
+  yogaPage: YogaPageConfig;
+  /** Bespoke "Life Coaching" service landing page content. */
+  lifeCoachingPage: LifeCoachingPageConfig;
   /** Shared-template showcase landing pages (Beauty, Nutrition), by slug. */
   showcasePages: Record<string, ShowcasePageConfig>;
   /** Raw JSON — validated lazily by catalog/pricing loaders via zod. */
@@ -88,6 +96,8 @@ const REGISTRY: Record<BrandId, LoadedBrand> = {
     termsPage: elevateTermsPage,
     servicesPage: elevateServicesPage,
     massagePage: elevateMassage,
+    yogaPage: elevateYoga,
+    lifeCoachingPage: elevateLifeCoaching,
     showcasePages: {
       [elevateBeauty.slug]: elevateBeauty,
       [elevateNutrition.slug]: elevateNutrition,
@@ -174,6 +184,16 @@ export function getServicesPage(): ServicesPageConfig {
 /** The active brand's bespoke "Massage" service landing page content. */
 export function getMassagePage(): MassagePageConfig {
   return loadBrand().massagePage;
+}
+
+/** The active brand's bespoke "Yoga" service landing page content. */
+export function getYogaPage(): YogaPageConfig {
+  return loadBrand().yogaPage;
+}
+
+/** The active brand's bespoke "Life Coaching" service landing page content. */
+export function getLifeCoachingPage(): LifeCoachingPageConfig {
+  return loadBrand().lifeCoachingPage;
 }
 
 /**

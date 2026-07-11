@@ -27,6 +27,12 @@
 /* Bespoke layout + motion for the Massage service page. */
 @import "./massage.css";
 
+/* Bespoke layout + motion for the Yoga service page. */
+@import "./yoga.css";
+
+/* Bespoke layout + motion for the Life Coaching service page. */
+@import "./life-coaching.css";
+
 /* Bespoke layout + motion for the redesigned About page. */
 @import "./about.css";
 
