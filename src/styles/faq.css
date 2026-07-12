@@ -13,7 +13,7 @@
   font-weight: 600;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: color-mix(in oklab, var(--primary) 40%, white);
+  color: var(--highlight);
 }
 
 /* Shared on-photo buttons (dark band). */
@@ -180,7 +180,7 @@
 }
 .faqp-f-btn:hover {
   background: color-mix(in oklab, var(--primary) 8%, transparent);
-  color: var(--primary);
+  color: var(--highlight);
 }
 .faqp-f-btn.is-active {
   background: var(--primary);
@@ -224,7 +224,7 @@
   transition: color 0.2s;
 }
 .faqp-trigger:hover {
-  color: var(--primary);
+  color: var(--highlight);
 }
 .faqp-trigger:focus-visible {
   outline: 2px solid var(--ring);
@@ -234,7 +234,7 @@
   flex-shrink: 0;
   width: 18px;
   height: 18px;
-  color: var(--primary);
+  color: var(--highlight);
   transition: transform 0.35s;
 }
 .faqp-trigger[data-state="open"] .faqp-trigger-icon {

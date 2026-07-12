@@ -73,7 +73,7 @@ export function ProcessStepsSection({
                     <div className="flex w-full items-center gap-3">
                       <span
                         aria-hidden
-                        className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"
+                        className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-highlight/10 text-highlight"
                       >
                         <Icon className="size-5" strokeWidth={1.75} />
                       </span>

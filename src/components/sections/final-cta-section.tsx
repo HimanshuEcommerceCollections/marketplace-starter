@@ -22,12 +22,12 @@ export function FinalCtaSection({
   return (
     <section
       aria-labelledby="final-cta-heading"
-      className="bg-surface-brand text-surface-brand-foreground"
+      className="border-t border-surface-brand-foreground/10 bg-surface-brand text-surface-brand-foreground"
     >
       <Container className="py-16 text-center md:py-20 lg:py-28">
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-6">
           {eyebrow ? (
-            <p className="text-xs font-semibold uppercase tracking-widest text-surface-brand-foreground/80">
+            <p className="text-xs font-semibold uppercase tracking-widest text-highlight">
               {eyebrow}
             </p>
           ) : null}

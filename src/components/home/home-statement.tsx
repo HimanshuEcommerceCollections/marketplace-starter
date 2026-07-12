@@ -40,7 +40,7 @@ export function HomeStatement({ lead, emphasis, sub }: HomeStatementProps) {
             <span key={`${item.w}-${i}`}>
               <span className="home-word">
                 <span
-                  className={item.em ? "home-word-inner italic text-primary" : "home-word-inner"}
+                  className={item.em ? "home-word-inner italic text-highlight" : "home-word-inner"}
                 >
                   {item.w}
                 </span>

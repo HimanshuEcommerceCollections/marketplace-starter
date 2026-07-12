@@ -17,13 +17,13 @@
   font-weight: 600;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: var(--primary);
+  color: var(--highlight);
 }
 .home-eyebrow::before {
   content: "";
   width: 22px;
   height: 1px;
-  background: var(--primary);
+  background: var(--highlight);
 }
 
 /* ───────────────────────── HERO ───────────────────────── */
@@ -544,7 +544,7 @@
   letter-spacing: 2.5px;
   text-transform: uppercase;
   /* Light-green step accent (matches the design's --green-light). */
-  color: color-mix(in oklab, var(--primary) 40%, white);
+  color: var(--highlight);
 }
 .home-panel-title {
   font-family: var(--font-display);
@@ -871,7 +871,7 @@
 }
 .home-why-badge i,
 .home-why-badge svg {
-  color: var(--primary);
+  color: var(--highlight);
 }
 .home-why-badge span {
   font-size: 12px;
@@ -999,7 +999,7 @@
   height: 46px;
   margin-bottom: 18px;
   border-radius: 13px;
-  color: var(--primary);
+  color: var(--highlight);
   background: color-mix(in oklab, var(--primary) 10%, transparent);
   border: 1px solid color-mix(in oklab, var(--primary) 18%, transparent);
   animation: home-why-icon-float 5.5s ease-in-out infinite;
@@ -1145,7 +1145,7 @@
   transition: all 0.3s;
 }
 .home-fit-card:hover .home-fit-arrow {
-  color: var(--primary);
+  color: var(--highlight);
   transform: translate(4px, -4px);
 }
 
@@ -1307,7 +1307,7 @@
 .home-loader-echo {
   position: absolute;
   inset: 0;
-  color: var(--primary);
+  color: var(--highlight);
   opacity: 0.16;
   transform: translate(8px, 4px);
   pointer-events: none;

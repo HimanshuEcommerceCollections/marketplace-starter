@@ -38,7 +38,7 @@ const columns: AdminColumn<AdminBooking>[] = [
     header: "Coordinator Stage",
     cell: (row) =>
       row.stage ? (
-        <span className="font-medium text-primary">{row.stage}</span>
+        <span className="font-medium text-highlight">{row.stage}</span>
       ) : (
         "—"
       ),

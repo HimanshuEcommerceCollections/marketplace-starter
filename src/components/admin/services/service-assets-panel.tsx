@@ -308,7 +308,7 @@ export function ServiceAssetsPanel({ slug }: { slug: string }) {
           className={cn(
             "flex items-center gap-2 rounded-md px-3 py-2 text-sm",
             notice.kind === "success"
-              ? "bg-primary/10 text-primary"
+              ? "bg-highlight/10 text-highlight"
               : "bg-destructive/10 text-destructive",
           )}
         >

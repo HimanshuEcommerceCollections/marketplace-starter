@@ -78,7 +78,7 @@ export function OfferingsSection({
                   )}
                 >
                   <div className="flex w-full items-center justify-between gap-2">
-                    <span className="inline-flex items-center justify-center rounded-lg bg-primary/10 p-2.5 text-primary">
+                    <span className="inline-flex items-center justify-center rounded-lg bg-highlight/10 p-2.5 text-highlight">
                       <Icon className="size-6" strokeWidth={1.75} aria-hidden />
                     </span>
                     {item.badge ? (

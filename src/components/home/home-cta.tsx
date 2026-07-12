@@ -132,7 +132,7 @@ export function HomeCta({ eyebrow, title, body, primaryCta }: HomeCtaProps) {
       <div aria-hidden className="home-cta-glow" />
       <Container className="relative z-10 flex flex-col items-center">
         {eyebrow ? (
-          <p className="js-cta-reveal mb-5 text-xs font-semibold uppercase tracking-widest text-primary">
+          <p className="js-cta-reveal mb-5 text-xs font-semibold uppercase tracking-widest text-highlight">
             {eyebrow}
           </p>
         ) : null}
@@ -141,7 +141,7 @@ export function HomeCta({ eyebrow, title, body, primaryCta }: HomeCtaProps) {
           className="js-cta-reveal max-w-3xl font-display text-4xl font-normal leading-tight tracking-tight text-background md:text-6xl"
         >
           {lead}
-          {emphasis ? <em className="italic text-primary">{emphasis}</em> : null}
+          {emphasis ? <em className="italic text-highlight">{emphasis}</em> : null}
         </h2>
         {body ? (
           <p className="js-cta-reveal mt-5 max-w-xl text-sm text-background/55">{body}</p>

@@ -172,7 +172,7 @@ export function PricingTiersSection({
                               "mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-full",
                               featured
                                 ? "bg-highlight/20 text-highlight"
-                                : "bg-primary/10 text-primary",
+                                : "bg-highlight/10 text-highlight",
                             )}
                           >
                             <Check className="size-3" strokeWidth={3} />

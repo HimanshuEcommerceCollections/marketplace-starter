@@ -43,7 +43,7 @@ export function ComparisonSection({
             <p className="px-5 py-3 text-sm font-semibold text-muted-foreground">
               {traditionalLabel}
             </p>
-            <p className="border-t border-border px-5 py-3 text-sm font-semibold text-primary sm:border-l sm:border-t-0">
+            <p className="border-t border-border px-5 py-3 text-sm font-semibold text-highlight sm:border-l sm:border-t-0">
               {elevateLabel}
             </p>
           </div>
@@ -59,7 +59,7 @@ export function ComparisonSection({
                   <span>{row.traditional}</span>
                 </div>
                 <div className="flex items-center gap-2 border-t border-border px-5 py-4 text-sm text-foreground sm:border-l sm:border-t-0">
-                  <Check aria-hidden className="size-4 shrink-0 text-primary" />
+                  <Check aria-hidden className="size-4 shrink-0 text-highlight" />
                   <span>{row.elevate}</span>
                 </div>
               </li>

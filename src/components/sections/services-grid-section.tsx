@@ -93,7 +93,7 @@ export function ServicesGridSection({
                     "mb-1 inline-flex w-fit items-center justify-center rounded-lg p-2",
                     comingSoon
                       ? "bg-muted-foreground/10 text-muted-foreground"
-                      : "bg-primary/10 text-primary",
+                      : "bg-highlight/10 text-highlight",
                   )}
                 >
                   {iconBox}

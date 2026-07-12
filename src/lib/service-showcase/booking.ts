@@ -8,12 +8,6 @@ import type {
   ShowcasePageConfig,
 } from "@/lib/service-showcase/page";
 
-const EMPTY_BOOKING: ShowcaseBookingData = {
-  specialties: [],
-  addOns: [],
-  priceChips: [],
-};
-
 export interface ShowcaseBookingResult {
   booking: ShowcaseBookingData;
   /** Base priceAmount (minor units) when the live config resolved. */
@@ -30,9 +24,23 @@ export interface ShowcaseBookingResult {
 export async function loadShowcaseBooking(
   page: ShowcasePageConfig,
 ): Promise<ShowcaseBookingResult> {
+  // Static editorial fallback for coming-soon services with no live config
+  // (mirrors the Yoga page). Live data below always takes precedence.
+  const fallbackSpecialties = page.specialties.items ?? [];
+  const fallbackChips = page.pricing.chips ?? [];
+
   const live = await fetchServiceBySlug(page.slug);
   const cfg = live ? await fetchServiceConfig(live.id) : null;
-  if (!cfg) return { booking: EMPTY_BOOKING, currency: "USD" };
+  if (!cfg) {
+    return {
+      booking: {
+        specialties: fallbackSpecialties,
+        addOns: [],
+        priceChips: fallbackChips,
+      },
+      currency: "USD",
+    };
+  }
 
   const currency = cfg.currency;
   const base = cfg.priceAmount;
@@ -44,23 +52,27 @@ export async function loadShowcaseBooking(
         ).filter((o) => o.status === "ACTIVE")
       : [];
 
+  // "Choose your focus" ← the focus group's options; fall back to static items.
+  const liveSpecialties = activeOptions(page.booking.focusGroupKey).map((o) => ({
+    title: o.label,
+    body: o.description ?? "",
+  }));
+  // "Simple, all-in prices" ← base priceAmount + each duration modifier;
+  // fall back to static chips.
+  const liveChips = activeOptions(page.booking.durationGroupKey).map((o) => ({
+    duration: o.label.replace(/\bminutes?\b/i, "min"),
+    price: wholeDollarLabel(base + o.priceModifier, currency) ?? "",
+  }));
+
   const booking: ShowcaseBookingData = {
-    // "Choose your focus" ← the focus group's options (label + description).
-    specialties: activeOptions(page.booking.focusGroupKey).map((o) => ({
-      title: o.label,
-      body: o.description ?? "",
-    })),
+    specialties: liveSpecialties.length ? liveSpecialties : fallbackSpecialties,
     // Optional add-ons ← label + description. The surcharge is not surfaced
     // on the marketing page; it applies in the booking flow.
     addOns: activeOptions(page.booking.addOnsGroupKey).map((o) => ({
       title: o.label,
       body: o.description ?? "",
     })),
-    // "Simple, all-in prices" ← base priceAmount + each duration modifier.
-    priceChips: activeOptions(page.booking.durationGroupKey).map((o) => ({
-      duration: o.label.replace(/\bminutes?\b/i, "min"),
-      price: wholeDollarLabel(base + o.priceModifier, currency) ?? "",
-    })),
+    priceChips: liveChips.length ? liveChips : fallbackChips,
   };
 
   return { booking, displayedPrice: base, currency };

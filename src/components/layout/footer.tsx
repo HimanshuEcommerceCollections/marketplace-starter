@@ -38,7 +38,7 @@ export function Footer({
             {tagline.accent ? (
               <>
                 <br />
-                <em className="text-surface-brand/50">{tagline.accent}</em>
+                <em className="text-highlight/80">{tagline.accent}</em>
               </>
             ) : null}
           </p>
@@ -68,7 +68,7 @@ export function Footer({
                   <li key={`${col.heading}-${link.label}`}>
                     <Link
                       href={link.href}
-                      className="text-sm text-surface-inverse-foreground/55 transition-colors hover:text-surface-brand"
+                      className="text-sm text-surface-inverse-foreground/55 transition-colors hover:text-highlight"
                     >
                       {link.label}
                     </Link>
@@ -91,7 +91,7 @@ export function Footer({
                 <Link
                   href="#"
                   aria-label={label}
-                  className="inline-flex rounded-md p-1 text-surface-inverse-foreground/45 transition-colors hover:text-surface-brand"
+                  className="inline-flex rounded-md p-1 text-surface-inverse-foreground/45 transition-colors hover:text-highlight"
                 >
                   <Icon className="size-4" aria-hidden />
                 </Link>
