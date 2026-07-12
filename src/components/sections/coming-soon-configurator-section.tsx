@@ -91,7 +91,7 @@ export function ComingSoonConfiguratorSection({
               return (
                 <fieldset key={group.id}>
                   <legend className="mb-3 flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <span className="text-primary">
+                    <span className="text-highlight">
                       <Icon className="size-4" strokeWidth={1.75} aria-hidden />
                     </span>
                     {group.label}

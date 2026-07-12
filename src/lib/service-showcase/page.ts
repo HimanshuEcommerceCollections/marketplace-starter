@@ -45,6 +45,12 @@ export interface ShowcaseSpecialtiesSection {
   sub?: string;
   /** Editorial heading for the optional add-ons sub-group (options come from the API). */
   addOnsHeading?: string;
+  /**
+   * Static fallback focus cards, used ONLY when the live focus group resolves no
+   * ACTIVE options (e.g. a coming-soon service with no booking config yet).
+   * Mirrors the Yoga page: live data always wins; this backfills editorial pages.
+   */
+  items?: ShowcaseSpecialty[];
 }
 
 /**
@@ -72,6 +78,11 @@ export interface ShowcasePricingSection {
   heading: string;
   note?: string;
   cta: NavItem;
+  /**
+   * Static fallback price chips, used ONLY when the live duration group resolves
+   * no ACTIVE options (coming-soon services). Live data always wins.
+   */
+  chips?: ShowcasePriceChip[];
 }
 
 /**
@@ -145,8 +156,10 @@ export interface ShowcasePageConfig {
 
 /**
  * Booking options resolved from the live service config API (database is the
- * single source of truth). The route fetches these and passes them into the
- * page; there is no static fallback list.
+ * single source of truth for bookable services). The route fetches these and
+ * passes them into the page. For coming-soon services with no live config, the
+ * loader backfills from the page config's static `specialties.items` /
+ * `pricing.chips` (Yoga-style editorial fallback) so the bands still render.
  */
 export interface ShowcaseBookingData {
   /** "Choose your focus" cards — the focus group's ACTIVE options. */

@@ -37,6 +37,8 @@ import { elevateYoga } from "@brands/elevate/yoga.config";
 import { elevateLifeCoaching } from "@brands/elevate/life-coaching.config";
 import { elevateBeauty } from "@brands/elevate/beauty.config";
 import { elevateNutrition } from "@brands/elevate/nutrition.config";
+import { elevatePhysicalTherapy } from "@brands/elevate/physical-therapy.config";
+import { elevatePersonalTraining } from "@brands/elevate/personal-training.config";
 import elevateServices from "@brands/elevate/services.json";
 import elevatePricing from "@brands/elevate/pricing.v1.json";
 
@@ -72,7 +74,7 @@ export interface LoadedBrand {
   yogaPage: YogaPageConfig;
   /** Bespoke "Life Coaching" service landing page content. */
   lifeCoachingPage: LifeCoachingPageConfig;
-  /** Shared-template showcase landing pages (Beauty, Nutrition), by slug. */
+  /** Shared-template showcase landing pages (Beauty, Nutrition, Physical Therapy, Personal Training), by slug. */
   showcasePages: Record<string, ShowcasePageConfig>;
   /** Raw JSON — validated lazily by catalog/pricing loaders via zod. */
   services: unknown;
@@ -101,6 +103,8 @@ const REGISTRY: Record<BrandId, LoadedBrand> = {
     showcasePages: {
       [elevateBeauty.slug]: elevateBeauty,
       [elevateNutrition.slug]: elevateNutrition,
+      [elevatePhysicalTherapy.slug]: elevatePhysicalTherapy,
+      [elevatePersonalTraining.slug]: elevatePersonalTraining,
     },
     services: elevateServices,
     pricing: elevatePricing,

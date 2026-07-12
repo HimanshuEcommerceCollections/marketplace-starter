@@ -14,7 +14,7 @@
   font-weight: 600;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: color-mix(in oklab, var(--primary) 40%, white);
+  color: var(--highlight);
 }
 
 /* Shared centered section head (benefits, steps, requirements, FAQ). */
@@ -23,7 +23,7 @@
   margin-bottom: 64px;
 }
 .fp-section-head .fp-eyebrow {
-  color: var(--primary);
+  color: var(--highlight);
   margin-bottom: 14px;
 }
 .fp-section-head h2 {
@@ -213,7 +213,7 @@
 .fp-benefit-icon svg {
   width: 22px;
   height: 22px;
-  color: var(--primary);
+  color: var(--highlight);
 }
 .fp-benefit-card h3 {
   margin-bottom: 10px;
@@ -384,7 +384,7 @@
   border: 1px solid color-mix(in oklab, var(--primary) 22%, transparent);
   font-size: 13px;
   font-weight: 600;
-  color: var(--primary);
+  color: var(--highlight);
 }
 .fp-step-title {
   margin-bottom: 8px;
@@ -437,7 +437,7 @@
   width: 19px;
   height: 19px;
   margin-top: 1px;
-  color: var(--primary);
+  color: var(--highlight);
 }
 .fp-req-item b {
   font-weight: 600;
@@ -471,7 +471,7 @@
   transition: color 0.2s;
 }
 .fp-faq-trigger:hover {
-  color: var(--primary);
+  color: var(--highlight);
 }
 .fp-faq-trigger:focus-visible {
   outline: 2px solid var(--ring);
@@ -481,7 +481,7 @@
   flex-shrink: 0;
   width: 18px;
   height: 18px;
-  color: var(--primary);
+  color: var(--highlight);
   transition: transform 0.35s;
 }
 .fp-faq-trigger[data-state="open"] .fp-faq-icon {

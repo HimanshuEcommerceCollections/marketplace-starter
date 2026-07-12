@@ -13,7 +13,7 @@
   font-weight: 600;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: color-mix(in oklab, var(--primary) 40%, white);
+  color: var(--highlight);
 }
 
 /* ───────────────────────── HERO ───────────────────────── */
@@ -120,10 +120,10 @@
     border-color 0.2s;
 }
 .terms-toc a:hover {
-  color: var(--primary);
+  color: var(--highlight);
 }
 .terms-toc a.on {
-  color: var(--primary);
+  color: var(--highlight);
   border-left-color: var(--primary);
   font-weight: 500;
 }
@@ -163,7 +163,7 @@
   margin-bottom: 0;
 }
 .terms-section a {
-  color: var(--primary);
+  color: var(--highlight);
   font-weight: 500;
   text-decoration: none;
 }

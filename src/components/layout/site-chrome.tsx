@@ -39,6 +39,8 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
     pathname === "/services/life-coaching" ||
     pathname === "/services/beauty" ||
     pathname === "/services/nutrition-coaching" ||
+    pathname === "/services/physical-therapy" ||
+    pathname === "/services/personal-training" ||
     pathname === "/how-it-works" ||
     pathname === "/pricing" ||
     pathname === "/terms" ||

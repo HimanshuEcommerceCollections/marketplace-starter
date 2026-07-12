@@ -80,7 +80,7 @@ export function CoordinatorSection({
                   key={item.title}
                   className="flex items-start gap-4 rounded-xl border border-border bg-card p-4"
                 >
-                  <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-highlight/10 text-highlight">
                     <Icon className="size-5" strokeWidth={1.75} aria-hidden />
                   </span>
                   <div className="min-w-0">

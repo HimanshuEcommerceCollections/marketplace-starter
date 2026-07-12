@@ -135,7 +135,7 @@ function PaymentForm({
       {/* Payment card — houses the Stripe Element */}
       <div className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
         <div className="mb-4 flex items-center gap-2 text-sm font-medium text-foreground">
-          <Lock aria-hidden strokeWidth={1.75} className="size-4 text-primary" />
+          <Lock aria-hidden strokeWidth={1.75} className="size-4 text-highlight" />
           Payment details
         </div>
 
@@ -213,7 +213,7 @@ function PaymentForm({
             <ShieldCheck
               aria-hidden
               strokeWidth={1.75}
-              className="size-3.5 text-primary"
+              className="size-3.5 text-highlight"
             />
             {point}
           </li>

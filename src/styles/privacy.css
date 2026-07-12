@@ -165,7 +165,7 @@
   margin-bottom: 0;
 }
 .pv-section a {
-  color: var(--primary);
+  color: var(--highlight);
   font-weight: 500;
   text-decoration: none;
 }
@@ -194,7 +194,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--primary);
+  background: var(--highlight);
 }
 .pv-bullets li b,
 .pv-callout b {

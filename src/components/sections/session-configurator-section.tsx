@@ -73,7 +73,7 @@ function PreviewGroups({ groups }: { groups: ConfiguratorGroup[] }) {
             className="flex h-full flex-col gap-4 rounded-xl bg-card p-6"
           >
             <p className="flex items-center gap-2 text-sm font-semibold text-foreground">
-              <span className="text-primary">
+              <span className="text-highlight">
                 <Icon className="size-4" strokeWidth={1.75} aria-hidden />
               </span>
               {group.label}

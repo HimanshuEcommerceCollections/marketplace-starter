@@ -68,7 +68,7 @@ export function InterestListSection({
                   <li key={bullet.text} className="flex items-center gap-3">
                     <span
                       aria-hidden
-                      className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"
+                      className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-highlight/10 text-highlight"
                     >
                       <Icon className="size-5" strokeWidth={1.75} />
                     </span>

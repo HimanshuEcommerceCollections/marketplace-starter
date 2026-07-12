@@ -56,7 +56,7 @@
   font-weight: 600;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: color-mix(in oklab, var(--primary) 40%, white);
+  color: var(--highlight);
 }
 .svcs-hero-title {
   margin-bottom: 24px;
@@ -129,7 +129,7 @@
 }
 .svcs-filter-btn:hover {
   background: color-mix(in oklab, var(--primary) 8%, transparent);
-  color: var(--primary);
+  color: var(--highlight);
 }
 .svcs-filter-btn:focus-visible {
   outline: 2px solid var(--ring);
@@ -243,7 +243,7 @@
   font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--primary);
+  color: var(--highlight);
 }
 .svcs-card-price {
   position: absolute;
@@ -291,7 +291,7 @@
   border-radius: 10px;
   background: color-mix(in oklab, var(--background) 82%, transparent);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  color: var(--primary);
+  color: var(--highlight);
 }
 .svcs-card-icon img,
 .svcs-card-icon svg {
@@ -426,7 +426,7 @@
   width: 16px;
   height: 16px;
   flex-shrink: 0;
-  color: color-mix(in oklab, var(--primary) 40%, white);
+  color: var(--highlight);
 }
 
 /* ───────────────────────── HOW (4 STEPS) ───────────────────────── */
@@ -447,7 +447,7 @@
   margin: 0 auto;
 }
 .svcs-steps .svcs-eyebrow {
-  color: var(--primary);
+  color: var(--highlight);
 }
 .svcs-steps-heading {
   margin-bottom: 10px;
@@ -512,7 +512,7 @@
   border: 1px solid color-mix(in oklab, var(--primary) 22%, transparent);
   font-size: 13px;
   font-weight: 600;
-  color: var(--primary);
+  color: var(--highlight);
 }
 .svcs-step-title {
   margin-bottom: 8px;

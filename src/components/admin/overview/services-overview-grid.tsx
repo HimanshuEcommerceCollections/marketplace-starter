@@ -13,7 +13,7 @@ export function ServicesOverviewGrid({ items }: ServicesOverviewGridProps) {
       {items.map((item) => (
         <Card key={item.name} className="p-4">
           <p className="font-medium text-foreground">{item.name}</p>
-          <p className="mt-2 text-sm font-medium text-primary">
+          <p className="mt-2 text-sm font-medium text-highlight">
             {item.active} active
           </p>
           {item.pending > 0 ? (

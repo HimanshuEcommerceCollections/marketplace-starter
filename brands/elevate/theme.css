@@ -11,33 +11,33 @@
   --font-display-bold: var(--font-montserrat), var(--font-inter), sans-serif;
   --radius: 0.875rem;
 
-  /* surfaces — warm cream / warm white */
-  --background: oklch(0.965 0.013 84);
-  --foreground: oklch(0.255 0.012 65);
-  --card: oklch(0.99 0.006 84);
-  --card-foreground: oklch(0.255 0.012 65);
-  --popover: oklch(0.99 0.006 84);
-  --popover-foreground: oklch(0.255 0.012 65);
-  --muted: oklch(0.93 0.02 83);
-  --muted-foreground: oklch(0.48 0.018 70);
-  --secondary: oklch(0.9 0.022 82);
-  --secondary-foreground: oklch(0.3 0.018 70);
-  --accent: oklch(0.92 0.03 130);
-  --accent-foreground: oklch(0.33 0.045 130);
-  --border: oklch(0.88 0.016 82);
-  --input: oklch(0.86 0.016 82);
-  --ring: oklch(0.45 0.055 128);
+  /* surfaces — cool near-neutral paper (mock: #f6f5f2 / #efecea / #fff) */
+  --background: oklch(0.966 0.001 100);
+  --foreground: oklch(0.2 0 0); /* near-black #111 — headings + body */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0 0);
+  --muted: oklch(0.94 0.0015 100);
+  --muted-foreground: oklch(0.55 0.003 100); /* neutral grey (mock body/label) */
+  --secondary: oklch(0.9 0.002 100);
+  --secondary-foreground: oklch(0.3 0.004 100);
+  --accent: oklch(0.93 0.003 100);
+  --accent-foreground: oklch(0.3 0.004 100);
+  --border: oklch(0.885 0.002 100); /* neutral #dddbd6 */
+  --input: oklch(0.86 0.002 100);
+  --ring: #6b8f6b; /* green focus ring (matches highlight) */
 
-  /* brand — deep olive / sage */
-  --primary: oklch(0.44 0.055 128);
-  --primary-foreground: oklch(0.98 0.008 84);
+  /* brand — near-black (mock buttons/CTAs are #111, not green) */
+  --primary: oklch(0.2 0 0);
+  --primary-foreground: oklch(0.98 0.002 100);
 
   /* extended semantic surfaces */
-  --highlight: #6b8f6b; /* sage green (exact design accent) */
-  --highlight-foreground: oklch(0.99 0.006 84);
-  --notice: #a06a45; /* exact draft-notice terracotta (design reference) */
-  --surface-inverse: oklch(0.25 0.014 62); /* espresso */
-  --surface-inverse-foreground: oklch(0.93 0.012 84);
-  --surface-brand: oklch(0.51 0.045 132); /* mid sage */
-  --surface-brand-foreground: oklch(0.98 0.008 84);
+  --highlight: #6b8f6b; /* sage green — the ONLY accent hue (mock --green) */
+  --highlight-foreground: oklch(0.98 0.002 100);
+  --notice: #a06a45; /* draft-notice terracotta (draft banners only) */
+  --surface-inverse: oklch(0.17 0 0); /* near-black #111 dark bands/footer */
+  --surface-inverse-foreground: oklch(0.94 0.003 100);
+  --surface-brand: oklch(0.17 0 0); /* near-black (mock CTA band is also #111) */
+  --surface-brand-foreground: oklch(0.98 0.002 100);
 }
