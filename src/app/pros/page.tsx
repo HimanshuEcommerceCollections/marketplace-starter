@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "Join Raleigh's premier wellness platform. Keep 80% of every session, set your own hours, and let a coordinator fill your calendar with quality clients.",
 };
 
-export default function ProApplyPage() {
+export default function ForProsPage() {
   const config = getForProsPage();
   return <ForProsLandingPage config={config} />;
 }

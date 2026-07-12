@@ -1,45 +1,53 @@
+import Image from "next/image";
 import Link from "next/link";
-import { Container } from "@/components/layout/container";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { formatMoney } from "@/lib/money";
 import type { Service } from "@/lib/catalog/types";
 
+/**
+ * Generic service-detail hero for the fallback /services/[slug] route (services
+ * with no bespoke landing page). Reuses the shared showcase hero styling
+ * (`.ssp-hero*` in service-showcase.css) so it matches the bespoke landing
+ * pages: full-bleed cover photo + dark scrim, translucent eyebrow, off-white
+ * DM Serif title, summary subline, and the shared buttons. Falls back to a
+ * solid dark band (`.ssp-hero-bg` background-color) when the service has no
+ * cover image.
+ */
 export function ServiceHero({ service }: { service: Service }) {
+  const cover = service.cover_images?.[0];
   return (
-    <section className="border-b border-border bg-secondary/30">
-      <Container className="flex flex-col items-center py-10 text-center md:py-14">
-        <nav aria-label="Breadcrumb" className="mb-4 text-sm text-muted-foreground">
-          <Link href="/services" className="hover:text-foreground">
-            Services
-          </Link>
-          <span aria-hidden> / </span>
-          <span className="text-foreground">{service.title}</span>
-        </nav>
-        <Badge variant="secondary">{service.category}</Badge>
-        <h1 className="mt-3 font-display text-4xl font-normal tracking-tight md:text-5xl">
+    <section className="ssp-hero" aria-labelledby="svc-hero-title">
+      <div aria-hidden className="ssp-hero-bg">
+        {cover ? (
+          <Image src={cover} alt="" fill priority sizes="100vw" />
+        ) : null}
+      </div>
+      <div className="ssp-hero-inner">
+        {service.category ? (
+          <p className="hero-eyebrow">{service.category}</p>
+        ) : null}
+        <h1 id="svc-hero-title" className="hero-title">
           {service.title}
         </h1>
-        <p className="mt-3 max-w-prose text-muted-foreground">
-          {service.summary}
-        </p>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
-          <Button asChild size="lg">
-            <Link href={`/book?service=${service.id}`}>Book now</Link>
-          </Button>
+        {service.summary ? (
+          <p className="hero-sub">{service.summary}</p>
+        ) : null}
+        <div className="ssp-hero-btns">
+          <Link href={`/book?service=${service.id}`} className="ssp-btn-p">
+            Book now →
+          </Link>
           {service.from_price != null ? (
-            <p className="text-sm">
-              <span className="text-muted-foreground">From </span>
-              <span className="text-lg font-semibold">
+            <p className="hero-price">
+              From{" "}
+              <strong>
                 {formatMoney({
                   amount: service.from_price,
                   currency: service.currency,
                 })}
-              </span>
+              </strong>
             </p>
           ) : null}
         </div>
-      </Container>
+      </div>
     </section>
   );
 }

@@ -110,12 +110,20 @@
   min-height: 68vh;
   overflow: hidden;
 }
-/* Photo per service — see VARIANT section. */
+/* Photo per service — see VARIANT section. Solid dark floor shows through when
+   a page provides no hero photo (e.g. a /services/[slug] service with no cover);
+   hidden under the opaque cover photo otherwise. */
 .ssp-hero-bg {
   position: absolute;
   inset: 0;
+  background-color: var(--surface-inverse);
   background-size: cover;
   background-position: center;
+}
+/* Cover image rendered via next/image on the generic /services/[slug] hero
+   (the bespoke pages set a CSS background-image instead — see VARIANTS). */
+.ssp-hero-bg img {
+  object-fit: cover;
 }
 /* Dark scrim over the photo. */
 .ssp-hero-bg::after {
@@ -142,35 +150,11 @@
      pill on short viewports, while the section centers it vertically. */
   padding: var(--hero-safe-top) 48px 72px;
 }
-.ssp-hero-eyebrow {
-  margin-bottom: 22px;
-}
-.ssp-hero-title {
-  margin-bottom: 24px;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(42px, 7vw, 104px);
-  letter-spacing: -0.03em;
-  line-height: 1.02;
-  color: #faf8f4;
-  text-shadow:
-    0 3px 28px rgba(0, 0, 0, 0.6),
-    0 1px 4px rgba(0, 0, 0, 0.7);
-}
-.ssp-hero-title em {
-  font-style: italic;
-  color: var(--highlight);
-}
-.ssp-hero-sub {
-  max-width: 520px;
-  font-size: 16px;
-  line-height: 1.7;
-  color: rgba(250, 248, 244, 0.88);
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55);
-}
+/* Hero eyebrow/title/subline/price typography is shared — see hero.css. */
 .ssp-hero-btns {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
   gap: 14px;
   margin-top: 36px;

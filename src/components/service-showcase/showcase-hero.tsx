@@ -34,11 +34,9 @@ export function ShowcaseHero({
       <div aria-hidden className="ssp-hero-bg" />
       <div className="ssp-hero-inner">
         {eyebrow ? (
-          <p className="js-ssp-hero-reveal ssp-eyebrow ssp-hero-eyebrow">
-            {eyebrow}
-          </p>
+          <p className="js-ssp-hero-reveal hero-eyebrow">{eyebrow}</p>
         ) : null}
-        <h1 id="ssp-hero-title" className="js-ssp-hero-reveal ssp-hero-title">
+        <h1 id="ssp-hero-title" className="js-ssp-hero-reveal hero-title">
           {title}
           {titleAccent ? (
             <>
@@ -47,7 +45,7 @@ export function ShowcaseHero({
             </>
           ) : null}
         </h1>
-        {sub ? <p className="js-ssp-hero-reveal ssp-hero-sub">{sub}</p> : null}
+        {sub ? <p className="js-ssp-hero-reveal hero-sub">{sub}</p> : null}
         <div className="js-ssp-hero-reveal ssp-hero-btns">
           <Link href={primaryCta.href} className="ssp-btn-p">
             {primaryCta.label} →

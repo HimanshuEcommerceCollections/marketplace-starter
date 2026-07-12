@@ -34,11 +34,9 @@ export function LifeCoachingHero({
       <div aria-hidden className="lc-hero-bg" />
       <div className="lc-hero-inner">
         {eyebrow ? (
-          <p className="js-lc-hero-reveal lc-eyebrow lc-hero-eyebrow">
-            {eyebrow}
-          </p>
+          <p className="js-lc-hero-reveal hero-eyebrow">{eyebrow}</p>
         ) : null}
-        <h1 id="lc-hero-title" className="js-lc-hero-reveal lc-hero-title">
+        <h1 id="lc-hero-title" className="js-lc-hero-reveal hero-title">
           {title}
           {titleAccent ? (
             <>
@@ -47,7 +45,7 @@ export function LifeCoachingHero({
             </>
           ) : null}
         </h1>
-        {sub ? <p className="js-lc-hero-reveal lc-hero-sub">{sub}</p> : null}
+        {sub ? <p className="js-lc-hero-reveal hero-sub">{sub}</p> : null}
         <div className="js-lc-hero-reveal lc-hero-btns">
           <Link href={primaryCta.href} className="lc-btn-white">
             {primaryCta.label} →

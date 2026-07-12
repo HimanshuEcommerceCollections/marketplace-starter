@@ -58,29 +58,7 @@
   text-transform: uppercase;
   color: var(--highlight);
 }
-.svcs-hero-title {
-  margin-bottom: 24px;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(42px, 7vw, 104px);
-  letter-spacing: -0.03em;
-  line-height: 1.02;
-  color: #faf8f4;
-  text-shadow:
-    0 3px 28px rgba(0, 0, 0, 0.6),
-    0 1px 4px rgba(0, 0, 0, 0.7);
-}
-.svcs-hero-title em {
-  font-style: italic;
-  color: var(--highlight);
-}
-.svcs-hero-sub {
-  max-width: 500px;
-  font-size: 16px;
-  line-height: 1.7;
-  color: rgba(250, 248, 244, 0.88);
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55);
-}
+/* Hero eyebrow/title/subline typography is shared — see hero.css. */
 
 /* ───────────────────────── FILTER BAR ─────────────────────────
    Sticks below the fixed floating nav (--nav-height) with a gap sized to

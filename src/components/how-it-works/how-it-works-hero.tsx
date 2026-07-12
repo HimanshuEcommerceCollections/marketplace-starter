@@ -31,11 +31,9 @@ export function HowItWorksHero({
       <div aria-hidden className="hiw-hero-bg" />
       <div className="hiw-hero-inner">
         {eyebrow ? (
-          <p className="js-hiw-hero-reveal hiw-eyebrow hiw-hero-eyebrow">
-            {eyebrow}
-          </p>
+          <p className="js-hiw-hero-reveal hero-eyebrow">{eyebrow}</p>
         ) : null}
-        <h1 id="hiw-hero-title" className="js-hiw-hero-reveal hiw-hero-title">
+        <h1 id="hiw-hero-title" className="js-hiw-hero-reveal hero-title">
           {title}
           {titleAccent ? (
             <>
@@ -44,7 +42,7 @@ export function HowItWorksHero({
             </>
           ) : null}
         </h1>
-        {sub ? <p className="js-hiw-hero-reveal hiw-hero-sub">{sub}</p> : null}
+        {sub ? <p className="js-hiw-hero-reveal hero-sub">{sub}</p> : null}
       </div>
     </section>
   );

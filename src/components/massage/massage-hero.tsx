@@ -34,11 +34,9 @@ export function MassageHero({
       <div aria-hidden className="msg-hero-bg" />
       <div className="msg-hero-inner">
         {eyebrow ? (
-          <p className="js-msg-hero-reveal msg-eyebrow msg-hero-eyebrow">
-            {eyebrow}
-          </p>
+          <p className="js-msg-hero-reveal hero-eyebrow">{eyebrow}</p>
         ) : null}
-        <h1 id="msg-hero-title" className="js-msg-hero-reveal msg-hero-title">
+        <h1 id="msg-hero-title" className="js-msg-hero-reveal hero-title">
           {title}
           {titleAccent ? (
             <>
@@ -47,7 +45,7 @@ export function MassageHero({
             </>
           ) : null}
         </h1>
-        {sub ? <p className="js-msg-hero-reveal msg-hero-sub">{sub}</p> : null}
+        {sub ? <p className="js-msg-hero-reveal hero-sub">{sub}</p> : null}
         <div className="js-msg-hero-reveal msg-hero-btns">
           <Link href={primaryCta.href} className="msg-btn-p">
             {primaryCta.label} →

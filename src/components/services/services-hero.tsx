@@ -20,8 +20,8 @@ export function ServicesHero({ eyebrow, title, titleAccent, sub }: ServicesPageH
     <section ref={scope} className="svcs-hero" aria-labelledby="svcs-hero-title">
       <div aria-hidden className="svcs-hero-bg" />
       <div className="svcs-hero-inner">
-        {eyebrow ? <p className="js-svcs-hero-reveal svcs-eyebrow">{eyebrow}</p> : null}
-        <h1 id="svcs-hero-title" className="js-svcs-hero-reveal svcs-hero-title">
+        {eyebrow ? <p className="js-svcs-hero-reveal hero-eyebrow">{eyebrow}</p> : null}
+        <h1 id="svcs-hero-title" className="js-svcs-hero-reveal hero-title">
           {title}
           {titleAccent ? (
             <>
@@ -30,7 +30,7 @@ export function ServicesHero({ eyebrow, title, titleAccent, sub }: ServicesPageH
             </>
           ) : null}
         </h1>
-        {sub ? <p className="js-svcs-hero-reveal svcs-hero-sub">{sub}</p> : null}
+        {sub ? <p className="js-svcs-hero-reveal hero-sub">{sub}</p> : null}
       </div>
     </section>
   );
