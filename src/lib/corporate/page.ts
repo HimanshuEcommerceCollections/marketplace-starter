@@ -1,19 +1,76 @@
+import type { NavItem } from "@/lib/brand/types";
+
 /**
- * Data-driven configuration for the "Corporate Wellness" page (the destination
- * of the Corporate navbar link). Brand-specific copy lives in
- * brands/<slug>/corporate.config.ts. The page is a focused proposal-request
- * (inquiry) page: a shared full-bleed hero, a stub inquiry form with a
- * "what happens next" sidebar, and a stats band. The hero uses the shared
- * `.hero-*` typography (see src/styles/hero.css); the rest is styled by
- * src/styles/corporate.css.
+ * Configuration for the two Corporate pages.
+ *
+ * - `CorporatePageConfig` — the marketing landing at /corporate (the Corporate
+ *   navbar destination): hero → programs → how-it-works → CTA. Its "Request a
+ *   proposal" CTA funnels to the inquiry page.
+ * - `CorporateInquiryConfig` — the proposal-request page at /corporate/inquiry:
+ *   hero → stub inquiry form + "what happens next" sidebar → stats band.
+ *
+ * Both heroes use the shared `.hero-*` typography (src/styles/hero.css); the
+ * bespoke sections are styled by src/styles/corporate.css.
  */
 
+/** A numbered step (shared by the landing "process" and the inquiry sidebar). */
 export interface CorporateStep {
-  /** Ordinal chip label (e.g. "01"). */
+  /** Ordinal chip/figure label (e.g. "01"). */
   num: string;
   title: string;
   body: string;
 }
+
+/* ───────────────────────── LANDING ───────────────────────── */
+
+export interface CorporateProgram {
+  /** Phosphor icon name (resolved by getPhosphorIcon). */
+  icon: string;
+  title: string;
+  body: string;
+  /** Supporting bullet points. */
+  points: string[];
+}
+
+export interface CorporatePageConfig {
+  hero: {
+    eyebrow?: string;
+    /** First title line (e.g. "Wellness."). */
+    title: string;
+    /** Accent line rendered in the highlight color (e.g. "At work."). */
+    titleAccent?: string;
+    sub?: string;
+    /** Full-bleed hero photo (public path + alt), rendered with next/image. */
+    image: { src: string; alt: string };
+  };
+  /** "Three ways to bring us in" — program cards. */
+  programs: {
+    eyebrow?: string;
+    heading: string;
+    headingAccent?: string;
+    intro?: string;
+    items: CorporateProgram[];
+  };
+  /** "Up and running in a week" — numbered process steps. */
+  process: {
+    eyebrow?: string;
+    heading: string;
+    headingAccent?: string;
+    steps: CorporateStep[];
+  };
+  /** Closing CTA band — funnels to the inquiry page. */
+  cta: {
+    eyebrow?: string;
+    title: string;
+    titleAccent?: string;
+    sub?: string;
+    primaryCta: NavItem;
+    secondaryCta?: NavItem;
+    chips?: string[];
+  };
+}
+
+/* ───────────────────────── INQUIRY ───────────────────────── */
 
 export interface CorporateStat {
   /** Headline figure (e.g. "8", "1 day", "5–500+"). */
@@ -21,26 +78,20 @@ export interface CorporateStat {
   label: string;
 }
 
-export interface CorporatePageConfig {
+export interface CorporateInquiryConfig {
   hero: {
     eyebrow?: string;
-    /** First title line (e.g. "Let's build."). */
     title: string;
-    /** Accent line rendered in the highlight color (e.g. "Your program."). */
     titleAccent?: string;
     sub?: string;
-    /** Full-bleed hero photo (public path + alt), rendered with next/image. */
     image: { src: string; alt: string };
   };
   /** "Request a proposal" inquiry form (stub-only). */
   form: {
     heading: string;
     intro?: string;
-    /** Team-size <select> options. */
     teamSizes: string[];
-    /** Multi-select "services of interest" chips. */
     services: string[];
-    /** Program-format <select> options. */
     formats: string[];
     submitLabel: string;
     note?: string;
@@ -60,7 +111,6 @@ export interface CorporatePageConfig {
   /** Dark stats band under the form. */
   stats: {
     heading: string;
-    /** Accent line rendered in the highlight color. */
     headingAccent?: string;
     sub?: string;
     items: CorporateStat[];

@@ -339,3 +339,274 @@
     padding-right: 20px;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   CORPORATE MARKETING LANDING (/corporate) — hero (shared .hero-*) over
+   programs, how-it-works, and a CTA band that funnels to the inquiry page.
+   ══════════════════════════════════════════════════════════════════ */
+
+.corp-kicker {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--highlight);
+  margin-bottom: 10px;
+}
+.corp-sec-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(32px, 4vw, 54px);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--foreground);
+}
+.corp-sec-title em {
+  font-style: italic;
+  color: var(--highlight);
+}
+
+/* ───────────────────────── PROGRAMS ───────────────────────── */
+.corp-programs {
+  padding: 90px 48px 100px;
+  border-bottom: 1px solid var(--border);
+}
+.corp-programs-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+.corp-programs-head {
+  margin-bottom: 52px;
+  max-width: 640px;
+}
+.corp-programs-intro {
+  font-size: 15px;
+  color: var(--muted-foreground);
+  line-height: 1.75;
+  margin-top: 14px;
+}
+.corp-prog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.corp-prog-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 30px 28px;
+  transition: box-shadow 0.3s;
+}
+.corp-prog-card:hover {
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.12);
+}
+.corp-prog-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.corp-prog-icon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--foreground);
+}
+.corp-prog-card h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  margin-bottom: 10px;
+}
+.corp-prog-card p {
+  font-size: 14px;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.corp-prog-card ul {
+  list-style: none;
+}
+.corp-prog-card ul li {
+  position: relative;
+  padding: 4px 0 4px 20px;
+  font-size: 13px;
+  color: var(--muted-foreground);
+  line-height: 1.6;
+}
+.corp-prog-card ul li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 12px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--highlight);
+}
+
+/* ───────────────────────── HOW IT WORKS ───────────────────────── */
+.corp-how {
+  padding: 90px 48px 100px;
+  border-bottom: 1px solid var(--border);
+  background: var(--muted);
+}
+.corp-how-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+.corp-how-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 48px;
+  margin-top: 52px;
+}
+.corp-how-step {
+  transition: transform 0.3s;
+}
+.corp-how-step:hover {
+  transform: translateY(-4px);
+}
+.corp-how-num {
+  font-family: var(--font-display);
+  font-size: 72px;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--border);
+  margin-bottom: 18px;
+  transition: color 0.4s;
+}
+.corp-how-step:hover .corp-how-num {
+  color: var(--highlight);
+}
+.corp-how-step-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 10px;
+}
+.corp-how-desc {
+  font-size: 14px;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+
+/* ───────────────────────── CTA BAND ───────────────────────── */
+.corp-cta {
+  position: relative;
+  overflow: hidden;
+  padding: 110px 48px;
+  text-align: center;
+  background: var(--surface-inverse);
+}
+.corp-cta-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.corp-cta-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--highlight);
+  margin-bottom: 24px;
+}
+.corp-cta-heading {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 68px);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  color: #faf8f4;
+  margin: 0 auto 20px;
+}
+.corp-cta-heading em {
+  font-style: italic;
+  color: var(--highlight);
+}
+.corp-cta-sub {
+  font-size: 15px;
+  color: rgba(250, 248, 244, 0.45);
+  margin-bottom: 40px;
+}
+.corp-cta-btns {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.corp-cta-p {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--card);
+  color: var(--foreground);
+  padding: 14px 34px;
+  border-radius: 100px;
+  font-size: 14.5px;
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.3s;
+}
+.corp-cta-p:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px -8px rgba(255, 255, 255, 0.3);
+}
+.corp-cta-ghost {
+  font-size: 14px;
+  color: rgba(250, 248, 244, 0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.corp-cta-ghost:hover {
+  color: #faf8f4;
+}
+.corp-cta-chips {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 36px;
+}
+.corp-cta-chip {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(250, 248, 244, 0.55);
+  background: rgba(250, 248, 244, 0.06);
+  border: 1px solid rgba(250, 248, 244, 0.14);
+  padding: 8px 18px;
+  border-radius: 100px;
+}
+
+/* ───────── LANDING RESPONSIVE ───────── */
+@media (max-width: 900px) {
+  .corp-prog-grid {
+    grid-template-columns: 1fr;
+  }
+  .corp-how-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+}
+@media (max-width: 640px) {
+  .corp-programs,
+  .corp-how {
+    padding: 64px 20px 72px;
+  }
+  .corp-how-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .corp-cta {
+    padding: 90px 20px;
+  }
+}
+

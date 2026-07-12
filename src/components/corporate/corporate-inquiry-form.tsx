@@ -3,7 +3,7 @@
 import * as React from "react";
 import { submitCorporateQuoteStub } from "@/lib/forms/stub-submit";
 import type { FieldErrors } from "@/lib/forms/validate";
-import type { CorporatePageConfig } from "@/lib/corporate/page";
+import type { CorporateInquiryConfig } from "@/lib/corporate/page";
 
 function FieldError({ id, errors }: { id: string; errors?: string[] }) {
   if (!errors?.length) return null;
@@ -24,7 +24,7 @@ function FieldError({ id, errors }: { id: string; errors?: string[] }) {
 export function CorporateInquiryForm({
   config,
 }: {
-  config: CorporatePageConfig["form"];
+  config: CorporateInquiryConfig["form"];
 }) {
   const [selected, setSelected] = React.useState<string[]>([]);
   const [errors, setErrors] = React.useState<FieldErrors>();

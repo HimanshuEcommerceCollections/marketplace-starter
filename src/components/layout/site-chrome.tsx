@@ -43,7 +43,8 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
     pathname === "/faq" ||
     pathname === "/contact" ||
     pathname === "/privacy" ||
-    pathname === "/corporate";
+    pathname === "/corporate" ||
+    pathname === "/corporate/inquiry";
 
   return (
     <>

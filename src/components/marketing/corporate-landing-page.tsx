@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
-import { CorporateInquiryForm } from "@/components/corporate/corporate-inquiry-form";
+import Link from "next/link";
+import { getPhosphorIcon } from "@/lib/icons-phosphor";
 import type { CorporatePageConfig } from "@/lib/corporate/page";
 
 export interface CorporateLandingPageProps {
@@ -7,16 +10,16 @@ export interface CorporateLandingPageProps {
 }
 
 /**
- * "Corporate Wellness" page — the destination of the Corporate navbar link.
- * A focused proposal-request (inquiry) page: a shared full-bleed hero
- * (.ssp-hero* + .hero-*), a stub inquiry form with a "what happens next"
- * sidebar, and a stats band. Renders inside the site chrome (navbar + footer).
+ * "Corporate Wellness" marketing landing — the Corporate navbar destination.
+ * A shared full-bleed hero (.ssp-hero* + .hero-*) over programs, how-it-works,
+ * and a closing CTA band that funnels to /corporate/inquiry. Styled by
+ * src/styles/corporate.css. Renders inside the site chrome (navbar + footer).
  */
 export function CorporateLandingPage({ config }: CorporateLandingPageProps) {
-  const { hero, nextSteps, contact, stats } = config;
+  const { hero, programs, process, cta } = config;
   return (
     <>
-      {/* Hero — shared full-bleed treatment (matches every other page). */}
+      {/* Hero — shared full-bleed treatment. */}
       <section className="ssp-hero" aria-labelledby="corp-hero-title">
         <div aria-hidden className="ssp-hero-bg">
           <Image src={hero.image.src} alt="" fill priority sizes="100vw" />
@@ -36,56 +39,110 @@ export function CorporateLandingPage({ config }: CorporateLandingPageProps) {
         </div>
       </section>
 
-      {/* Inquiry form + "what happens next" sidebar. */}
-      <div className="corp-wrap">
-        <CorporateInquiryForm config={config.form} />
-
-        <aside className="corp-side">
-          <div className="corp-card">
-            <h3>{nextSteps.heading}</h3>
-            {nextSteps.steps.map((step) => (
-              <div key={step.num} className="corp-step">
-                <div aria-hidden className="corp-step-num">
-                  {step.num}
-                </div>
-                <div>
-                  <b>{step.title}</b>
-                  <span>{step.body}</span>
-                </div>
-              </div>
-            ))}
+      {/* Programs — three ways to bring us in. */}
+      <section className="corp-programs" aria-labelledby="corp-programs-title">
+        <div className="corp-programs-inner">
+          <div className="corp-programs-head">
+            {programs.eyebrow ? (
+              <p className="corp-kicker">{programs.eyebrow}</p>
+            ) : null}
+            <h2 id="corp-programs-title" className="corp-sec-title">
+              {programs.heading}
+              {programs.headingAccent ? (
+                <>
+                  {" "}
+                  <em>{programs.headingAccent}</em>
+                </>
+              ) : null}
+            </h2>
+            {programs.intro ? (
+              <p className="corp-programs-intro">{programs.intro}</p>
+            ) : null}
           </div>
-
-          <div className="corp-card corp-contact">
-            <h3>{contact.heading}</h3>
-            {contact.blurb ? <p>{contact.blurb}</p> : null}
-            <a href={`mailto:${contact.email}`}>{contact.email}</a>
-            <a href={`tel:${contact.phone}`}>{contact.phoneDisplay}</a>
+          <div className="corp-prog-grid">
+            {programs.items.map((item) => {
+              const Icon = getPhosphorIcon(item.icon);
+              return (
+                <article key={item.title} className="corp-prog-card">
+                  <div aria-hidden className="corp-prog-icon">
+                    <Icon weight="regular" />
+                  </div>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                  <ul>
+                    {item.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                </article>
+              );
+            })}
           </div>
-        </aside>
-      </div>
+        </div>
+      </section>
 
-      {/* Stats band. */}
-      <section className="corp-stats" aria-labelledby="corp-stats-title">
-        <div className="corp-stats-inner">
-          <h2 id="corp-stats-title">
-            {stats.heading}
-            {stats.headingAccent ? (
+      {/* How it works — numbered process. */}
+      <section className="corp-how" aria-labelledby="corp-how-title">
+        <div className="corp-how-inner">
+          {process.eyebrow ? (
+            <p className="corp-kicker">{process.eyebrow}</p>
+          ) : null}
+          <h2 id="corp-how-title" className="corp-sec-title">
+            {process.heading}
+            {process.headingAccent ? (
               <>
-                <br />
-                <em>{stats.headingAccent}</em>
+                {" "}
+                <em>{process.headingAccent}</em>
               </>
             ) : null}
           </h2>
-          {stats.sub ? <p className="corp-stats-sub">{stats.sub}</p> : null}
-          <div className="corp-stats-chips">
-            {stats.items.map((item) => (
-              <div key={item.label} className="corp-stat">
-                <div className="n">{item.value}</div>
-                <div className="l">{item.label}</div>
+          <div className="corp-how-grid">
+            {process.steps.map((step) => (
+              <div key={step.num} className="corp-how-step">
+                <div aria-hidden className="corp-how-num">
+                  {step.num}
+                </div>
+                <div className="corp-how-step-title">{step.title}</div>
+                <p className="corp-how-desc">{step.body}</p>
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* CTA band — funnels to the inquiry page. */}
+      <section className="corp-cta" aria-labelledby="corp-cta-title">
+        <div className="corp-cta-inner">
+          {cta.eyebrow ? <p className="corp-cta-eyebrow">{cta.eyebrow}</p> : null}
+          <h2 id="corp-cta-title" className="corp-cta-heading">
+            {cta.title}
+            {cta.titleAccent ? (
+              <>
+                {" "}
+                <em>{cta.titleAccent}</em>
+              </>
+            ) : null}
+          </h2>
+          {cta.sub ? <p className="corp-cta-sub">{cta.sub}</p> : null}
+          <div className="corp-cta-btns">
+            <Link href={cta.primaryCta.href} className="corp-cta-p">
+              {cta.primaryCta.label} →
+            </Link>
+            {cta.secondaryCta ? (
+              <Link href={cta.secondaryCta.href} className="corp-cta-ghost">
+                {cta.secondaryCta.label} →
+              </Link>
+            ) : null}
+          </div>
+          {cta.chips?.length ? (
+            <div className="corp-cta-chips">
+              {cta.chips.map((chip) => (
+                <span key={chip} className="corp-cta-chip">
+                  {chip}
+                </span>
+              ))}
+            </div>
+          ) : null}
         </div>
       </section>
     </>
