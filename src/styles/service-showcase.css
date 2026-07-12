@@ -259,6 +259,10 @@
   padding: 100px 80px;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
+  /* Solid dark floor: shows through on pages with no band photo (personal-
+     training, physical-therapy); fully hidden under the opaque cover photo on
+     pages that set one (beauty, nutrition-coaching). */
+  background-color: var(--surface-inverse);
   background-size: cover;
   background-position: center;
 }
@@ -387,6 +391,8 @@
 .ssp-expect {
   padding: 100px 80px;
   border-top: 1px solid var(--border);
+  /* See .ssp-styles — solid dark floor under any per-page band photo. */
+  background-color: var(--surface-inverse);
   background-size: cover;
   background-position: center;
 }
@@ -522,6 +528,8 @@
   overflow: hidden;
   padding: 120px 80px;
   text-align: center;
+  /* See .ssp-styles — solid dark floor under any per-page band photo. */
+  background-color: var(--surface-inverse);
   background-size: cover;
   background-position: center;
 }
@@ -665,4 +673,33 @@
    matching the approved mock. */
 .ssp--personal-training .ssp-hero-bg {
   background-image: url("/assets/personal-training/hero-bg.jpg");
+}
+
+/* Speech Therapy (/services/speech-therapy) — hero photo, but (unlike every
+   other showcase page) the specialties/experience bands are LIGHT, matching the
+   approved mock. Override the dark-band defaults back to the light surface with
+   solid white cards and dark text; the CTA band stays dark (default). */
+.ssp--speech-therapy .ssp-hero-bg {
+  background-image: url("/assets/speech-therapy/hero-bg.jpg");
+}
+.ssp--speech-therapy .ssp-styles,
+.ssp--speech-therapy .ssp-expect {
+  background-color: var(--muted);
+}
+.ssp--speech-therapy .ssp-styles .ssp-section-head h2,
+.ssp--speech-therapy .ssp-expect .ssp-section-head h2 {
+  color: var(--foreground);
+  text-shadow: none;
+}
+.ssp--speech-therapy .ssp-styles .ssp-section-head p,
+.ssp--speech-therapy .ssp-expect .ssp-section-head p {
+  color: var(--muted-foreground);
+  text-shadow: none;
+}
+.ssp--speech-therapy .ssp-style-card,
+.ssp--speech-therapy .ssp-addon-card,
+.ssp--speech-therapy .ssp-expect-card {
+  background: var(--card);
+  border-color: var(--border);
+  box-shadow: 0 4px 18px rgba(30, 28, 25, 0.06);
 }
