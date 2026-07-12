@@ -34,11 +34,9 @@ export function YogaHero({
       <div aria-hidden className="yoga-hero-bg" />
       <div className="yoga-hero-inner">
         {eyebrow ? (
-          <p className="js-yoga-hero-reveal yoga-eyebrow yoga-hero-eyebrow">
-            {eyebrow}
-          </p>
+          <p className="js-yoga-hero-reveal hero-eyebrow">{eyebrow}</p>
         ) : null}
-        <h1 id="yoga-hero-title" className="js-yoga-hero-reveal yoga-hero-title">
+        <h1 id="yoga-hero-title" className="js-yoga-hero-reveal hero-title">
           {title}
           {titleAccent ? (
             <>
@@ -47,7 +45,7 @@ export function YogaHero({
             </>
           ) : null}
         </h1>
-        {sub ? <p className="js-yoga-hero-reveal yoga-hero-sub">{sub}</p> : null}
+        {sub ? <p className="js-yoga-hero-reveal hero-sub">{sub}</p> : null}
         <div className="js-yoga-hero-reveal yoga-hero-btns">
           <Link href={primaryCta.href} className="yoga-btn-white">
             {primaryCta.label} →

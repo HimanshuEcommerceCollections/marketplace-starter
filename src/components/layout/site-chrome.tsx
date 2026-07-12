@@ -23,29 +23,22 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   const adminFlow = pathname?.startsWith("/admin") ?? false;
   const bareLayout = bookingFlow || authFlow || adminFlow;
   // Pages with a full-bleed photo hero that deliberately sits behind the
-  // floating nav: the homepage, the services showcase (listing only —
-  // generic /services/<slug> detail pages keep the offset, but the bespoke
-  // massage/yoga/life-coaching/beauty/nutrition landings have their own
-  // full-bleed heroes),
-  // How It Works, For Pros, Pricing, Terms, About, FAQ, Contact, and Privacy.
+  // floating nav: the homepage, the services listing, every service-detail page
+  // (the bespoke landings AND the generic /services/[slug] fallback, which now
+  // share one full-bleed photo hero), How It Works, For Pros, Pricing, Terms,
+  // About, FAQ, Contact, and Privacy.
   const fullBleedHero =
     pathname === "/" ||
     // During ISR regeneration on Vercel the root route is rendered as
     // "/index", so the server-side pathname never equals "/" there.
     pathname === "/index" ||
     pathname === "/services" ||
-    pathname === "/services/massage" ||
-    pathname === "/services/yoga" ||
-    pathname === "/services/life-coaching" ||
-    pathname === "/services/beauty" ||
-    pathname === "/services/nutrition-coaching" ||
-    pathname === "/services/physical-therapy" ||
-    pathname === "/services/personal-training" ||
-    pathname === "/services/speech-therapy" ||
+    // Any service-detail route (/services/<slug>) — bespoke or generic fallback.
+    (pathname?.startsWith("/services/") ?? false) ||
     pathname === "/how-it-works" ||
     pathname === "/pricing" ||
     pathname === "/terms" ||
-    pathname === "/pros/apply" ||
+    pathname === "/pros" ||
     pathname === "/about" ||
     pathname === "/faq" ||
     pathname === "/contact" ||

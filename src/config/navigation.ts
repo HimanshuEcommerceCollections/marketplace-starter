@@ -9,6 +9,6 @@ export const NAV_ITEMS: NavItem[] = [
   { label: "Services", href: "/services" },
   { label: "Pricing", href: "/pricing" },
   { label: "How It Works", href: "/how-it-works" },
-  { label: "For Pros", href: "/pros/apply" },
+  { label: "For Pros", href: "/pros" },
   { label: "Corporate", href: "/corporate" },
 ];

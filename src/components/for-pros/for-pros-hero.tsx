@@ -42,9 +42,9 @@ export function ForProsHero({
       <div aria-hidden className="fp-hero-bg" />
       <div className="fp-hero-inner">
         {eyebrow ? (
-          <p className="js-fp-hero-reveal fp-eyebrow fp-hero-eyebrow">{eyebrow}</p>
+          <p className="js-fp-hero-reveal hero-eyebrow">{eyebrow}</p>
         ) : null}
-        <h1 id="fp-hero-title" className="js-fp-hero-reveal fp-hero-title">
+        <h1 id="fp-hero-title" className="js-fp-hero-reveal hero-title">
           {title}
           {titleAccent ? (
             <>
@@ -53,7 +53,7 @@ export function ForProsHero({
             </>
           ) : null}
         </h1>
-        {sub ? <p className="js-fp-hero-reveal fp-hero-sub">{sub}</p> : null}
+        {sub ? <p className="js-fp-hero-reveal hero-sub">{sub}</p> : null}
         <div className="js-fp-hero-reveal fp-hero-btns">
           <a href={primaryCta.href} className="fp-btn-p">
             {primaryCta.label} →

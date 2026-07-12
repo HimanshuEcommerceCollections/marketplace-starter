@@ -30,8 +30,8 @@ export function PricingHero({
     <section ref={scope} className="pr-hero" aria-labelledby="pr-hero-title">
       <div aria-hidden className="pr-hero-bg" />
       <div className="pr-hero-inner">
-        {eyebrow ? <p className="js-pr-hero pr-eyebrow">{eyebrow}</p> : null}
-        <h1 id="pr-hero-title" className="js-pr-hero pr-hero-title">
+        {eyebrow ? <p className="js-pr-hero hero-eyebrow">{eyebrow}</p> : null}
+        <h1 id="pr-hero-title" className="js-pr-hero hero-title">
           {title}
           {titleAccent ? (
             <>
@@ -40,7 +40,7 @@ export function PricingHero({
             </>
           ) : null}
         </h1>
-        {sub ? <p className="js-pr-hero pr-hero-sub">{sub}</p> : null}
+        {sub ? <p className="js-pr-hero hero-sub">{sub}</p> : null}
       </div>
     </section>
   );

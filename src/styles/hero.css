@@ -1,0 +1,63 @@
+/* ══════════════════════════════════════════════════════════════════
+   SHARED HERO TEXT STYLING — single source of truth for the typography of
+   every full-bleed service landing hero: Massage, Yoga, Life Coaching, the
+   showcase pages (Beauty, Nutrition Coaching, Physical/Personal/Speech
+   Therapy) and the generic /services/[slug] fallback. The canonical treatment
+   is the Yoga hero.
+
+   Each hero keeps its OWN container / background / button / GSAP-reveal classes
+   (.<page>-hero, .<page>-hero-bg, .<page>-hero-inner, .<page>-hero-btns,
+   .js-<page>-hero-reveal); only the eyebrow, title, subline and price live
+   here. On-photo whites stay literal (permitted in src/styles/**).
+
+   NOTE: the Corporate / config-driven landing hero (ServiceLandingHero) does
+   not use these classes yet — it will adopt this styling separately.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Small uppercase label above the title — translucent white on the photo. */
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 26px;
+}
+
+/* Display serif title. The accent word (em) renders in the sage highlight. */
+.hero-title {
+  margin-bottom: 24px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(52px, 7.5vw, 96px);
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  color: #faf8f4;
+  text-shadow: 0 3px 28px rgba(0, 0, 0, 0.5);
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--highlight);
+}
+
+/* Supporting subline below the title. */
+.hero-sub {
+  max-width: 460px;
+  font-size: clamp(15px, 1.6vw, 17px);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.62);
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.5);
+}
+
+/* "From $X" price line beside the CTA on the generic /services/[slug] hero. */
+.hero-price {
+  font-size: 14px;
+  color: rgba(250, 248, 244, 0.82);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+}
+.hero-price strong {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 20px;
+  color: #faf8f4;
+}

@@ -18,7 +18,7 @@ export const elevateConfig: BrandConfig = {
     { label: "How It Works", href: "/how-it-works" },
     { label: "About", href: "/about" },
     { label: "Corporate", href: "/corporate" },
-    { label: "Become a Pro", href: "/pros/apply" },
+    { label: "Become a Pro", href: "/pros" },
     { label: "FAQ", href: "/faq" },
   ],
   footerColumns: [
@@ -46,8 +46,8 @@ export const elevateConfig: BrandConfig = {
     {
       heading: "Professionals",
       links: [
-        { label: "Become a Pro", href: "/pros/apply" },
-        { label: "Partner with Elevate", href: "/pros/apply" },
+        { label: "Become a Pro", href: "/pros" },
+        { label: "Partner with Elevate", href: "/pros" },
         { label: "Pro Resources", href: "#" },
         { label: "Pro Login", href: "/login" },
       ],

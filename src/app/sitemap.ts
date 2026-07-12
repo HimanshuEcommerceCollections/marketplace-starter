@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/privacy",
     "/book",
     "/waitlist",
-    "/pros/apply",
+    "/pros",
   ];
   const serviceRoutes = getServices().map((s) => `/services/${s.id}`);
   return [...staticRoutes, ...serviceRoutes].map((path) => ({
