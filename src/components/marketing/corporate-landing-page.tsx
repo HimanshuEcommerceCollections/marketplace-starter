@@ -1,13 +1,5 @@
-import { Container } from "@/components/layout/container";
-import { Card } from "@/components/ui/card";
-import { ServiceLandingHero } from "@/components/marketplace/service-landing-hero";
-import { OfferingsSection } from "@/components/sections/offerings-section";
-import { BenefitsSection } from "@/components/sections/benefits-section";
-import { HowItWorksSection } from "@/components/sections/how-it-works-section";
-import { TestimonialsSection } from "@/components/sections/testimonials-section";
-import { FaqSection } from "@/components/sections/faq-section";
-import { FinalCtaSection } from "@/components/sections/final-cta-section";
-import { CorporateQuoteForm } from "@/components/forms/corporate-quote-form";
+import Image from "next/image";
+import { CorporateInquiryForm } from "@/components/corporate/corporate-inquiry-form";
 import type { CorporatePageConfig } from "@/lib/corporate/page";
 
 export interface CorporateLandingPageProps {
@@ -15,93 +7,87 @@ export interface CorporateLandingPageProps {
 }
 
 /**
- * "Corporate Wellness" page — the destination of the Corporate navbar link. A
- * config-driven composition of the shared section components plus the stub
- * corporate-quote form. Renders inside the site chrome (navbar + footer).
+ * "Corporate Wellness" page — the destination of the Corporate navbar link.
+ * A focused proposal-request (inquiry) page: a shared full-bleed hero
+ * (.ssp-hero* + .hero-*), a stub inquiry form with a "what happens next"
+ * sidebar, and a stats band. Renders inside the site chrome (navbar + footer).
  */
 export function CorporateLandingPage({ config }: CorporateLandingPageProps) {
+  const { hero, nextSteps, contact, stats } = config;
   return (
     <>
-      <ServiceLandingHero
-        variant={config.hero.variant}
-        eyebrow={config.hero.eyebrow}
-        title={config.hero.title}
-        subtitle={config.hero.subtitle}
-        primaryCta={config.hero.primaryCta}
-        secondaryCta={config.hero.secondaryCta}
-        trustIndicators={config.hero.trustIndicators}
-        image={config.hero.image}
-      />
-
-      <OfferingsSection
-        heading={config.offerings.heading}
-        subheading={config.offerings.subheading}
-        columns={4}
-        items={config.offerings.items}
-        note={config.offerings.note}
-      />
-
-      <BenefitsSection
-        heading={config.whoItsFor.heading}
-        subheading={config.whoItsFor.subheading}
-        columns={4}
-        items={config.whoItsFor.items}
-        surface="muted"
-      />
-
-      <HowItWorksSection
-        heading={config.process.heading}
-        subheading={config.process.subheading}
-        steps={config.process.steps}
-        note={config.process.note}
-      />
-
-      <BenefitsSection
-        heading={config.whyWorkWith.heading}
-        subheading={config.whyWorkWith.subheading}
-        columns={4}
-        items={config.whyWorkWith.items}
-        surface="muted"
-      />
-
-      <section id="quote" className="py-16 md:py-20 lg:py-28">
-        <Container size="md">
-          <div className="mx-auto mb-8 max-w-2xl text-center">
-            <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-              {config.quote.heading}
-            </h2>
-            {config.quote.subheading ? (
-              <p className="mt-3 leading-relaxed text-muted-foreground">
-                {config.quote.subheading}
-              </p>
+      {/* Hero — shared full-bleed treatment (matches every other page). */}
+      <section className="ssp-hero" aria-labelledby="corp-hero-title">
+        <div aria-hidden className="ssp-hero-bg">
+          <Image src={hero.image.src} alt="" fill priority sizes="100vw" />
+        </div>
+        <div className="ssp-hero-inner">
+          {hero.eyebrow ? <p className="hero-eyebrow">{hero.eyebrow}</p> : null}
+          <h1 id="corp-hero-title" className="hero-title">
+            {hero.title}
+            {hero.titleAccent ? (
+              <>
+                <br />
+                <em>{hero.titleAccent}</em>
+              </>
             ) : null}
-          </div>
-          <Card className="rounded-2xl p-6 md:p-8">
-            <CorporateQuoteForm eventTypes={config.quote.eventTypes} />
-          </Card>
-        </Container>
+          </h1>
+          {hero.sub ? <p className="hero-sub">{hero.sub}</p> : null}
+        </div>
       </section>
 
-      <TestimonialsSection
-        heading={config.testimonials.heading}
-        subheading={config.testimonials.subheading}
-        items={config.testimonials.items}
-        surface="muted"
-      />
+      {/* Inquiry form + "what happens next" sidebar. */}
+      <div className="corp-wrap">
+        <CorporateInquiryForm config={config.form} />
 
-      <FaqSection
-        heading={config.faq.heading}
-        items={config.faq.items}
-        viewAll={config.faq.viewAll}
-      />
+        <aside className="corp-side">
+          <div className="corp-card">
+            <h3>{nextSteps.heading}</h3>
+            {nextSteps.steps.map((step) => (
+              <div key={step.num} className="corp-step">
+                <div aria-hidden className="corp-step-num">
+                  {step.num}
+                </div>
+                <div>
+                  <b>{step.title}</b>
+                  <span>{step.body}</span>
+                </div>
+              </div>
+            ))}
+          </div>
 
-      <FinalCtaSection
-        eyebrow={config.cta.eyebrow}
-        title={config.cta.title}
-        body={config.cta.body}
-        primaryCta={config.cta.primaryCta}
-        secondaryCta={config.cta.secondaryCta}
-      />
+          <div className="corp-card corp-contact">
+            <h3>{contact.heading}</h3>
+            {contact.blurb ? <p>{contact.blurb}</p> : null}
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+            <a href={`tel:${contact.phone}`}>{contact.phoneDisplay}</a>
+          </div>
+        </aside>
+      </div>
+
+      {/* Stats band. */}
+      <section className="corp-stats" aria-labelledby="corp-stats-title">
+        <div className="corp-stats-inner">
+          <h2 id="corp-stats-title">
+            {stats.heading}
+            {stats.headingAccent ? (
+              <>
+                <br />
+                <em>{stats.headingAccent}</em>
+              </>
+            ) : null}
+          </h2>
+          {stats.sub ? <p className="corp-stats-sub">{stats.sub}</p> : null}
+          <div className="corp-stats-chips">
+            {stats.items.map((item) => (
+              <div key={item.label} className="corp-stat">
+                <div className="n">{item.value}</div>
+                <div className="l">{item.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </>
   );
 }
