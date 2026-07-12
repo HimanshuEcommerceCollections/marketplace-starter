@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { submitCorporateQuoteStub } from "@/lib/forms/stub-submit";
+import { submitCorporateInquiry } from "@/lib/corporate/api";
 import type { FieldErrors } from "@/lib/forms/validate";
 import type { CorporateInquiryConfig } from "@/lib/corporate/page";
 
@@ -15,11 +15,11 @@ function FieldError({ id, errors }: { id: string; errors?: string[] }) {
 }
 
 /**
- * "Request a proposal" corporate inquiry form. Stub-only: validates and returns
- * a fake request_id — no backend call, no mailto, no analytics event (golden
- * rule #3; corporate quote is not one of the 8 contract events). The selected
- * service chips + free-text message are folded into the stub's `notes` field;
- * team size maps to `headcount` and format to `event_type`.
+ * "Request a proposal" corporate inquiry form. Wired to the live backend via
+ * the same-origin BFF (`submitCorporateInquiry` → POST /api/corporate-inquiries),
+ * where staff triage it in the admin dashboard. The selected service chips +
+ * free-text message are folded into `notes`; team size maps to `headcount` and
+ * format to `event_type`. Validation runs locally first for instant field errors.
  */
 export function CorporateInquiryForm({
   config,
@@ -47,7 +47,7 @@ export function CorporateInquiryForm({
     const message = String(form.get("message") ?? "").trim();
     const notes =
       `Services of interest: ${services}` + (message ? `\n\n${message}` : "");
-    const result = await submitCorporateQuoteStub({
+    const result = await submitCorporateInquiry({
       company: form.get("company"),
       contact: { name: form.get("name"), email: form.get("email") },
       headcount: form.get("teamSize") || undefined,
@@ -68,9 +68,8 @@ export function CorporateInquiryForm({
       <div className="corp-form-card">
         <h2>{config.heading}</h2>
         <p role="status" className="corp-done">
-          Thanks — your inquiry was captured (demo form, nothing is sent to a
-          backend). A coordinator would follow up within one business day in the
-          real experience.
+          Thanks — your inquiry has been received. A coordinator will follow up
+          within one business day.
         </p>
       </div>
     );
