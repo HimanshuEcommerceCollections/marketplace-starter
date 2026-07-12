@@ -35,6 +35,9 @@ import {
   Briefcase,
   Buildings,
   Phone,
+  Armchair,
+  Confetti,
+  ChartLineUp,
 } from "@phosphor-icons/react";
 
 /**
@@ -73,6 +76,9 @@ const PHOSPHOR_ICONS: Record<string, Icon> = {
   Briefcase,
   Buildings,
   Phone,
+  Armchair,
+  Confetti,
+  ChartLineUp,
   // Lucide service-icon names -> closest Phosphor glyph (matches the mockup).
   HandHelping: HandWaving,
   Dumbbell: Barbell,

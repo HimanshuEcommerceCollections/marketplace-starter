@@ -1,242 +1,184 @@
-import type { CorporatePageConfig } from "@/lib/corporate/page";
+import type {
+  CorporatePageConfig,
+  CorporateInquiryConfig,
+} from "@/lib/corporate/page";
 
-/** "Corporate Wellness" page content for the Elevate brand. */
+/**
+ * "Corporate Wellness" marketing landing (the Corporate navbar destination) —
+ * editorial copy from the approved mock (corporate.html). Its CTA funnels to
+ * the inquiry page (/corporate/inquiry).
+ */
 export const elevateCorporate: CorporatePageConfig = {
   hero: {
-    variant: "dark",
-    eyebrow: "For Teams & Organizations",
-    title: "Corporate Wellness, Coordinated Thoughtfully",
-    subtitle:
-      "Wellness experiences and services tailored to teams, workplaces, and special events throughout Raleigh and Wake County.",
-    primaryCta: { label: "Request a Quote", href: "#quote" },
-    secondaryCta: { label: "Speak with a Coordinator", href: "#quote" },
-    trustIndicators: [
-      "Coordinator-Led",
-      "Vetted Professionals",
-      "Raleigh & Wake County",
-    ],
+    eyebrow: "Corporate Wellness · Teams of 5 to 500",
+    title: "Wellness.",
+    titleAccent: "At work.",
+    sub: "Bring Elevate's vetted professionals to your office — massage, yoga, training, and more, coordinated end to end on a single invoice.",
     image: {
-      caption: {
-        title: "Corporate wellness",
-        lines: ["Coordinated for teams · Raleigh & Wake County"],
-      },
+      src: "/assets/corporate/landing-hero.jpg",
+      alt: "Colleagues collaborating around a table in a bright modern office",
     },
   },
 
-  offerings: {
-    heading: "Corporate Wellness Offerings",
-    subheading:
-      "Customizable experiences and services designed for teams of any size. All pricing by coordinator quote.",
-    note: "All corporate offerings are priced by coordinator quote. No standard pricing applies to corporate programs.",
+  programs: {
+    eyebrow: "Programs",
+    heading: "Three ways to",
+    headingAccent: "bring us in.",
+    intro:
+      "Every program draws on the same eight disciplines and the same vetted professionals as our in-home service — your coordinator handles staffing, scheduling, and setup.",
     items: [
       {
-        icon: "HandHelping",
-        title: "Chair Massage Events",
-        description:
-          "Vetted massage professionals set up at your workplace for scheduled employee sessions. Ideal for office wellness days or team appreciation events.",
-        badge: "Most Requested",
-        cta: { label: "Inquire about this", href: "#quote" },
+        icon: "Armchair",
+        title: "On-site sessions",
+        body: "Regular chair massage, desk-stretch, or mindfulness blocks that run during the workday.",
+        points: [
+          "Weekly, biweekly, or monthly cadence",
+          "Runs in any spare room or quiet corner",
+          "Employees book their own slots",
+        ],
       },
       {
-        icon: "Flower2",
-        title: "Wellness Workshops",
-        description:
-          "Guided group sessions covering yoga, mindfulness, breathwork, or movement — tailored to your team's goals and fitness levels.",
-        cta: { label: "Inquire about this", href: "#quote" },
+        icon: "Confetti",
+        title: "Wellness days",
+        body: "Half- or full-day events that mix disciplines — massage, yoga, nutrition talks — for launches, milestones, or appreciation days.",
+        points: [
+          "Multiple pros on site at once",
+          "One coordinator runs the day",
+          "Teams of 5 to 500",
+        ],
       },
       {
-        icon: "Users",
-        title: "Team Wellness Experiences",
-        description:
-          "Customized multi-service wellness experiences for team offsites, retreats, or special occasions. Coordinator-planned from start to finish.",
-        cta: { label: "Inquire about this", href: "#quote" },
-      },
-      {
-        icon: "Package",
-        title: "Custom Wellness Programs",
-        description:
-          "Recurring wellness initiatives tailored to your organization's calendar, headcount, and program goals. Inquire for details.",
-        badge: "Custom Quote",
-        cta: { label: "Inquire about this", href: "#quote" },
-      },
-    ],
-  },
-
-  whoItsFor: {
-    heading: "Who It's For",
-    subheading:
-      "Corporate wellness inquiries are welcome from organizations of all sizes and industries.",
-    items: [
-      {
-        icon: "Users",
-        title: "Small Teams",
-        description:
-          "5–20 person teams looking to add wellness to a team day, lunch event, or appreciation moment.",
-      },
-      {
-        icon: "TrendingUp",
-        title: "Growing Companies",
-        description:
-          "Mid-size organizations building workplace wellness programs as part of their people operations strategy.",
-      },
-      {
-        icon: "CalendarCheck",
-        title: "Employee Events",
-        description:
-          "HR and People Ops teams planning company-wide wellness activities, health fairs, or seasonal events.",
-      },
-      {
-        icon: "Compass",
-        title: "Leadership Retreats",
-        description:
-          "Executive and leadership teams incorporating wellness into off-site retreats, planning sessions, or team travel.",
+        icon: "ChartLineUp",
+        title: "Ongoing programs",
+        body: "A standing wellness benefit: recurring visits, rotating disciplines, and simple reporting on what your team actually uses.",
+        points: [
+          "Single monthly invoice",
+          "Usage summaries each quarter",
+          "Adjust the mix any month",
+        ],
       },
     ],
   },
 
   process: {
-    heading: "How the Process Works",
-    subheading:
-      "Five steps from inquiry to coordinated event. No automated systems — human support throughout.",
-    note: "This is a B2B inquiry process — not the standard consumer booking flow. All corporate requests are coordinator-reviewed.",
+    eyebrow: "The process",
+    heading: "Up and running in",
+    headingAccent: "a week.",
     steps: [
       {
-        title: "Submit Inquiry",
-        description:
-          "Complete the corporate inquiry form with your event details, headcount, and preferred dates.",
+        num: "01",
+        title: "Tell us about your team",
+        body: "Headcount, space, goals, budget — one short call or email covers it.",
       },
       {
-        title: "Coordinator Review",
-        description:
-          "A coordinator reviews your inquiry and prepares for an initial conversation within one business day.",
+        num: "02",
+        title: "Get a tailored plan",
+        body: "A coordinator proposes the discipline mix, cadence, and a transparent all-in price.",
       },
       {
-        title: "Discovery Call",
-        description:
-          "The coordinator connects with you to understand your goals, preferences, and any specific requirements.",
+        num: "03",
+        title: "We staff & coordinate",
+        body: "Vetted pros arrive with everything they need. Your only job is telling the team.",
       },
       {
-        title: "Proposal & Quote",
-        description:
-          "You receive a tailored proposal with program options and a coordinator-reviewed quote for your event.",
-      },
-      {
-        title: "Event Coordination",
-        description:
-          "Once confirmed, the coordinator manages scheduling, logistics, and day-of execution.",
-      },
-    ],
-  },
-
-  whyWorkWith: {
-    heading: "Why Work with Elevate",
-    subheading:
-      "A coordinated, human-supported approach to corporate wellness — not a platform or directory.",
-    items: [
-      {
-        icon: "Headphones",
-        title: "Coordinator Support",
-        description:
-          "A dedicated coordinator manages your corporate inquiry from initial contact through event completion.",
-      },
-      {
-        icon: "CalendarDays",
-        title: "Flexible Planning",
-        description:
-          "Corporate events are planned around your schedule, headcount, and venue — not a fixed calendar.",
-      },
-      {
-        icon: "BadgeCheck",
-        title: "Trusted Professionals",
-        description:
-          "Every professional is identity-verified and background-checked before marketplace activation.",
-      },
-      {
-        icon: "MapPin",
-        title: "Local Service Coverage",
-        description:
-          "Elevate serves Raleigh and Wake County — your event stays local with professionals who know the area.",
-      },
-    ],
-  },
-
-  quote: {
-    heading: "Request a Corporate Quote",
-    subheading:
-      "Tell us about your team and event goals. A coordinator will follow up to discuss your options.",
-    eventTypes: [
-      "Chair Massage Event",
-      "Wellness Workshop",
-      "Team Wellness Experience",
-      "Custom Wellness Program",
-      "Not sure yet",
-    ],
-  },
-
-  testimonials: {
-    heading: "What Organizations Say",
-    subheading:
-      "Feedback from teams and organizations who have worked with Elevate.",
-    items: [
-      {
-        id: "corp-1",
-        quote:
-          "The coordinator made the entire process seamless. From first contact to the day of our team wellness event, every detail was handled professionally.",
-        author: "Director of People Operations",
-        role: "Sample Company",
-      },
-      {
-        id: "corp-2",
-        quote:
-          "We had 40 team members participate in chair massages during our annual offsite. The coordination was flawless and the professionals were excellent.",
-        author: "HR Manager",
-        role: "Sample Company",
-      },
-      {
-        id: "corp-3",
-        quote:
-          "Elevate was the right choice for our leadership retreat. The coordinator understood our goals and delivered a tailored wellness experience.",
-        author: "Executive Assistant to CEO",
-        role: "Sample Company",
-      },
-    ],
-  },
-
-  faq: {
-    heading: "Frequently Asked Questions",
-    viewAll: { label: "View FAQ", href: "/faq" },
-    items: [
-      {
-        id: "quoting",
-        question: "How does quoting work?",
-        answer:
-          "After submitting an inquiry, a coordinator will review your request and reach out within one business day. The coordinator will gather more details during a discovery call and provide a tailored proposal and quote.",
-      },
-      {
-        id: "event-types",
-        question: "What types of events are supported?",
-        answer:
-          "Elevate supports chair massage events, wellness workshops, team wellness experiences, and custom programs. Events can be tailored to team size, venue, and organizational goals. Inquire to discuss your specific needs.",
-      },
-      {
-        id: "lead-time",
-        question: "How far in advance should we inquire?",
-        answer:
-          "We recommend submitting an inquiry at least 2–3 weeks before your desired event date. For larger events or complex programs, earlier contact allows more time for planning and professional coordination.",
-      },
-      {
-        id: "coordinator-contact",
-        question: "Will a coordinator contact us?",
-        answer:
-          "Yes. Every corporate inquiry is handled by a coordinator — not an automated system. You will receive a direct follow-up within one business day of submitting your inquiry.",
+        num: "04",
+        title: "See the impact",
+        body: "Booking rates and feedback after every visit — keep what works, swap what doesn't.",
       },
     ],
   },
 
   cta: {
-    title: "Let's plan something meaningful for your team.",
-    body: "Corporate wellness, coordinated thoughtfully. Reach out to get started.",
-    primaryCta: { label: "Request a Quote", href: "#quote" },
-    secondaryCta: { label: "Speak with a Coordinator", href: "#quote" },
+    eyebrow: "Talk to a coordinator",
+    title: "One vendor.",
+    titleAccent: "Zero hassle.",
+    sub: "Tell us about your team and we'll send a tailored proposal within two business days.",
+    primaryCta: { label: "Request a proposal", href: "/corporate/inquiry" },
+    secondaryCta: { label: "Or use the contact page", href: "/contact" },
+    chips: ["Teams of 5 to 500", "Single invoice", "Coordinator-run, end to end"],
+  },
+};
+
+/**
+ * "Corporate Wellness" inquiry page (/corporate/inquiry) — editorial copy from
+ * the approved mock (corporate-inquiry.html). The proposal-request form is
+ * stub-only (validate → fake request_id; golden rule #3). Stats are
+ * illustrative INTERNAL DRAFT values.
+ */
+export const elevateCorporateInquiry: CorporateInquiryConfig = {
+  hero: {
+    eyebrow: "Corporate Wellness",
+    title: "Let's build.",
+    titleAccent: "Your program.",
+    sub: "Tell us about your team — a coordinator designs a proposal around your people, space, and budget within one business day.",
+    image: {
+      src: "/assets/corporate/hero-bg.jpg",
+      alt: "A team gathered for an all-hands session in a bright open office",
+    },
+  },
+
+  form: {
+    heading: "Request a proposal",
+    intro:
+      "Tell us about your team and a coordinator follows up with a tailored proposal within one business day.",
+    teamSizes: ["5 – 25", "25 – 100", "100 – 500", "500+"],
+    services: [
+      "Massage",
+      "Personal Training",
+      "Yoga",
+      "Beauty",
+      "Nutrition",
+      "Life Coaching",
+      "Physical Therapy",
+      "Speech Therapy",
+    ],
+    formats: [
+      "Recurring on-site program",
+      "Wellness event / team day",
+      "Employee session credits",
+      "Not sure yet — advise us",
+    ],
+    submitLabel: "Request proposal",
+    note: "A coordinator would reply within one business day.",
+  },
+
+  nextSteps: {
+    heading: "What happens next",
+    steps: [
+      {
+        num: "01",
+        title: "We listen",
+        body: "A coordinator calls to understand your team, space, and goals — 15 minutes.",
+      },
+      {
+        num: "02",
+        title: "You get a proposal",
+        body: "Program design, vetted professionals, and transparent all-in pricing within one business day.",
+      },
+      {
+        num: "03",
+        title: "We run it",
+        body: "Scheduling, delivery, and feedback handled — you just tell your team where to be.",
+      },
+    ],
+  },
+
+  contact: {
+    heading: "Prefer to talk?",
+    blurb: "Our corporate team, Mon–Sat 8am–9pm ET.",
+    email: "corporate@elevatewellness.com",
+    phone: "+19195550142",
+    phoneDisplay: "(919) 555-0142",
+  },
+
+  stats: {
+    heading: "Teams that feel good",
+    headingAccent: "do great work.",
+    sub: "From five-person startups to five-hundred-person campuses — Elevate scales to your floor plan.",
+    items: [
+      { value: "8", label: "Disciplines" },
+      { value: "1 day", label: "Proposal Turnaround" },
+      { value: "5–500+", label: "Team Sizes" },
+    ],
   },
 };

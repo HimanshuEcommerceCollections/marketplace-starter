@@ -1,13 +1,8 @@
-import { Container } from "@/components/layout/container";
-import { Card } from "@/components/ui/card";
-import { ServiceLandingHero } from "@/components/marketplace/service-landing-hero";
-import { OfferingsSection } from "@/components/sections/offerings-section";
-import { BenefitsSection } from "@/components/sections/benefits-section";
-import { HowItWorksSection } from "@/components/sections/how-it-works-section";
-import { TestimonialsSection } from "@/components/sections/testimonials-section";
-import { FaqSection } from "@/components/sections/faq-section";
-import { FinalCtaSection } from "@/components/sections/final-cta-section";
-import { CorporateQuoteForm } from "@/components/forms/corporate-quote-form";
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { getPhosphorIcon } from "@/lib/icons-phosphor";
 import type { CorporatePageConfig } from "@/lib/corporate/page";
 
 export interface CorporateLandingPageProps {
@@ -15,93 +10,141 @@ export interface CorporateLandingPageProps {
 }
 
 /**
- * "Corporate Wellness" page — the destination of the Corporate navbar link. A
- * config-driven composition of the shared section components plus the stub
- * corporate-quote form. Renders inside the site chrome (navbar + footer).
+ * "Corporate Wellness" marketing landing — the Corporate navbar destination.
+ * A shared full-bleed hero (.ssp-hero* + .hero-*) over programs, how-it-works,
+ * and a closing CTA band that funnels to /corporate/inquiry. Styled by
+ * src/styles/corporate.css. Renders inside the site chrome (navbar + footer).
  */
 export function CorporateLandingPage({ config }: CorporateLandingPageProps) {
+  const { hero, programs, process, cta } = config;
   return (
     <>
-      <ServiceLandingHero
-        variant={config.hero.variant}
-        eyebrow={config.hero.eyebrow}
-        title={config.hero.title}
-        subtitle={config.hero.subtitle}
-        primaryCta={config.hero.primaryCta}
-        secondaryCta={config.hero.secondaryCta}
-        trustIndicators={config.hero.trustIndicators}
-        image={config.hero.image}
-      />
-
-      <OfferingsSection
-        heading={config.offerings.heading}
-        subheading={config.offerings.subheading}
-        columns={4}
-        items={config.offerings.items}
-        note={config.offerings.note}
-      />
-
-      <BenefitsSection
-        heading={config.whoItsFor.heading}
-        subheading={config.whoItsFor.subheading}
-        columns={4}
-        items={config.whoItsFor.items}
-        surface="muted"
-      />
-
-      <HowItWorksSection
-        heading={config.process.heading}
-        subheading={config.process.subheading}
-        steps={config.process.steps}
-        note={config.process.note}
-      />
-
-      <BenefitsSection
-        heading={config.whyWorkWith.heading}
-        subheading={config.whyWorkWith.subheading}
-        columns={4}
-        items={config.whyWorkWith.items}
-        surface="muted"
-      />
-
-      <section id="quote" className="py-16 md:py-20 lg:py-28">
-        <Container size="md">
-          <div className="mx-auto mb-8 max-w-2xl text-center">
-            <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-              {config.quote.heading}
-            </h2>
-            {config.quote.subheading ? (
-              <p className="mt-3 leading-relaxed text-muted-foreground">
-                {config.quote.subheading}
-              </p>
+      {/* Hero — shared full-bleed treatment. */}
+      <section className="ssp-hero" aria-labelledby="corp-hero-title">
+        <div aria-hidden className="ssp-hero-bg">
+          <Image src={hero.image.src} alt="" fill priority sizes="100vw" />
+        </div>
+        <div className="ssp-hero-inner">
+          {hero.eyebrow ? <p className="hero-eyebrow">{hero.eyebrow}</p> : null}
+          <h1 id="corp-hero-title" className="hero-title">
+            {hero.title}
+            {hero.titleAccent ? (
+              <>
+                <br />
+                <em>{hero.titleAccent}</em>
+              </>
             ) : null}
-          </div>
-          <Card className="rounded-2xl p-6 md:p-8">
-            <CorporateQuoteForm eventTypes={config.quote.eventTypes} />
-          </Card>
-        </Container>
+          </h1>
+          {hero.sub ? <p className="hero-sub">{hero.sub}</p> : null}
+        </div>
       </section>
 
-      <TestimonialsSection
-        heading={config.testimonials.heading}
-        subheading={config.testimonials.subheading}
-        items={config.testimonials.items}
-        surface="muted"
-      />
+      {/* Programs — three ways to bring us in. */}
+      <section className="corp-programs" aria-labelledby="corp-programs-title">
+        <div className="corp-programs-inner">
+          <div className="corp-programs-head">
+            {programs.eyebrow ? (
+              <p className="corp-kicker">{programs.eyebrow}</p>
+            ) : null}
+            <h2 id="corp-programs-title" className="corp-sec-title">
+              {programs.heading}
+              {programs.headingAccent ? (
+                <>
+                  {" "}
+                  <em>{programs.headingAccent}</em>
+                </>
+              ) : null}
+            </h2>
+            {programs.intro ? (
+              <p className="corp-programs-intro">{programs.intro}</p>
+            ) : null}
+          </div>
+          <div className="corp-prog-grid">
+            {programs.items.map((item) => {
+              const Icon = getPhosphorIcon(item.icon);
+              return (
+                <article key={item.title} className="corp-prog-card">
+                  <div aria-hidden className="corp-prog-icon">
+                    <Icon weight="regular" />
+                  </div>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                  <ul>
+                    {item.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
-      <FaqSection
-        heading={config.faq.heading}
-        items={config.faq.items}
-        viewAll={config.faq.viewAll}
-      />
+      {/* How it works — numbered process. */}
+      <section className="corp-how" aria-labelledby="corp-how-title">
+        <div className="corp-how-inner">
+          {process.eyebrow ? (
+            <p className="corp-kicker">{process.eyebrow}</p>
+          ) : null}
+          <h2 id="corp-how-title" className="corp-sec-title">
+            {process.heading}
+            {process.headingAccent ? (
+              <>
+                {" "}
+                <em>{process.headingAccent}</em>
+              </>
+            ) : null}
+          </h2>
+          <div className="corp-how-grid">
+            {process.steps.map((step) => (
+              <div key={step.num} className="corp-how-step">
+                <div aria-hidden className="corp-how-num">
+                  {step.num}
+                </div>
+                <div className="corp-how-step-title">{step.title}</div>
+                <p className="corp-how-desc">{step.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      <FinalCtaSection
-        eyebrow={config.cta.eyebrow}
-        title={config.cta.title}
-        body={config.cta.body}
-        primaryCta={config.cta.primaryCta}
-        secondaryCta={config.cta.secondaryCta}
-      />
+      {/* CTA band — funnels to the inquiry page. */}
+      <section className="corp-cta" aria-labelledby="corp-cta-title">
+        <div className="corp-cta-inner">
+          {cta.eyebrow ? <p className="corp-cta-eyebrow">{cta.eyebrow}</p> : null}
+          <h2 id="corp-cta-title" className="corp-cta-heading">
+            {cta.title}
+            {cta.titleAccent ? (
+              <>
+                {" "}
+                <em>{cta.titleAccent}</em>
+              </>
+            ) : null}
+          </h2>
+          {cta.sub ? <p className="corp-cta-sub">{cta.sub}</p> : null}
+          <div className="corp-cta-btns">
+            <Link href={cta.primaryCta.href} className="corp-cta-p">
+              {cta.primaryCta.label} →
+            </Link>
+            {cta.secondaryCta ? (
+              <Link href={cta.secondaryCta.href} className="corp-cta-ghost">
+                {cta.secondaryCta.label} →
+              </Link>
+            ) : null}
+          </div>
+          {cta.chips?.length ? (
+            <div className="corp-cta-chips">
+              {cta.chips.map((chip) => (
+                <span key={chip} className="corp-cta-chip">
+                  {chip}
+                </span>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      </section>
     </>
   );
 }

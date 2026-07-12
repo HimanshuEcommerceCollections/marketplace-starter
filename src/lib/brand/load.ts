@@ -9,7 +9,10 @@ import type { HowItWorksPageConfig } from "@/lib/how-it-works/page";
 import type { ForProsPageConfig } from "@/lib/for-pros/page";
 import type { AboutPageConfig } from "@/lib/about/page";
 import type { ContactPageConfig } from "@/lib/contact/page";
-import type { CorporatePageConfig } from "@/lib/corporate/page";
+import type {
+  CorporatePageConfig,
+  CorporateInquiryConfig,
+} from "@/lib/corporate/page";
 import type { FaqPageConfig } from "@/lib/faq/page";
 import type { PrivacyPageConfig } from "@/lib/privacy/page";
 import type { TermsPageConfig } from "@/lib/terms/page";
@@ -27,7 +30,10 @@ import { elevateHowItWorks } from "@brands/elevate/how-it-works.config";
 import { elevateForPros } from "@brands/elevate/for-pros.config";
 import { elevateAbout } from "@brands/elevate/about-page.config";
 import { elevateContact } from "@brands/elevate/contact-page.config";
-import { elevateCorporate } from "@brands/elevate/corporate.config";
+import {
+  elevateCorporate,
+  elevateCorporateInquiry,
+} from "@brands/elevate/corporate.config";
 import { elevateFaqPage } from "@brands/elevate/faq-page.config";
 import { elevatePrivacyPage } from "@brands/elevate/privacy-page.config";
 import { elevateTermsPage } from "@brands/elevate/terms-page.config";
@@ -59,8 +65,10 @@ export interface LoadedBrand {
   about: AboutPageConfig;
   /** "Contact" page content. */
   contact: ContactPageConfig;
-  /** "Corporate Wellness" page content. */
+  /** "Corporate Wellness" marketing landing content. */
   corporate: CorporatePageConfig;
+  /** "Corporate Wellness" proposal-request (inquiry) page content. */
+  corporateInquiry: CorporateInquiryConfig;
   /** "Frequently Asked Questions" page content. */
   faqPage: FaqPageConfig;
   /** "Privacy Policy" page content (redesigned bespoke layout). */
@@ -94,6 +102,7 @@ const REGISTRY: Record<BrandId, LoadedBrand> = {
     about: elevateAbout,
     contact: elevateContact,
     corporate: elevateCorporate,
+    corporateInquiry: elevateCorporateInquiry,
     faqPage: elevateFaqPage,
     privacyPage: elevatePrivacyPage,
     termsPage: elevateTermsPage,
@@ -162,9 +171,14 @@ export function getContactPage(): ContactPageConfig {
   return loadBrand().contact;
 }
 
-/** The active brand's "Corporate Wellness" page content. */
+/** The active brand's "Corporate Wellness" marketing landing content. */
 export function getCorporateLanding(): CorporatePageConfig {
   return loadBrand().corporate;
+}
+
+/** The active brand's Corporate proposal-request (inquiry) page content. */
+export function getCorporateInquiry(): CorporateInquiryConfig {
+  return loadBrand().corporateInquiry;
 }
 
 /** The active brand's "Frequently Asked Questions" page content. */
