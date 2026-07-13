@@ -10,6 +10,7 @@ import { SectionHeading } from "@/components/admin/overview/section-heading";
 import { PendingReviewTable } from "@/components/admin/overview/pending-review-table";
 import { ActiveBookingsTable } from "@/components/admin/overview/active-bookings-table";
 import { ServicesOverviewGrid } from "@/components/admin/overview/services-overview-grid";
+import { RecentInquiries } from "@/components/admin/overview/recent-inquiries";
 import {
   listBookings,
   setBookingStatus,
@@ -18,6 +19,10 @@ import {
   type AdminBookingRow,
 } from "@/lib/admin/bookings";
 import { BookingApiError } from "@/lib/booking/api";
+import {
+  listCorporateInquiries,
+  type CorporateInquiryRow,
+} from "@/lib/corporate/api";
 import {
   DASHBOARD_SUBTITLE,
   KPIS,
@@ -32,18 +37,25 @@ import {
  */
 export default function AdminOverviewPage() {
   const [bookings, setBookings] = React.useState<AdminBookingRow[] | null>(null);
+  const [inquiries, setInquiries] = React.useState<CorporateInquiryRow[]>([]);
   const [error, setError] = React.useState<string | null>(null);
   const [busyId, setBusyId] = React.useState<string | undefined>();
 
   const load = React.useCallback(async () => {
     setError(null);
-    try {
-      const { items } = await listBookings({ limit: 100 });
-      setBookings(items);
-    } catch (err) {
+    // Load both in parallel; an inquiries failure must not blank the bookings.
+    const [bk, inq] = await Promise.allSettled([
+      listBookings({ limit: 100 }),
+      listCorporateInquiries({ limit: 100 }),
+    ]);
+    if (bk.status === "fulfilled") {
+      setBookings(bk.value.items);
+    } else {
+      const err = bk.reason;
       setError(err instanceof BookingApiError ? err.message : "Failed to load bookings.");
       setBookings([]);
     }
+    setInquiries(inq.status === "fulfilled" ? inq.value.items : []);
   }, []);
 
   React.useEffect(() => {
@@ -102,6 +114,10 @@ export default function AdminOverviewPage() {
         <section className="mt-8">
           <SectionHeading title={`Active Bookings — ${active.length} in progress`} />
           <ActiveBookingsTable bookings={active} />
+        </section>
+
+        <section className="mt-8">
+          <RecentInquiries inquiries={inquiries} />
         </section>
 
         <section className="mt-8">
