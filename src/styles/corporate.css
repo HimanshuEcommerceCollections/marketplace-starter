@@ -370,6 +370,14 @@
 .corp-programs {
   padding: 90px 48px 100px;
   border-bottom: 1px solid var(--border);
+  /* Barely-there textured wash behind the cards (mirrors the mock's programs
+     band); the near-opaque light gradient keeps the cards and copy legible. */
+  background-color: var(--background);
+  background-image:
+    linear-gradient(rgba(240, 237, 232, 0.95), rgba(240, 237, 232, 0.97)),
+    url("/assets/corporate/programs-bg.jpg");
+  background-size: cover;
+  background-position: center;
 }
 .corp-programs-inner {
   max-width: 1160px;
@@ -502,7 +510,14 @@
   overflow: hidden;
   padding: 110px 48px;
   text-align: center;
-  background: var(--surface-inverse);
+  /* Dark photo band (mirrors the mock's CTA); solid fallback shows if the
+     image fails, and the dark scrim keeps the reversed-out copy legible. */
+  background-color: var(--surface-inverse);
+  background-image:
+    linear-gradient(rgba(10, 14, 11, 0.72), rgba(10, 14, 11, 0.82)),
+    url("/assets/corporate/cta-bg.jpg");
+  background-size: cover;
+  background-position: center;
 }
 .corp-cta-inner {
   max-width: 720px;
