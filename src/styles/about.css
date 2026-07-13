@@ -69,8 +69,12 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-size: cover;
-  background-position: center;
+  /* Solid-dark base shows while the hero photo loads (no blank flash). */
+  background: var(--surface-inverse);
+}
+/* next/image (fill) renders an <img> child — cover it like a bg image. */
+.ab-hero-bg img {
+  object-fit: cover;
 }
 .ab-hero-bg::after {
   content: "";
@@ -202,14 +206,37 @@
   color: color-mix(in oklab, var(--foreground) 60%, transparent);
 }
 
-/* ───────────────────────── BELIEF BAND (solid dark) ───────────────────────── */
+/* ───────────────────────── BELIEF BAND (photo · dark) ───────────────────────── */
 .ab-band {
+  position: relative;
   overflow: hidden;
   padding: 110px 48px;
   text-align: center;
+  /* Solid-dark base: shows while the photo loads, or if no band image is set. */
   background: var(--surface-inverse);
 }
+/* Optional background photo (next/image fill) behind a dark scrim. */
+.ab-band-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.ab-band-bg img {
+  object-fit: cover;
+}
+.ab-band-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(16, 22, 17, 0.58),
+    rgba(16, 22, 17, 0.74)
+  );
+}
 .ab-band-inner {
+  position: relative;
+  z-index: 1;
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -264,16 +291,38 @@
   color: rgba(255, 255, 255, 0.45);
 }
 
-/* ───────────────────────── CTA BAND (solid dark) ───────────────────────── */
+/* ───────────────────────── CTA BAND (photo · dark) ───────────────────────── */
 .ab-cta {
   position: relative;
   overflow: hidden;
   padding: 110px 48px;
   text-align: center;
+  /* Solid-dark base: shows while the photo loads, or if no CTA image is set. */
   background: var(--surface-inverse);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
+/* Optional background photo (next/image fill) behind a dark scrim. */
+.ab-cta-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.ab-cta-bg img {
+  object-fit: cover;
+}
+.ab-cta-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 14, 11, 0.72),
+    rgba(10, 14, 11, 0.82)
+  );
+}
 .ab-cta-inner {
+  position: relative;
+  z-index: 1;
   max-width: 720px;
   margin: 0 auto;
 }

@@ -3,8 +3,9 @@ import type { PrivacyPageConfig } from "@/lib/privacy/page";
 /**
  * "Privacy Policy" page content for Elevate (redesigned bespoke layout). All
  * copy is draft / demonstration content — no real legal language, dates, or
- * contact details; final copy is pending counsel review. Photography currently
- * hotlinks Unsplash like the homepage (see next.config.ts remotePatterns).
+ * contact details; final copy is pending counsel review. Photography is served
+ * from local /assets/privacy/* (placeholder art extracted from the mockup —
+ * swap for final designer art in place).
  */
 export const elevatePrivacyPage: PrivacyPageConfig = {
   hero: {
@@ -12,8 +13,7 @@ export const elevatePrivacyPage: PrivacyPageConfig = {
     title: "Privacy.",
     titleAccent: "Respected.",
     sub: "What we collect, why we collect it, and the promises we make about it — in plain English.",
-    image:
-      "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=1600&q=80",
+    image: "/assets/privacy/hero-bg.jpg",
   },
 
   body: {

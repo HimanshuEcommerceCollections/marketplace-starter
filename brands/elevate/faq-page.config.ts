@@ -3,8 +3,8 @@ import type { FaqPageConfig } from "@/lib/faq/page";
 /**
  * "FAQ" page content for Elevate (redesigned bespoke layout). All copy is
  * draft / demonstration content — no real claims, statistics, or final
- * prices. Photography currently hotlinks Unsplash like the homepage; swap
- * for /assets/faq/* files once the designer supplies final art.
+ * prices. Photography is served from local /assets/faq/* (placeholder art
+ * extracted from the mockup — swap for final designer art in place).
  */
 export const elevateFaqPage: FaqPageConfig = {
   hero: {
@@ -12,8 +12,7 @@ export const elevateFaqPage: FaqPageConfig = {
     title: "Questions.",
     titleAccent: "Answered.",
     sub: "Everything people ask before their first booking — and a real human on the other end if we missed yours.",
-    image:
-      "https://images.unsplash.com/photo-1622587133988-70349a7942c8?w=1600&q=85&fit=crop&auto=format",
+    image: "/assets/faq/hero-bg.jpg",
   },
 
   browser: {
@@ -148,7 +147,6 @@ export const elevateFaqPage: FaqPageConfig = {
     body: "Our coordinators answer every message personally — usually within the hour on business days.",
     primaryCta: { label: "Contact us", href: "/contact" },
     secondaryCta: { label: "Just book — ask along the way", href: "/book" },
-    image:
-      "https://images.unsplash.com/photo-1620302044868-e061ebf02bfb?w=1600&q=85&fit=crop&auto=format",
+    image: "/assets/faq/band-bg.jpg",
   },
 };

@@ -2,10 +2,10 @@ import type { ContactPageConfig } from "@/lib/contact/page";
 
 /**
  * "Contact" page content for the Elevate brand (bespoke redesign layout).
- * Photography currently hotlinks Unsplash like the homepage (see
- * next.config.ts remotePatterns); swap for /assets/contact/* files once the
- * designer supplies final art. Email addresses, phone, and hours are draft /
- * demonstration placeholders — do not present as real contact channels.
+ * Photography is served from local /assets/contact/* (mirrors the other
+ * migrated pages) — swap for final designer art in place. Email addresses,
+ * phone, and hours are draft / demonstration placeholders — do not present as
+ * real contact channels.
  */
 export const elevateContact: ContactPageConfig = {
   hero: {
@@ -13,8 +13,7 @@ export const elevateContact: ContactPageConfig = {
     title: "Talk.",
     titleAccent: "To us.",
     sub: "No ticket numbers, no bots. Coordinators read every message and reply within one business day — usually much faster.",
-    image:
-      "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?auto=format&fit=crop&w=1600&q=80",
+    image: "/assets/contact/hero-bg.jpg",
   },
 
   methodsHeading: "Contact us",

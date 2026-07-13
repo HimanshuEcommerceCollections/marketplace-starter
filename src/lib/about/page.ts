@@ -53,16 +53,18 @@ export interface AboutBandChip {
   label: string;
 }
 
-/** Solid-dark belief band with a statement and stat chips. */
+/** Dark belief band with a statement and stat chips. */
 export interface AboutDarkBand {
   /** First title line; the accent renders italic in the highlight color. */
   title: string;
   titleAccent?: string;
   body?: string;
   chips: AboutBandChip[];
+  /** Optional background photo behind a dark scrim; omit for a solid-dark band. */
+  image?: string;
 }
 
-/** Closing solid-dark CTA band. */
+/** Closing dark CTA band. */
 export interface AboutCta {
   eyebrow?: string;
   title: string;
@@ -71,6 +73,8 @@ export interface AboutCta {
   body?: string;
   primaryCta: NavItem;
   secondaryCta?: NavItem;
+  /** Optional background photo behind a dark scrim; omit for a solid-dark band. */
+  image?: string;
 }
 
 export interface AboutPageConfig {

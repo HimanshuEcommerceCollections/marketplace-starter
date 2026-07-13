@@ -1,10 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useGsap } from "@/lib/anim/use-gsap";
 import type { AboutCta as AboutCtaConfig } from "@/lib/about/page";
 
-/** Closing solid-dark CTA band for the About page. */
+/** Closing dark CTA band for the About page; an optional photo sits behind a
+ *  dark scrim, otherwise the band stays solid-dark. */
 export function AboutCta({
   eyebrow,
   title,
@@ -12,6 +14,7 @@ export function AboutCta({
   body,
   primaryCta,
   secondaryCta,
+  image,
 }: AboutCtaConfig) {
   const scope = useGsap<HTMLElement>(({ gsap, scope }) => {
     gsap.from(scope.querySelectorAll(".js-ab-cta-reveal"), {
@@ -26,6 +29,11 @@ export function AboutCta({
 
   return (
     <section ref={scope} className="ab-cta" aria-labelledby="ab-cta-heading">
+      {image ? (
+        <div aria-hidden className="ab-cta-bg">
+          <Image src={image} alt="" fill sizes="100vw" />
+        </div>
+      ) : null}
       <div className="ab-cta-inner">
         {eyebrow ? (
           <p className="js-ab-cta-reveal ab-cta-eyebrow">{eyebrow}</p>

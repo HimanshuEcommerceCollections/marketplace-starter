@@ -31,8 +31,12 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-size: cover;
-  background-position: center;
+  /* Solid-dark base shows while the hero photo loads (no blank flash). */
+  background: var(--surface-inverse);
+}
+/* next/image (fill) renders an <img> child — cover it like a bg image. */
+.ct-hero-bg img {
+  object-fit: cover;
 }
 .ct-hero-bg::after {
   content: "";

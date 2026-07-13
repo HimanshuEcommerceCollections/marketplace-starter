@@ -1,10 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { useGsap } from "@/lib/anim/use-gsap";
 import type { AboutDarkBand } from "@/lib/about/page";
 
-/** Solid-dark belief band with the statement and illustrative stat chips. */
-export function AboutBand({ title, titleAccent, body, chips }: AboutDarkBand) {
+/** Dark belief band with the statement and illustrative stat chips; an optional
+ *  photo sits behind a dark scrim, otherwise the band stays solid-dark. */
+export function AboutBand({ title, titleAccent, body, chips, image }: AboutDarkBand) {
   const scope = useGsap<HTMLElement>(({ gsap, scope }) => {
     gsap.from(scope.querySelectorAll(".js-ab-band-reveal"), {
       scrollTrigger: { trigger: scope, start: "top 80%", once: true },
@@ -30,6 +32,11 @@ export function AboutBand({ title, titleAccent, body, chips }: AboutDarkBand) {
 
   return (
     <section ref={scope} className="ab-band" aria-labelledby="ab-band-heading">
+      {image ? (
+        <div aria-hidden className="ab-band-bg">
+          <Image src={image} alt="" fill sizes="100vw" />
+        </div>
+      ) : null}
       <div className="ab-band-inner">
         <h2 id="ab-band-heading" className="js-ab-band-reveal">
           {title}

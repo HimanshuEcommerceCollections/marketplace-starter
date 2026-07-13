@@ -76,10 +76,14 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-size: cover;
-  background-position: center;
+  /* Solid-dark base shows while the hero photo loads (no blank flash). */
+  background: var(--surface-inverse);
 }
-/* Dark scrim over the photo (image is painted on .faqp-hero-bg from config). */
+/* next/image (fill) renders an <img> child — cover it like a bg image. */
+.faqp-hero-bg img {
+  object-fit: cover;
+}
+/* Dark scrim over the photo (rendered as a next/image fill child). */
 .faqp-hero-bg::after {
   content: "";
   position: absolute;

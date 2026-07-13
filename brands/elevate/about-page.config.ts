@@ -2,10 +2,9 @@ import type { AboutPageConfig } from "@/lib/about/page";
 
 /**
  * "About" page content for the Elevate brand (redesigned bespoke layout).
- * Photography currently hotlinks Unsplash like the homepage (see
- * next.config.ts remotePatterns); swap for /assets/about/* files once the
- * designer supplies final art. Stats in the dark band are illustrative
- * INTERNAL DRAFT placeholders, not real claims.
+ * Photography is served from local /assets/about/* (placeholder art extracted
+ * from the mockup — swap for final designer art in place). Stats in the dark
+ * band are illustrative INTERNAL DRAFT placeholders, not real claims.
  */
 export const elevateAbout: AboutPageConfig = {
   hero: {
@@ -13,8 +12,7 @@ export const elevateAbout: AboutPageConfig = {
     title: "Care.",
     titleAccent: "Delivered.",
     sub: "We started with a simple frustration: the best wellness in Raleigh required the worst logistics. So we flipped it — the professionals come to you.",
-    image:
-      "https://images.unsplash.com/photo-1745327883508-b6cd32e5dde5?w=1600&q=85&fit=crop&auto=format",
+    image: "/assets/about/hero-bg.jpg",
   },
 
   story: {
@@ -27,7 +25,7 @@ export const elevateAbout: AboutPageConfig = {
       "Today, Elevate delivers eight disciplines across all of Wake County, from a Tuesday-evening massage in Cary to a twelve-week coaching program in Wake Forest.",
     ],
     image: {
-      src: "https://images.unsplash.com/photo-1598901986949-f593ff2a31a6?w=1000&q=85&fit=crop&auto=format",
+      src: "/assets/about/story.jpg",
       alt: "Care in human hands",
     },
   },
@@ -70,6 +68,7 @@ export const elevateAbout: AboutPageConfig = {
       { value: "<1hr", label: "Confirmation" },
       { value: "12", label: "Areas Served" },
     ],
+    image: "/assets/about/band-bg.jpg",
   },
 
   cta: {
@@ -79,5 +78,6 @@ export const elevateAbout: AboutPageConfig = {
     body: "Pick a service, set your time, and meet the professional who comes to you.",
     primaryCta: { label: "Book a session", href: "/book" },
     secondaryCta: { label: "Browse services", href: "/services" },
+    image: "/assets/about/cta-bg.jpg",
   },
 };

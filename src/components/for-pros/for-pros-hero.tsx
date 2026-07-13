@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import Image from "next/image";
 import { useGsap } from "@/lib/anim/use-gsap";
 import type { ForProsHero as ForProsHeroConfig } from "@/lib/for-pros/page";
 
@@ -30,16 +30,13 @@ export function ForProsHero({
     });
   }, []);
 
-  // Paint the background from config (inline style is linted out); runs even
-  // under reduced motion so the photo always shows.
-  useEffect(() => {
-    const el = scope.current?.querySelector<HTMLElement>(".fp-hero-bg");
-    if (el) el.style.backgroundImage = `url(${image})`;
-  }, [scope, image]);
-
   return (
     <section ref={scope} className="fp-hero" aria-labelledby="fp-hero-title">
-      <div aria-hidden className="fp-hero-bg" />
+      {/* Server-rendered background photo (no JS dependency → shows on first
+          paint). `priority` preloads it as the hero's LCP image. */}
+      <div aria-hidden className="fp-hero-bg">
+        <Image src={image} alt="" fill priority sizes="100vw" />
+      </div>
       <div className="fp-hero-inner">
         {eyebrow ? (
           <p className="js-fp-hero-reveal hero-eyebrow">{eyebrow}</p>

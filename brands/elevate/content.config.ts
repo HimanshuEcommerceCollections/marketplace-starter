@@ -25,8 +25,7 @@ export const elevateContent: BrandContent = {
       "Independent Professionals",
       "Coordinator Confirmed",
     ],
-    imageSrc:
-      "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1600&q=80",
+    imageSrc: "/assets/home/lifestyle.jpg",
     imageAlt:
       "Sample lifestyle image — a warm, naturally lit in-home wellness session.",
     imageCaption: {
@@ -35,17 +34,17 @@ export const elevateContent: BrandContent = {
     },
     photos: [
       {
-        src: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=80",
+        src: "/assets/home/discipline-yoga.jpg",
         alt: "Sample image — a yoga session at home.",
         label: "Yoga",
       },
       {
-        src: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=900&q=80",
+        src: "/assets/home/discipline-massage.jpg",
         alt: "Sample image — an in-home massage therapy session.",
         label: "Massage",
       },
       {
-        src: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=80",
+        src: "/assets/home/discipline-training.jpg",
         alt: "Sample image — a personal training session.",
         label: "Training",
       },

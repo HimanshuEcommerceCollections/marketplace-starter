@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import Image from "next/image";
 import { useGsap } from "@/lib/anim/use-gsap";
 import type { ContactHero as ContactHeroConfig } from "@/lib/contact/page";
 
@@ -28,16 +28,13 @@ export function ContactHero({
     });
   }, []);
 
-  // Paint the background from config (inline style is linted out); runs even
-  // under reduced motion so the photo always shows.
-  useEffect(() => {
-    const el = scope.current?.querySelector<HTMLElement>(".ct-hero-bg");
-    if (el) el.style.backgroundImage = `url(${image})`;
-  }, [scope, image]);
-
   return (
     <section ref={scope} className="ct-hero" aria-labelledby="ct-hero-title">
-      <div aria-hidden className="ct-hero-bg" />
+      {/* Server-rendered background photo (no JS dependency → shows on first
+          paint). `priority` preloads it as the hero's LCP image. */}
+      <div aria-hidden className="ct-hero-bg">
+        <Image src={image} alt="" fill priority sizes="100vw" />
+      </div>
       {eyebrow ? (
         <p className="js-ct-hero-reveal hero-eyebrow">{eyebrow}</p>
       ) : null}

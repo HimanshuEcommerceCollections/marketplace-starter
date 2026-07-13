@@ -3,20 +3,20 @@
 import Image from "next/image";
 import { useGsap } from "@/lib/anim/use-gsap";
 
-/** Demo lifestyle photography (Unsplash). */
+/** Demo lifestyle photography served from local /assets/home/*. */
 const PHOTOS = [
   {
-    src: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=80",
+    src: "/assets/home/strip-yoga.jpg",
     alt: "Sample image — an outdoor yoga session.",
     label: "Yoga",
   },
   {
-    src: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=900&q=80",
+    src: "/assets/home/strip-meditation.jpg",
     alt: "Sample image — a guided meditation.",
     label: "Meditation",
   },
   {
-    src: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=900&q=80",
+    src: "/assets/home/strip-training.jpg",
     alt: "Sample image — a strength training session.",
     label: "Training",
   },

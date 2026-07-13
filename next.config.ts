@@ -3,11 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    // Add brand asset CDNs here per deploy. Placeholder local assets need no remotePatterns.
-    remotePatterns: [
-      // Demo lifestyle photography for the redesigned homepage (Unsplash).
-      { protocol: "https", hostname: "images.unsplash.com" },
-    ],
+    // All photography is served from local /assets/* files, so no remote hosts
+    // are whitelisted. Add brand asset CDNs here per deploy if needed.
+    remotePatterns: [],
   },
   async redirects() {
     // The admin "category" pages were merged into flat "service" pages.
