@@ -458,19 +458,27 @@
 }
 .svcs-step {
   position: relative;
+  /* Center each step's content so the four numbers are evenly spaced and the
+     connector lines sit balanced between adjacent chips (mirrors for-pros). */
+  text-align: center;
 }
-/* Connector line between steps (desktop only). */
+/* Connector line between step chips (desktop only). Chips are centered in
+   their columns, so span from just past this chip's right edge (50% + 22px
+   chip half + 10px breathing) to ~10px before the next centered chip. The
+   gradient peaks mid-gap and fades toward both chips, reading as a balanced
+   divider. Sits at the chip's vertical center (top: 22px = half the 44px chip). */
 @media (min-width: 1101px) {
   .svcs-step::after {
     content: "";
     position: absolute;
     top: 22px;
-    left: calc(100% + 4px);
-    width: calc(100% - 40px);
+    left: calc(50% + 32px);
+    width: calc(100% - 32px);
     height: 1px;
     background: linear-gradient(
       to right,
-      color-mix(in oklab, var(--primary) 22%, transparent),
+      transparent,
+      color-mix(in oklab, var(--primary) 30%, transparent) 50%,
       transparent
     );
   }
@@ -484,7 +492,8 @@
   justify-content: center;
   width: 44px;
   height: 44px;
-  margin-bottom: 18px;
+  /* Auto inline margins center the fixed-width chip within its centered column. */
+  margin: 0 auto 18px;
   border-radius: 12px;
   background: color-mix(in oklab, var(--primary) 9%, transparent);
   border: 1px solid color-mix(in oklab, var(--primary) 22%, transparent);
