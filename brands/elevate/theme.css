@@ -33,9 +33,13 @@
   --primary-foreground: oklch(0.98 0.002 100);
 
   /* extended semantic surfaces */
-  --highlight: #6b8f6b; /* sage green — the ONLY accent hue (mock --green) */
+  --highlight: #6b8f6b; /* sage green — primary accent hue (mock --green) */
   --highlight-foreground: oklch(0.98 0.002 100);
   --notice: #a06a45; /* draft-notice terracotta (draft banners only) */
+
+  /* on-photo hero text (my-bookings design generation: dual green + terra) */
+  --hero-accent: #c17a5a; /* terra — accent word in the hero title */
+  --hero-eyebrow: #8fbc9e; /* green-light — eyebrow label over photography */
   --surface-inverse: oklch(0.17 0 0); /* near-black #111 dark bands/footer */
   --surface-inverse-foreground: oklch(0.94 0.003 100);
   --surface-brand: oklch(0.17 0 0); /* near-black (mock CTA band is also #111) */

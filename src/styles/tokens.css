@@ -48,6 +48,11 @@
   --surface-brand-foreground: var(--primary-foreground);
   --notice: var(--highlight); /* draft / demo notice text (brand-overridable) */
 
+  /* ---- ON-PHOTO HERO TEXT ---- (brand-overridable; used only over full-bleed
+     hero photography where semantic surface tokens don't apply) */
+  --hero-accent: var(--highlight); /* accent word (em) in the hero title */
+  --hero-eyebrow: rgba(255, 255, 255, 0.6); /* small uppercase label above it */
+
   /* ---- RADIUS ---- (brands override --radius base) */
   --radius: 0.625rem; /* OVERRIDDEN PER BRAND */
   --radius-sm: calc(var(--radius) - 4px);

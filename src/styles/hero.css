@@ -1,52 +1,62 @@
 /* ══════════════════════════════════════════════════════════════════
    SHARED HERO TEXT STYLING — single source of truth for the typography of
-   every full-bleed service landing hero: Massage, Yoga, Life Coaching, the
-   showcase pages (Beauty, Nutrition Coaching, Physical/Personal/Speech
-   Therapy) and the generic /services/[slug] fallback. The canonical treatment
-   is the Yoga hero.
+   every full-bleed page hero: the service landings (Massage, Yoga, Life
+   Coaching), the showcase pages (Beauty, Nutrition Coaching, Physical /
+   Personal / Speech Therapy), the generic /services/[slug] fallback, and the
+   About / Contact / FAQ / Privacy / Terms / Pricing / Services / How-It-Works
+   / For-Pros / Corporate page heroes.
 
-   Each hero keeps its OWN container / background / button / GSAP-reveal classes
-   (.<page>-hero, .<page>-hero-bg, .<page>-hero-inner, .<page>-hero-btns,
-   .js-<page>-hero-reveal); only the eyebrow, title, subline and price live
-   here. On-photo whites stay literal (permitted in src/styles/**).
+   The canonical treatment is the my-bookings design generation (mockups:
+   my-bookings / login / signup / corporate-inquiry `.page-title`): heavy
+   Montserrat 900 uppercase with a terra accent word and a green-light
+   eyebrow — see --hero-accent / --hero-eyebrow in brands/elevate/theme.css.
 
-   NOTE: the Corporate / config-driven landing hero (ServiceLandingHero) does
-   not use these classes yet — it will adopt this styling separately.
+   Each hero keeps its OWN container / background / button / GSAP-reveal
+   classes (.<page>-hero, .<page>-hero-bg, .<page>-hero-inner,
+   .<page>-hero-btns, .js-<page>-hero-reveal); only the eyebrow, title,
+   subline and price live here. On-photo whites stay literal (permitted in
+   src/styles/**).
+
+   NOTE: the home hero (.home-hero-*) intentionally stays on its own serif
+   treatment — it tracks the dedicated elevate-home.html design.
    ══════════════════════════════════════════════════════════════════ */
 
-/* Small uppercase label above the title — translucent white on the photo. */
+/* Small uppercase label above the title — green-light on the photo. */
 .hero-eyebrow {
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 26px;
+  color: var(--hero-eyebrow);
+  margin-bottom: 22px;
 }
 
-/* Display serif title. The accent word (em) renders in the sage highlight. */
+/* Heavy grotesque display title. The accent word (em) renders in terra. */
 .hero-title {
-  margin-bottom: 24px;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(52px, 7.5vw, 96px);
-  letter-spacing: -0.03em;
-  line-height: 1.02;
+  margin-bottom: 22px;
+  font-family: var(--font-display-bold);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(42px, 6.6vw, 98px);
+  letter-spacing: -0.02em;
+  line-height: 0.94;
   color: #faf8f4;
-  text-shadow: 0 3px 28px rgba(0, 0, 0, 0.5);
+  text-shadow:
+    0 3px 28px rgba(0, 0, 0, 0.6),
+    0 1px 4px rgba(0, 0, 0, 0.7);
 }
 .hero-title em {
-  font-style: italic;
-  color: var(--highlight);
+  font-style: normal;
+  color: var(--hero-accent);
 }
 
 /* Supporting subline below the title. */
 .hero-sub {
-  max-width: 460px;
-  font-size: clamp(15px, 1.6vw, 17px);
+  max-width: 520px;
+  font-size: 16px;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.62);
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.5);
+  color: rgba(250, 248, 244, 0.88);
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55);
 }
 
 /* "From $X" price line beside the CTA on the generic /services/[slug] hero. */

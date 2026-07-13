@@ -32,15 +32,16 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  align-items: flex-start;
+  justify-content: flex-end;
   overflow: hidden;
-  padding: 140px 24px 100px;
+  /* Top inset is the nav-clearance floor: with bottom-anchored copy it binds
+     only on short viewports. Bottom padding clears the scroll indicator. */
+  padding: var(--hero-safe-top) 24px 100px;
 }
 @media (min-width: 768px) {
   .home-hero {
-    padding: 140px 60px 100px;
+    padding: var(--hero-safe-top) 80px 100px;
   }
 }
 .home-hero-media {
@@ -152,53 +153,25 @@
   max-width: 780px;
   color: #faf8f4;
 }
-.home-hero-eyebrow {
-  display: block;
-  margin-bottom: 24px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--primary-foreground);
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
-}
-.home-hero-title {
-  /* Match the Yoga hero: Lora serif, regular weight, natural case. */
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(52px, 8vw, 112px);
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  margin-bottom: 32px;
-  color: #faf8f4;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.55);
-}
+/* Hero eyebrow / title / sub typography is shared — see hero.css. The title
+   keeps per-line wrappers so GSAP can reveal each line independently. */
 .home-hero-line {
   display: block;
   overflow: hidden;
-  padding-bottom: 10px;
+  padding-bottom: 6px;
 }
 .home-hero-line-inner {
   display: block;
 }
 .home-hero-line-accent {
-  color: var(--highlight);
-  font-style: italic;
-}
-.home-hero-sub {
-  max-width: 440px;
-  margin: 0 auto 40px;
-  font-size: clamp(14px, 1.4vw, 17px);
-  line-height: 1.72;
-  color: rgba(250, 248, 244, 0.92);
-  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55);
+  color: var(--hero-accent);
 }
 .home-hero-btns {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
   align-items: center;
-  justify-content: center;
+  margin-top: 40px;
 }
 .home-hero-btn-ghost {
   display: inline-flex;

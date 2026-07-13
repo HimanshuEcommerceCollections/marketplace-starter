@@ -26,11 +26,9 @@ export function TermsHero({ eyebrow, title, titleAccent, sub }: TermsHeroConfig)
       <div aria-hidden className="terms-hero-bg" />
       <div className="terms-hero-inner">
         {eyebrow ? (
-          <p className="js-terms-hero-reveal terms-eyebrow terms-hero-eyebrow">
-            {eyebrow}
-          </p>
+          <p className="js-terms-hero-reveal hero-eyebrow">{eyebrow}</p>
         ) : null}
-        <h1 id="terms-hero-title" className="js-terms-hero-reveal terms-hero-title">
+        <h1 id="terms-hero-title" className="js-terms-hero-reveal hero-title">
           {title}
           {titleAccent ? (
             <>
@@ -39,7 +37,7 @@ export function TermsHero({ eyebrow, title, titleAccent, sub }: TermsHeroConfig)
             </>
           ) : null}
         </h1>
-        {sub ? <p className="js-terms-hero-reveal terms-hero-sub">{sub}</p> : null}
+        {sub ? <p className="js-terms-hero-reveal hero-sub">{sub}</p> : null}
       </div>
     </section>
   );

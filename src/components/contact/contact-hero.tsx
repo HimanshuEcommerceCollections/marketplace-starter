@@ -39,9 +39,9 @@ export function ContactHero({
     <section ref={scope} className="ct-hero" aria-labelledby="ct-hero-title">
       <div aria-hidden className="ct-hero-bg" />
       {eyebrow ? (
-        <p className="js-ct-hero-reveal ct-eyebrow ct-hero-eyebrow">{eyebrow}</p>
+        <p className="js-ct-hero-reveal hero-eyebrow">{eyebrow}</p>
       ) : null}
-      <h1 id="ct-hero-title" className="js-ct-hero-reveal ct-hero-title">
+      <h1 id="ct-hero-title" className="js-ct-hero-reveal hero-title">
         {title}
         {titleAccent ? (
           <>
@@ -50,7 +50,7 @@ export function ContactHero({
           </>
         ) : null}
       </h1>
-      {sub ? <p className="js-ct-hero-reveal ct-hero-sub">{sub}</p> : null}
+      {sub ? <p className="js-ct-hero-reveal hero-sub">{sub}</p> : null}
     </section>
   );
 }
