@@ -69,7 +69,8 @@ export interface ContactBandChip {
   label: string;
 }
 
-/** Closing solid-dark band with a location statement and reachability chips. */
+/** Closing dark band with a location statement and reachability chips; an
+ *  optional photo sits behind a dark scrim, otherwise the band stays solid-dark. */
 export interface ContactDarkBand {
   eyebrow?: string;
   /** First title line; the accent renders italic in the highlight color. */
@@ -77,6 +78,8 @@ export interface ContactDarkBand {
   titleAccent?: string;
   body?: string;
   chips: ContactBandChip[];
+  /** Optional background photo (public path or whitelisted remote URL). */
+  image?: string;
 }
 
 export interface ContactPageConfig {

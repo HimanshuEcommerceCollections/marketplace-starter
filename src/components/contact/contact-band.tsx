@@ -1,10 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { useGsap } from "@/lib/anim/use-gsap";
 import type { ContactDarkBand } from "@/lib/contact/page";
 
-/** Closing solid-dark band with a location statement and reachability chips. */
-export function ContactBand({ eyebrow, title, titleAccent, body, chips }: ContactDarkBand) {
+/** Closing dark band with a location statement and reachability chips; an
+ *  optional photo sits behind a dark scrim, otherwise the band stays solid-dark. */
+export function ContactBand({ eyebrow, title, titleAccent, body, chips, image }: ContactDarkBand) {
   const scope = useGsap<HTMLElement>(({ gsap, scope }) => {
     gsap.from(scope.querySelectorAll(".js-ct-band-reveal"), {
       scrollTrigger: { trigger: scope, start: "top 80%", once: true },
@@ -30,6 +32,11 @@ export function ContactBand({ eyebrow, title, titleAccent, body, chips }: Contac
 
   return (
     <section ref={scope} className="ct-band" aria-labelledby="ct-band-heading">
+      {image ? (
+        <div aria-hidden className="ct-band-bg">
+          <Image src={image} alt="" fill sizes="100vw" />
+        </div>
+      ) : null}
       <div className="ct-band-inner">
         {eyebrow ? (
           <p className="js-ct-band-reveal ct-eyebrow ct-band-eyebrow">{eyebrow}</p>
