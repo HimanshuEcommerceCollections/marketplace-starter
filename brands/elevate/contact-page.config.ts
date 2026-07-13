@@ -87,6 +87,7 @@ export const elevateContact: ContactPageConfig = {
     title: "Local, and",
     titleAccent: "reachable.",
     body: "Elevate is coordinated from Raleigh and serves every corner of Wake County — travel always included.",
+    image: "/assets/contact/band-bg.jpg",
     chips: [
       { value: "Mon–Sat", label: "8am – 9pm ET" },
       { value: "12", label: "Areas Served" },
