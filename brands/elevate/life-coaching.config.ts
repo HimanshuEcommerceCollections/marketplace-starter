@@ -11,7 +11,8 @@ const BOOK: { label: string; href: string } = {
  * live from the service config API, with these static values as the fallback.
  * Prices are illustrative INTERNAL DRAFT values aligned with the catalog
  * (base $119 / +$40 for 90 min = $159). The hero + about photos live in
- * /assets/life-coaching/; the solid dark bands live in src/styles/life-coaching.css.
+ * /assets/life-coaching/; the dark bands are now photo bands styled in
+ * src/styles/life-coaching.css.
  */
 export const elevateLifeCoaching: LifeCoachingPageConfig = {
   hero: {
