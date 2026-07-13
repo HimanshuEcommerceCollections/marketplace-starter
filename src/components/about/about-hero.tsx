@@ -33,9 +33,9 @@ export function AboutHero({ eyebrow, title, titleAccent, sub, image }: AboutHero
     <section ref={scope} className="ab-hero" aria-labelledby="ab-hero-title">
       <div aria-hidden className="ab-hero-bg" />
       {eyebrow ? (
-        <p className="js-ab-hero-reveal ab-hero-eyebrow">{eyebrow}</p>
+        <p className="js-ab-hero-reveal hero-eyebrow">{eyebrow}</p>
       ) : null}
-      <h1 id="ab-hero-title" className="js-ab-hero-reveal ab-hero-title">
+      <h1 id="ab-hero-title" className="js-ab-hero-reveal hero-title">
         {title}
         {titleAccent ? (
           <>
@@ -44,7 +44,7 @@ export function AboutHero({ eyebrow, title, titleAccent, sub, image }: AboutHero
           </>
         ) : null}
       </h1>
-      {sub ? <p className="js-ab-hero-reveal ab-hero-sub">{sub}</p> : null}
+      {sub ? <p className="js-ab-hero-reveal hero-sub">{sub}</p> : null}
     </section>
   );
 }

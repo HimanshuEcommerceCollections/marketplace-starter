@@ -134,10 +134,10 @@ export function HomeHero({
 
       <div className="home-hero-content">
         {eyebrow ? (
-          <p className="js-hero-eyebrow home-hero-eyebrow">{eyebrow}</p>
+          <p className="js-hero-eyebrow hero-eyebrow">{eyebrow}</p>
         ) : null}
 
-        <h1 id="hero-heading" className="home-hero-title">
+        <h1 id="hero-heading" className="hero-title">
           {lines.map((line, i) => (
             <span key={line} className="home-hero-line">
               <span
@@ -153,7 +153,7 @@ export function HomeHero({
           ))}
         </h1>
 
-        {subtitle ? <p className="js-hero-sub home-hero-sub">{subtitle}</p> : null}
+        {subtitle ? <p className="js-hero-sub hero-sub">{subtitle}</p> : null}
 
         <div className="js-hero-btns home-hero-btns">
           <Button

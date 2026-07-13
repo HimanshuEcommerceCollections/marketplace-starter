@@ -49,33 +49,7 @@
      binds on short viewports, keeping the copy below the fixed nav pill. */
   padding: var(--hero-safe-top) 80px 64px;
 }
-.terms-hero-eyebrow {
-  margin-bottom: 22px;
-}
-.terms-hero-title {
-  margin-bottom: 22px;
-  font-family: var(--font-display-bold);
-  font-weight: 900;
-  text-transform: uppercase;
-  font-size: clamp(42px, 6.6vw, 98px);
-  letter-spacing: -0.02em;
-  line-height: 0.94;
-  color: #faf8f4;
-  text-shadow:
-    0 3px 28px rgba(0, 0, 0, 0.6),
-    0 1px 4px rgba(0, 0, 0, 0.7);
-}
-.terms-hero-title em {
-  font-style: normal;
-  color: var(--highlight);
-}
-.terms-hero-sub {
-  max-width: 520px;
-  font-size: 16px;
-  line-height: 1.7;
-  color: rgba(250, 248, 244, 0.88);
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55);
-}
+/* Hero eyebrow / title / sub typography is shared — see hero.css. */
 
 /* ───────────────────────── BODY (TOC + sections) ───────────────────────── */
 .terms-wrap {

@@ -99,9 +99,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  justify-content: flex-end;
   min-height: 68vh;
   overflow: hidden;
 }
@@ -128,19 +126,18 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
-  max-width: 820px;
-  margin: 0 auto;
-  /* Top inset is the nav-clearance floor: keeps the copy below the fixed nav
-     pill on short viewports, while the section centers it vertically. */
-  padding: var(--hero-safe-top) 48px 72px;
+  max-width: 1220px;
+  margin-right: auto;
+  /* Top inset is the nav-clearance floor: with the section bottom-anchoring
+     the copy, it binds only on short viewports to clear the fixed nav pill. */
+  padding: var(--hero-safe-top) 80px 64px;
 }
 /* Hero eyebrow/title/subline typography is shared — see hero.css. */
 .fp-hero-btns {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 14px;
   margin-top: 36px;
 }

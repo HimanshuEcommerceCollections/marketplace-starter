@@ -39,9 +39,9 @@ export function PrivacyHero({
     <section ref={scope} className="pv-hero" aria-labelledby="pv-hero-title">
       <div aria-hidden className="pv-hero-bg" />
       {eyebrow ? (
-        <p className="js-pv-hero-reveal pv-hero-eyebrow">{eyebrow}</p>
+        <p className="js-pv-hero-reveal hero-eyebrow">{eyebrow}</p>
       ) : null}
-      <h1 id="pv-hero-title" className="js-pv-hero-reveal pv-hero-title">
+      <h1 id="pv-hero-title" className="js-pv-hero-reveal hero-title">
         {title}
         {titleAccent ? (
           <>
@@ -50,7 +50,7 @@ export function PrivacyHero({
           </>
         ) : null}
       </h1>
-      {sub ? <p className="js-pv-hero-reveal pv-hero-sub">{sub}</p> : null}
+      {sub ? <p className="js-pv-hero-reveal hero-sub">{sub}</p> : null}
     </section>
   );
 }

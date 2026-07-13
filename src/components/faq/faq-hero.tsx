@@ -33,9 +33,9 @@ export function FaqHero({ eyebrow, title, titleAccent, sub, image }: FaqHeroConf
     <section ref={scope} className="faqp-hero" aria-labelledby="faqp-hero-title">
       <div aria-hidden className="faqp-hero-bg" />
       {eyebrow ? (
-        <p className="js-faqp-hero-reveal faqp-eyebrow faqp-hero-eyebrow">{eyebrow}</p>
+        <p className="js-faqp-hero-reveal hero-eyebrow">{eyebrow}</p>
       ) : null}
-      <h1 id="faqp-hero-title" className="js-faqp-hero-reveal faqp-hero-title">
+      <h1 id="faqp-hero-title" className="js-faqp-hero-reveal hero-title">
         {title}
         {titleAccent ? (
           <>
@@ -44,7 +44,7 @@ export function FaqHero({ eyebrow, title, titleAccent, sub, image }: FaqHeroConf
           </>
         ) : null}
       </h1>
-      {sub ? <p className="js-faqp-hero-reveal faqp-hero-sub">{sub}</p> : null}
+      {sub ? <p className="js-faqp-hero-reveal hero-sub">{sub}</p> : null}
     </section>
   );
 }

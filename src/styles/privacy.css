@@ -8,18 +8,18 @@
    consistent pair.
    ══════════════════════════════════════════════════════════════════ */
 
-/* ───────────────────────── HERO (centered) ───────────────────────── */
+/* ───────────────────────── HERO (bottom-left) ───────────────────────── */
 .pv-hero {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  align-items: flex-start;
+  justify-content: flex-end;
   min-height: 68vh;
   overflow: hidden;
-  /* --hero-safe-top reserves clearance for the fixed floating nav pill. */
-  padding: var(--hero-safe-top) 48px 90px;
+  /* --hero-safe-top reserves clearance for the fixed floating nav pill; with
+     bottom-anchored copy it binds only on short viewports. */
+  padding: var(--hero-safe-top) 80px 64px;
 }
 .pv-hero-bg {
   position: absolute;
@@ -43,37 +43,7 @@
   position: relative;
   z-index: 1;
 }
-.pv-hero-eyebrow {
-  margin-bottom: 26px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
-}
-.pv-hero-title {
-  margin-bottom: 26px;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(52px, 7.5vw, 96px);
-  line-height: 1.02;
-  letter-spacing: -0.025em;
-  color: #faf8f4;
-  text-shadow:
-    0 3px 28px rgba(0, 0, 0, 0.5),
-    0 1px 4px rgba(0, 0, 0, 0.6);
-}
-.pv-hero-title em {
-  font-style: italic;
-  color: var(--highlight);
-}
-.pv-hero-sub {
-  max-width: 460px;
-  font-size: clamp(15px, 1.6vw, 17px);
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.62);
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.5);
-}
+/* Hero eyebrow / title / sub typography is shared — see hero.css. */
 
 /* ───────────────────────── BODY (TOC + sections) ───────────────────────── */
 .pv-wrap {
