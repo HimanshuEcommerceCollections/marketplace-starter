@@ -241,10 +241,16 @@
   object-fit: cover;
 }
 
-/* ───────────────────────── SPECIALTIES (solid dark band) ───────────────────────── */
+/* ───────────────────────── SPECIALTIES (dark photo band) ───────────────────────── */
 .lc-styles {
   padding: 110px 80px;
-  background: var(--surface-inverse);
+  /* Solid-dark base shows while the photo loads / if it fails to load. */
+  background-color: var(--surface-inverse);
+  background-image:
+    linear-gradient(rgba(16, 22, 17, 0.55), rgba(16, 22, 17, 0.72)),
+    url("/assets/life-coaching/specialties-bg.jpg");
+  background-size: cover;
+  background-position: center;
   color: var(--surface-inverse-foreground);
 }
 .lc-styles-inner {
@@ -345,10 +351,16 @@
   color: var(--muted-foreground);
 }
 
-/* ───────────────────────── EXPECT (solid dark band, numbered) ───────────────────────── */
+/* ───────────────────────── EXPECT (dark photo band, numbered) ───────────────────────── */
 .lc-expect {
   padding: 110px 80px;
-  background: var(--surface-inverse);
+  /* Solid-dark base shows while the photo loads / if it fails to load. */
+  background-color: var(--surface-inverse);
+  background-image:
+    linear-gradient(rgba(16, 22, 17, 0.5), rgba(16, 22, 17, 0.68)),
+    url("/assets/life-coaching/expect-bg.jpg");
+  background-size: cover;
+  background-position: center;
   color: var(--surface-inverse-foreground);
 }
 .lc-expect-inner {
@@ -480,13 +492,19 @@
   }
 }
 
-/* ───────────────────────── CTA BAND (solid dark) ───────────────────────── */
+/* ───────────────────────── CTA BAND (dark photo) ───────────────────────── */
 .lc-cta {
   position: relative;
   overflow: hidden;
   padding: 110px 80px;
   text-align: center;
-  background: var(--surface-inverse);
+  /* Solid-dark base shows while the photo loads / if it fails to load. */
+  background-color: var(--surface-inverse);
+  background-image:
+    linear-gradient(rgba(10, 14, 11, 0.72), rgba(10, 14, 11, 0.82)),
+    url("/assets/life-coaching/cta-bg.jpg");
+  background-size: cover;
+  background-position: center;
 }
 .lc-cta-inner {
   position: relative;
