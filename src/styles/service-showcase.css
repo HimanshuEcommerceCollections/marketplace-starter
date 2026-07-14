@@ -642,11 +642,26 @@
     url("/assets/nutrition-coaching/cta-bg.jpg");
 }
 
-/* Physical Therapy (/services/physical-therapy) — hero photo only; the
-   specialties/expect/CTA bands stay solid dark (default --surface-inverse),
-   matching the approved mock. */
+/* Physical Therapy (/services/physical-therapy) — full band photography (hero +
+   specialties + experience + CTA), matching the approved mock. Scrim values are
+   identical to the other photo-band pages (see Beauty above). */
 .ssp--physical-therapy .ssp-hero-bg {
   background-image: url("/assets/physical-therapy/hero-bg.jpg");
+}
+.ssp--physical-therapy .ssp-styles {
+  background-image:
+    linear-gradient(rgba(16, 22, 17, 0.55), rgba(16, 22, 17, 0.72)),
+    url("/assets/physical-therapy/specialties-bg.jpg");
+}
+.ssp--physical-therapy .ssp-expect {
+  background-image:
+    linear-gradient(rgba(16, 22, 17, 0.5), rgba(16, 22, 17, 0.68)),
+    url("/assets/physical-therapy/expect-bg.jpg");
+}
+.ssp--physical-therapy .ssp-cta {
+  background-image:
+    linear-gradient(rgba(10, 14, 11, 0.72), rgba(10, 14, 11, 0.82)),
+    url("/assets/physical-therapy/cta-bg.jpg");
 }
 
 /* Personal Training (/services/personal-training) — hero + CTA photos; the
@@ -661,31 +676,24 @@
     url("/assets/personal-training/cta-bg.jpg");
 }
 
-/* Speech Therapy (/services/speech-therapy) — hero photo, but (unlike every
-   other showcase page) the specialties/experience bands are LIGHT, matching the
-   approved mock. Override the dark-band defaults back to the light surface with
-   solid white cards and dark text; the CTA band stays dark (default). */
+/* Speech Therapy (/services/speech-therapy) — full band photography (hero +
+   specialties + experience + CTA), matching the approved mock. Scrim values are
+   identical to the other photo-band pages (see Beauty above). */
 .ssp--speech-therapy .ssp-hero-bg {
   background-image: url("/assets/speech-therapy/hero-bg.jpg");
 }
-.ssp--speech-therapy .ssp-styles,
+.ssp--speech-therapy .ssp-styles {
+  background-image:
+    linear-gradient(rgba(16, 22, 17, 0.55), rgba(16, 22, 17, 0.72)),
+    url("/assets/speech-therapy/specialties-bg.jpg");
+}
 .ssp--speech-therapy .ssp-expect {
-  background-color: var(--muted);
+  background-image:
+    linear-gradient(rgba(16, 22, 17, 0.5), rgba(16, 22, 17, 0.68)),
+    url("/assets/speech-therapy/expect-bg.jpg");
 }
-.ssp--speech-therapy .ssp-styles .ssp-section-head h2,
-.ssp--speech-therapy .ssp-expect .ssp-section-head h2 {
-  color: var(--foreground);
-  text-shadow: none;
-}
-.ssp--speech-therapy .ssp-styles .ssp-section-head p,
-.ssp--speech-therapy .ssp-expect .ssp-section-head p {
-  color: var(--muted-foreground);
-  text-shadow: none;
-}
-.ssp--speech-therapy .ssp-style-card,
-.ssp--speech-therapy .ssp-addon-card,
-.ssp--speech-therapy .ssp-expect-card {
-  background: var(--card);
-  border-color: var(--border);
-  box-shadow: 0 4px 18px rgba(30, 28, 25, 0.06);
+.ssp--speech-therapy .ssp-cta {
+  background-image:
+    linear-gradient(rgba(10, 14, 11, 0.72), rgba(10, 14, 11, 0.82)),
+    url("/assets/speech-therapy/cta-bg.jpg");
 }

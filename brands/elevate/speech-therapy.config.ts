@@ -13,10 +13,9 @@ const BOOK: { label: string; href: string } = {
  * with no live booking config, so `specialties.items` / `pricing.chips` supply
  * the static fallback the showcase renders when the service config API has no
  * ACTIVE focus/duration groups (mirrors Physical Therapy and the Yoga page).
- * Prices are illustrative INTERNAL DRAFT values. Unlike the other showcase
- * pages, this mock uses LIGHT specialties/experience bands (not the dark
- * default) — see the `.ssp--speech-therapy` variant in
- * src/styles/service-showcase.css, which also selects the hero photo.
+ * Prices are illustrative INTERNAL DRAFT values. Band photography (hero +
+ * specialties + experience + CTA) is selected by the `.ssp--speech-therapy`
+ * variant in src/styles/service-showcase.css.
  */
 export const elevateSpeechTherapy: ShowcasePageConfig = {
   slug: "speech-therapy",
