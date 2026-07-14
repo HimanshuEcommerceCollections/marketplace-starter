@@ -649,11 +649,16 @@
   background-image: url("/assets/physical-therapy/hero-bg.jpg");
 }
 
-/* Personal Training (/services/personal-training) — hero photo only; the
-   specialties/expect/CTA bands stay solid dark (default --surface-inverse),
+/* Personal Training (/services/personal-training) — hero + CTA photos; the
+   specialties/expect bands stay solid dark (default --surface-inverse),
    matching the approved mock. */
 .ssp--personal-training .ssp-hero-bg {
   background-image: url("/assets/personal-training/hero-bg.jpg");
+}
+.ssp--personal-training .ssp-cta {
+  background-image:
+    linear-gradient(rgba(10, 14, 11, 0.72), rgba(10, 14, 11, 0.82)),
+    url("/assets/personal-training/cta-bg.jpg");
 }
 
 /* Speech Therapy (/services/speech-therapy) — hero photo, but (unlike every
