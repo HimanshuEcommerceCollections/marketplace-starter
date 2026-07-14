@@ -200,7 +200,22 @@
   overflow: hidden;
   padding: 110px 48px;
   text-align: center;
-  background: var(--surface-inverse);
+  /* Layered glow over a green-tinted dark base (matches the mock): a green wash
+     from the top-left and a softer terra wash from the bottom-right. Glow colors
+     flow from brand tokens; the base is the mock's literal dark green-black
+     gradient (deep-band overlay literals are permitted in src/styles/**). */
+  background:
+    radial-gradient(
+      ellipse 60% 80% at 20% 10%,
+      color-mix(in oklab, var(--highlight) 35%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 50% 70% at 85% 90%,
+      color-mix(in oklab, var(--hero-accent) 18%, transparent),
+      transparent 55%
+    ),
+    linear-gradient(160deg, #1e2b22 0%, #141f19 100%);
 }
 .pv-cta-inner {
   max-width: 720px;
