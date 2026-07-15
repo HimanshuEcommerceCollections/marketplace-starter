@@ -241,6 +241,14 @@ function BookInner({
     }
   }, [state, draftKey]);
 
+  // After a confirmed LIVE payment, send the customer to their My Bookings page.
+  React.useEffect(() => {
+    if (state.step === "success" && ctx.liveServiceId) {
+      const t = setTimeout(() => router.replace("/bookings"), 1400);
+      return () => clearTimeout(t);
+    }
+  }, [state.step, ctx.liveServiceId, router]);
+
   // ── Pricing helpers (mirror wizard-step-config) ─────────────────────────────
   const sp = pricing.services[service.id];
   const base: Money = sp?.base_price ?? { amount: 0, currency: service.currency };
@@ -374,12 +382,29 @@ function BookInner({
 
   // ── Success ─────────────────────────────────────────────────────────────────
   if (state.step === "success") {
+    // Live booking confirmed → redirect to My Bookings (effect above); show a
+    // brief confirmation with a manual fallback link meanwhile.
+    if (ctx.liveServiceId) {
+      return (
+        <div className="bk-panel">
+          <div className="bk-panel-head">
+            <h2>Payment confirmed</h2>
+            <p>Your booking is confirmed — taking you to My Bookings…</p>
+          </div>
+          <Link href="/bookings" className="bk-cta">
+            Go to My Bookings
+            <ArrowRight size={16} aria-hidden />
+          </Link>
+        </div>
+      );
+    }
+    // Static/stub fallback (no real booking persisted) → keep the confirmation.
     return (
       <div className="bk-panel">
         <BookingSuccessScreen
           request={state.request}
           reference={state.reference}
-          live={Boolean(ctx.liveServiceId)}
+          live={false}
         />
       </div>
     );
