@@ -313,60 +313,6 @@
   color: #b3452b;
 }
 
-/* ---- Preferred-time windows (repeater) ---- */
-.book-page .bk-windows {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.book-page .bk-window {
-  position: relative;
-}
-.book-page .bk-window + .bk-window {
-  padding-top: 16px;
-  border-top: 1px solid rgba(30, 28, 25, 0.08);
-}
-.book-page .bk-window .err {
-  display: block;
-  margin-top: 6px;
-  font-size: 11.5px;
-  color: #b3452b;
-}
-.book-page .bk-window-remove {
-  margin-top: 8px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: var(--font-inter), sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  color: #b3452b;
-  padding: 0;
-}
-.book-page .bk-window-remove:hover {
-  text-decoration: underline;
-}
-.book-page .bk-add-window {
-  margin-top: 16px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: none;
-  border: 1px dashed rgba(78, 123, 97, 0.4);
-  border-radius: 100px;
-  cursor: pointer;
-  font-family: var(--font-inter), sans-serif;
-  font-size: 12.5px;
-  font-weight: 500;
-  color: #4e7b61;
-  padding: 9px 18px;
-  transition: all 0.2s;
-}
-.book-page .bk-add-window:hover {
-  background: rgba(78, 123, 97, 0.06);
-  border-color: #4e7b61;
-}
-
 /* ---- Sticky dark summary ---- */
 .book-page .bk-summary {
   position: sticky;
