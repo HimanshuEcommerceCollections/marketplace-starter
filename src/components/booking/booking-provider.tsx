@@ -7,6 +7,7 @@ import type { BrandId } from "@/lib/brand/registry";
 import type { BookingRequest, Configuration } from "@/lib/booking/contract";
 import { createDraftBooking } from "@/lib/booking/contract";
 import { computePrice } from "@/lib/pricing/engine";
+import { rangeStart, rangeLabel } from "@/lib/booking/time-ranges";
 import type { CreateBookingPayload } from "@/lib/booking/api";
 
 export type WizardStep =
@@ -340,10 +341,10 @@ export function buildBookingRequest(ctx: BookingContextValue): BookingRequest {
     displayed_price,
   });
 
-  // Each filled window becomes an ISO date(+time) string in preferred_dates.
+  // Each filled window becomes an ISO date(+range-start) string in preferred_dates.
   const preferred_dates = state.windows
     .filter((w) => w.date)
-    .map((w) => (w.time ? `${w.date}T${w.time}` : w.date));
+    .map((w) => (w.time ? `${w.date}T${rangeStart(w.time)}` : w.date));
 
   return {
     ...draft,
@@ -398,11 +399,15 @@ export function toServerBooking(ctx: BookingContextValue): CreateBookingPayload 
 
   const filled = state.windows.filter((w) => w.date);
   const first = filled[0] ?? state.windows[0];
-  const startDate = new Date(`${first.date}T${first.time || "09:00"}:00`);
+  // The preferred time is a RANGE; the concrete slot uses the range's start.
+  const startDate = new Date(`${first.date}T${rangeStart(first.time)}:00`);
   const dur = durationMinutes && durationMinutes > 0 ? durationMinutes : 60;
   const endDate = new Date(startDate.getTime() + dur * 60_000);
 
-  const altWindows = filled.slice(1).map(formatWindowLabel).filter(Boolean);
+  const altWindows = filled
+    .slice(1)
+    .map((w) => `${formatDateLabel(w.date)}${w.time ? ` · ${rangeLabel(w.time)}` : ""}`)
+    .filter(Boolean);
   const notesParts: string[] = [];
   if (state.notes.trim()) notesParts.push(state.notes.trim());
   if (altWindows.length) notesParts.push(`Alternate preferred windows: ${altWindows.join("; ")}`);
