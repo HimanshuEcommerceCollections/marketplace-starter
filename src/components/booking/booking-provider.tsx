@@ -34,7 +34,13 @@ export interface SchedWindow {
   time: string;
 }
 
-type DetailField = "firstName" | "lastName" | "email" | "phone" | "address";
+type DetailField =
+  | "firstName"
+  | "lastName"
+  | "email"
+  | "phone"
+  | "address"
+  | "area";
 
 export interface WizardState {
   step: WizardStep;
@@ -46,6 +52,8 @@ export interface WizardState {
   email: string;
   phone: string;
   address: string;
+  /** Wake County town (ServiceArea enum value) the session takes place in. */
+  area: string;
   windows: SchedWindow[];
   notes: string;
   status: "draft" | "submitting" | "paying" | "submitted" | "error";
@@ -208,6 +216,7 @@ export function BookingProvider({
     email: "",
     phone: "",
     address: "",
+    area: "",
     windows: [
       { date: "", time: "" },
       { date: "", time: "" },
@@ -399,6 +408,7 @@ export function toServerBooking(ctx: BookingContextValue): CreateBookingPayload 
     scheduledStart: startDate.toISOString(),
     scheduledEnd: endDate.toISOString(),
     locationMode: MODE_TO_SERVER[service.location_modes[0] ?? "onsite"] ?? "ONSITE",
+    area: state.area || undefined,
     notes: notesParts.join("\n") || undefined,
     optionIds,
     contact: {

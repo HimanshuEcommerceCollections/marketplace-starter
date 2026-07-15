@@ -1,6 +1,9 @@
 "use client";
 
+import * as React from "react";
 import { useBookingDraft } from "./booking-provider";
+import { useAuth } from "@/components/auth/auth-provider";
+import { AREA_OPTIONS } from "@/lib/auth/areas";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -30,11 +33,19 @@ function FieldError({ id, errors }: { id: string; errors?: string[] }) {
 
 export function WizardStepDetails({ errors }: { errors?: FieldErrors }) {
   const { state, dispatch } = useBookingDraft();
+  const { user } = useAuth();
 
   const setField = (
-    field: "firstName" | "lastName" | "email" | "phone" | "address",
+    field: "firstName" | "lastName" | "email" | "phone" | "address" | "area",
     value: string,
   ) => dispatch({ type: "SET_FIELD", field, value });
+
+  // Pre-fill area when the signed-in customer covers exactly one town.
+  React.useEffect(() => {
+    if (!state.area && user?.area?.length === 1) {
+      dispatch({ type: "SET_FIELD", field: "area", value: user.area[0] });
+    }
+  }, [user, state.area, dispatch]);
 
   return (
     <div className="space-y-8">
@@ -86,14 +97,32 @@ export function WizardStepDetails({ errors }: { errors?: FieldErrors }) {
         </div>
       </div>
 
-      <div>
-        <Label htmlFor="address">Home Address / Location</Label>
-        <Input
-          id="address"
-          className="mt-2"
-          value={state.address}
-          onChange={(e) => setField("address", e.target.value)}
-        />
+      <div className="grid gap-x-6 gap-y-5 sm:grid-cols-2">
+        <div>
+          <Label htmlFor="address">Home Address / Location</Label>
+          <Input
+            id="address"
+            className="mt-2"
+            value={state.address}
+            onChange={(e) => setField("address", e.target.value)}
+          />
+        </div>
+        <div>
+          <Label htmlFor="area">Your Area</Label>
+          <select
+            id="area"
+            className={cn(SELECT_CLS, "mt-2", !state.area && "text-muted-foreground")}
+            value={state.area}
+            onChange={(e) => setField("area", e.target.value)}
+          >
+            <option value="">Select your area</option>
+            {AREA_OPTIONS.map((o) => (
+              <option key={o.value} value={o.value}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {/* Scheduling windows */}

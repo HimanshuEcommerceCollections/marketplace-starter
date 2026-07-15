@@ -21,7 +21,10 @@ export interface SiteChromeProps {
  */
 export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   const pathname = usePathname();
-  const bookingFlow = pathname?.startsWith("/book") ?? false;
+  // The booking WIZARD (/book, /book/success…) is bare — but NOT the customer's
+  // "My Bookings" account pages (/bookings, /bookings/[id]), which keep chrome.
+  const bookingFlow =
+    pathname === "/book" || (pathname?.startsWith("/book/") ?? false);
   const authFlow = pathname === "/login" || pathname === "/signup";
   const adminFlow = pathname?.startsWith("/admin") ?? false;
   const bareLayout = bookingFlow || adminFlow;
@@ -32,6 +35,9 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   // About, FAQ, Contact, and Privacy.
   const fullBleedHero =
     authFlow ||
+    // "My Bookings" list has a full-bleed photo hero behind the nav; the detail
+    // page (/bookings/[id]) has no hero, so it keeps the normal nav offset.
+    pathname === "/bookings" ||
     pathname === "/" ||
     // During ISR regeneration on Vercel the root route is rendered as
     // "/index", so the server-side pathname never equals "/" there.

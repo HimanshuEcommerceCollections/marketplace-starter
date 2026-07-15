@@ -53,6 +53,9 @@
 /* Split-screen login / signup screens. */
 @import "./auth.css";
 
+/* "My Bookings" account list + detail. */
+@import "./bookings.css";
+
 /* Shared hero text styling (consumed by every service landing hero + the
    generic /services/[slug] hero). Imported last so .hero-* wins the cascade. */
 @import "./hero.css";

@@ -1,0 +1,661 @@
+/* =========================================================================
+   bookings.css — "My Bookings" account page (migrated from the my-bookings.html
+   mockup). Literal colors/spacing live here by design (per-page stylesheet, same
+   pattern as terms.css / how-it-works.css). Everything is scoped under `.mb-page`
+   so the short class names can't leak into the rest of the app.
+
+   Hero eyebrow/title/subline reuse the shared .hero-* classes (see hero.css);
+   only the hero container lives here. Fonts use the app's next/font CSS vars.
+   ========================================================================= */
+
+/* ---- Hero (compact) ---- */
+.mb-page .mb-hero {
+  position: relative;
+  min-height: 46vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+.mb-page .mb-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-image: linear-gradient(
+      to bottom,
+      rgba(10, 14, 11, 0.42) 0%,
+      rgba(10, 14, 11, 0.56) 40%,
+      rgba(10, 14, 11, 0.92) 100%
+    ),
+    url("/assets/bookings/hero-bg.jpg");
+}
+.mb-page .mb-hero-inner {
+  position: relative;
+  z-index: 1;
+  padding: 0 80px 64px;
+  max-width: 1220px;
+  width: 100%;
+}
+
+/* ---- Two-column layout ---- */
+.mb-page .mb-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 64px 80px 110px;
+  display: grid;
+  grid-template-columns: 1.65fr 1fr;
+  gap: 34px;
+  align-items: start;
+}
+
+/* ---- Tabs ---- */
+.mb-page .mb-tabs {
+  display: flex;
+  gap: 4px;
+  background: #f0ede8;
+  border: 1px solid rgba(30, 28, 25, 0.09);
+  border-radius: 100px;
+  padding: 4px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.mb-page .mb-tab {
+  border: none;
+  background: transparent;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: rgba(30, 28, 25, 0.5);
+  padding: 8px 18px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.mb-page .mb-tab.on {
+  background: linear-gradient(135deg, #4e7b61, #2b4a36);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(78, 123, 97, 0.32);
+}
+.mb-page .mb-tab small {
+  opacity: 0.7;
+  margin-left: 4px;
+}
+
+/* ---- Booking card ---- */
+.mb-page .bkg-card {
+  background: #fff;
+  border: 1px solid rgba(30, 28, 25, 0.09);
+  border-radius: 22px;
+  padding: 24px 26px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 18px rgba(30, 28, 25, 0.05);
+  transition: transform 0.4s, box-shadow 0.4s, border-color 0.3s;
+}
+.mb-page .bkg-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(78, 123, 97, 0.22);
+  box-shadow: 0 16px 36px -12px rgba(78, 123, 97, 0.15);
+}
+.mb-page .bkg-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+.mb-page .bkg-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: rgba(78, 123, 97, 0.09);
+  border: 1px solid rgba(78, 123, 97, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #4e7b61;
+}
+.mb-page .bkg-main {
+  flex: 1;
+  min-width: 0;
+}
+.mb-page .bkg-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.mb-page .bkg-title h3 {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: 19px;
+  letter-spacing: -0.4px;
+  color: #1e1c19;
+}
+.mb-page .badge {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 4px 11px;
+  border-radius: 100px;
+}
+.mb-page .badge.confirmed {
+  color: #4e7b61;
+  background: rgba(78, 123, 97, 0.1);
+  border: 1px solid rgba(78, 123, 97, 0.25);
+}
+.mb-page .badge.pending {
+  color: #c17a5a;
+  background: rgba(193, 122, 90, 0.1);
+  border: 1px solid rgba(193, 122, 90, 0.28);
+}
+.mb-page .badge.completed {
+  color: rgba(30, 28, 25, 0.55);
+  background: rgba(30, 28, 25, 0.05);
+  border: 1px solid rgba(30, 28, 25, 0.12);
+}
+.mb-page .badge.cancelled {
+  color: rgba(30, 28, 25, 0.38);
+  background: rgba(30, 28, 25, 0.03);
+  border: 1px dashed rgba(30, 28, 25, 0.18);
+}
+.mb-page .bkg-meta {
+  font-size: 13px;
+  color: rgba(30, 28, 25, 0.55);
+  line-height: 1.75;
+}
+.mb-page .bkg-meta b {
+  color: rgba(30, 28, 25, 0.75);
+  font-weight: 500;
+}
+.mb-page .bkg-meta .cred {
+  font-weight: 400;
+  font-size: 11px;
+  color: #4e7b61;
+}
+.mb-page .bkg-meta .ref {
+  letter-spacing: 1px;
+  font-size: 11.5px;
+}
+.mb-page .bkg-meta .dot {
+  margin: 0 7px;
+  opacity: 0.4;
+}
+.mb-page .bkg-price {
+  text-align: right;
+  flex-shrink: 0;
+}
+.mb-page .bkg-price .p {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: 24px;
+  letter-spacing: -0.8px;
+  color: #1e1c19;
+}
+.mb-page .bkg-price .l {
+  font-size: 10.5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(30, 28, 25, 0.4);
+  display: block;
+  margin-top: 2px;
+}
+.mb-page .bkg-price a.l {
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.mb-page .bkg-price a.l:hover {
+  color: #4e7b61;
+}
+.mb-page .bkg-note {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: rgba(193, 122, 90, 0.06);
+  border: 1px solid rgba(193, 122, 90, 0.18);
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-size: 12.5px;
+  color: rgba(30, 28, 25, 0.6);
+  line-height: 1.6;
+  margin-top: 14px;
+}
+.mb-page .bkg-note svg {
+  color: #c17a5a;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ---- Card action buttons ---- */
+.mb-page .bkg-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.mb-page .mb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 9px 16px;
+  border-radius: 100px;
+  border: 1px solid rgba(30, 28, 25, 0.14);
+  background: transparent;
+  color: #1e1c19;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.22s;
+}
+.mb-page .mb-btn:hover {
+  border-color: #4e7b61;
+  color: #4e7b61;
+  background: rgba(78, 123, 97, 0.05);
+}
+.mb-page .mb-btn.danger:hover {
+  border-color: #b4533a;
+  color: #b4533a;
+  background: rgba(180, 83, 58, 0.05);
+}
+.mb-page .mb-btn.solid {
+  background: linear-gradient(135deg, #4e7b61, #2b4a36);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(78, 123, 97, 0.3);
+}
+.mb-page .mb-btn.solid:hover {
+  transform: translateY(-1px);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(78, 123, 97, 0.42);
+}
+.mb-page .mb-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ---- Star rating ---- */
+.mb-page .stars {
+  display: flex;
+  gap: 3px;
+  margin-top: 14px;
+  align-items: center;
+}
+.mb-page .stars .lbl {
+  font-size: 12px;
+  color: rgba(30, 28, 25, 0.5);
+  margin-right: 8px;
+}
+.mb-page .stars button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  color: rgba(30, 28, 25, 0.22);
+  transition: all 0.15s;
+}
+.mb-page .stars button:hover {
+  transform: scale(1.15);
+}
+.mb-page .stars button.fill {
+  color: #c17a5a;
+}
+.mb-page .stars button:disabled {
+  cursor: default;
+}
+.mb-page .stars button:disabled:hover {
+  transform: none;
+}
+.mb-page .stars .thanks {
+  font-size: 12px;
+  color: #4e7b61;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+/* ---- Empty state ---- */
+.mb-page .mb-empty {
+  text-align: center;
+  padding: 64px 20px;
+  border: 1px dashed rgba(30, 28, 25, 0.09);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.5);
+}
+.mb-page .mb-empty svg {
+  color: #8fbc9e;
+  margin: 0 auto 14px;
+  display: block;
+}
+.mb-page .mb-empty p {
+  font-size: 14px;
+  color: rgba(30, 28, 25, 0.5);
+  margin-bottom: 20px;
+}
+
+/* ---- Skeleton (loading) ---- */
+.mb-page .mb-skel {
+  height: 132px;
+  border-radius: 22px;
+  background: rgba(30, 28, 25, 0.05);
+  margin-bottom: 16px;
+  animation: mb-pulse 1.4s ease-in-out infinite;
+}
+@keyframes mb-pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ---- Error banner ---- */
+.mb-page .mb-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(180, 83, 58, 0.08);
+  border: 1px solid rgba(180, 83, 58, 0.22);
+  color: #9a4227;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 13.5px;
+  margin-bottom: 16px;
+}
+
+/* ---- Sidebar ---- */
+.mb-page .mb-side {
+  position: sticky;
+  top: 118px;
+}
+.mb-page .next-card-dark {
+  background: linear-gradient(165deg, #1e2b22 0%, #14201a 100%);
+  border: 1px solid rgba(143, 188, 158, 0.25);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 16px 44px rgba(20, 32, 26, 0.3);
+  margin-bottom: 16px;
+}
+.mb-page .nc-eyebrow {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #8fbc9e;
+  margin-bottom: 14px;
+}
+.mb-page .nc-when {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: 26px;
+  letter-spacing: -0.8px;
+  color: #faf8f4;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.mb-page .nc-count {
+  font-size: 12px;
+  color: #c17a5a;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+.mb-page .nc-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 13px;
+  color: rgba(250, 248, 244, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.mb-page .nc-line b {
+  color: rgba(250, 248, 244, 0.92);
+  font-weight: 500;
+  text-align: right;
+}
+.mb-page .nc-line:last-of-type {
+  border-bottom: none;
+}
+.mb-page .side-card {
+  background: #fff;
+  border: 1px solid rgba(30, 28, 25, 0.09);
+  border-radius: 22px;
+  padding: 24px 26px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 18px rgba(30, 28, 25, 0.05);
+}
+.mb-page .side-card h4 {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: 17px;
+  letter-spacing: -0.3px;
+  color: #1e1c19;
+  margin-bottom: 14px;
+}
+.mb-page .side-card .mb-btn {
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+.mb-page .side-card p {
+  font-size: 12.5px;
+  color: rgba(30, 28, 25, 0.5);
+  line-height: 1.65;
+}
+.mb-page .side-card a.txt {
+  color: #4e7b61;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 13px;
+}
+.mb-page .side-card a.txt:hover {
+  text-decoration: underline;
+}
+
+/* ---- Dark "Plans change" band ---- */
+.mb-page .mb-band {
+  position: relative;
+  padding: 100px 80px;
+  background-size: cover;
+  background-position: center;
+  background-image: linear-gradient(
+      rgba(16, 22, 17, 0.6),
+      rgba(16, 22, 17, 0.76)
+    ),
+    url("/assets/bookings/band-bg.jpg");
+}
+.mb-page .mb-band-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+.mb-page .mb-band h2 {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: clamp(28px, 3.8vw, 48px);
+  letter-spacing: -1.5px;
+  color: #faf8f4;
+  margin-bottom: 16px;
+}
+.mb-page .mb-band h2 em {
+  font-style: italic;
+  color: #c17a5a;
+}
+.mb-page .mb-band-inner > p {
+  font-size: 14.5px;
+  color: rgba(250, 248, 244, 0.66);
+  max-width: 540px;
+  margin: 0 auto 40px;
+  line-height: 1.75;
+}
+.mb-page .mb-band-chips {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.mb-page .mb-band-chip {
+  background: rgba(20, 28, 22, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 18px;
+  padding: 20px 30px;
+  min-width: 150px;
+}
+.mb-page .mb-band-chip .n {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: 28px;
+  color: #faf8f4;
+  letter-spacing: -1px;
+}
+.mb-page .mb-band-chip .l {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(250, 248, 244, 0.5);
+  margin-top: 5px;
+}
+
+/* ---- Detail page extras ---- */
+.mb-page .mb-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(30, 28, 25, 0.55);
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: color 0.2s;
+}
+.mb-page .mb-back:hover {
+  color: #4e7b61;
+}
+.mb-page .mb-detail {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px 32px 96px;
+}
+.mb-page .mb-detail-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.mb-page .mb-detail-head h1 {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: clamp(28px, 4vw, 40px);
+  letter-spacing: -1px;
+  color: #1e1c19;
+  margin-bottom: 6px;
+}
+.mb-page .mb-detail-head .ref {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: rgba(30, 28, 25, 0.45);
+}
+.mb-page .mb-detail-badges {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.mb-page .mb-skel.tall {
+  height: 280px;
+}
+.mb-page .mb-fineprint {
+  font-size: 12px;
+  color: rgba(30, 28, 25, 0.45);
+}
+.mb-page .mb-panel {
+  background: #fff;
+  border: 1px solid rgba(30, 28, 25, 0.09);
+  border-radius: 22px;
+  padding: 22px 26px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 18px rgba(30, 28, 25, 0.05);
+}
+.mb-page .mb-panel h2 {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(30, 28, 25, 0.45);
+  margin-bottom: 14px;
+}
+.mb-page .mb-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 7px 0;
+  font-size: 13.5px;
+}
+.mb-page .mb-row dt {
+  color: rgba(30, 28, 25, 0.55);
+}
+.mb-page .mb-row dd {
+  text-align: right;
+  color: #1e1c19;
+  font-weight: 500;
+}
+.mb-page .mb-row.muted dd {
+  color: rgba(30, 28, 25, 0.55);
+  font-weight: 400;
+}
+.mb-page .mb-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(30, 28, 25, 0.09);
+  margin-top: 12px;
+  padding-top: 14px;
+}
+.mb-page .mb-total .p {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: 22px;
+  letter-spacing: -0.6px;
+  color: #1e1c19;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 960px) {
+  .mb-page .mb-hero-inner {
+    padding: 0 32px 52px;
+  }
+  .mb-page .mb-wrap {
+    grid-template-columns: 1fr;
+    padding: 48px 32px 90px;
+  }
+  .mb-page .mb-side {
+    position: static;
+    order: -1;
+  }
+  .mb-page .mb-band {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+@media (max-width: 640px) {
+  .mb-page .mb-hero-inner {
+    padding: 0 20px 42px;
+  }
+  .mb-page .mb-wrap {
+    padding: 40px 16px 72px;
+  }
+  .mb-page .bkg-card {
+    padding: 20px 18px;
+  }
+  .mb-page .bkg-top {
+    flex-wrap: wrap;
+  }
+  .mb-page .bkg-price {
+    text-align: left;
+    width: 100%;
+    order: 3;
+  }
+  .mb-page .mb-band {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .mb-page .mb-detail {
+    padding: 44px 16px 72px;
+  }
+}
