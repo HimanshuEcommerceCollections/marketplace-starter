@@ -10,6 +10,7 @@ import { computePrice } from "@/lib/pricing/engine";
 import type { CreateBookingPayload } from "@/lib/booking/api";
 
 export type WizardStep =
+  | "build" // single-page redesign: service + config + details on one screen
   | "config"
   | "pricing"
   | "details"
@@ -197,6 +198,7 @@ export function BookingProvider({
   liveServiceId,
   optionIdByGroupKey,
   durationMinutes,
+  initialStep = "config",
   children,
 }: {
   service: Service;
@@ -205,10 +207,12 @@ export function BookingProvider({
   liveServiceId?: string;
   optionIdByGroupKey?: Record<string, Record<string, string>>;
   durationMinutes?: number;
+  /** Starting step — the single-page redesign passes "build". */
+  initialStep?: WizardStep;
   children: React.ReactNode;
 }) {
   const initial: WizardState = {
-    step: "config",
+    step: initialStep,
     selections: defaultSelections(service),
     quantity: 1,
     firstName: "",

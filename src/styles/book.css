@@ -1,0 +1,573 @@
+/* =========================================================================
+   book.css — single-page "Book" flow (migrated from book.html mockup).
+   Literal colors/spacing live here by design (per-page stylesheet, same pattern
+   as terms.css / bookings.css). Scoped under `.book-page` so class names can't
+   leak. Hero eyebrow/title/subline reuse the shared .hero-* classes (hero.css).
+   ========================================================================= */
+
+/* ---- Hero ---- */
+.book-page .bk-hero {
+  position: relative;
+  min-height: 54vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+.book-page .bk-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-image: linear-gradient(
+      to bottom,
+      rgba(10, 14, 11, 0.44) 0%,
+      rgba(10, 14, 11, 0.58) 45%,
+      rgba(10, 14, 11, 0.92) 100%
+    ),
+    url("/assets/book/hero-bg.jpg");
+}
+.book-page .bk-hero-inner {
+  position: relative;
+  z-index: 1;
+  padding: 0 80px 56px;
+  max-width: 1220px;
+  width: 100%;
+}
+
+/* ---- Layout ---- */
+.book-page .book-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 72px 80px 110px;
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+/* ---- Step card ---- */
+.book-page .bk-step {
+  background: #fff;
+  border: 1px solid rgba(30, 28, 25, 0.09);
+  border-radius: 24px;
+  padding: 30px 32px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 20px rgba(30, 28, 25, 0.05);
+}
+.book-page .bk-step-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.book-page .bk-num {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: rgba(78, 123, 97, 0.09);
+  border: 1px solid rgba(78, 123, 97, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #4e7b61;
+  flex-shrink: 0;
+}
+.book-page .bk-step-head h3 {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: 21px;
+  letter-spacing: -0.5px;
+  color: #1e1c19;
+}
+.book-page .bk-step-head small {
+  display: block;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 12px;
+  color: rgba(30, 28, 25, 0.45);
+  margin-top: 2px;
+}
+
+/* ---- Service tiles ---- */
+.book-page .svc-pick {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.book-page .svc-tile {
+  border: 1px solid rgba(30, 28, 25, 0.09);
+  border-radius: 16px;
+  padding: 16px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s;
+  background: #faf8f4;
+  text-decoration: none;
+  display: block;
+}
+.book-page .svc-tile svg {
+  color: #4e7b61;
+  margin: 0 auto 8px;
+  display: block;
+}
+.book-page .svc-tile span {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: rgba(30, 28, 25, 0.62);
+  line-height: 1.3;
+  display: block;
+}
+.book-page .svc-tile:hover {
+  border-color: rgba(78, 123, 97, 0.22);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(78, 123, 97, 0.12);
+}
+.book-page .svc-tile.sel {
+  background: linear-gradient(135deg, #4e7b61, #2b4a36);
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(78, 123, 97, 0.38);
+}
+.book-page .svc-tile.sel svg,
+.book-page .svc-tile.sel span {
+  color: #fff;
+}
+.book-page .svc-tile.soon {
+  opacity: 0.62;
+}
+.book-page .svc-tile .soon-tag {
+  display: block;
+  font-size: 9.5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #c17a5a;
+  margin-top: 4px;
+}
+
+/* ---- Single-select chip rows ---- */
+.book-page .bk-chips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.book-page .bk-chip {
+  border: 1px solid rgba(30, 28, 25, 0.09);
+  border-radius: 100px;
+  padding: 11px 22px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(30, 28, 25, 0.62);
+  cursor: pointer;
+  transition: all 0.25s;
+  background: #faf8f4;
+}
+.book-page .bk-chip b {
+  color: #1e1c19;
+  margin-left: 6px;
+  font-weight: 600;
+}
+.book-page .bk-chip:hover {
+  border-color: rgba(78, 123, 97, 0.22);
+}
+.book-page .bk-chip.sel {
+  background: linear-gradient(135deg, #4e7b61, #2b4a36);
+  border-color: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 6px 18px rgba(78, 123, 97, 0.36);
+}
+.book-page .bk-chip.sel b {
+  color: #fff;
+}
+.book-page .bk-chip:focus-visible {
+  outline: 2px solid #4e7b61;
+  outline-offset: 2px;
+}
+
+/* ---- Multi-select add-ons ---- */
+.book-page .addon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.book-page .addon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid rgba(30, 28, 25, 0.09);
+  border-radius: 14px;
+  padding: 13px 16px;
+  cursor: pointer;
+  transition: all 0.22s;
+  background: #faf8f4;
+}
+.book-page .addon:hover {
+  border-color: rgba(78, 123, 97, 0.22);
+}
+.book-page .addon.sel {
+  border-color: #4e7b61;
+  background: rgba(78, 123, 97, 0.06);
+}
+.book-page .addon .l {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 13.5px;
+  color: rgba(30, 28, 25, 0.7);
+}
+.book-page .addon .box {
+  width: 19px;
+  height: 19px;
+  border-radius: 6px;
+  border: 1.5px solid rgba(30, 28, 25, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  color: #fff;
+}
+.book-page .addon.sel .box {
+  background: #4e7b61;
+  border-color: #4e7b61;
+}
+.book-page .addon .box svg {
+  opacity: 0;
+}
+.book-page .addon.sel .box svg {
+  opacity: 1;
+}
+.book-page .addon .p {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4e7b61;
+}
+.book-page .addon input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* ---- Coordinator / info note ---- */
+.book-page .coord-note {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: rgba(193, 122, 90, 0.07);
+  border: 1px solid rgba(193, 122, 90, 0.22);
+  border-radius: 14px;
+  padding: 15px 17px;
+  font-size: 13px;
+  color: rgba(30, 28, 25, 0.62);
+  line-height: 1.6;
+}
+.book-page .coord-note svg {
+  color: #c17a5a;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ---- Detail fields ---- */
+.book-page .bk-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.book-page .bk-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.book-page .bk-field.full {
+  grid-column: 1 / -1;
+}
+.book-page .bk-field label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(30, 28, 25, 0.45);
+}
+.book-page .bk-field input,
+.book-page .bk-field select {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 14px;
+  color: #1e1c19;
+  background: #faf8f4;
+  border: 1px solid rgba(30, 28, 25, 0.09);
+  border-radius: 12px;
+  padding: 12px 14px;
+  outline: none;
+  transition: border 0.2s;
+  width: 100%;
+}
+.book-page .bk-field input:focus,
+.book-page .bk-field select:focus {
+  border-color: #4e7b61;
+}
+.book-page .bk-field input[aria-invalid="true"],
+.book-page .bk-field select[aria-invalid="true"] {
+  border-color: #c15a3a;
+}
+.book-page .bk-field .err {
+  font-size: 11.5px;
+  color: #b3452b;
+}
+
+/* ---- Sticky dark summary ---- */
+.book-page .bk-summary {
+  position: sticky;
+  top: 118px;
+  background: linear-gradient(165deg, #1e2b22 0%, #14201a 100%);
+  border: 1px solid rgba(143, 188, 158, 0.25);
+  border-radius: 26px;
+  padding: 32px 30px;
+  box-shadow: 0 16px 48px rgba(20, 32, 26, 0.35);
+}
+.book-page .bk-sum-eyebrow {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #8fbc9e;
+  margin-bottom: 16px;
+}
+.book-page .bk-sum-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  font-size: 13.5px;
+  color: rgba(250, 248, 244, 0.66);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.book-page .bk-sum-line b {
+  color: rgba(250, 248, 244, 0.92);
+  font-weight: 500;
+  text-align: right;
+}
+.book-page .bk-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 20px 0 6px;
+}
+.book-page .bk-total .lbl {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(250, 248, 244, 0.45);
+}
+.book-page .bk-total .amt {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: 44px;
+  letter-spacing: -2px;
+  color: #faf8f4;
+  line-height: 1;
+}
+.book-page .bk-total .amt small {
+  font-size: 15px;
+  letter-spacing: 0;
+  color: rgba(250, 248, 244, 0.5);
+}
+.book-page .bk-coord-tag {
+  font-size: 11.5px;
+  color: #c17a5a;
+  margin-top: 4px;
+}
+.book-page .bk-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(135deg, #4e7b61, #2b4a36);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 16px;
+  border-radius: 100px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 22px;
+  transition: all 0.3s;
+  box-shadow: 0 8px 26px rgba(78, 123, 97, 0.45);
+}
+.book-page .bk-cta:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 34px rgba(78, 123, 97, 0.6);
+}
+.book-page .bk-cta:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.book-page .bk-fine {
+  font-size: 11.5px;
+  color: rgba(250, 248, 244, 0.4);
+  text-align: center;
+  margin-top: 14px;
+  line-height: 1.6;
+}
+.book-page .bk-sum-error {
+  background: rgba(193, 90, 58, 0.15);
+  border: 1px solid rgba(193, 90, 58, 0.35);
+  color: #f0c3b2;
+  border-radius: 12px;
+  padding: 10px 13px;
+  font-size: 12.5px;
+  margin-top: 14px;
+}
+
+/* ---- Payment + success (post-request) ---- */
+.book-page .bk-panel {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 64px 32px 100px;
+}
+.book-page .bk-panel-head {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.book-page .bk-panel-head h2 {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: clamp(26px, 3.4vw, 38px);
+  letter-spacing: -1px;
+  color: #1e1c19;
+  margin-bottom: 8px;
+}
+.book-page .bk-panel-head p {
+  font-size: 14px;
+  color: rgba(30, 28, 25, 0.55);
+  line-height: 1.6;
+}
+.book-page .bk-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(30, 28, 25, 0.55);
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 18px;
+  font-family: var(--font-inter), sans-serif;
+}
+.book-page .bk-back:hover {
+  color: #4e7b61;
+}
+
+/* ---- "What happens next" band ---- */
+.book-page .next-band {
+  position: relative;
+  padding: 100px 80px;
+  background-size: cover;
+  background-position: center;
+  background-image: linear-gradient(
+      rgba(16, 22, 17, 0.62),
+      rgba(16, 22, 17, 0.78)
+    ),
+    url("/assets/book/next-band-bg.jpg");
+}
+.book-page .next-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+.book-page .next-band h2 {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: clamp(28px, 3.6vw, 46px);
+  letter-spacing: -1.4px;
+  color: #faf8f4;
+  margin-bottom: 14px;
+}
+.book-page .next-band h2 em {
+  font-style: italic;
+  color: #c17a5a;
+}
+.book-page .next-inner > p {
+  font-size: 14.5px;
+  color: rgba(250, 248, 244, 0.65);
+  max-width: 520px;
+  margin: 0 auto 44px;
+  line-height: 1.7;
+}
+.book-page .next-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.book-page .next-card {
+  background: rgba(250, 248, 244, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 20px;
+  padding: 28px 26px;
+  text-align: left;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+}
+.book-page .next-card svg {
+  color: #4e7b61;
+  margin-bottom: 14px;
+}
+.book-page .next-card h4 {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: 18px;
+  color: #1e1c19;
+  letter-spacing: -0.4px;
+  margin-bottom: 8px;
+}
+.book-page .next-card p {
+  font-size: 13px;
+  color: rgba(30, 28, 25, 0.55);
+  line-height: 1.65;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 960px) {
+  .book-page .book-wrap {
+    grid-template-columns: 1fr;
+    padding: 56px 32px 90px;
+  }
+  .book-page .bk-summary {
+    position: static;
+  }
+  .book-page .bk-hero-inner {
+    padding: 0 32px 48px;
+  }
+  .book-page .next-band {
+    padding: 80px 32px;
+  }
+  .book-page .next-grid {
+    grid-template-columns: 1fr;
+  }
+  .book-page .svc-pick {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .book-page .bk-hero {
+    min-height: 46vh;
+  }
+  .book-page .bk-hero-inner {
+    padding: 0 20px 40px;
+  }
+  .book-page .book-wrap {
+    padding: 44px 16px 72px;
+  }
+  .book-page .bk-step {
+    padding: 24px 20px;
+  }
+  .book-page .svc-pick {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .book-page .bk-fields {
+    grid-template-columns: 1fr;
+  }
+  .book-page .next-band {
+    padding: 64px 20px;
+  }
+}

@@ -21,10 +21,10 @@ export interface SiteChromeProps {
  */
 export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   const pathname = usePathname();
-  // The booking WIZARD (/book, /book/success…) is bare — but NOT the customer's
-  // "My Bookings" account pages (/bookings, /bookings/[id]), which keep chrome.
-  const bookingFlow =
-    pathname === "/book" || (pathname?.startsWith("/book/") ?? false);
+  // The single-page /book screen now carries full chrome (see below); only its
+  // sub-routes (e.g. the standalone /book/success fallback) stay bare. The
+  // customer's "My Bookings" pages (/bookings, /bookings/[id]) keep chrome too.
+  const bookingFlow = pathname?.startsWith("/book/") ?? false;
   const authFlow = pathname === "/login" || pathname === "/signup";
   const adminFlow = pathname?.startsWith("/admin") ?? false;
   const bareLayout = bookingFlow || adminFlow;
@@ -35,6 +35,8 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   // About, FAQ, Contact, and Privacy.
   const fullBleedHero =
     authFlow ||
+    // The single-page /book screen leads with a full-bleed photo hero.
+    pathname === "/book" ||
     // "My Bookings" list has a full-bleed photo hero behind the nav; the detail
     // page (/bookings/[id]) has no hero, so it keeps the normal nav offset.
     pathname === "/bookings" ||
