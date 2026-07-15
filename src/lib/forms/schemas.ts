@@ -4,6 +4,7 @@ import {
   LocationPrefSchema,
   SchedulePreferencesSchema,
 } from "@/lib/booking/contract.schema";
+import { AREA_VALUES } from "@/lib/auth/areas";
 
 /** Reuses the booking contract's nested pieces so forms stay in sync. */
 export const BookingContactFormSchema = ContactSchema.extend({
@@ -59,6 +60,11 @@ export const SignupFormSchema = z
     name: z.string().min(1, "Name is required").max(120),
     email: z.string().email("Enter a valid email"),
     phone: z.string().max(40).optional(),
+    // The UI collects a SINGLE area (dropdown); it is wrapped into a one-element
+    // array before being sent, because the server's `area` is multi-value.
+    area: z.enum(AREA_VALUES, {
+      errorMap: () => ({ message: "Select your area" }),
+    }),
     password: z.string().min(8, "Minimum 8 characters"),
     confirm_password: z.string().min(1, "Re-enter your password"),
     consent: z.literal(true, {

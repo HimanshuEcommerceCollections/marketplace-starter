@@ -310,23 +310,19 @@ export const elevateContent: BrandContent = {
   },
 
   auth: {
-    categories: ["Yoga", "Beauty", "Massage", "Personal Training", "Nutrition"],
     login: {
-      panelTitle: "Wellness, delivered to your door.",
-      testimonial: {
-        id: "auth-login",
-        quote:
-          "Exactly what I needed — professional, convenient, and always on time.",
-        author: "Elevate client",
-      },
+      heading: "Welcome back.",
+      sub: "Log in to manage bookings, rebook your favorite pros, and see your session history.",
+      quoteLead: "Your wellness, right where",
+      quoteEm: "you left it.",
+      chips: ["8 disciplines", "Vetted pros", "All of Wake County"],
     },
     signup: {
-      panelTitle: "Your personal wellness concierge awaits.",
-      testimonial: {
-        id: "auth-signup",
-        quote: "From yoga to beauty — all my wellness needs, handled at home.",
-        author: "Elevate client",
-      },
+      heading: "Create your account.",
+      sub: "Two minutes now — then every future booking takes two taps.",
+      quoteLead: "The best pros in Raleigh,",
+      quoteEm: "delivered to your door.",
+      chips: ["Free to join", "No charge until confirmed", "Cancel free ≥ 4 hrs"],
     },
   },
 };

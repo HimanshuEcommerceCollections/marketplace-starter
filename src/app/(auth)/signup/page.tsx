@@ -13,24 +13,27 @@ export default async function SignupPage() {
 
   const userType = await getViewMode();
   const config = getBrandConfig();
-  const auth = getBrandContent().auth;
+  const content = getBrandContent().auth?.signup;
 
   return (
     <AuthShell
       userType={userType}
+      screen="signup"
       brandName={config.shortName}
       logoSublabel={config.logoSublabel}
-      formHeading={
-        userType === "system" ? "Create a system account" : "Create your account"
+      heading={
+        userType === "system"
+          ? "Create a system account"
+          : content?.heading ?? "Create your account."
       }
-      formSub={
+      sub={
         userType === "system"
           ? "Provision internal console access."
-          : `Join ${config.shortName} and book your first session today.`
+          : content?.sub
       }
-      panelTitle={auth?.signup.panelTitle}
-      categories={auth?.categories}
-      quote={auth?.signup.testimonial}
+      quoteLead={content?.quoteLead}
+      quoteEm={content?.quoteEm}
+      chips={content?.chips}
     >
       <SignupForm />
     </AuthShell>

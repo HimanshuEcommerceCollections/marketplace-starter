@@ -3,9 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/components/auth/auth-provider";
 import { landingPathForRole } from "@/lib/auth/roles";
 import { validateForm, type FieldErrors } from "@/lib/forms/validate";
@@ -20,6 +18,7 @@ export function LoginForm({ brandName }: LoginFormProps) {
   const { login } = useAuth();
   const [errors, setErrors] = React.useState<FieldErrors>();
   const [pending, setPending] = React.useState(false);
+  const [showPw, setShowPw] = React.useState(false);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -44,7 +43,8 @@ export function LoginForm({ brandName }: LoginFormProps) {
       // Honor a safe in-app ?next= (e.g. returning to the booking wizard);
       // otherwise route by role. Reject protocol-relative ("//") targets.
       const next = new URLSearchParams(window.location.search).get("next");
-      const safeNext = next && next.startsWith("/") && !next.startsWith("//") ? next : null;
+      const safeNext =
+        next && next.startsWith("/") && !next.startsWith("//") ? next : null;
       router.push(
         safeNext ?? (result.user ? landingPathForRole(result.user.role) : "/"),
       );
@@ -55,78 +55,68 @@ export function LoginForm({ brandName }: LoginFormProps) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5" noValidate>
+    <form onSubmit={onSubmit} noValidate>
       {errors?._form ? (
-        <p className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
-          {errors._form[0]}
-        </p>
+        <p className="auth-form-error">{errors._form[0]}</p>
       ) : null}
 
-      <div className="space-y-2">
-        <Label htmlFor="login-email">Email address</Label>
-        <Input
+      <div className="af">
+        <label htmlFor="login-email">Email</label>
+        <input
           id="login-email"
           name="email"
           type="email"
           autoComplete="email"
-          placeholder="your@email.com"
+          placeholder="you@email.com"
           aria-invalid={!!errors?.email}
         />
-        {errors?.email ? (
-          <p className="text-xs text-destructive">{errors.email[0]}</p>
-        ) : null}
+        {errors?.email ? <p className="af-error">{errors.email[0]}</p> : null}
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="login-password">Password</Label>
-        <Input
-          id="login-password"
-          name="password"
-          type="password"
-          autoComplete="current-password"
-          placeholder="Enter your password"
-          aria-invalid={!!errors?.password}
-        />
-        {errors?.password ? (
-          <p className="text-xs text-destructive">{errors.password[0]}</p>
-        ) : null}
-      </div>
-
-      <div className="flex items-center justify-between">
-        <label className="flex items-center gap-2 text-sm text-muted-foreground">
+      <div className="af">
+        <label htmlFor="login-password">Password</label>
+        <div className="pw-wrap">
           <input
-            type="checkbox"
-            name="remember"
-            className="size-4 rounded border-input accent-primary"
+            id="login-password"
+            name="password"
+            type={showPw ? "text" : "password"}
+            autoComplete="current-password"
+            placeholder="••••••••"
+            aria-invalid={!!errors?.password}
           />
+          <button
+            type="button"
+            className="pw-eye"
+            onClick={() => setShowPw((v) => !v)}
+            aria-label={showPw ? "Hide password" : "Show password"}
+            aria-pressed={showPw}
+          >
+            {showPw ? (
+              <EyeOff size={18} aria-hidden />
+            ) : (
+              <Eye size={18} aria-hidden />
+            )}
+          </button>
+        </div>
+        {errors?.password ? (
+          <p className="af-error">{errors.password[0]}</p>
+        ) : null}
+      </div>
+
+      <div className="auth-row">
+        <label className="remember">
+          <input type="checkbox" name="remember" defaultChecked />
           Remember me
         </label>
-        <Link
-          href="#"
-          className="text-sm font-medium text-highlight hover:underline"
-        >
-          Forgot password?
-        </Link>
+        <Link href="/contact">Forgot password?</Link>
       </div>
 
-      <Button type="submit" className="w-full" disabled={pending}>
-        {pending ? "Signing in…" : "Sign In"}
-      </Button>
+      <button type="submit" className="auth-submit" disabled={pending}>
+        {pending ? "Signing in…" : "Log in"}
+      </button>
 
-      <div className="flex items-center gap-3 text-xs text-muted-foreground">
-        <span className="h-px flex-1 bg-border" />
-        or
-        <span className="h-px flex-1 bg-border" />
-      </div>
-
-      <p className="text-center text-sm text-muted-foreground">
-        New to {brandName}?{" "}
-        <Link
-          href="/signup"
-          className="font-medium text-highlight hover:underline"
-        >
-          Create an account
-        </Link>
+      <p className="auth-alt">
+        New to {brandName}? <Link href="/signup">Create an account</Link>
       </p>
     </form>
   );

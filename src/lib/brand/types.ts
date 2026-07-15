@@ -218,12 +218,23 @@ export interface BrandContent {
     secondaryCta?: NavItem;
   };
 
-  /* Auth screens (login / signup). The brand panel copy + sample quote shown on
-     the customer-facing split-screen; structural form labels live in code. */
+  /* Auth screens (login / signup). Per-screen brand-panel copy + form headings
+     for the customer-facing split-screen; structural form labels live in code. */
   auth?: {
-    /** Service category chips shown on the brand panel. */
-    categories: string[];
-    login: { panelTitle: string; testimonial: TestimonialItem };
-    signup: { panelTitle: string; testimonial: TestimonialItem };
+    login: AuthScreenContent;
+    signup: AuthScreenContent;
   };
+}
+
+/** Copy for one auth screen (login or signup). */
+export interface AuthScreenContent {
+  /** Form-column heading (e.g. "Welcome back."). */
+  heading: string;
+  /** Form-column subheading below the heading. */
+  sub: string;
+  /** Brand-panel blockquote: lead text + an emphasized (terracotta) clause. */
+  quoteLead: string;
+  quoteEm: string;
+  /** Glass "chips" shown under the blockquote on the brand panel. */
+  chips: string[];
 }

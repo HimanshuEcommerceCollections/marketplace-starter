@@ -14,6 +14,8 @@ export interface SessionUser {
   name: string;
   phone: string | null;
   brand: string;
+  /** Coverage areas the user selected (Wake County towns). Multi-value. */
+  area: string[];
   role: SessionRole;
   status: string;
   emailVerifiedAt: string | null;
