@@ -12,22 +12,26 @@ export interface SiteChromeProps {
 
 /**
  * Wraps the page in the site navbar + footer, EXCEPT on flows that render their
- * own full-screen chrome: the booking flow (/book*), the auth screens
- * (/login, /signup), and the admin console (/admin*), which all provide their
- * own header and no public footer.
+ * own full-screen chrome: the booking flow (/book*) and the admin console
+ * (/admin*), which provide their own header and no public footer.
+ *
+ * The auth screens (/login, /signup) keep the nav + footer but render a
+ * full-bleed split-screen behind the floating nav — so they are treated as
+ * full-bleed heroes (no top offset), not bare.
  */
 export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   const pathname = usePathname();
   const bookingFlow = pathname?.startsWith("/book") ?? false;
   const authFlow = pathname === "/login" || pathname === "/signup";
   const adminFlow = pathname?.startsWith("/admin") ?? false;
-  const bareLayout = bookingFlow || authFlow || adminFlow;
+  const bareLayout = bookingFlow || adminFlow;
   // Pages with a full-bleed photo hero that deliberately sits behind the
   // floating nav: the homepage, the services listing, every service-detail page
   // (the bespoke landings AND the generic /services/[slug] fallback, which now
   // share one full-bleed photo hero), How It Works, For Pros, Pricing, Terms,
   // About, FAQ, Contact, and Privacy.
   const fullBleedHero =
+    authFlow ||
     pathname === "/" ||
     // During ISR regeneration on Vercel the root route is rendered as
     // "/index", so the server-side pathname never equals "/" there.

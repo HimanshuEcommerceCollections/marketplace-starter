@@ -22,6 +22,8 @@ interface SignupInput {
   name: string;
   email: string;
   phone?: string;
+  /** Multi-value coverage area (Wake County towns) selected at signup. */
+  area: string[];
   password: string;
 }
 

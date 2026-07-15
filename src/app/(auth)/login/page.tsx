@@ -13,22 +13,27 @@ export default async function LoginPage() {
 
   const userType = await getViewMode();
   const config = getBrandConfig();
-  const auth = getBrandContent().auth;
+  const content = getBrandContent().auth?.login;
 
   return (
     <AuthShell
       userType={userType}
+      screen="login"
       brandName={config.shortName}
       logoSublabel={config.logoSublabel}
-      formHeading={userType === "system" ? "Staff sign in" : "Welcome back"}
-      formSub={
+      heading={
+        userType === "system"
+          ? "Staff sign in"
+          : content?.heading ?? "Welcome back."
+      }
+      sub={
         userType === "system"
           ? "Sign in to the internal console."
-          : `Sign in to your ${config.shortName} account`
+          : content?.sub
       }
-      panelTitle={auth?.login.panelTitle}
-      categories={auth?.categories}
-      quote={auth?.login.testimonial}
+      quoteLead={content?.quoteLead}
+      quoteEm={content?.quoteEm}
+      chips={content?.chips}
     >
       <LoginForm brandName={config.shortName} />
     </AuthShell>

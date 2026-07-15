@@ -1,31 +1,31 @@
 import * as React from "react";
 import Link from "next/link";
 import type { AuthUserType } from "@/lib/auth/user-type";
-import type { TestimonialItem } from "@/lib/brand/types";
 
 export interface AuthShellProps {
   /** Which audience this screen serves — switches the whole layout. */
   userType: AuthUserType;
+  /** Which auth screen — selects the brand-panel background photo. */
+  screen: "login" | "signup";
   brandName: string;
   logoSublabel?: string;
-  /** Heading shown directly above the form (e.g. "Welcome back"). */
-  formHeading: string;
-  formSub?: string;
-  /** Brand-panel marketing headline (customer split-screen only). */
-  panelTitle?: string;
-  categories?: string[];
-  quote?: TestimonialItem;
+  /** Heading shown above the form (e.g. "Welcome back."). */
+  heading: string;
+  sub?: string;
+  /** Brand-panel blockquote: lead text + emphasized clause (customer only). */
+  quoteLead?: string;
+  quoteEm?: string;
+  /** Glass chips under the blockquote (customer only). */
+  chips?: string[];
   children: React.ReactNode;
 }
 
 function Wordmark({
   brandName,
   logoSublabel,
-  onDark,
 }: {
   brandName: string;
   logoSublabel?: string;
-  onDark?: boolean;
 }) {
   return (
     <Link
@@ -36,13 +36,7 @@ function Wordmark({
         {brandName}
       </span>
       {logoSublabel ? (
-        <span
-          className={
-            onDark
-              ? "text-xs font-medium text-primary-foreground/70"
-              : "text-xs font-medium text-muted-foreground"
-          }
-        >
+        <span className="text-xs font-medium text-primary-foreground/70">
           {logoSublabel}
         </span>
       ) : null}
@@ -50,43 +44,24 @@ function Wordmark({
   );
 }
 
-function SampleQuote({
-  quote,
-  onDark,
-}: {
-  quote: TestimonialItem;
-  onDark?: boolean;
-}) {
-  return (
-    <figure className="border-l-2 border-highlight pl-4">
-      <blockquote
-        className={
-          onDark
-            ? "font-heading text-sm italic text-primary-foreground/80"
-            : "font-heading text-sm italic text-muted-foreground"
-        }
-      >
-        &ldquo;{quote.quote}&rdquo;
-      </blockquote>
-    </figure>
-  );
-}
-
 /**
  * Frame for the auth screens. Two distinct layouts by user type:
  *
- * - `user`   — customer split-screen: brand panel (left) + form column (right).
- * - `system` — internal/staff console: a centered card on a dark backdrop.
+ * - `user`   — customer split-screen: photographic brand panel (left) + form
+ *              column (right). Styled by src/styles/auth.css.
+ * - `system` — internal/staff console: a centered card on a dark backdrop
+ *              (token-styled).
  */
 export function AuthShell({
   userType,
+  screen,
   brandName,
   logoSublabel,
-  formHeading,
-  formSub,
-  panelTitle,
-  categories = [],
-  quote,
+  heading,
+  sub,
+  quoteLead,
+  quoteEm,
+  chips = [],
   children,
 }: AuthShellProps) {
   if (userType === "system") {
@@ -95,21 +70,15 @@ export function AuthShell({
         <div className="flex flex-1 items-center justify-center px-4 py-12">
           <div className="w-full max-w-md">
             <div className="mb-6 flex flex-col items-center text-center">
-              <Wordmark
-                brandName={brandName}
-                logoSublabel={logoSublabel}
-                onDark
-              />
+              <Wordmark brandName={brandName} logoSublabel={logoSublabel} />
               <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-surface-inverse-foreground/10 px-3 py-1 text-xs font-medium uppercase tracking-widest text-surface-inverse-foreground/80">
                 System Console · Authorized access
               </span>
             </div>
             <div className="rounded-2xl bg-card p-6 text-card-foreground shadow-lg sm:p-8">
-              <h1 className="font-heading text-2xl font-semibold">
-                {formHeading}
-              </h1>
-              {formSub ? (
-                <p className="mt-1 text-sm text-muted-foreground">{formSub}</p>
+              <h1 className="font-heading text-2xl font-semibold">{heading}</h1>
+              {sub ? (
+                <p className="mt-1 text-sm text-muted-foreground">{sub}</p>
               ) : null}
               <div className="mt-6">{children}</div>
             </div>
@@ -119,61 +88,42 @@ export function AuthShell({
     );
   }
 
-  // userType === "user" — customer-facing split-screen.
+  // userType === "user" — customer-facing split-screen (see auth.css).
   return (
-    <div className="flex min-h-screen flex-col">
-      <div className="grid flex-1 lg:grid-cols-2">
-        {/* Brand panel */}
-        <aside className="relative hidden flex-col justify-between gap-10 bg-primary p-10 text-primary-foreground lg:flex xl:p-14">
-          <Wordmark
-            brandName={brandName}
-            logoSublabel={logoSublabel}
-            onDark
-          />
-
-          <div className="flex flex-1 flex-col justify-center gap-10">
-            <div className="flex aspect-[4/3] items-center justify-center rounded-2xl border border-t-2 border-primary-foreground/15 border-t-highlight bg-primary-foreground/5 text-sm text-primary-foreground/40">
-              Lifestyle Photography Placeholder
+    <div className="auth-wrap">
+      <aside className={`auth-panel auth-panel--${screen}`}>
+        <div className="auth-panel-inner">
+          <Link href="/" className="logo">
+            {brandName}
+          </Link>
+          {quoteLead ? (
+            <blockquote>
+              {quoteLead}
+              {quoteEm ? (
+                <>
+                  {" "}
+                  <em>{quoteEm}</em>
+                </>
+              ) : null}
+            </blockquote>
+          ) : null}
+          {chips.length > 0 ? (
+            <div className="auth-chips">
+              {chips.map((c) => (
+                <span key={c} className="a-chip">
+                  {c}
+                </span>
+              ))}
             </div>
-            {panelTitle ? (
-              <h2 className="max-w-md font-heading text-4xl font-semibold leading-tight xl:text-5xl">
-                {panelTitle}
-              </h2>
-            ) : null}
-          </div>
+          ) : null}
+        </div>
+      </aside>
 
-          <div className="space-y-5">
-            {categories.length > 0 ? (
-              <ul className="flex flex-wrap gap-2">
-                {categories.map((c) => (
-                  <li
-                    key={c}
-                    className="rounded-full bg-primary-foreground/10 px-3 py-1 text-xs font-medium text-primary-foreground/90"
-                  >
-                    {c}
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-            {quote ? <SampleQuote quote={quote} onDark /> : null}
-          </div>
-        </aside>
-
-        {/* Form column */}
-        <div className="flex items-center justify-center bg-background px-4 py-12 sm:px-8">
-          <div className="w-full max-w-md">
-            {/* Compact wordmark for mobile, where the brand panel is hidden. */}
-            <div className="mb-8 lg:hidden">
-              <Wordmark brandName={brandName} logoSublabel={logoSublabel} />
-            </div>
-            <h1 className="font-heading text-3xl font-semibold text-foreground">
-              {formHeading}
-            </h1>
-            {formSub ? (
-              <p className="mt-1 text-muted-foreground">{formSub}</p>
-            ) : null}
-            <div className="mt-8">{children}</div>
-          </div>
+      <div className="auth-side">
+        <div className="auth-card">
+          <h1>{heading}</h1>
+          {sub ? <p className="auth-sub">{sub}</p> : null}
+          {children}
         </div>
       </div>
     </div>

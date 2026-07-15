@@ -1,0 +1,315 @@
+/* =========================================================================
+   auth.css — split-screen login / signup design (migrated from the
+   "Elevate Pages" mockups: login.html / signup.html).
+
+   Literal colors/spacing live here by design (per-page stylesheet, same pattern
+   as home.css / how-it-works.css). Everything is scoped under `.auth-wrap` so the
+   short class names (.af, .seg, .pw-*) can't leak into the rest of the app.
+
+   Fonts use the app's next/font CSS variables (--font-dm-serif / --font-inter),
+   NOT the mockup's Google Fonts <link>.
+   ========================================================================= */
+
+.auth-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  min-height: 100vh;
+}
+
+/* ---- Brand panel (left) ---- */
+.auth-wrap .auth-panel {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  padding: 72px 56px;
+}
+/* Panel backgrounds: dark bottom-up gradient over the local lifestyle photo. */
+.auth-wrap .auth-panel--login {
+  background-image: linear-gradient(
+      to top,
+      rgba(10, 14, 11, 0.88) 0%,
+      rgba(10, 14, 11, 0.45) 55%,
+      rgba(10, 14, 11, 0.35) 100%
+    ),
+    url("/assets/auth/login-panel.jpg");
+}
+.auth-wrap .auth-panel--signup {
+  background-image: linear-gradient(
+      to top,
+      rgba(10, 14, 11, 0.88) 0%,
+      rgba(10, 14, 11, 0.45) 55%,
+      rgba(10, 14, 11, 0.35) 100%
+    ),
+    url("/assets/auth/signup-panel.jpg");
+}
+.auth-wrap .auth-panel-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 420px;
+}
+.auth-wrap .auth-panel .logo {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: 26px;
+  color: #faf8f4;
+  margin-bottom: 20px;
+  text-decoration: none;
+  display: inline-block;
+}
+.auth-wrap .auth-panel blockquote {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: clamp(22px, 2.2vw, 30px);
+  letter-spacing: -0.8px;
+  line-height: 1.35;
+  color: rgba(250, 248, 244, 0.95);
+  margin-bottom: 20px;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.4);
+}
+.auth-wrap .auth-panel blockquote em {
+  font-style: italic;
+  color: #c17a5a;
+}
+.auth-wrap .auth-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.auth-wrap .a-chip {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(250, 248, 244, 0.85);
+  background: rgba(20, 28, 22, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 6px 14px;
+  border-radius: 100px;
+}
+
+/* ---- Form column (right) ---- */
+.auth-wrap .auth-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Big top padding clears the fixed floating nav (page is full-bleed). */
+  padding: 150px 56px 90px;
+  background: #faf8f4;
+}
+.auth-wrap .auth-card {
+  width: 100%;
+  max-width: 430px;
+}
+.auth-wrap .auth-card h1 {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: 36px;
+  letter-spacing: -1.2px;
+  color: #1e1c19;
+  margin-bottom: 8px;
+}
+.auth-wrap .auth-sub {
+  font-size: 14px;
+  color: rgba(30, 28, 25, 0.5);
+  line-height: 1.6;
+  margin-bottom: 26px;
+}
+
+/* ---- Fields ---- */
+.auth-wrap .af {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 15px;
+}
+.auth-wrap .af label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(30, 28, 25, 0.45);
+}
+.auth-wrap .af input,
+.auth-wrap .af select {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 14px;
+  color: #1e1c19;
+  background: #fff;
+  border: 1px solid rgba(30, 28, 25, 0.09);
+  border-radius: 12px;
+  padding: 13px 15px;
+  outline: none;
+  transition: border 0.2s;
+  width: 100%;
+}
+.auth-wrap .af input:focus,
+.auth-wrap .af select:focus {
+  border-color: #4e7b61;
+}
+.auth-wrap .af input[aria-invalid="true"],
+.auth-wrap .af select[aria-invalid="true"] {
+  border-color: #c15a3a;
+}
+/* Password field with show/hide eye toggle. */
+.auth-wrap .pw-wrap {
+  position: relative;
+}
+.auth-wrap .pw-wrap input {
+  padding-right: 46px;
+}
+.auth-wrap .pw-eye {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 8px;
+  display: inline-flex;
+  color: rgba(30, 28, 25, 0.4);
+}
+.auth-wrap .pw-eye:hover {
+  color: #4e7b61;
+}
+.auth-wrap .pw-eye:focus-visible {
+  outline: 2px solid #4e7b61;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* ---- Remember-me / forgot row ---- */
+.auth-wrap .auth-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2px 0 20px;
+  font-size: 12.5px;
+}
+.auth-wrap .remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(30, 28, 25, 0.55);
+  cursor: pointer;
+}
+.auth-wrap .remember input {
+  accent-color: #4e7b61;
+  width: 15px;
+  height: 15px;
+}
+.auth-wrap .auth-row a {
+  color: #4e7b61;
+  text-decoration: none;
+  font-weight: 500;
+}
+.auth-wrap .auth-row a:hover {
+  text-decoration: underline;
+}
+
+/* ---- Terms consent ---- */
+.auth-wrap .agree {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  color: rgba(30, 28, 25, 0.55);
+  line-height: 1.6;
+  margin: 4px 0 20px;
+  cursor: pointer;
+}
+.auth-wrap .agree input {
+  accent-color: #4e7b61;
+  width: 15px;
+  height: 15px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.auth-wrap .agree a {
+  color: #4e7b61;
+  text-decoration: none;
+  font-weight: 500;
+}
+.auth-wrap .agree a:hover {
+  text-decoration: underline;
+}
+
+/* ---- Submit button (green gradient, full width) ---- */
+.auth-wrap .auth-submit {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #4e7b61, #2b4a36);
+  color: #fff;
+  padding: 15px 32px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-inter), sans-serif;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(78, 123, 97, 0.38);
+  transition: all 0.3s;
+}
+.auth-wrap .auth-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(78, 123, 97, 0.52);
+}
+.auth-wrap .auth-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---- Alt link + errors ---- */
+.auth-wrap .auth-alt {
+  text-align: center;
+  font-size: 13px;
+  color: rgba(30, 28, 25, 0.5);
+  margin-top: 22px;
+}
+.auth-wrap .auth-alt a {
+  color: #4e7b61;
+  font-weight: 500;
+  text-decoration: none;
+}
+.auth-wrap .auth-alt a:hover {
+  text-decoration: underline;
+}
+.auth-wrap .auth-form-error {
+  background: rgba(193, 90, 58, 0.1);
+  color: #9a4227;
+  font-size: 13px;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+.auth-wrap .af-error {
+  font-size: 11.5px;
+  color: #b3452b;
+}
+
+/* ---- Responsive: stack the split below the panel ---- */
+@media (max-width: 960px) {
+  .auth-wrap {
+    grid-template-columns: 1fr;
+  }
+  .auth-wrap .auth-panel {
+    min-height: 38vh;
+    padding: 110px 32px 40px;
+  }
+  .auth-wrap .auth-side {
+    padding: 56px 32px 72px;
+  }
+}
+@media (max-width: 640px) {
+  .auth-wrap .auth-panel {
+    padding: 100px 20px 32px;
+  }
+  .auth-wrap .auth-side {
+    padding: 44px 20px 64px;
+  }
+  .auth-wrap .auth-card h1 {
+    font-size: 30px;
+  }
+}
