@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/components/auth/auth-provider";
 import { serviceIcon } from "@/lib/catalog/service-icons";
 import { AREA_OPTIONS } from "@/lib/auth/areas";
-import { TIME_RANGES, MAX_WINDOWS } from "@/lib/booking/time-ranges";
+import { TIME_RANGES } from "@/lib/booking/time-ranges";
 import { analytics } from "@/lib/analytics/analytics";
 import { computePrice } from "@/lib/pricing/engine";
 import { formatMoney, addMoney } from "@/lib/money";
@@ -154,13 +154,9 @@ export function BookFlow(props: BookFlowProps) {
   );
 }
 
-type FieldErrors = {
-  name?: string;
-  email?: string;
-  area?: string;
-  /** Per preferred-window (index → message). */
-  windows?: Record<number, string>;
-};
+type FieldErrors = Partial<
+  Record<"name" | "email" | "area" | "date" | "time", string>
+>;
 
 // ── Interactive flow ─────────────────────────────────────────────────────────
 function BookInner({
@@ -175,7 +171,6 @@ function BookInner({
   const { status: authStatus } = useAuth();
   const router = useRouter();
   const [errors, setErrors] = React.useState<FieldErrors>({});
-  const [windowCount, setWindowCount] = React.useState(1);
   const [submitPhase, setSubmitPhase] = React.useState<"idle" | "creating" | "preparing">(
     "idle",
   );
@@ -217,9 +212,7 @@ function BookInner({
       (["firstName", "lastName", "email", "phone", "address", "area"] as const).forEach((f) => {
         if (typeof d[f] === "string" && d[f]) dispatch({ type: "SET_FIELD", field: f, value: d[f] as string });
       });
-      d.windows?.forEach((w, i) => dispatch({ type: "SET_WINDOW", index: i, patch: w }));
-      const filledWindows = (d.windows ?? []).filter((w) => w?.date || w?.time).length;
-      if (filledWindows > 1) setWindowCount(Math.min(filledWindows, MAX_WINDOWS));
+      if (d.windows?.[0]) dispatch({ type: "SET_WINDOW", index: 0, patch: d.windows[0] });
     } catch {
       /* ignore malformed draft */
     }
@@ -273,38 +266,15 @@ function BookInner({
     }
   }
 
-  function addWindow() {
-    setWindowCount((n) => Math.min(n + 1, MAX_WINDOWS));
-  }
-  function removeWindow(index: number) {
-    dispatch({ type: "SET_WINDOW", index, patch: { date: "", time: "" } });
-    setWindowCount((n) => Math.max(1, n - 1));
-  }
-
   async function requestBooking() {
     const errs: FieldErrors = {};
     if (!state.firstName.trim()) errs.name = "Enter your name";
     if (!EMAIL_RE.test(state.email)) errs.email = "Enter a valid email";
     if (!state.area) errs.area = "Select your area";
-
-    // Preferred windows: #1 needs date + range; extras need both-or-neither.
-    const winErrs: Record<number, string> = {};
-    for (let i = 0; i < windowCount; i += 1) {
-      const w = state.windows[i];
-      const hasDate = !!w?.date;
-      const hasTime = !!w?.time;
-      if (i === 0) {
-        if (!hasDate && !hasTime) winErrs[0] = "Choose a date and time range";
-        else if (!hasDate) winErrs[0] = "Choose a date";
-        else if (!hasTime) winErrs[0] = "Pick a time range";
-      } else if (hasDate !== hasTime) {
-        winErrs[i] = "Add both a date and a time range, or remove this option";
-      }
-    }
-    if (Object.keys(winErrs).length > 0) errs.windows = winErrs;
-
+    if (!state.windows[0]?.date) errs.date = "Choose a date";
+    if (!state.windows[0]?.time) errs.time = "Pick a time range";
     setErrors(errs);
-    if (errs.name || errs.email || errs.area || errs.windows) return;
+    if (errs.name || errs.email || errs.area || errs.date || errs.time) return;
     if (state.status === "submitting") return;
 
     // Static fallback (no live service) — keep the stub behavior.
@@ -512,85 +482,6 @@ function BookInner({
           );
         })}
 
-        {/* Preferred times (up to MAX_WINDOWS date + range options) */}
-        <div className="bk-step">
-          <div className="bk-step-head">
-            <div className="bk-num">{nextNum()}</div>
-            <div>
-              <h3>Preferred times</h3>
-              <small>
-                Give up to {MAX_WINDOWS} date + time-range options — your coordinator
-                confirms one
-              </small>
-            </div>
-          </div>
-          <div className="bk-windows">
-            {Array.from({ length: windowCount }).map((_, i) => (
-              <div className="bk-window" key={i}>
-                <div className="bk-fields">
-                  <div className="bk-field">
-                    <label htmlFor={`f-date-${i}`}>
-                      {i === 0 ? "Date" : `Date (option ${i + 1})`}
-                    </label>
-                    <input
-                      id={`f-date-${i}`}
-                      type="date"
-                      value={state.windows[i]?.date ?? ""}
-                      aria-invalid={!!errors.windows?.[i]}
-                      onChange={(e) =>
-                        dispatch({
-                          type: "SET_WINDOW",
-                          index: i,
-                          patch: { date: e.target.value },
-                        })
-                      }
-                    />
-                  </div>
-                  <div className="bk-field">
-                    <label htmlFor={`f-time-${i}`}>Preferred time</label>
-                    <select
-                      id={`f-time-${i}`}
-                      value={state.windows[i]?.time ?? ""}
-                      aria-invalid={!!errors.windows?.[i]}
-                      onChange={(e) =>
-                        dispatch({
-                          type: "SET_WINDOW",
-                          index: i,
-                          patch: { time: e.target.value },
-                        })
-                      }
-                    >
-                      <option value="">Select a time range</option>
-                      {TIME_RANGES.map((r) => (
-                        <option key={r.value} value={r.value}>
-                          {r.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                {errors.windows?.[i] ? (
-                  <span className="err">{errors.windows[i]}</span>
-                ) : null}
-                {i > 0 && i === windowCount - 1 ? (
-                  <button
-                    type="button"
-                    className="bk-window-remove"
-                    onClick={() => removeWindow(i)}
-                  >
-                    Remove this option
-                  </button>
-                ) : null}
-              </div>
-            ))}
-          </div>
-          {windowCount < MAX_WINDOWS ? (
-            <button type="button" className="bk-add-window" onClick={addWindow}>
-              + Add another time
-            </button>
-          ) : null}
-        </div>
-
         {/* Details */}
         <div className="bk-step">
           <div className="bk-step-head">
@@ -601,6 +492,38 @@ function BookInner({
             </div>
           </div>
           <div className="bk-fields">
+            <div className="bk-field">
+              <label htmlFor="f-date">Date</label>
+              <input
+                id="f-date"
+                type="date"
+                value={state.windows[0]?.date ?? ""}
+                aria-invalid={!!errors.date}
+                onChange={(e) =>
+                  dispatch({ type: "SET_WINDOW", index: 0, patch: { date: e.target.value } })
+                }
+              />
+              {errors.date ? <span className="err">{errors.date}</span> : null}
+            </div>
+            <div className="bk-field">
+              <label htmlFor="f-time">Preferred time</label>
+              <select
+                id="f-time"
+                value={state.windows[0]?.time ?? ""}
+                aria-invalid={!!errors.time}
+                onChange={(e) =>
+                  dispatch({ type: "SET_WINDOW", index: 0, patch: { time: e.target.value } })
+                }
+              >
+                <option value="">Select a time range</option>
+                {TIME_RANGES.map((r) => (
+                  <option key={r.value} value={r.value}>
+                    {r.label}
+                  </option>
+                ))}
+              </select>
+              {errors.time ? <span className="err">{errors.time}</span> : null}
+            </div>
             <div className="bk-field">
               <label htmlFor="f-area">Area</label>
               <select
