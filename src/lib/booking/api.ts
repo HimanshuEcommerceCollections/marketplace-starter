@@ -6,6 +6,8 @@ export interface CreateBookingPayload {
   scheduledStart: string; // ISO
   scheduledEnd: string; // ISO
   locationMode?: "ONSITE" | "REMOTE" | "HYBRID";
+  /** Wake County town (ServiceArea enum value) the session takes place in. */
+  area?: string;
   notes?: string;
   optionIds?: string[];
   contact?: { name?: string; email?: string; phone?: string };
@@ -58,6 +60,12 @@ export interface BookingSchedulePreferences {
   timezone?: string;
 }
 
+/** The customer's review of a booking, as returned inline on the booking. */
+export interface BookingReview {
+  rating: number;
+  comment: string | null;
+}
+
 /** A booking as returned to the customer (matches the server BookingResponse). */
 export interface MyBooking {
   id: string;
@@ -65,6 +73,8 @@ export interface MyBooking {
   status: BookingStatusValue;
   serviceName: string;
   serviceSlug: string;
+  providerName: string | null;
+  providerCredential: string | null;
   scheduledStart: string;
   scheduledEnd: string;
   scheduledDate: string; // "YYYY-MM-DD"
@@ -72,6 +82,8 @@ export interface MyBooking {
   priceAmount: number;
   currency: string;
   locationMode: string;
+  /** ServiceArea enum value (e.g. "WAKE_FOREST"), or null. */
+  area: string | null;
   notes: string | null;
   contactName: string | null;
   contactEmail: string | null;
@@ -79,6 +91,7 @@ export interface MyBooking {
   address: string | null;
   schedulePreferences: BookingSchedulePreferences | null;
   selections: BookingSelectionItem[] | null;
+  review: BookingReview | null;
   createdAt: string;
 }
 
@@ -130,6 +143,17 @@ export async function getMyBooking(id: string): Promise<MyBooking> {
 /** Cancel one of the customer's bookings. */
 export async function cancelMyBooking(id: string): Promise<MyBooking> {
   return unwrapData<MyBooking>(await apiClient.patch(`/bookings/${id}/cancel`)).data;
+}
+
+/** Submit a star rating (+ optional comment) for a completed booking. */
+export async function submitReview(input: {
+  bookingId: string;
+  rating: number;
+  comment?: string;
+}): Promise<BookingReview> {
+  const res = await apiClient.post("/reviews", input);
+  const { data } = unwrapData<{ rating: number; comment: string | null }>(res);
+  return { rating: data.rating, comment: data.comment ?? null };
 }
 
 /**
