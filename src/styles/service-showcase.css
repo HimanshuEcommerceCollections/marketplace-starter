@@ -664,11 +664,21 @@
     url("/assets/physical-therapy/cta-bg.jpg");
 }
 
-/* Personal Training (/services/personal-training) — hero + CTA photos; the
-   specialties/expect bands stay solid dark (default --surface-inverse),
-   matching the approved mock. */
+/* Personal Training (/services/personal-training) — full band photography
+   (hero + specialties + experience + CTA), matching the approved mock. Scrim
+   values are identical to the other photo-band pages (see Beauty above). */
 .ssp--personal-training .ssp-hero-bg {
   background-image: url("/assets/personal-training/hero-bg.jpg");
+}
+.ssp--personal-training .ssp-styles {
+  background-image:
+    linear-gradient(rgba(16, 22, 17, 0.55), rgba(16, 22, 17, 0.72)),
+    url("/assets/personal-training/specialties-bg.jpg");
+}
+.ssp--personal-training .ssp-expect {
+  background-image:
+    linear-gradient(rgba(16, 22, 17, 0.5), rgba(16, 22, 17, 0.68)),
+    url("/assets/personal-training/expect-bg.jpg");
 }
 .ssp--personal-training .ssp-cta {
   background-image:
