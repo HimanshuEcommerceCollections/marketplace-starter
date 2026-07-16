@@ -15,10 +15,17 @@ export interface LoginFormProps {
 
 export function LoginForm({ brandName }: LoginFormProps) {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, resendVerification } = useAuth();
   const [errors, setErrors] = React.useState<FieldErrors>();
   const [pending, setPending] = React.useState(false);
   const [showPw, setShowPw] = React.useState(false);
+  // When login is blocked because the email isn't verified, offer a resend using
+  // the address they just entered.
+  const [unverifiedEmail, setUnverifiedEmail] = React.useState<string | null>(null);
+  const [resendState, setResendState] = React.useState<
+    "idle" | "sending" | "sent" | "error"
+  >("idle");
+  const [resendMsg, setResendMsg] = React.useState<string>();
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -40,6 +47,7 @@ export function LoginForm({ brandName }: LoginFormProps) {
     setPending(false);
     if (result.success) {
       setErrors(undefined);
+      setUnverifiedEmail(null);
       // Honor a safe in-app ?next= (e.g. returning to the booking wizard);
       // otherwise route by role. Reject protocol-relative ("//") targets.
       const next = new URLSearchParams(window.location.search).get("next");
@@ -51,13 +59,49 @@ export function LoginForm({ brandName }: LoginFormProps) {
       router.refresh();
     } else {
       setErrors(result.errors);
+      setResendState("idle");
+      setUnverifiedEmail(
+        result.code === "EMAIL_NOT_VERIFIED" ? parsed.data.email : null,
+      );
     }
+  }
+
+  async function handleResend() {
+    if (!unverifiedEmail) return;
+    setResendState("sending");
+    const res = await resendVerification({ email: unverifiedEmail });
+    setResendState(res.success ? "sent" : "error");
+    setResendMsg(res.message);
   }
 
   return (
     <form onSubmit={onSubmit} noValidate>
       {errors?._form ? (
         <p className="auth-form-error">{errors._form[0]}</p>
+      ) : null}
+
+      {unverifiedEmail ? (
+        <div className="auth-resend">
+          {resendState === "sent" ? (
+            <p className="auth-form-success">
+              {resendMsg ?? "Verification email sent — check your inbox."}
+            </p>
+          ) : (
+            <button
+              type="button"
+              className="auth-ghost"
+              onClick={handleResend}
+              disabled={resendState === "sending"}
+            >
+              {resendState === "sending"
+                ? "Sending…"
+                : "Resend verification email"}
+            </button>
+          )}
+          {resendState === "error" ? (
+            <p className="af-error">{resendMsg ?? "Could not resend."}</p>
+          ) : null}
+        </div>
       ) : null}
 
       <div className="af">

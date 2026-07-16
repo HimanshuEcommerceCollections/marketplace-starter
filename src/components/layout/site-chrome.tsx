@@ -25,7 +25,10 @@ export function SiteChrome({ navbar, footer, children }: SiteChromeProps) {
   // sub-routes (e.g. the standalone /book/success fallback) stay bare. The
   // customer's "My Bookings" pages (/bookings, /bookings/[id]) keep chrome too.
   const bookingFlow = pathname?.startsWith("/book/") ?? false;
-  const authFlow = pathname === "/login" || pathname === "/signup";
+  const authFlow =
+    pathname === "/login" ||
+    pathname === "/signup" ||
+    pathname === "/verify-email";
   const adminFlow = pathname?.startsWith("/admin") ?? false;
   const bareLayout = bookingFlow || adminFlow;
   // Pages with a full-bleed photo hero that deliberately sits behind the

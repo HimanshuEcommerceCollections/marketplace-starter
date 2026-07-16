@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/components/auth/auth-provider";
-import { landingPathForRole } from "@/lib/auth/roles";
 import { validateForm, type FieldErrors } from "@/lib/forms/validate";
 import { SignupFormSchema } from "@/lib/forms/schemas";
 import { AREA_OPTIONS } from "@/lib/auth/areas";
@@ -50,7 +49,9 @@ export function SignupForm() {
     setPending(false);
     if (result.success) {
       setErrors(undefined);
-      router.push(result.user ? landingPathForRole(result.user.role) : "/");
+      // Account is created + auto-logged-in, but unverified: send them to the
+      // "check your inbox" screen rather than the dashboard.
+      router.push("/verify-email");
       router.refresh();
     } else {
       setErrors(result.errors);

@@ -35,7 +35,8 @@
     ),
     url("/assets/auth/login-panel.jpg");
 }
-.auth-wrap .auth-panel--signup {
+.auth-wrap .auth-panel--signup,
+.auth-wrap .auth-panel--verify {
   background-image: linear-gradient(
       to top,
       rgba(10, 14, 11, 0.88) 0%,
@@ -287,6 +288,104 @@
 .auth-wrap .af-error {
   font-size: 11.5px;
   color: #b3452b;
+}
+/* Success counterpart of .auth-form-error (green), e.g. "email sent". */
+.auth-wrap .auth-form-success {
+  background: rgba(78, 123, 97, 0.12);
+  color: #2f5b42;
+  font-size: 13px;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+
+/* ---- Verify-email states (icon + title + text + actions) ---- */
+.auth-wrap .auth-verify {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+.auth-wrap .auth-verify-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 100px;
+  margin-bottom: 4px;
+}
+.auth-wrap .auth-verify-icon.is-pending {
+  background: rgba(30, 28, 25, 0.06);
+  color: rgba(30, 28, 25, 0.55);
+}
+.auth-wrap .auth-verify-icon.is-success {
+  background: rgba(78, 123, 97, 0.14);
+  color: #3d7154;
+}
+.auth-wrap .auth-verify-icon.is-warning {
+  background: rgba(193, 122, 90, 0.16);
+  color: #b06b45;
+}
+.auth-wrap .auth-verify-icon.is-error {
+  background: rgba(193, 90, 58, 0.14);
+  color: #b3452b;
+}
+.auth-wrap .auth-verify-title {
+  font-family: var(--font-dm-serif), Georgia, serif;
+  font-size: 22px;
+  letter-spacing: -0.4px;
+  color: #1e1c19;
+}
+.auth-wrap .auth-verify-text {
+  font-size: 14px;
+  color: rgba(30, 28, 25, 0.6);
+  line-height: 1.6;
+  max-width: 360px;
+}
+.auth-wrap .auth-verify .auth-submit {
+  margin-top: 14px;
+}
+.auth-wrap .auth-spin {
+  animation: auth-spin 0.9s linear infinite;
+}
+@keyframes auth-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Resend block (verify page + login "not verified" affordance). */
+.auth-wrap .auth-resend {
+  width: 100%;
+  margin-top: 14px;
+  text-align: left;
+}
+/* Secondary (outline) button — used for inline resend on the login screen. */
+.auth-wrap .auth-ghost {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  color: #4e7b61;
+  padding: 13px 28px;
+  border-radius: 100px;
+  font-size: 13.5px;
+  font-weight: 500;
+  font-family: var(--font-inter), sans-serif;
+  border: 1px solid rgba(78, 123, 97, 0.5);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.auth-wrap .auth-ghost:hover:not(:disabled) {
+  background: rgba(78, 123, 97, 0.08);
+}
+.auth-wrap .auth-ghost:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* ---- Responsive: stack the split below the panel ---- */
