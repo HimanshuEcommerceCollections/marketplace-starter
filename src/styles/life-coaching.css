@@ -6,7 +6,7 @@
    in src/styles/**). Structure/patterns mirror massage.css — the hero is
    centered (serif display); the specialty/experience/CTA bands use photo
    backgrounds over a solid-dark floor, and their cards are opaque cream
-   (like .ssp-*/.msg-* cards) rather than translucent glass.
+   (like the showcase/massage cards) rather than translucent glass.
    ══════════════════════════════════════════════════════════════════ */
 
 /* Shared eyebrow — small uppercase sage label. */
