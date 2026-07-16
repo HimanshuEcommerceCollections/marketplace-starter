@@ -47,6 +47,11 @@ export const CorporateQuoteFormSchema = z.object({
   notes: z.string().max(2000).optional(),
 });
 
+/** Resend an email-verification link to a (logged-out) address. */
+export const ResendVerificationFormSchema = z.object({
+  email: z.string().email("Enter a valid email"),
+});
+
 /** Account sign-in. Stub-only — no credentials are ever sent or stored. */
 export const LoginFormSchema = z.object({
   email: z.string().email("Enter a valid email"),

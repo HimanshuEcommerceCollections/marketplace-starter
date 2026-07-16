@@ -6,7 +6,7 @@ export interface AuthShellProps {
   /** Which audience this screen serves — switches the whole layout. */
   userType: AuthUserType;
   /** Which auth screen — selects the brand-panel background photo. */
-  screen: "login" | "signup";
+  screen: "login" | "signup" | "verify";
   brandName: string;
   logoSublabel?: string;
   /** Heading shown above the form (e.g. "Welcome back."). */
