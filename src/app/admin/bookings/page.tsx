@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AdminTopbar } from "@/components/admin/admin-topbar";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
-import { StatusDot } from "@/components/admin/status-pill";
+import { StatusPill } from "@/components/admin/status-pill";
 import { MasterDetail } from "@/components/admin/master-detail";
 import { AdminTable, type AdminColumn } from "@/components/admin/admin-table";
 import {
@@ -76,7 +76,7 @@ export default function AdminBookingsPage() {
     {
       key: "status",
       header: "Status",
-      cell: (row) => <StatusDot status={toAdminStatus(row.status)} />,
+      cell: (row) => <StatusPill status={toAdminStatus(row.status)} />,
     },
     {
       key: "id",
