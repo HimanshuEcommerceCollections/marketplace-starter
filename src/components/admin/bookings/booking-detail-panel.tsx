@@ -47,6 +47,9 @@ export function BookingDetailPanel({ booking, onChanged }: BookingDetailPanelPro
   const [error, setError] = React.useState<string | null>(null);
   const options = (booking.selections ?? []).map((s) => s.optionLabel).filter(Boolean);
   const canModerate = !TERMINAL.includes(booking.status);
+  // Confirming only advances a PENDING booking; for any later status it's either a
+  // no-op (already CONFIRMED) or a backwards move (IN_PROGRESS), so it's disabled.
+  const canConfirm = booking.status === "PENDING";
 
   async function moderate(status: "CONFIRMED" | "CANCELLED") {
     if (busy) return;
@@ -116,7 +119,7 @@ export function BookingDetailPanel({ booking, onChanged }: BookingDetailPanelPro
           <div className="flex flex-col gap-2 sm:flex-row">
             <Button
               type="button"
-              disabled={busy}
+              disabled={busy || !canConfirm}
               className="flex-1 bg-success text-success-foreground hover:bg-success/90"
               onClick={() => void moderate("CONFIRMED")}
             >
