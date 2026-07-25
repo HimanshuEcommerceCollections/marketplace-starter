@@ -12,7 +12,7 @@ export interface GridCard {
   title: string;
   summary?: string;
   icon?: string; // lucide icon name (static catalog services)
-  iconUrl?: string; // uploaded SVG icon URL (API categories); takes precedence
+  iconUrl?: string; // committed SVG icon URL (from the API); takes precedence
   coverImages?: string[]; // ordered cover image URLs (API categories)
   priceLabel?: string | null; // whole-dollar label e.g. "$109"; null = no price
   /** Unit the from-price maps to, e.g. "60 min" (shortest duration) or "session". */
