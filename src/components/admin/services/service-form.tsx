@@ -15,8 +15,6 @@ import {
   updateService,
   ServiceApiError,
 } from "@/lib/admin/services";
-import { createServiceAssets } from "@/lib/admin/service-assets";
-import { ServiceAssetStager } from "./service-asset-stager";
 
 /** Browser-side slug preview; the server is the source of truth on save. */
 function slugify(input: string): string {
@@ -44,13 +42,6 @@ export function ServiceForm({ mode, initial }: ServiceFormProps) {
   const [errors, setErrors] = React.useState<FieldErrors>({});
   const [formError, setFormError] = React.useState<string | null>(null);
   const [submitting, setSubmitting] = React.useState(false);
-  // Staged assets (create flow only): selected now, uploaded after the service
-  // is created since the asset API is keyed by slug.
-  const [pendingIcon, setPendingIcon] = React.useState<File | null>(null);
-  const [pendingCovers, setPendingCovers] = React.useState<File[]>([]);
-  // Set if the service was created but its images failed to upload — the
-  // service exists, so we offer a link to its page instead of re-creating.
-  const [createdId, setCreatedId] = React.useState<string | null>(null);
 
   // Auto-derive the slug from the name until the user edits it directly.
   React.useEffect(() => {
@@ -83,7 +74,7 @@ export function ServiceForm({ mode, initial }: ServiceFormProps) {
   }
 
   async function submit(publish: boolean) {
-    if (submitting || createdId) return; // service already created; don't duplicate
+    if (submitting) return;
     setFormError(null);
     const valid = validate();
     if (!valid) return;
@@ -109,27 +100,6 @@ export function ServiceForm({ mode, initial }: ServiceFormProps) {
         basePrice: valid.basePrice,
         publish,
       });
-
-      // Upload any staged icon/covers now that the service (and its slug) exist.
-      if (pendingIcon || pendingCovers.length > 0) {
-        const assetForm = new FormData();
-        if (pendingIcon) assetForm.append("icon", pendingIcon);
-        for (const cover of pendingCovers) assetForm.append("covers", cover);
-        try {
-          await createServiceAssets(created.slug, assetForm);
-        } catch (assetErr) {
-          // The service was created; only the images failed. Don't lose it —
-          // surface the error and offer a link to its page to retry there.
-          setCreatedId(created.id);
-          setFormError(
-            assetErr instanceof ServiceApiError
-              ? `Service created, but the images failed to upload: ${assetErr.message}. Open the service to add them.`
-              : "Service created, but the images failed to upload. Open the service to add them.",
-          );
-          setSubmitting(false);
-          return;
-        }
-      }
 
       router.push(`/admin/services/${created.id}`);
       router.refresh();
@@ -219,48 +189,28 @@ export function ServiceForm({ mode, initial }: ServiceFormProps) {
           />
         </Field>
 
-        {mode === "create" ? (
-          <ServiceAssetStager
-            icon={pendingIcon}
-            onIconChange={setPendingIcon}
-            covers={pendingCovers}
-            onCoversChange={setPendingCovers}
-            onNotice={setFormError}
-            disabled={submitting || createdId !== null}
-          />
-        ) : null}
-
         <div className="flex flex-wrap items-center justify-end gap-3 pt-2">
-          {createdId ? (
-            // Service was created but image upload failed — let the user open it.
-            <Button asChild type="button">
-              <Link href={`/admin/services/${createdId}`}>Go to service</Link>
-            </Button>
-          ) : (
+          <Button asChild type="button" variant="ghost">
+            <Link href="/admin/services">Cancel</Link>
+          </Button>
+          {mode === "create" ? (
             <>
-              <Button asChild type="button" variant="ghost">
-                <Link href="/admin/services">Cancel</Link>
+              <Button
+                type="button"
+                variant="outline"
+                disabled={submitting}
+                onClick={() => void submit(false)}
+              >
+                Save as Draft
               </Button>
-              {mode === "create" ? (
-                <>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    disabled={submitting}
-                    onClick={() => void submit(false)}
-                  >
-                    Save as Draft
-                  </Button>
-                  <Button type="button" disabled={submitting} onClick={() => void submit(true)}>
-                    Publish
-                  </Button>
-                </>
-              ) : (
-                <Button type="submit" disabled={submitting}>
-                  Save Changes
-                </Button>
-              )}
+              <Button type="button" disabled={submitting} onClick={() => void submit(true)}>
+                Publish
+              </Button>
             </>
+          ) : (
+            <Button type="submit" disabled={submitting}>
+              Save Changes
+            </Button>
           )}
         </div>
       </form>

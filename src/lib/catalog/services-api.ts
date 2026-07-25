@@ -101,9 +101,9 @@ export function apiServiceToGridCard(s: ApiService): GridCard {
   // catalog by slug (static ids ARE the booking slugs) to inherit the showcase
   // fields. API-only services simply render untagged and match "All" only.
   const staticService = getService(s.slug);
-  // Uploaded images win, but the services showcase reads cover_images[1] as its
-  // alternate card photo — until a second image is uploaded through the admin
-  // assets panel, borrow the static catalog's extras to fill the array out.
+  // The API returns the single committed cover per service, but the services
+  // showcase reads cover_images[1] as its alternate card photo — so borrow the
+  // static catalog's extras to fill the array out. Load-bearing, not temporary.
   const staticCovers = staticService?.cover_images ?? [];
   const coverImages =
     s.coverImages.length >= 2
@@ -117,7 +117,7 @@ export function apiServiceToGridCard(s: ApiService): GridCard {
     // API list payload has no summary field — its `description` is the long
     // detail-page text (often seeded placeholder), so it's a fallback only.
     summary: staticService?.summary ?? s.description ?? undefined,
-    // iconPath is now an uploaded SVG URL (not a lucide name) — render as <img>.
+    // iconPath is a committed SVG URL (not a lucide name) — render as <img>.
     iconUrl: s.iconPath,
     coverImages,
     priceLabel:
