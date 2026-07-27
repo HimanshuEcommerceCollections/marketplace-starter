@@ -14,8 +14,9 @@ export interface SessionUser {
   name: string;
   phone: string | null;
   brand: string;
-  /** Coverage areas the user selected (Wake County towns). Multi-value. */
-  area: string[];
+  // NOTE: no `area`. Coverage is a property of a BOOKING (resolved server-side
+  // from the customer's ZIP), never of an account — the server's PublicUser no
+  // longer carries one, and nothing may reintroduce a client-side area enum.
   role: SessionRole;
   status: string;
   emailVerifiedAt: string | null;

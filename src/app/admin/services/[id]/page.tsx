@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { ServiceStatusPill } from "@/components/admin/status-pill";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ServiceStatusControl } from "@/components/admin/services/service-status-control";
+import { ServiceCoveragePanel } from "@/components/admin/services/service-coverage-panel";
 import { ServiceConfigPanel } from "@/components/admin/services/service-config-panel";
 import { ServicePricingPreview } from "@/components/admin/services/service-pricing-preview";
 import { getService, ServiceApiError } from "@/lib/admin/services";
@@ -82,6 +83,7 @@ export default function ServiceDetailsPage() {
           <Tabs defaultValue="details">
             <TabsList aria-label="Service editor">
               <TabsTrigger value="details">Service Details</TabsTrigger>
+              <TabsTrigger value="coverage">Coverage</TabsTrigger>
               <TabsTrigger value="configurations">Configurations</TabsTrigger>
               <TabsTrigger value="pricing">Pricing Preview</TabsTrigger>
               <TabsTrigger value="publish">Publish</TabsTrigger>
@@ -109,6 +111,10 @@ export default function ServiceDetailsPage() {
                   <Row label="Created" value={formatDate(service.createdAt)} />
                   <Row label="Updated" value={formatDate(service.updatedAt)} />
                 </Card>
+              </TabsContent>
+
+              <TabsContent value="coverage">
+                <ServiceCoveragePanel service={service} />
               </TabsContent>
 
               <TabsContent value="configurations">

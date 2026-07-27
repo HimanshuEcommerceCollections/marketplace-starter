@@ -55,7 +55,21 @@ export interface HowItWorksCoverage {
   eyebrow?: string;
   heading: string;
   sub?: string;
-  /** Coverage areas, each rendered as a map-pin pill. */
+  /**
+   * FALLBACK coverage areas, each rendered as a map-pin pill.
+   *
+   * The band is no longer driven by this list: `<CoverageBand>` reads the real
+   * ACTIVE markets from `GET /areas` (role-aware, so anonymous visitors see
+   * exactly the published footprint in the admin's `sortOrder`). These names are
+   * what renders server-side and what stays if that call fails or comes back
+   * empty — the band must never be blank, so keep this list populated and roughly
+   * accurate, but do NOT treat it as the source of truth. Adding a market here
+   * does not make it bookable; creating it in the admin Areas screen does.
+   *
+   * `heading`/`sub`/`note` are still fixed brand copy, so a heading that names a
+   * specific footprint ("All of Wake County") has to be revised by hand when the
+   * business expands.
+   */
   areas: string[];
   note?: string;
 }

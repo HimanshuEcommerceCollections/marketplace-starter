@@ -41,8 +41,23 @@ type DetailField =
   | "lastName"
   | "email"
   | "phone"
-  | "address"
-  | "area";
+  | "address";
+
+/**
+ * Result of the ZIP serviceability preflight (`GET /coverage/check`).
+ *
+ * `"error"` (network / timeout / rate limit) is NOT a deny: the UI fails OPEN on
+ * it and lets `POST /bookings` be the authority. A degraded coverage endpoint
+ * must never block a paying customer — the POST is strict, so the worst case is
+ * today's late-rejection experience and nothing worse.
+ */
+export interface CoverageState {
+  status: "idle" | "checking" | "ok" | "blocked" | "error";
+  /** Resolved market name, e.g. "Cary". Set ONLY when status === "ok". */
+  areaName?: string;
+  /** Server-authored copy. Render VERBATIM — never compose or explain a deny. */
+  message?: string;
+}
 
 export interface WizardState {
   step: WizardStep;
@@ -54,8 +69,15 @@ export interface WizardState {
   email: string;
   phone: string;
   address: string;
-  /** Wake County town (ServiceArea enum value) the session takes place in. */
-  area: string;
+  /**
+   * The ZIP code the session takes place in, exactly as typed. The ONLY
+   * geographic input the customer supplies — the server resolves the market from
+   * it, so there is deliberately no `area` in this state. Re-adding one would
+   * re-open the self-selection bypass (pick "RALEIGH", type an LA address).
+   */
+  zip: string;
+  /** Verdict of the ZIP preflight. NEVER persisted — see the draft notes. */
+  coverage: CoverageState;
   windows: SchedWindow[];
   notes: string;
   status: "draft" | "submitting" | "paying" | "submitted" | "error";
@@ -79,6 +101,9 @@ type Action =
   | { type: "SET_SELECTION"; key: string; value: SelectionValue }
   | { type: "SET_QUANTITY"; quantity: number }
   | { type: "SET_FIELD"; field: DetailField; value: string }
+  | { type: "SET_ZIP"; zip: string }
+  | { type: "COVERAGE_CHECKING" }
+  | { type: "COVERAGE_RESULT"; coverage: CoverageState }
   | { type: "SET_WINDOW"; index: number; patch: Partial<SchedWindow> }
   | { type: "SET_NOTES"; notes: string }
   | { type: "SUBMIT_START" }
@@ -113,6 +138,15 @@ function reducer(state: WizardState, action: Action): WizardState {
       return { ...state, quantity: Math.max(1, action.quantity) };
     case "SET_FIELD":
       return { ...state, [action.field]: action.value };
+    case "SET_ZIP":
+      // Editing the ZIP invalidates the verdict for the old one, always. Without
+      // this reset a customer could clear a confirmed ZIP, type an unserved one
+      // and still be holding an "ok".
+      return { ...state, zip: action.zip, coverage: { status: "idle" } };
+    case "COVERAGE_CHECKING":
+      return { ...state, coverage: { status: "checking" } };
+    case "COVERAGE_RESULT":
+      return { ...state, coverage: action.coverage };
     case "SET_WINDOW":
       return {
         ...state,
@@ -221,7 +255,8 @@ export function BookingProvider({
     email: "",
     phone: "",
     address: "",
-    area: "",
+    zip: "",
+    coverage: { status: "idle" },
     windows: [
       { date: "", time: "" },
       { date: "", time: "" },
@@ -358,6 +393,9 @@ export function buildBookingRequest(ctx: BookingContextValue): BookingRequest {
     location_pref: {
       mode: service.location_modes[0] ?? "onsite",
       address_line1: state.address || undefined,
+      // The contract has always declared postal_code; the ZIP-first flow is the
+      // first thing that actually has a value to put in it.
+      postal_code: state.zip || undefined,
     },
     schedule_preferences: {
       preferred_dates,
@@ -417,7 +455,9 @@ export function toServerBooking(ctx: BookingContextValue): CreateBookingPayload 
     scheduledStart: startDate.toISOString(),
     scheduledEnd: endDate.toISOString(),
     locationMode: MODE_TO_SERVER[service.location_modes[0] ?? "onsite"] ?? "ONSITE",
-    area: state.area || undefined,
+    // ZIP only. The server resolves the Area (and stamps the snapshot columns)
+    // from this; it never trusts a client-named market.
+    postalCode: state.zip.trim() || undefined,
     notes: notesParts.join("\n") || undefined,
     optionIds,
     contact: {

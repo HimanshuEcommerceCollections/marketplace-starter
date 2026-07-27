@@ -1,15 +1,46 @@
-import { AREA_LABELS, type AreaValue } from "@/lib/auth/areas";
 import type { BookingStatusValue, MyBooking } from "./api";
 
-/** Display label for a ServiceArea enum value (e.g. "WAKE_FOREST" → "Wake Forest"). */
+/** SCREAMING_SNAKE_CASE, i.e. the shape of the deprecated `ServiceArea` enum. */
+const ENUM_SHAPED = /^[A-Z0-9]+(?:_[A-Z0-9]+)*$/;
+
+/**
+ * Render an area name for display.
+ *
+ * Areas are admin-created rows now, so the authority is whatever human-readable
+ * name the server sends ("Cary", "Wake Forest") — it is rendered VERBATIM. There
+ * is deliberately no lookup table: a hardcoded 12-town map made every area an
+ * admin added render as a raw token.
+ *
+ * The one transformation left is a compatibility shim: `Booking.area` is still
+ * dual-written as the legacy `ServiceArea` enum, so an all-caps token like
+ * "WAKE_FOREST" is title-cased rather than shown raw. Anything that does not
+ * look like an enum member passes straight through untouched. Delete the shim
+ * once the legacy column is dropped and the booking payload carries
+ * `areaNameSnapshot`.
+ */
 export function areaLabel(area: string | null): string | null {
   if (!area) return null;
-  return AREA_LABELS[area as AreaValue] ?? area;
+  const trimmed = area.trim();
+  if (!trimmed) return null;
+  if (!ENUM_SHAPED.test(trimmed)) return trimmed;
+  return trimmed
+    .toLowerCase()
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
 
-/** "Your home · Cary" style location line for a booking (falls back to mode). */
-export function locationLabel(b: Pick<MyBooking, "area" | "locationMode">): string {
-  const town = areaLabel(b.area);
+/**
+ * "Your home · Cary" style location line for a booking (falls back to mode).
+ *
+ * Snapshot beats FK for DISPLAY: `areaNameSnapshot` is the name the customer was
+ * shown at booking time and survives a rename or a ZIP being re-homed, so it is
+ * preferred over the legacy enum whenever the server sends it.
+ */
+export function locationLabel(
+  b: Pick<MyBooking, "area" | "locationMode" | "areaNameSnapshot">,
+): string {
+  const town = areaLabel(b.areaNameSnapshot ?? null) ?? areaLabel(b.area);
   if (b.locationMode === "REMOTE") return "Remote session";
   return town ? `Your home · ${town}` : "Your home";
 }

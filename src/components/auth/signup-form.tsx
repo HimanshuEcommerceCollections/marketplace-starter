@@ -8,7 +8,6 @@ import { useAuth } from "@/components/auth/auth-provider";
 import { landingPathForRole } from "@/lib/auth/roles";
 import { validateForm, type FieldErrors } from "@/lib/forms/validate";
 import { SignupFormSchema } from "@/lib/forms/schemas";
-import { AREA_OPTIONS } from "@/lib/auth/areas";
 
 export function SignupForm() {
   const router = useRouter();
@@ -22,13 +21,12 @@ export function SignupForm() {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     // Client-only rules (password confirmation + consent) are enforced here;
-    // the server validates name/email/password/area/brand. The UI collects a
-    // single area from the dropdown.
+    // the server validates name/email/password/brand. No area is collected: the
+    // service area is resolved from the ZIP code at booking time, not at signup.
     const parsed = validateForm(SignupFormSchema, {
       name: form.get("name"),
       email: form.get("email"),
       phone: form.get("phone") || undefined,
-      area: form.get("area") || undefined,
       password: form.get("password"),
       confirm_password: form.get("confirm_password"),
       consent: form.get("consent") === "on",
@@ -42,9 +40,6 @@ export function SignupForm() {
       name: parsed.data.name,
       email: parsed.data.email,
       phone: parsed.data.phone,
-      // Wrap the single selected area into an array — the server's `area` is
-      // multi-value, so the wire format stays a list even when we send one.
-      area: [parsed.data.area],
       password: parsed.data.password,
     });
     setPending(false);
@@ -106,26 +101,6 @@ export function SignupForm() {
           aria-invalid={!!errors?.phone}
         />
         {errors?.phone ? <p className="af-error">{errors.phone[0]}</p> : null}
-      </div>
-
-      <div className="af">
-        <label htmlFor="signup-area">Your area</label>
-        <select
-          id="signup-area"
-          name="area"
-          defaultValue=""
-          aria-invalid={!!errors?.area}
-        >
-          <option value="" disabled>
-            Select your area
-          </option>
-          {AREA_OPTIONS.map((o) => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
-        {errors?.area ? <p className="af-error">{errors.area[0]}</p> : null}
       </div>
 
       <div className="af">

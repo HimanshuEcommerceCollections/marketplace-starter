@@ -4,7 +4,6 @@ import {
   LocationPrefSchema,
   SchedulePreferencesSchema,
 } from "@/lib/booking/contract.schema";
-import { AREA_VALUES } from "@/lib/auth/areas";
 
 /** Reuses the booking contract's nested pieces so forms stay in sync. */
 export const BookingContactFormSchema = ContactSchema.extend({
@@ -59,17 +58,21 @@ export const LoginFormSchema = z.object({
   remember: z.boolean().optional(),
 });
 
-/** Account creation. Stub-only — no credentials are ever sent or stored. */
+/**
+ * Account creation.
+ *
+ * There is deliberately NO `area` field. Coverage is a property of a BOOKING
+ * (resolved server-side from the customer's ZIP at booking time), not of an
+ * account, and the server's `registerSchema` no longer accepts one. The old
+ * `area: z.enum(AREA_VALUES)` mirrored a hardcoded 12-town list, so any area an
+ * admin created was rejected here before the request was ever sent — do not
+ * reintroduce a client-side enum of areas anywhere.
+ */
 export const SignupFormSchema = z
   .object({
     name: z.string().min(1, "Name is required").max(120),
     email: z.string().email("Enter a valid email"),
     phone: z.string().max(40).optional(),
-    // The UI collects a SINGLE area (dropdown); it is wrapped into a one-element
-    // array before being sent, because the server's `area` is multi-value.
-    area: z.enum(AREA_VALUES, {
-      errorMap: () => ({ message: "Select your area" }),
-    }),
     password: z.string().min(8, "Minimum 8 characters"),
     confirm_password: z.string().min(1, "Re-enter your password"),
     consent: z.literal(true, {
