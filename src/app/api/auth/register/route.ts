@@ -21,8 +21,9 @@ export async function POST(req: NextRequest) {
       email: input.email,
       password: input.password,
       phone: input.phone || undefined,
-      // Multi-value coverage area (Wake County towns) chosen at signup.
-      area: input.area,
+      // No `area`: the server's registerSchema has no such field, and coverage is
+      // resolved from the ZIP at booking time. Forwarding one would be silently
+      // stripped upstream, so it is dropped here where it is visible.
       // Brand is server-trusted (from NEXT_PUBLIC_BRAND), never client-supplied.
       brand: getActiveBrandId(),
     },

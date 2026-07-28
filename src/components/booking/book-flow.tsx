@@ -3,16 +3,28 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRight, ArrowLeft, ArrowUp, Check } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowLeft,
+  ArrowUp,
+  Check,
+  LoaderCircle,
+  MapPin,
+  TriangleAlert,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/components/auth/auth-provider";
 import { serviceIcon } from "@/lib/catalog/service-icons";
-import { AREA_OPTIONS } from "@/lib/auth/areas";
 import { TIME_RANGES } from "@/lib/booking/time-ranges";
 import { analytics } from "@/lib/analytics/analytics";
 import { computePrice } from "@/lib/pricing/engine";
 import { formatMoney, addMoney } from "@/lib/money";
-import { submitBooking, BookingApiError } from "@/lib/booking/api";
+import {
+  submitBooking,
+  checkCoverage,
+  BookingApiError,
+  COVERAGE_DENY_CODE,
+} from "@/lib/booking/api";
 import { createPaymentIntent, PaymentApiError } from "@/lib/payments/api";
 import {
   BookingProvider,
@@ -22,6 +34,7 @@ import {
   buildBookingRequest,
   selectionSummary,
   addOnsSummary,
+  type CoverageState,
 } from "./booking-provider";
 import { WizardStepPayment } from "./wizard-step-payment";
 import { BookingSuccessScreen } from "./booking-success-screen";
@@ -31,6 +44,22 @@ import type { Money } from "@/lib/booking/contract";
 import type { BrandId } from "@/lib/brand/registry";
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+/**
+ * A COMPLETE US ZIP. The coverage check fires only on a match, so there is at
+ * most one request per finished ZIP rather than one per keystroke.
+ */
+const ZIP_RE = /^\d{5}$/;
+
+/**
+ * The server's `serviceSlugSchema` for the coverage check, byte for byte
+ * (`coverage.validation.ts`). A `?service=` value that fails it 422s the WHOLE
+ * query — the ZIP included — so a slug that cannot pass is never sent.
+ */
+const SERVICE_SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+/** Debounce before the coverage preflight. The repo's search idiom is 300ms. */
+const COVERAGE_DEBOUNCE_MS = 400;
 
 export interface BookTile {
   slug: string;
@@ -155,7 +184,7 @@ export function BookFlow(props: BookFlowProps) {
 }
 
 type FieldErrors = Partial<
-  Record<"name" | "email" | "area" | "date" | "time", string>
+  Record<"name" | "email" | "zip" | "date" | "time", string>
 >;
 
 // ── Interactive flow ─────────────────────────────────────────────────────────
@@ -185,6 +214,10 @@ function BookInner({
   }, []);
 
   // ── Draft persistence: survive the login round-trip (sessionStorage) ────────
+  // `coverage` is deliberately NEVER persisted. The login round-trip can span
+  // minutes and an admin may have switched a ZIP or a market off in between, so a
+  // restored "ok" would let a stale draft walk past the gate. The ZIP itself is
+  // restored and the check simply re-runs.
   const restored = React.useRef(false);
   React.useEffect(() => {
     if (restored.current) return;
@@ -200,7 +233,7 @@ function BookInner({
         email: string;
         phone: string;
         address: string;
-        area: string;
+        zip: string;
         windows: Array<{ date: string; time: string }>;
       }>;
       if (d.selections) {
@@ -209,9 +242,10 @@ function BookInner({
         }
       }
       if (typeof d.quantity === "number") dispatch({ type: "SET_QUANTITY", quantity: d.quantity });
-      (["firstName", "lastName", "email", "phone", "address", "area"] as const).forEach((f) => {
+      (["firstName", "lastName", "email", "phone", "address"] as const).forEach((f) => {
         if (typeof d[f] === "string" && d[f]) dispatch({ type: "SET_FIELD", field: f, value: d[f] as string });
       });
+      if (typeof d.zip === "string" && d.zip) dispatch({ type: "SET_ZIP", zip: d.zip });
       if (d.windows?.[0]) dispatch({ type: "SET_WINDOW", index: 0, patch: d.windows[0] });
     } catch {
       /* ignore malformed draft */
@@ -232,7 +266,7 @@ function BookInner({
           email: state.email,
           phone: state.phone,
           address: state.address,
-          area: state.area,
+          zip: state.zip,
           windows: state.windows,
         }),
       );
@@ -240,6 +274,99 @@ function BookInner({
       /* storage full / unavailable — non-fatal */
     }
   }, [state, draftKey]);
+
+  // ── ZIP coverage preflight ──────────────────────────────────────────────────
+  // One request per COMPLETE ZIP (not per keystroke), 400ms debounced, aborted on
+  // change so a stale response can never overwrite a newer verdict, and memoized
+  // so backspacing to an already-checked ZIP costs nothing. The endpoint is never
+  // cached server-side, so this is the only layer that removes the latency.
+  const coverageMemo = React.useRef<Map<string, CoverageState>>(new Map());
+  const zip = state.zip.trim();
+
+  /**
+   * Does coverage apply to the booking this form will actually POST?
+   *
+   * `toServerBooking` submits `locationMode = service.location_modes[0]`, and the
+   * server's gate returns early for REMOTE — no ZIP required, no resolution, no
+   * deny. The PREFLIGHT does not use that mode: `coverage.service.ts check()`
+   * passes REMOTE only when EVERY offered mode is remote, so for a service listing
+   * `[REMOTE, ONSITE]` the preflight resolves the ZIP and can answer "not
+   * serviceable" for a booking `POST /bookings` would have accepted without
+   * looking at geography at all. Asking the ZIP question at all here is what
+   * creates that false block, so a remote session is not asked.
+   */
+  const remoteSession = (service.location_modes[0] ?? "onsite") === "remote";
+
+  // WHICH service the ZIP is checked against. A live service is a UUID; the
+  // static/preview fallback has only the URL slug.
+  //
+  // Naming one is MANDATORY. `GET /coverage/check` with neither selector answers
+  // a different question — "is anything at all bookable at this ZIP" — and its
+  // `serviceable: true` would be rendered here as "we serve you" for a service
+  // that may not be covered at all. And a slug the server's regex rejects 422s the
+  // entire query, ZIP included. So when neither selector is usable the preflight
+  // is SKIPPED (coverage stays "idle", the form stays open) rather than asked a
+  // question whose answer would be about something else.
+  const coverageServiceId = ctx.liveServiceId;
+  const coverageServiceSlug =
+    !coverageServiceId && selectedSlug && SERVICE_SLUG_RE.test(selectedSlug)
+      ? selectedSlug
+      : undefined;
+  // The memo is keyed on (service, zip): the same ZIP can be serviceable for one
+  // service and not another, so a memo keyed on the ZIP alone would lie.
+  const coverageTarget = coverageServiceId ?? coverageServiceSlug ?? "";
+  const memoKey = `${coverageTarget}:${zip}`;
+
+  React.useEffect(() => {
+    if (remoteSession) return; // coverage does not apply — see above
+    if (!coverageTarget) return; // no nameable service — see above
+    if (!ZIP_RE.test(zip)) return; // incomplete — SET_ZIP already reset to idle
+    const cached = coverageMemo.current.get(memoKey);
+    if (cached) {
+      dispatch({ type: "COVERAGE_RESULT", coverage: cached });
+      return;
+    }
+    const controller = new AbortController();
+    const timer = setTimeout(() => {
+      dispatch({ type: "COVERAGE_CHECKING" });
+      void (async () => {
+        try {
+          const result = await checkCoverage({
+            zip,
+            serviceId: coverageServiceId,
+            serviceSlug: coverageServiceSlug,
+            signal: controller.signal,
+          });
+          // Re-check AFTER the await: `abort()` is a no-op once the response has
+          // landed, so the signal — not the rejection — is what makes a superseded
+          // verdict unable to overwrite a newer one.
+          if (controller.signal.aborted) return;
+          const next: CoverageState = result.serviceable
+            ? {
+                status: "ok",
+                areaName: result.area?.name ?? undefined,
+                message: result.message,
+              }
+            : { status: "blocked", message: result.message };
+          coverageMemo.current.set(memoKey, next);
+          dispatch({ type: "COVERAGE_RESULT", coverage: next });
+        } catch {
+          // Aborted → a newer ZIP is already in flight; drop this result.
+          if (controller.signal.aborted) return;
+          // Anything else (network, 404 on an unpublished service, 429) FAILS
+          // OPEN and is not memoized: POST /bookings stays the authority.
+          dispatch({ type: "COVERAGE_RESULT", coverage: { status: "error" } });
+        }
+      })();
+    }, COVERAGE_DEBOUNCE_MS);
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
+    // `dispatch` is reducer-stable; the two selectors are both folded into
+    // `memoKey` via `coverageTarget`, so this list is complete in practice.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [zip, memoKey, coverageTarget, remoteSession]);
 
   // After a confirmed LIVE payment, send the customer to their My Bookings page.
   React.useEffect(() => {
@@ -262,8 +389,23 @@ function BookInner({
   const sessionLabel = selectionSummary(service, state.selections);
   const addOns = addOnsSummary(service, state.selections);
 
-  function setField(field: "firstName" | "email" | "phone" | "address" | "area", value: string) {
+  function setField(field: "firstName" | "email" | "phone" | "address", value: string) {
     dispatch({ type: "SET_FIELD", field, value });
+  }
+
+  /**
+   * Digits only, capped at five, so the field can only ever hold a canonical ZIP:
+   * pasting "27601-1234" yields "27601", which is what the server's
+   * `normalizeZip` would have produced anyway.
+   *
+   * The stale `errors.zip` is cleared here. Unlike every other field on this
+   * form, the ZIP's error can be set by an ASYNC verdict ("we don't serve this
+   * ZIP yet"), so leaving it pinned under a ZIP the customer has since corrected
+   * — with `aria-invalid` still true — reads as "the new one is rejected too".
+   */
+  function setZip(raw: string) {
+    dispatch({ type: "SET_ZIP", zip: raw.replace(/\D/g, "").slice(0, 5) });
+    setErrors((prev) => (prev.zip ? { ...prev, zip: undefined } : prev));
   }
 
   function clearDraft() {
@@ -278,11 +420,19 @@ function BookInner({
     const errs: FieldErrors = {};
     if (!state.firstName.trim()) errs.name = "Enter your name";
     if (!EMAIL_RE.test(state.email)) errs.email = "Enter a valid email";
-    if (!state.area) errs.area = "Select your area";
+    // ZIP gate. "error" and "checking" pass: a degraded preflight must not block a
+    // paying customer, and POST /bookings re-runs the same resolver strictly.
+    // Skipped for a remote session — the server's gate never asks for a ZIP there,
+    // so demanding one would reject a booking the API would accept.
+    if (!remoteSession) {
+      if (!ZIP_RE.test(state.zip.trim())) errs.zip = "Enter a valid 5-digit ZIP code";
+      else if (state.coverage.status === "blocked")
+        errs.zip = "We don't serve this ZIP code yet";
+    }
     if (!state.windows[0]?.date) errs.date = "Choose a date";
     if (!state.windows[0]?.time) errs.time = "Pick a time range";
     setErrors(errs);
-    if (errs.name || errs.email || errs.area || errs.date || errs.time) return;
+    if (errs.name || errs.email || errs.zip || errs.date || errs.time) return;
     if (state.status === "submitting") return;
 
     // Static fallback (no live service) — keep the stub behavior.
@@ -345,6 +495,19 @@ function BookInner({
         err.status === 401
       ) {
         router.push(loginRedirect);
+        return;
+      }
+      // The POST is the authority: if it denies the ZIP (coverage changed since
+      // the preflight, or the preflight failed open) mirror its verdict into the
+      // ZIP step so the customer sees it where they can act on it.
+      if (err instanceof BookingApiError && err.code === COVERAGE_DENY_CODE) {
+        coverageMemo.current.delete(memoKey);
+        dispatch({
+          type: "COVERAGE_RESULT",
+          coverage: { status: "blocked", message: err.message },
+        });
+        setErrors({ zip: "We don't serve this ZIP code yet" });
+        dispatch({ type: "SUBMIT_ERROR", error: err.message });
         return;
       }
       dispatch({
@@ -412,6 +575,14 @@ function BookInner({
 
   // ── Build (single-page) ─────────────────────────────────────────────────────
   const submitting = state.status === "submitting";
+  // Coverage came back a definite NO. Everything past the ZIP step collapses, so
+  // the customer never fills in a name and a date they are about to throw away.
+  // Only "blocked" gates: idle/checking/error all render the form.
+  const gated = state.coverage.status === "blocked";
+  const waitlistHref = `/waitlist?${new URLSearchParams({
+    ...(selectedSlug ? { service: selectedSlug } : {}),
+    zip,
+  }).toString()}`;
   let stepNo = 1;
   const nextNum = () => String(++stepNo).padStart(2, "0");
 
@@ -420,198 +591,324 @@ function BookInner({
       <div className="bk-steps">
         <ServiceTiles tiles={tiles} selectedSlug={selectedSlug} />
 
-        {/* Config groups (data-driven) */}
-        {service.config_options.map((option) => {
-          const num = nextNum();
-          if (option.input === "multiselect") {
-            const selected = Array.isArray(state.selections[option.id])
-              ? (state.selections[option.id] as string[])
-              : [];
-            const toggle = (id: string, on: boolean) =>
-              dispatch({
-                type: "SET_SELECTION",
-                key: option.id,
-                value: on ? [...selected, id] : selected.filter((x) => x !== id),
-              });
-            return (
-              <div className="bk-step" key={option.id}>
-                <div className="bk-step-head">
-                  <div className="bk-num">{num}</div>
-                  <div>
-                    <h3>{option.label}</h3>
-                    <small>Optional — each shows its price before you add it</small>
+        {/* Coverage gate — asked BEFORE anything is configured, and only for a
+            session that happens somewhere. A remote booking has no ZIP to gate on
+            (the server's gate returns before it looks at one), so the step, its
+            requirement and its derived Area row are all absent rather than dead. */}
+        {remoteSession ? null : (
+          <div className="bk-step">
+            <div className="bk-step-head">
+              <div className="bk-num">{nextNum()}</div>
+              <div>
+                <h3>Where are we coming?</h3>
+                <small>We confirm coverage before you build your session</small>
+              </div>
+            </div>
+            <div className="bk-fields">
+              {/* The status line lives INSIDE the field, not in the next grid cell:
+                  `.bk-fields` is a two-column grid and `.bk-field` a flex column, so
+                  a sibling cell with no label floats above the input it describes. */}
+              <div className="bk-field">
+                <label htmlFor="f-zip">ZIP code</label>
+                <input
+                  id="f-zip"
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="postal-code"
+                  maxLength={5}
+                  placeholder="27601"
+                  value={state.zip}
+                  aria-invalid={!!errors.zip}
+                  aria-describedby={
+                    errors.zip ? "f-zip-error f-zip-status" : "f-zip-status"
+                  }
+                  onChange={(e) => setZip(e.target.value)}
+                />
+                {errors.zip ? (
+                  <span id="f-zip-error" className="err">
+                    {errors.zip}
+                  </span>
+                ) : null}
+                {/* Always mounted, so the live region exists before it changes —
+                    a region inserted together with its text is not announced. */}
+                <span
+                  id="f-zip-status"
+                  role="status"
+                  className="flex items-center gap-2 text-sm text-muted-foreground"
+                >
+                  {state.coverage.status === "checking" ? (
+                    <>
+                      <LoaderCircle className="animate-spin" size={15} aria-hidden />
+                      Checking coverage…
+                    </>
+                  ) : state.coverage.status === "ok" ? (
+                    <span className="flex items-center gap-2 text-success">
+                      <Check size={15} aria-hidden />
+                      {state.coverage.areaName
+                        ? `Serving ${state.coverage.areaName}`
+                        : "We serve this ZIP code"}
+                    </span>
+                  ) : state.coverage.status === "blocked" ? (
+                    <span className="flex items-center gap-2 text-warning">
+                      <TriangleAlert size={15} aria-hidden />
+                      Not available here yet
+                    </span>
+                  ) : state.coverage.status === "error" ? (
+                    <>
+                      <MapPin size={15} aria-hidden />
+                      We&apos;ll confirm coverage when you submit
+                    </>
+                  ) : (
+                    <>
+                      <MapPin size={15} aria-hidden />
+                      Travel is included — no distance fees
+                    </>
+                  )}
+                </span>
+              </div>
+            </div>
+
+            {gated ? (
+              <div
+                className="mt-4 rounded-lg border border-warning/40 bg-warning/10 p-4 text-sm"
+                role="alert"
+              >
+                {/* Server-authored copy, verbatim: it deliberately never says WHY,
+                    and it already carries the "add your email" offer. */}
+                <p>{state.coverage.message}</p>
+                {/* The link is the affordance that sentence points at — nothing
+                    more is promised here. `/waitlist` is still a STUB that ignores
+                    both query params and tells the customer "nothing sent"; the
+                    real destination is the `POST /coverage-requests` lead capture,
+                    which does not exist on the server yet. When it lands, this
+                    panel should post to it inline instead of linking out. Do not
+                    re-add a client-authored "we'll email you" guarantee before
+                    then — there is currently nothing that would. */}
+                <p className="mt-3">
+                  <Link href={waitlistHref} className="underline">
+                    Add me to the waitlist for {zip}
+                  </Link>
+                </p>
+              </div>
+            ) : null}
+          </div>
+        )}
+
+        {gated ? (
+          <div className="bk-step">
+            <div className="bk-step-head">
+              <div className="bk-num">{nextNum()}</div>
+              <div>
+                <h3>Configure your session</h3>
+                <small>Unlocks as soon as your ZIP code is one we serve</small>
+              </div>
+            </div>
+            <div className="coord-note">
+              <ArrowUp size={18} aria-hidden />
+              Enter a ZIP code we serve above to build your session.
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Config groups (data-driven) */}
+            {service.config_options.map((option) => {
+              const num = nextNum();
+              if (option.input === "multiselect") {
+                const selected = Array.isArray(state.selections[option.id])
+                  ? (state.selections[option.id] as string[])
+                  : [];
+                const toggle = (id: string, on: boolean) =>
+                  dispatch({
+                    type: "SET_SELECTION",
+                    key: option.id,
+                    value: on ? [...selected, id] : selected.filter((x) => x !== id),
+                  });
+                return (
+                  <div className="bk-step" key={option.id}>
+                    <div className="bk-step-head">
+                      <div className="bk-num">{num}</div>
+                      <div>
+                        <h3>{option.label}</h3>
+                        <small>Optional — each shows its price before you add it</small>
+                      </div>
+                    </div>
+                    <div className="addon-list">
+                      {option.choices?.map((c) => {
+                        const on = selected.includes(c.id);
+                        const delta = deltaOf(option.id, c.id);
+                        return (
+                          <label key={c.id} className={cn("addon", on && "sel")}>
+                            <span className="l">
+                              <input
+                                type="checkbox"
+                                checked={on}
+                                onChange={(e) => toggle(c.id, e.target.checked)}
+                              />
+                              <span className="box">
+                                <Check size={12} aria-hidden />
+                              </span>
+                              {c.label}
+                            </span>
+                            <span className="p">
+                              {delta && delta.amount !== 0 ? `+${money(delta)}` : "Free"}
+                            </span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              }
+
+              // Single-select → chip row
+              const current = String(state.selections[option.id] ?? "");
+              const showPrice = groupAffectsPrice(option.id);
+              return (
+                <div className="bk-step" key={option.id}>
+                  <div className="bk-step-head">
+                    <div className="bk-num">{num}</div>
+                    <div>
+                      <h3>{option.label}</h3>
+                      <small>Prices are all-in — travel, equipment &amp; gratuity included</small>
+                    </div>
+                  </div>
+                  <div className="bk-chips" role="group" aria-label={option.label}>
+                    {option.choices?.map((c) => {
+                      const on = current === c.id;
+                      const delta = deltaOf(option.id, c.id);
+                      const price = showPrice ? money(delta ? addMoney(base, delta) : base) : null;
+                      return (
+                        <button
+                          type="button"
+                          key={c.id}
+                          className={cn("bk-chip", on && "sel")}
+                          aria-pressed={on}
+                          onClick={() =>
+                            dispatch({ type: "SET_SELECTION", key: option.id, value: c.id })
+                          }
+                        >
+                          {c.label}
+                          {price ? <b>{price}</b> : null}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
-                <div className="addon-list">
-                  {option.choices?.map((c) => {
-                    const on = selected.includes(c.id);
-                    const delta = deltaOf(option.id, c.id);
-                    return (
-                      <label key={c.id} className={cn("addon", on && "sel")}>
-                        <span className="l">
-                          <input
-                            type="checkbox"
-                            checked={on}
-                            onChange={(e) => toggle(c.id, e.target.checked)}
-                          />
-                          <span className="box">
-                            <Check size={12} aria-hidden />
-                          </span>
-                          {c.label}
-                        </span>
-                        <span className="p">
-                          {delta && delta.amount !== 0 ? `+${money(delta)}` : "Free"}
-                        </span>
-                      </label>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          }
+              );
+            })}
 
-          // Single-select → chip row
-          const current = String(state.selections[option.id] ?? "");
-          const showPrice = groupAffectsPrice(option.id);
-          return (
-            <div className="bk-step" key={option.id}>
+            {/* Details */}
+            <div className="bk-step">
               <div className="bk-step-head">
-                <div className="bk-num">{num}</div>
+                <div className="bk-num">{nextNum()}</div>
                 <div>
-                  <h3>{option.label}</h3>
-                  <small>Prices are all-in — travel, equipment &amp; gratuity included</small>
+                  <h3>Your details</h3>
+                  <small>A coordinator confirms within one business hour</small>
                 </div>
               </div>
-              <div className="bk-chips" role="group" aria-label={option.label}>
-                {option.choices?.map((c) => {
-                  const on = current === c.id;
-                  const delta = deltaOf(option.id, c.id);
-                  const price = showPrice ? money(delta ? addMoney(base, delta) : base) : null;
-                  return (
-                    <button
-                      type="button"
-                      key={c.id}
-                      className={cn("bk-chip", on && "sel")}
-                      aria-pressed={on}
-                      onClick={() =>
-                        dispatch({ type: "SET_SELECTION", key: option.id, value: c.id })
+              <div className="bk-fields">
+                <div className="bk-field">
+                  <label htmlFor="f-date">Date</label>
+                  <input
+                    id="f-date"
+                    type="date"
+                    value={state.windows[0]?.date ?? ""}
+                    aria-invalid={!!errors.date}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_WINDOW", index: 0, patch: { date: e.target.value } })
+                    }
+                  />
+                  {errors.date ? <span className="err">{errors.date}</span> : null}
+                </div>
+                <div className="bk-field">
+                  <label htmlFor="f-time">Preferred time</label>
+                  <select
+                    id="f-time"
+                    value={state.windows[0]?.time ?? ""}
+                    aria-invalid={!!errors.time}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_WINDOW", index: 0, patch: { time: e.target.value } })
+                    }
+                  >
+                    <option value="">Select a time range</option>
+                    {TIME_RANGES.map((r) => (
+                      <option key={r.value} value={r.value}>
+                        {r.label}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.time ? <span className="err">{errors.time}</span> : null}
+                </div>
+                {/* The area is DERIVED, never picked: it is whatever the server
+                    resolved from the ZIP in the coverage step. Read-only on
+                    purpose — a customer-selectable market is the coverage bypass
+                    this replaced. Absent entirely for a remote session, which has
+                    no ZIP step to derive it from. */}
+                {remoteSession ? null : (
+                  <div className="bk-field">
+                    <label htmlFor="f-area">Area</label>
+                    <input
+                      id="f-area"
+                      type="text"
+                      readOnly
+                      tabIndex={-1}
+                      value={
+                        state.coverage.status === "ok"
+                          ? (state.coverage.areaName ?? "Confirmed")
+                          : ""
                       }
-                    >
-                      {c.label}
-                      {price ? <b>{price}</b> : null}
-                    </button>
-                  );
-                })}
+                      placeholder="From your ZIP code"
+                    />
+                  </div>
+                )}
+                <div className="bk-field">
+                  <label htmlFor="f-name">Name</label>
+                  <input
+                    id="f-name"
+                    type="text"
+                    placeholder="Your name"
+                    value={state.firstName}
+                    aria-invalid={!!errors.name}
+                    onChange={(e) => setField("firstName", e.target.value)}
+                  />
+                  {errors.name ? <span className="err">{errors.name}</span> : null}
+                </div>
+                <div className="bk-field">
+                  <label htmlFor="f-phone">Phone</label>
+                  <input
+                    id="f-phone"
+                    type="tel"
+                    placeholder="(919) 555-0000"
+                    value={state.phone}
+                    onChange={(e) => setField("phone", e.target.value)}
+                  />
+                </div>
+                <div className="bk-field">
+                  <label htmlFor="f-email">Email</label>
+                  <input
+                    id="f-email"
+                    type="email"
+                    placeholder="you@email.com"
+                    value={state.email}
+                    aria-invalid={!!errors.email}
+                    onChange={(e) => setField("email", e.target.value)}
+                  />
+                  {errors.email ? <span className="err">{errors.email}</span> : null}
+                </div>
+                <div className="bk-field full">
+                  <label htmlFor="f-address">Home address</label>
+                  <input
+                    id="f-address"
+                    type="text"
+                    placeholder="Street, unit, city"
+                    value={state.address}
+                    onChange={(e) => setField("address", e.target.value)}
+                  />
+                </div>
               </div>
             </div>
-          );
-        })}
-
-        {/* Details */}
-        <div className="bk-step">
-          <div className="bk-step-head">
-            <div className="bk-num">{nextNum()}</div>
-            <div>
-              <h3>Your details</h3>
-              <small>A coordinator confirms within one business hour</small>
-            </div>
-          </div>
-          <div className="bk-fields">
-            <div className="bk-field">
-              <label htmlFor="f-date">Date</label>
-              <input
-                id="f-date"
-                type="date"
-                value={state.windows[0]?.date ?? ""}
-                aria-invalid={!!errors.date}
-                onChange={(e) =>
-                  dispatch({ type: "SET_WINDOW", index: 0, patch: { date: e.target.value } })
-                }
-              />
-              {errors.date ? <span className="err">{errors.date}</span> : null}
-            </div>
-            <div className="bk-field">
-              <label htmlFor="f-time">Preferred time</label>
-              <select
-                id="f-time"
-                value={state.windows[0]?.time ?? ""}
-                aria-invalid={!!errors.time}
-                onChange={(e) =>
-                  dispatch({ type: "SET_WINDOW", index: 0, patch: { time: e.target.value } })
-                }
-              >
-                <option value="">Select a time range</option>
-                {TIME_RANGES.map((r) => (
-                  <option key={r.value} value={r.value}>
-                    {r.label}
-                  </option>
-                ))}
-              </select>
-              {errors.time ? <span className="err">{errors.time}</span> : null}
-            </div>
-            <div className="bk-field">
-              <label htmlFor="f-area">Area</label>
-              <select
-                id="f-area"
-                value={state.area}
-                aria-invalid={!!errors.area}
-                onChange={(e) => setField("area", e.target.value)}
-              >
-                <option value="">Select your area</option>
-                {AREA_OPTIONS.map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </select>
-              {errors.area ? <span className="err">{errors.area}</span> : null}
-            </div>
-            <div className="bk-field">
-              <label htmlFor="f-name">Name</label>
-              <input
-                id="f-name"
-                type="text"
-                placeholder="Your name"
-                value={state.firstName}
-                aria-invalid={!!errors.name}
-                onChange={(e) => setField("firstName", e.target.value)}
-              />
-              {errors.name ? <span className="err">{errors.name}</span> : null}
-            </div>
-            <div className="bk-field">
-              <label htmlFor="f-phone">Phone</label>
-              <input
-                id="f-phone"
-                type="tel"
-                placeholder="(919) 555-0000"
-                value={state.phone}
-                onChange={(e) => setField("phone", e.target.value)}
-              />
-            </div>
-            <div className="bk-field">
-              <label htmlFor="f-email">Email</label>
-              <input
-                id="f-email"
-                type="email"
-                placeholder="you@email.com"
-                value={state.email}
-                aria-invalid={!!errors.email}
-                onChange={(e) => setField("email", e.target.value)}
-              />
-              {errors.email ? <span className="err">{errors.email}</span> : null}
-            </div>
-            <div className="bk-field full">
-              <label htmlFor="f-address">Home address</label>
-              <input
-                id="f-address"
-                type="text"
-                placeholder="Street, unit, city"
-                value={state.address}
-                onChange={(e) => setField("address", e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
 
       {/* Sticky summary */}
@@ -628,6 +925,16 @@ function BookInner({
         <div className="bk-sum-line">
           <span>Add-ons</span>
           <b>{addOns || "None"}</b>
+        </div>
+        <div className="bk-sum-line">
+          <span>{remoteSession ? "Delivery" : "Area"}</span>
+          <b>
+            {remoteSession
+              ? "Remote"
+              : state.coverage.status === "ok"
+                ? (state.coverage.areaName ?? zip)
+                : zip || "—"}
+          </b>
         </div>
         <div className="bk-sum-line">
           <span>Travel &amp; gratuity</span>
@@ -650,14 +957,16 @@ function BookInner({
           type="button"
           className="bk-cta"
           onClick={() => void requestBooking()}
-          disabled={submitting}
+          disabled={submitting || gated}
         >
           {submitting
             ? submitPhase === "preparing"
               ? "Preparing payment…"
               : "Creating booking…"
-            : "Request booking"}
-          {!submitting ? <ArrowRight size={16} aria-hidden /> : null}
+            : gated
+              ? "Not available in your ZIP"
+              : "Request booking"}
+          {!submitting && !gated ? <ArrowRight size={16} aria-hidden /> : null}
         </button>
         <div className="bk-fine">
           No charge until your coordinator confirms. Free rescheduling up to 4 hours
